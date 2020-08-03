@@ -1,0 +1,13 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        issue-message: 'Thanks for opening your first issue here! Be sure to follow the [issue template](https://github.com/linuxserver/docker-swag/.github/ISSUE_TEMPLATE.md)!'
+        pr-message: 'Thanks for opening this pull request! Be sure to follow the [pull request template](https://github.com/linuxserver/docker-swag/.github/PULL_REQUEST_TEMPLATE.md)!'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. /config/donoteditthisfile.conf
+
+curl https://www.duckdns.org/update?domains=${CERTBOT_DOMAIN}\&token=${ORIGDUCKDNSTOKEN}\&txt=${CERTBOT_VALIDATION}
+
+echo "sleeping 60"
+sleep 60

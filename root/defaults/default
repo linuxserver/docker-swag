@@ -1,4 +1,4 @@
-## Version 2020/05/23 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
+## Version 2020/05/23 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/default
 
 # redirect all traffic to https
 server {

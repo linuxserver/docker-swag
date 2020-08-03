@@ -1,0 +1,4 @@
+[Definition]
+
+logtarget = /config/log/fail2ban/fail2ban.log
+dbfile = /config/fail2ban/fail2ban.sqlite3

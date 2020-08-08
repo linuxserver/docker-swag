@@ -183,7 +183,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
   * Create new container using the sample on this page (container name: `swag`, image name: `linuxserver/swag`)
 * If using docker compose:
   * Edit the compose yaml to change the image to `linuxserver/swag` and change the service and container names to `swag`
-  * Issue `docker-compose up -d`
+  * Issue `docker-compose up -d --remove-orphans`
 ### Validation and initial setup
 * Before running this container, make sure that the url and subdomains are properly forwarded to this container's host, and that port 443 (and/or 80) is not being used by another service on the host (NAS gui, another webserver, etc.).
 * For `http` validation, port 80 on the internet side of the router should be forwarded to this container's port 80

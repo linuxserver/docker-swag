@@ -83,6 +83,7 @@ app_setup_block: |
   > * If using docker compose:
   >   * Edit the compose yaml to change the image to `linuxserver/swag` and change the service and container names to `swag`
   >   * Issue `docker-compose up -d --remove-orphans`
+  >   * If you don't want to or can't use the option `--remove-orphans`, then you can first do `docker-compose down`, then edit the compose yaml as above, and then issue `docker-compose up -d`
   
   > Make sure to also update any references to this container by name. For instance, Nextcloud's `config.php` references this container in its `trusted_proxies` directive, which would have to be updated to `swag`.
   ### Validation and initial setup

@@ -4,7 +4,7 @@
 project_name: swag
 project_url: "https://linuxserver.io"
 project_logo: "https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/swag.gif"
-project_blurb: "SWAG - Secure Web-server And Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention."
+project_blurb: "SWAG - Secure Web Application Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention."
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
 
 project_blurb_optional_extras_enabled: false

@@ -20,7 +20,7 @@ freetype-2.10.2-r0
 gdbm-1.13-r1
 git-2.26.2-r0
 git-perl-2.26.2-r0
-glib-2.64.4-r0
+glib-2.64.5-r0
 gmp-6.2.0-r0
 gnupg-2.2.20-r0
 gnutls-3.6.14-r0

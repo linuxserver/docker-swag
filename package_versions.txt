@@ -74,7 +74,7 @@ libtls-standalone-2.9.1-r1
 libunistring-0.9.10-r0
 libuuid-2.35.2-r0
 libwebp-1.1.0-r0
-libx11-1.6.11-r0
+libx11-1.6.12-r0
 libxau-1.0.9-r0
 libxcb-1.14-r1
 libxdmcp-1.1.3-r0

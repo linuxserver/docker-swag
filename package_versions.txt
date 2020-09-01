@@ -25,8 +25,8 @@ gmp-6.2.0-r0
 gnupg-2.2.20-r0
 gnutls-3.6.14-r0
 icu-libs-67.1-r0
-ip6tables-1.8.4-r1
-iptables-1.8.4-r1
+ip6tables-1.8.4-r2
+iptables-1.8.4-r2
 libacl-2.2.53-r0
 libassuan-2.5.3-r0
 libattr-2.4.48-r0

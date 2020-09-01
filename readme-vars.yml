@@ -84,7 +84,7 @@ app_setup_block: |
   >   * Edit the compose yaml to change the image to `linuxserver/swag` and change the service and container names to `swag`
   >   * Issue `docker-compose up -d --remove-orphans`
   >   * If you don't want to or can't use the option `--remove-orphans`, then you can first do `docker-compose down`, then edit the compose yaml as above, and then issue `docker-compose up -d`
-  
+
   > Make sure to also update any references to this container by name. For instance, Nextcloud's `config.php` references this container in its `trusted_proxies` directive, which would have to be updated to `swag`.
   ### Validation and initial setup
   * Before running this container, make sure that the url and subdomains are properly forwarded to this container's host, and that port 443 (and/or 80) is not being used by another service on the host (NAS gui, another webserver, etc.).
@@ -130,10 +130,23 @@ app_setup_block: |
   * You can check the status of a specific jail via `docker exec -it swag fail2ban-client status <jail name>`
   * You can unban an IP via `docker exec -it swag fail2ban-client set <jail name> unbanip <IP>`
   * A list of commands can be found here: https://www.fail2ban.org/wiki/index.php/Commands
+  ### Updating configs
+  * This container creates a number of configs for nginx, proxy samples, etc.
+  * Config updates are noted in the changelog but not automatically applied to your files.
+  * If you have modified a file with noted changes in the changelog:
+    1. Keep your existing configs as is (not broken, don't fix)
+    2. Review our repository commits and apply the new changes yourself
+    3. Delete the modified config file with listed updates, restart the container, reapply your changes
+  * If you have NOT modified a file with noted changes in the changelog:
+    1. Delete the config file with listed updates, restart the container, reapply your changes
+  * Proxy sample updates are not listed in the changelog. See the changes here: [https://github.com/linuxserver/reverse-proxy-confs/commits/master](https://github.com/linuxserver/reverse-proxy-confs/commits/master)
+  * Proxy sample files WILL be updated, however your renamed (enabled) proxy files will not.
+  * You can check the new sample and adjust your active config as needed.
 
 app_setup_nginx_reverse_proxy_snippet: false
 app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "01.09.20:", desc: "Update nginx.conf and proxy.conf (and various proxy samples) to better handle websockets." }
   - { date: "03.08.20:", desc: "Initial release." }

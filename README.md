@@ -315,5 +315,6 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **08.09.20:** - Add php7-xsl.
 * **01.09.20:** - Update nginx.conf and proxy.conf (and various proxy samples) to better handle websockets.
 * **03.08.20:** - Initial release.

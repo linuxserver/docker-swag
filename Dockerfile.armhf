@@ -79,6 +79,7 @@ RUN \
 	php7-xml \
 	php7-xmlreader \
 	php7-xmlrpc \
+	php7-xsl \
 	php7-zip \
 	py3-cryptography \
 	py3-future \

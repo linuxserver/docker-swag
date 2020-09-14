@@ -22,7 +22,7 @@ git-2.26.2-r0
 git-perl-2.26.2-r0
 glib-2.64.5-r0
 gmp-6.2.0-r0
-gnupg-2.2.20-r0
+gnupg-2.2.23-r0
 gnutls-3.6.15-r0
 icu-libs-67.1-r0
 ip6tables-1.8.4-r2
@@ -170,6 +170,7 @@ php7-xml-7.3.22-r0
 php7-xmlreader-7.3.22-r0
 php7-xmlrpc-7.3.22-r0
 php7-xmlwriter-7.3.22-r0
+php7-xsl-7.3.22-r0
 php7-zip-7.3.22-r0
 pinentry-1.1.0-r2
 popt-1.16-r7

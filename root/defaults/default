@@ -31,7 +31,7 @@ server {
 	#include /config/nginx/authelia-server.conf;
 
 	# enable for geo blocking
-	# See /config/nginx/geoip2.conf for more information. 
+	# See /config/nginx/geoip2.conf for more information.
 	#if ($allowed_country = no) {
 	#return 444;
 	#}

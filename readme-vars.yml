@@ -139,7 +139,7 @@ app_setup_block: |
     2. Review our repository commits and apply the new changes yourself
     3. Delete the modified config file with listed updates, restart the container, reapply your changes
   * If you have NOT modified a file with noted changes in the changelog:
-    1. Delete the config file with listed updates, restart the container, reapply your changes
+    1. Delete the config file with listed updates, restart the container
   * Proxy sample updates are not listed in the changelog. See the changes here: [https://github.com/linuxserver/reverse-proxy-confs/commits/master](https://github.com/linuxserver/reverse-proxy-confs/commits/master)
   * Proxy sample files WILL be updated, however your renamed (enabled) proxy files will not.
   * You can check the new sample and adjust your active config as needed.
@@ -149,7 +149,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
-  - { date: "20.09.20:", desc: "Update nginx.conf - Added geoip2 configs. Added MAXMINDDB_LICENSE_KEY variable to readme."}
+  - { date: "20.09.20:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf - Added geoip2 configs. Added MAXMINDDB_LICENSE_KEY variable to readme."}
   - { date: "08.09.20:", desc: "Add php7-xsl." }
-  - { date: "01.09.20:", desc: "Update nginx.conf and proxy.conf (and various proxy samples) to better handle websockets." }
+  - { date: "01.09.20:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf, proxy.conf, and various proxy samples - Global websockets across all configs." }
   - { date: "03.08.20:", desc: "Initial release." }

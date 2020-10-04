@@ -245,7 +245,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
   2. Review our repository commits and apply the new changes yourself
   3. Delete the modified config file with listed updates, restart the container, reapply your changes
 * If you have NOT modified a file with noted changes in the changelog:
-  1. Delete the config file with listed updates, restart the container, reapply your changes
+  1. Delete the config file with listed updates, restart the container
 * Proxy sample updates are not listed in the changelog. See the changes here: [https://github.com/linuxserver/reverse-proxy-confs/commits/master](https://github.com/linuxserver/reverse-proxy-confs/commits/master)
 * Proxy sample files WILL be updated, however your renamed (enabled) proxy files will not.
 * You can check the new sample and adjust your active config as needed.
@@ -322,7 +322,8 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **20.09.20:** - Update nginx.conf - Added geoip2 configs. Added MAXMINDDB_LICENSE_KEY variable to readme.
+* **04.10.20:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf, proxy.conf, and ssl.conf - Minor cleanups and reordering.
+* **20.09.20:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf - Added geoip2 configs. Added MAXMINDDB_LICENSE_KEY variable to readme.
 * **08.09.20:** - Add php7-xsl.
-* **01.09.20:** - Update nginx.conf and proxy.conf (and various proxy samples) to better handle websockets.
+* **01.09.20:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf, proxy.conf, and various proxy samples - Global websockets across all configs.
 * **03.08.20:** - Initial release.

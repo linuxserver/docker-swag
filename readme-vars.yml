@@ -57,6 +57,7 @@ opt_param_env_vars:
   - { env_var: "ONLY_SUBDOMAINS", env_value: "false", desc: "If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`" }
   - { env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org,*.anotherdomain.org`" }
   - { env_var: "STAGING", env_value: "false", desc: "Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes." }
+  - { env_var: "MAXMINDDB_LICENSE_KEY", env_value: "". desc: "Add your MaxmindDB license key to automatically download the GeoLite2-City.mmdb database. Download location is /config/geoip2db. The database is updated weekly."}
 opt_param_usage_include_vols: false
 opt_param_volumes:
   - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Configuration files." }
@@ -148,6 +149,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "20.09.20:", desc: "Update nginx.conf - Added geoip2 configs. Added MAXMINDDB_LICENSE_KEY variable to readme."}
   - { date: "08.09.20:", desc: "Add php7-xsl." }
   - { date: "01.09.20:", desc: "Update nginx.conf and proxy.conf (and various proxy samples) to better handle websockets." }
   - { date: "03.08.20:", desc: "Initial release." }

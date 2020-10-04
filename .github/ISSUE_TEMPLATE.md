@@ -1,7 +1,10 @@
 [linuxserverurl]: https://linuxserver.io
 [![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)][linuxserverurl]
 
-If you are new to Docker or this application our issue tracker is **ONLY** used for reporting bugs or requesting features. Please use [our discord server](https://discord.gg/YWrKVTn) for general support.
+<!--- If you are new to Docker or this application our issue tracker is **ONLY** used for reporting bugs or requesting features. Please use [our discord server](https://discord.gg/YWrKVTn) for general support. --->
+
+<!--- If this acts as a feature request please ask yourself if this modification is something the whole userbase will benefit from --->
+<!--- If this is a specific change for corner case functionality or plugins please look at making a Docker Mod or local script  https://blog.linuxserver.io/2019/09/14/customizing-our-containers/ -->
 
 <!--- Provide a general summary of the issue in the Title above -->
 
@@ -22,9 +25,10 @@ If you are new to Docker or this application our issue tracker is **ONLY** used 
 4.
 
 ## Environment
-**OS:**      
-**CPU architecture:** x86_64/arm32/arm64      
-**How docker service was installed:**      
+**OS:**
+**CPU architecture:** x86_64/arm32/arm64
+**How docker service was installed:**
+<!--- ie. from the official docker repo, from the distro repo, nas OS provided, etc. -->
 <!--- Providing context helps us come up with a solution that is most useful in the real world -->
 
 ## Command used to create docker container (run/create/compose/screenshot)

@@ -2,11 +2,11 @@
 
 [linuxserverurl]: https://linuxserver.io
 [![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)][linuxserverurl]
-	
+
 
 <!--- Before submitting a pull request please check the following -->
 
-<!---  If this is a fix for a typo in code or documentation in the README please file an issue and let us sort it out we do not need a PR  --> 
+<!---  If this is a fix for a typo in code or documentation in the README please file an issue and let us sort it out we do not need a PR  -->
 <!---  Ask yourself if this modification is something the whole userbase will benefit from, if this is a specific change for corner case functionality or plugins please look at making a Docker Mod or local script  https://blog.linuxserver.io/2019/09/14/customizing-our-containers/ -->
 <!---  That if the PR is addressing an existing issue include, closes #<issue number> , in the body of the PR commit message   -->
 <!---  You have included links to any files / patches etc your PR may be using in the body of the PR commit message -->
@@ -21,7 +21,11 @@
 
 ------------------------------
 
-We welcome all PR’s though this doesn’t guarantee it will be accepted.
+ - [ ] I have read the [contributing](https://github.com/linuxserver/docker-swag/blob/master/.github/CONTRIBUTING.md) guideline and understand that I have made the correct modifications
+
+------------------------------
+
+<!--- We welcome all PR’s though this doesn’t guarantee it will be accepted. -->
 
 ## Description:
 <!--- Describe your changes in detail -->

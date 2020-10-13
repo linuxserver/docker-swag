@@ -6,7 +6,7 @@ apr-1.7.0-r0
 apr-util-1.6.1-r6
 argon2-libs-20190702-r1
 bash-5.0.17-r0
-brotli-libs-1.0.7-r5
+brotli-libs-1.0.9-r1
 busybox-1.31.1-r19
 c-client-2007f-r11
 ca-certificates-20191127-r4
@@ -152,7 +152,7 @@ php7-pdo_pgsql-7.3.23-r0
 php7-pdo_sqlite-7.3.23-r0
 php7-pear-7.3.23-r0
 php7-pecl-apcu-5.1.19-r0
-php7-pecl-igbinary-3.1.4-r0
+php7-pecl-igbinary-3.1.6-r0
 php7-pecl-mcrypt-1.0.3-r0
 php7-pecl-memcached-3.1.5-r0
 php7-pecl-redis-5.2.2-r1

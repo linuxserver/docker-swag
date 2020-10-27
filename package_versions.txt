@@ -16,7 +16,7 @@ curl-7.69.1-r1
 db-5.3.28-r1
 expat-2.2.9-r1
 fail2ban-0.11.1-r3
-freetype-2.10.2-r0
+freetype-2.10.4-r0
 gdbm-1.13-r1
 git-2.26.2-r0
 git-perl-2.26.2-r0

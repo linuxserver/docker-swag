@@ -107,12 +107,12 @@ RUN \
 	certbot-dns-inwx \
 	certbot-dns-linode \
 	certbot-dns-luadns \
+	certbot-dns-netcup \
 	certbot-dns-nsone \
 	certbot-dns-ovh \
 	certbot-dns-rfc2136 \
 	certbot-dns-route53 \
 	certbot-dns-transip \
-	certbot-dns-netcup \
 	certbot-plugin-gandi \
 	cryptography \
 	requests && \

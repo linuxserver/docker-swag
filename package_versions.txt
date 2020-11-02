@@ -212,7 +212,7 @@ scanelf-1.2.6-r0
 shadow-4.8.1-r0
 sqlite-libs-3.32.1-r0
 ssl_client-1.31.1-r19
-tzdata-2020a-r0
+tzdata-2020c-r0
 unixodbc-2.3.7-r2
 whois-5.5.6-r0
 xz-5.2.5-r0

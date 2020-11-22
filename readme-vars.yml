@@ -121,10 +121,11 @@ app_setup_block: |
     2. `privkey.pfx`, a format supported by Microsoft and commonly used by dotnet apps such as Emby Server (no password)
     3. `priv-fullchain-bundle.pem`, a pem cert that bundles the private key and the fullchain, used by apps like ZNC
   ### Using fail2ban
-  * This container includes fail2ban set up with 3 jails by default:
+  * This container includes fail2ban set up with 4 jails by default:
     1. nginx-http-auth
     2. nginx-badbots
     3. nginx-botsearch
+    4. nginx-deny
   * To enable or disable other jails, modify the file `/config/fail2ban/jail.local`
   * To modify filters and actions, instead of editing the `.conf` files, create `.local` files with the same name and edit those because .conf files get overwritten when the actions and filters are updated. `.local` files will append whatever's in the `.conf` files (ie. `nginx-http-auth.conf` --> `nginx-http-auth.local`)
   * You can check which jails are active via `docker exec -it swag fail2ban-client status`

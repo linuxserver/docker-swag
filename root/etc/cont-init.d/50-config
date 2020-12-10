@@ -90,7 +90,7 @@ if ! grep -q 'PARAMETERS' "/config/nginx/dhparams.pem"; then
 fi
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|cloudflare|cloudxns|cpanel|digitalocean|dnsimple|dnsmadeeasy|domeneshop|gandi|gehirn|google|inwx|linode|luadns|netcup|nsone|ovh|rfc2136|route53|sakuracloud|transip)$ ]] && \
+[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|cloudflare|cloudxns|cpanel|digitalocean|dnsimple|dnsmadeeasy|domeneshop|gandi|gehirn|google|inwx|linode|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|sakuracloud|transip)$ ]] && \
   echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
   sleep infinity
 
@@ -187,7 +187,7 @@ if [ "$VALIDATION" = "dns" ]; then
   elif [[ "$DNSPLUGIN" =~ ^(aliyun|domeneshop|inwx|transip)$ ]]; then
     if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
     PREFCHAL="-a certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
-  elif [[ "$DNSPLUGIN" =~ ^(netcup)$ ]]; then
+  elif [[ "$DNSPLUGIN" =~ ^(netcup|njalla)$ ]]; then
     if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
     PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
   else

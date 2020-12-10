@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /config/donoteditthisfile.conf
+. /config/.donoteditthisfile.conf
 
 curl https://www.duckdns.org/update?domains=${CERTBOT_DOMAIN}\&token=${ORIGDUCKDNSTOKEN}\&txt=${CERTBOT_VALIDATION}
 

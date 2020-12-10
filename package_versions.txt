@@ -12,7 +12,7 @@ c-client-2007f-r11
 ca-certificates-20191127-r4
 ca-certificates-bundle-20191127-r4
 coreutils-8.32-r0
-curl-7.69.1-r1
+curl-7.69.1-r2
 db-5.3.28-r1
 expat-2.2.9-r1
 fail2ban-0.11.1-r3
@@ -36,7 +36,7 @@ libbz2-1.0.8-r1
 libc-utils-0.7.2-r3
 libcap-2.27-r0
 libcrypto1.1-1.1.1g-r0
-libcurl-7.69.1-r1
+libcurl-7.69.1-r2
 libedit-20191231.3.1-r0
 libevent-2.1.11-r1
 libffi-3.3-r2
@@ -49,7 +49,7 @@ libidn-1.35-r0
 libintl-0.20.2-r0
 libjpeg-turbo-2.0.5-r0
 libksba-1.4.0-r0
-libldap-2.4.50-r0
+libldap-2.4.50-r1
 libmagic-5.38-r0
 libmaxminddb-1.4.2-r1
 libmcrypt-2.5.8-r8

@@ -246,10 +246,20 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
   echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
   if [ "$ORIGONLY_SUBDOMAINS" = "true" ] && [ ! "$ORIGSUBDOMAINS" = "wildcard" ]; then
     ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
-    [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
   else
-    [[ -f /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem
+    ORIGDOMAIN="$ORIGURL"
   fi
+  if [ "$ORIGCERTPROVIDER" = "zerossl" ] && [ -n "$ORIGEMAIL" ]; then
+    REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$ORIGEMAIL")
+    REV_ZEROSSL_EAB_KID=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
+    ZEROSSL_EAB_HMAC_KEY=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+    REV_ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${REV_ZEROSSL_EAB_KID} --eab-hmac-key ${REV_ZEROSSL_EAB_HMAC_KEY}"
+  elif [ "$ORIGSTAGING" = "true" ]; then
+    REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
+  else
+    REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
+  fi
+  [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
   rm -rf /config/etc/letsencrypt
   mkdir -p /config/etc/letsencrypt
 fi

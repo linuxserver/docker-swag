@@ -10,6 +10,7 @@ SUBDOMAINS=${SUBDOMAINS}\\n\
 EXTRA_DOMAINS=${EXTRA_DOMAINS}\\n\
 ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}\\n\
 VALIDATION=${VALIDATION}\\n\
+CERTPROVIDER=${CERTPROVIDER}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
 STAGING=${STAGING}\\n"
@@ -20,7 +21,7 @@ if [ -n "${TEST_RUN}" ]; then
 fi
 
 # Sanitize variables
-SANED_VARS=( DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION )
+SANED_VARS=( DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION CERTPROVIDER )
 for i in "${SANED_VARS[@]}"
 do
   export echo "$i"="${!i//\"/}"
@@ -98,15 +99,18 @@ fi
 rm /etc/crontabs/*
 cp /config/crontabs/* /etc/crontabs/
 
-# create original config file if it doesn't exist
-if [ ! -f "/config/donoteditthisfile.conf" ]; then
-  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\"" > /config/donoteditthisfile.conf
-  echo "Created donoteditthisfile.conf"
+# create original config file if it doesn't exist, move non-hidden legacy file to hidden
+if [ -f "/config/donoteditthisfile.conf" ]; then
+  mv /config/donoteditthisfile.conf /config/.donoteditthisfile.conf
+fi
+if [ ! -f "/config/.donoteditthisfile.conf" ]; then
+  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\"" > /config/.donoteditthisfile.conf
+  echo "Created .donoteditthisfile.conf"
 fi
 
 # load original config settings
 # shellcheck disable=SC1091
-. /config/donoteditthisfile.conf
+. /config/.donoteditthisfile.conf
 
 # set default validation to http
 if [ -z "$VALIDATION" ]; then
@@ -114,11 +118,25 @@ if [ -z "$VALIDATION" ]; then
   echo "VALIDATION parameter not set; setting it to http"
 fi
 
-# if staging is set to true, use the staging server
-if [ "$STAGING" = "true" ]; then
+# if zerossl is selected or staging is set to true, use the relevant server
+if [ "$CERTPROVIDER" = "zerossl" ] && [ "$STAGING" = "true" ]; then
+  echo "ZeroSSL does not support staging mode, ignoring STAGING variable"
+fi
+if [ "$CERTPROVIDER" = "zerossl" ] && [ -n "$EMAIL" ]; then
+  echo "ZeroSSL is selected as the cert provider, registering cert with $EMAIL"
+  EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$EMAIL")
+  ZEROSSL_EAB_KID=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
+  ZEROSSL_EAB_HMAC_KEY=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+  ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${ZEROSSL_EAB_KID} --eab-hmac-key ${ZEROSSL_EAB_HMAC_KEY}"
+elif [ "$CERTPROVIDER" = "zerossl" ] && [ -z "$EMAIL" ]; then
+  echo "ZeroSSL is selected as the cert provider, but the e-mail address has not been entered. Please visit https://zerossl.com, register a new account and set the account e-mail address in the EMAIL environment variable"
+  sleep infinity
+elif [ "$STAGING" = "true" ]; then
   echo "NOTICE: Staging is active"
+  echo "Using Let's Encrypt as the cert provider"
   ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
 else
+  echo "Using Let's Encrypt as the cert provider"
   ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
 fi
 
@@ -224,7 +242,7 @@ else
 fi
 
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$DUCKDNSTOKEN" = "$ORIGDUCKDNSTOKEN" ]; then
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$DUCKDNSTOKEN" = "$ORIGDUCKDNSTOKEN" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ]; then
   echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
   if [ "$ORIGONLY_SUBDOMAINS" = "true" ] && [ ! "$ORIGSUBDOMAINS" = "wildcard" ]; then
     ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
@@ -237,7 +255,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\"" > /config/donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\"" > /config/.donoteditthisfile.conf
 
 # alter extension for error message
 if [ "$DNSPLUGIN" = "google" ]; then

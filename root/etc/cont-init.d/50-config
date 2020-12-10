@@ -45,8 +45,6 @@ chown -R abc:abc /config/dns-conf
 
 # copy reverse proxy configs
 cp -R /defaults/proxy-confs /config/nginx/
-# remove outdated files (remove this action after 2020/10/17)
-rm -f /config/nginx/proxy-confs/seafile.subdomain.config.sample /config/nginx/proxy-confs/librespeed.subdomain.com.sample
 
 # copy/update the fail2ban config defaults to/in /config
 cp -R /defaults/fail2ban/filter.d /config/fail2ban/
@@ -92,7 +90,7 @@ if ! grep -q 'PARAMETERS' "/config/nginx/dhparams.pem"; then
 fi
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|cloudflare|cloudxns|cpanel|digitalocean|dnsimple|dnsmadeeasy|domeneshop|gandi|google|inwx|linode|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|transip)$ ]] && \
+[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|cloudflare|cloudxns|cpanel|digitalocean|dnsimple|dnsmadeeasy|domeneshop|gandi|gehirn|google|inwx|linode|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|sakuracloud|transip)$ ]] && \
   echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
   sleep infinity
 
@@ -176,32 +174,32 @@ fi
 if [ "$VALIDATION" = "dns" ]; then
   if [ "$DNSPLUGIN" = "route53" ]; then
     if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-    PREFCHAL="--dns-${DNSPLUGIN} ${PROPAGATIONPARAM} --manual-public-ip-logging-ok"
+    PREFCHAL="--dns-${DNSPLUGIN} ${PROPAGATIONPARAM}"
   elif [[ "$DNSPLUGIN" =~ ^(cpanel)$ ]]; then
     if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--certbot-dns-${DNSPLUGIN}:${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-    PREFCHAL="-a certbot-dns-${DNSPLUGIN}:${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM} --manual-public-ip-logging-ok"
+    PREFCHAL="-a certbot-dns-${DNSPLUGIN}:${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
   elif [[ "$DNSPLUGIN" =~ ^(gandi)$ ]]; then
     if [ -n "$PROPAGATION" ];then echo "Gandi dns plugin does not support setting propagation time"; fi
-    PREFCHAL="-a certbot-plugin-${DNSPLUGIN}:dns --certbot-plugin-${DNSPLUGIN}:dns-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
+    PREFCHAL="-a certbot-plugin-${DNSPLUGIN}:dns --certbot-plugin-${DNSPLUGIN}:dns-credentials /config/dns-conf/${DNSPLUGIN}.ini"
   elif [[ "$DNSPLUGIN" =~ ^(google)$ ]]; then
     if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-    PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.json ${PROPAGATIONPARAM} --manual-public-ip-logging-ok"
+    PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.json ${PROPAGATIONPARAM}"
   elif [[ "$DNSPLUGIN" =~ ^(aliyun|domeneshop|inwx|transip)$ ]]; then
     if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-    PREFCHAL="-a certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM} --manual-public-ip-logging-ok"
+    PREFCHAL="-a certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
   elif [[ "$DNSPLUGIN" =~ ^(netcup|njalla)$ ]]; then
     if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-    PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM} --manual-public-ip-logging-ok"
+    PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
   else
     if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-    PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM} --manual-public-ip-logging-ok"
+    PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
   fi
   echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
 elif [ "$VALIDATION" = "tls-sni" ]; then
   PREFCHAL="--non-interactive --standalone --preferred-challenges http"
   echo "*****tls-sni validation has been deprecated, attempting http validation instead"
 elif [ "$VALIDATION" = "duckdns" ]; then
-  PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-public-ip-logging-ok --manual-auth-hook /app/duckdns-txt"
+  PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-auth-hook /app/duckdns-txt"
   chmod +x /app/duckdns-txt
   echo "duckdns validation is selected"
   if [ "$SUBDOMAINS" = "wildcard" ]; then

@@ -252,7 +252,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
   if [ "$ORIGCERTPROVIDER" = "zerossl" ] && [ -n "$ORIGEMAIL" ]; then
     REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$ORIGEMAIL")
     REV_ZEROSSL_EAB_KID=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
-    ZEROSSL_EAB_HMAC_KEY=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+    REV_ZEROSSL_EAB_HMAC_KEY=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
     REV_ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${REV_ZEROSSL_EAB_KID} --eab-hmac-key ${REV_ZEROSSL_EAB_HMAC_KEY}"
   elif [ "$ORIGSTAGING" = "true" ]; then
     REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"

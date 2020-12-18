@@ -12,7 +12,7 @@ c-client-2007f-r11
 ca-certificates-20191127-r4
 ca-certificates-bundle-20191127-r4
 coreutils-8.32-r0
-curl-7.69.1-r2
+curl-7.69.1-r3
 db-5.3.28-r1
 expat-2.2.9-r1
 fail2ban-0.11.1-r3
@@ -35,8 +35,8 @@ libbsd-0.10.0-r0
 libbz2-1.0.8-r1
 libc-utils-0.7.2-r3
 libcap-2.27-r0
-libcrypto1.1-1.1.1g-r0
-libcurl-7.69.1-r2
+libcrypto1.1-1.1.1i-r0
+libcurl-7.69.1-r3
 libedit-20191231.3.1-r0
 libevent-2.1.11-r1
 libffi-3.3-r2
@@ -67,7 +67,7 @@ libseccomp-2.4.3-r0
 libsecret-0.20.3-r0
 libsm-1.2.3-r0
 libsodium-1.0.18-r0
-libssl1.1-1.1.1g-r0
+libssl1.1-1.1.1i-r0
 libstdc++-9.3.0-r2
 libtasn1-4.16.0-r1
 libtls-standalone-2.9.1-r1
@@ -116,8 +116,8 @@ nginx-mod-stream-1.18.0-r1
 nginx-mod-stream-geoip2-1.18.0-r1
 nginx-vim-1.18.0-r1
 npth-1.6-r0
-openssl-1.1.1g-r0
-p11-kit-0.23.20-r5
+openssl-1.1.1i-r0
+p11-kit-0.23.22-r0
 pcre-8.44-r0
 pcre2-10.35-r0
 perl-5.30.3-r0

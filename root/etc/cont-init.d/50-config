@@ -124,10 +124,7 @@ if [ "$CERTPROVIDER" = "zerossl" ] && [ "$STAGING" = "true" ]; then
 fi
 if [ "$CERTPROVIDER" = "zerossl" ] && [ -n "$EMAIL" ]; then
   echo "ZeroSSL is selected as the cert provider, registering cert with $EMAIL"
-  EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$EMAIL")
-  ZEROSSL_EAB_KID=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
-  ZEROSSL_EAB_HMAC_KEY=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
-  ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${ZEROSSL_EAB_KID} --eab-hmac-key ${ZEROSSL_EAB_HMAC_KEY}"
+  ACMESERVER="https://acme.zerossl.com/v2/DV90"
 elif [ "$CERTPROVIDER" = "zerossl" ] && [ -z "$EMAIL" ]; then
   echo "ZeroSSL is selected as the cert provider, but the e-mail address has not been entered. Please visit https://zerossl.com, register a new account and set the account e-mail address in the EMAIL environment variable"
   sleep infinity
@@ -276,9 +273,16 @@ fi
 
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
+  if [ "$CERTPROVIDER" = "zerossl" ] && [ -n "$EMAIL" ]; then
+    echo "Retrieving EAB from ZeroSSL"
+    EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$EMAIL")
+    ZEROSSL_EAB_KID=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
+    ZEROSSL_EAB_HMAC_KEY=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+    ZEROSSL_EAB="--eab-kid ${ZEROSSL_EAB_KID} --eab-hmac-key ${ZEROSSL_EAB_HMAC_KEY}"
+  fi
   echo "Generating new certificate"
- # shellcheck disable=SC2086
- certbot certonly --renew-by-default --server $ACMESERVER $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
+  # shellcheck disable=SC2086
+  certbot certonly --renew-by-default --server $ACMESERVER $ZEROSSL_EAB $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
   if [ -d /config/keys/letsencrypt ]; then
     cd /config/keys/letsencrypt || exit
   else

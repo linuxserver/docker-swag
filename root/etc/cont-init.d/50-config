@@ -185,6 +185,12 @@ else
   EMAILPARAM="--register-unsafely-without-email"
 fi
 
+# update plugin names in dns conf inis
+sed -i 's|^certbot_dns_aliyun:||g' /defaults/dns-conf/aliyun.ini
+sed -i 's|^certbot_dns_domeneshop:||g' /defaults/dns-conf/domeneshop.ini
+sed -i 's|^certbot_dns_inwx:||g' /defaults/dns-conf/inwx.ini
+sed -i 's|^certbot_dns_transip:||g' /defaults/dns-conf/transip.ini
+
 # setting the validation method to use
 if [ "$VALIDATION" = "dns" ]; then
   if [ "$DNSPLUGIN" = "route53" ]; then

@@ -1,4 +1,4 @@
-## Version 2020/05/23 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/default
+## Version 2021/01/03 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/default
 
 error_page 502 /502.html;
 

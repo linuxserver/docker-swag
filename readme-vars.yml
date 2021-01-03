@@ -150,7 +150,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
-  - { date: "30.12.20:", desc: "Add helper pages to aid troubleshooting" }
+  - { date: "03.01.21:", desc: "Add helper pages to aid troubleshooting" }
   - { date: "10.12.20:", desc: "Add support for njalla dns validation" }
   - { date: "09.12.20:", desc: "Check for template/conf updates and notify in the log. Add support for gehirn and sakuracloud dns validation." }
   - { date: "01.11.20:", desc: "Add support for netcup dns validation" }

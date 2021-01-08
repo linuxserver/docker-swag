@@ -326,7 +326,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **08.01.21:** - Add support for getting certs from [ZeroSSL](https://zerossl.com/) via optional `CERTPROVIDER` env var.
+* **08.01.21:** - Add support for getting certs from [ZeroSSL](https://zerossl.com/) via optional `CERTPROVIDER` env var. Update aliyun, domeneshop, inxw and transip dns plugins with the new plugin names. Hide `donoteditthisfile.conf` because users were editing it despite its name. Suppress harmless error when no proxy confs are enabled.
 * **03.01.21:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) /config/nginx/site-confs/default - Add helper pages to aid troubleshooting
 * **10.12.20:** - Add support for njalla dns validation
 * **09.12.20:** - Check for template/conf updates and notify in the log. Add support for gehirn and sakuracloud dns validation.

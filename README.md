@@ -323,6 +323,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **03.01.21:** - Add helper pages to aid troubleshooting
 * **10.12.20:** - Add support for njalla dns validation
 * **09.12.20:** - Check for template/conf updates and notify in the log. Add support for gehirn and sakuracloud dns validation.
 * **01.11.20:** - Add support for netcup dns validation

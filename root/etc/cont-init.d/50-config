@@ -255,6 +255,10 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
     REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$ORIGEMAIL")
     REV_ZEROSSL_EAB_KID=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
     REV_ZEROSSL_EAB_HMAC_KEY=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+    if [ -z "$REV_ZEROSSL_EAB_KID" ] || or [ -z "$REV_ZEROSSL_EAB_HMAC_KEY" ]; then
+      echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
+      sleep infinity
+    fi
     REV_ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${REV_ZEROSSL_EAB_KID} --eab-hmac-key ${REV_ZEROSSL_EAB_HMAC_KEY}"
   elif [ "$ORIGSTAGING" = "true" ]; then
     REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
@@ -283,6 +287,10 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
     EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$EMAIL")
     ZEROSSL_EAB_KID=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
     ZEROSSL_EAB_HMAC_KEY=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+    if [ -z "$ZEROSSL_EAB_KID" ] || or [ -z "$ZEROSSL_EAB_HMAC_KEY" ]; then
+      echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
+      sleep infinity
+    fi
     ZEROSSL_EAB="--eab-kid ${ZEROSSL_EAB_KID} --eab-hmac-key ${ZEROSSL_EAB_HMAC_KEY}"
   fi
   echo "Generating new certificate"

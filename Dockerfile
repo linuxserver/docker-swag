@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.12
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.13
 
 # set version label
 ARG BUILD_DATE

@@ -139,6 +139,15 @@ else
   ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
 fi
 
+# check for the ACME server to be valid
+ACMEHOST=$(echo $ACMESERVER | awk -F/ '{print $3}')
+echo "Waiting (up to 1min) for [$ACMEHOST] to be reachable..."
+timeout 1m bash -c "until nslookup $ACMEHOST >/dev/null; do sleep 1; done"
+if [ $? -ne 0 ]; then
+  echo "ERROR: Cannot resolv $ACMEHOST"
+  sleep infinity
+fi
+
 # figuring out url only vs url & subdomains vs subdomains only
 if [ -n "$SUBDOMAINS" ]; then
   echo "SUBDOMAINS entered, processing"

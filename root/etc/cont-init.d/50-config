@@ -280,6 +280,9 @@ else
   FILENAME="$DNSPLUGIN.ini"
 fi
 
+# wait some time to allow container's network to settle
+sleep 5
+
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   if [ "$CERTPROVIDER" = "zerossl" ] && [ -n "$EMAIL" ]; then

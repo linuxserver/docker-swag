@@ -105,6 +105,7 @@ RUN \
 	certbot-dns-dnsmadeeasy \
 	certbot-dns-domeneshop \
 	certbot-dns-google \
+	certbot-dns-hetzner \
 	certbot-dns-inwx \
 	certbot-dns-linode \
 	certbot-dns-luadns \

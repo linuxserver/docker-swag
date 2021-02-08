@@ -14,6 +14,7 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 RUN \
  echo "**** install build packages ****" && \
  apk add --no-cache --virtual=build-dependencies \
+	cargo \
 	g++ \
 	gcc \
 	libffi-dev \

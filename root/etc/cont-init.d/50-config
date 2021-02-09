@@ -82,9 +82,9 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /defaults/502.html /config/www/502.html
 
 # remove lua bits from nginx.conf if not done before
-if ! grep -q '#Removed lua' nginx.conf; then 
+if ! grep -q '#Removed lua' /config/nginx/nginx.conf; then 
   echo "Removing lua specific info from nginx.conf"
-  sed -i 's|\tlua_load_resty_core off;|\t#Removed lua. Do not remove this comment|g' nginx.conf
+  sed -i 's|\tlua_load_resty_core off;|\t#Removed lua. Do not remove this comment|g' /config/nginx/nginx.conf
 fi
 
 # copy pre-generated dhparams or generate if needed

@@ -9,7 +9,7 @@ LABEL maintainer="aptalca"
 
 # environment settings
 ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false AWS_CONFIG_FILE=/config/dns-conf/route53.ini
-ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 CRYPTOGRAPHY_DONT_BUILD_RUST=true
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 RUN \
  echo "**** install build packages ****" && \

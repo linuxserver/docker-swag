@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:arm64v8-3.12
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:arm64v8-3.13
 
 # set version label
 ARG BUILD_DATE
@@ -9,11 +9,12 @@ LABEL maintainer="aptalca"
 
 # environment settings
 ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false AWS_CONFIG_FILE=/config/dns-conf/route53.ini
-ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 CRYPTOGRAPHY_DONT_BUILD_RUST=true
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 RUN \
  echo "**** install build packages ****" && \
  apk add --no-cache --virtual=build-dependencies \
+	cargo \
 	g++ \
 	gcc \
 	libffi-dev \
@@ -26,13 +27,13 @@ RUN \
 	gnupg \
 	memcached \
 	nginx \
+	nginx-mod-http-brotli \
+	nginx-mod-http-dav-ext \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
 	nginx-mod-http-geoip2 \
 	nginx-mod-http-headers-more \
 	nginx-mod-http-image-filter \
-	nginx-mod-http-lua \
-	nginx-mod-http-lua-upstream \
 	nginx-mod-http-nchan \
 	nginx-mod-http-perl \
 	nginx-mod-http-redis2 \

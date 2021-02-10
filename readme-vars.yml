@@ -151,10 +151,11 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "10.02.21:", desc: "Fix aliyun, domeneshop, inwx and transip dns confs for existing users." }
   - { date: "09.02.21:", desc: "Rebasing to alpine 3.13. Add nginx mods brotli and dav-ext. Remove nginx mods lua and lua-upstream (due to regression over the last couple of years)." }
   - { date: "26.01.21:", desc: "Add support for hetzner dns validation." }
   - { date: "20.01.21:", desc: "Add check for ZeroSSL EAB retrieval." }
-  - { date: "08.01.21:", desc: "Add support for getting certs from [ZeroSSL](https://zerossl.com/) via optional `CERTPROVIDER` env var. Update aliyun, domeneshop, inxw and transip dns plugins with the new plugin names. Hide `donoteditthisfile.conf` because users were editing it despite its name. Suppress harmless error when no proxy confs are enabled." }
+  - { date: "08.01.21:", desc: "Add support for getting certs from [ZeroSSL](https://zerossl.com/) via optional `CERTPROVIDER` env var. Update aliyun, domeneshop, inwx and transip dns plugins with the new plugin names. Hide `donoteditthisfile.conf` because users were editing it despite its name. Suppress harmless error when no proxy confs are enabled." }
   - { date: "03.01.21:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) /config/nginx/site-confs/default - Add helper pages to aid troubleshooting" }
   - { date: "10.12.20:", desc: "Add support for njalla dns validation" }
   - { date: "09.12.20:", desc: "Check for template/conf updates and notify in the log. Add support for gehirn and sakuracloud dns validation." }

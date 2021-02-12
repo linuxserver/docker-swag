@@ -326,6 +326,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **12.02.21:** - Clean up rust/cargo cache, which ballooned the image size in the last couple of builds.
 * **10.02.21:** - Fix aliyun, domeneshop, inwx and transip dns confs for existing users.
 * **09.02.21:** - Rebasing to alpine 3.13. Add nginx mods brotli and dav-ext. Remove nginx mods lua and lua-upstream (due to regression over the last couple of years).
 * **26.01.21:** - Add support for hetzner dns validation.

@@ -148,7 +148,8 @@ RUN \
 	; done && \
  rm -rf \
 	/tmp/* \
-	/root/.cache
+	/root/.cache \
+	/root/.cargo
 
 # add local files
 COPY root/ /

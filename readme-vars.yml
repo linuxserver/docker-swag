@@ -151,6 +151,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "12.02.21:", desc: "Clean up rust/cargo cache, which ballooned the image size in the last couple of builds." }
   - { date: "10.02.21:", desc: "Fix aliyun, domeneshop, inwx and transip dns confs for existing users." }
   - { date: "09.02.21:", desc: "Rebasing to alpine 3.13. Add nginx mods brotli and dav-ext. Remove nginx mods lua and lua-upstream (due to regression over the last couple of years)." }
   - { date: "26.01.21:", desc: "Add support for hetzner dns validation." }

@@ -7,7 +7,7 @@ apr-util-1.6.1-r7
 argon2-libs-20190702-r1
 bash-5.1.0-r0
 brotli-libs-1.0.9-r3
-busybox-1.32.1-r2
+busybox-1.32.1-r3
 c-client-2007f-r11
 ca-certificates-20191127-r5
 ca-certificates-bundle-20191127-r5
@@ -17,8 +17,9 @@ expat-2.2.10-r1
 fail2ban-0.11.1-r4
 freetype-2.10.4-r1
 gdbm-1.19-r0
-git-2.30.0-r0
-glib-2.66.4-r0
+git-2.30.1-r0
+git-perl-2.30.1-r0
+glib-2.66.7-r0
 gmp-6.2.1-r0
 gnupg-2.2.27-r0
 gnutls-3.7.0-r0
@@ -120,6 +121,8 @@ p11-kit-0.23.22-r0
 pcre-8.44-r0
 pcre2-10.36-r0
 perl-5.32.0-r0
+perl-error-0.17029-r1
+perl-git-2.30.1-r0
 php7-7.4.15-r0
 php7-bcmath-7.4.15-r0
 php7-bz2-7.4.15-r0
@@ -128,8 +131,8 @@ php7-ctype-7.4.15-r0
 php7-curl-7.4.15-r0
 php7-dom-7.4.15-r0
 php7-exif-7.4.15-r0
-php7-fileinfo-7.4.14-r0
-php7-fpm-7.4.14-r0
+php7-fileinfo-7.4.15-r0
+php7-fpm-7.4.15-r0
 php7-ftp-7.4.15-r0
 php7-gd-7.4.15-r0
 php7-iconv-7.4.15-r0
@@ -157,7 +160,7 @@ php7-pgsql-7.4.15-r0
 php7-phar-7.4.15-r0
 php7-posix-7.4.15-r0
 php7-session-7.4.15-r0
-php7-simplexml-7.4.14-r0
+php7-simplexml-7.4.15-r0
 php7-soap-7.4.15-r0
 php7-sockets-7.4.15-r0
 php7-sodium-7.4.15-r0
@@ -166,7 +169,7 @@ php7-tokenizer-7.4.15-r0
 php7-xml-7.4.15-r0
 php7-xmlreader-7.4.15-r0
 php7-xmlrpc-7.4.15-r0
-php7-xmlwriter-7.4.14-r0
+php7-xmlwriter-7.4.15-r0
 php7-xsl-7.4.15-r0
 php7-zip-7.4.15-r0
 pinentry-1.1.1-r0
@@ -209,7 +212,7 @@ scanelf-1.2.8-r0
 shadow-4.8.1-r0
 skalibs-2.10.0.0-r0
 sqlite-libs-3.34.1-r0
-ssl_client-1.32.1-r2
+ssl_client-1.32.1-r3
 tzdata-2021a-r0
 unixodbc-2.3.9-r1
 utmps-0.1.0.0-r0

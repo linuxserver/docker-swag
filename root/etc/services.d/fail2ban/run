@@ -1,4 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-  exec \
-        fail2ban-client -x -f start

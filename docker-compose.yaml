@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  certbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - TARGETPLATFORM='linux/amd64'
+        - TARGETPLATFORM='linux/arm64'
+        - TARGETPLATFORM='linux/arm32/v7'
+    image: certbot:test

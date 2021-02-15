@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv bash
+
+. /config/.donoteditthisfile.conf
+
+if [ ! "$ORIGVALIDATION" = "dns" ] && [ ! "$ORIGVALIDATION" = "duckdns" ]; then
+	if ps aux | grep 's6-supervise nginx' | grep -v grep >/dev/null; then
+		s6-svc -u /run/service/nginx
+	fi
+else
+	if ps aux | grep [n]ginx: >/dev/null; then
+		s6-svc -h /run/service/nginx
+	fi
+fi

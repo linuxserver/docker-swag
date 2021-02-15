@@ -207,6 +207,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 * If you need a dynamic dns provider, you can use the free provider duckdns.org where the `URL` will be `yoursubdomain.duckdns.org` and the `SUBDOMAINS` can be `www,ftp,cloud` with http validation, or `wildcard` with dns validation.
 * After setup, navigate to `https://yourdomain.url` to access the default homepage (http access through port 80 is disabled by default, you can enable it by editing the default site config at `/config/nginx/site-confs/default`).
 * Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from Let's Encrypt in those circumstances.
+* It's possible to extend default renewal-hooks `/etc/letsencrypt/renewal-hooks/*` they are executed in sorted order.
 ### Security and password protection
 * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start.
 * The container provides a pre-generated 4096-bit dhparams.pem (rotated weekly via [Jenkins job](https://ci.linuxserver.io/blue/organizations/jenkins/Xtras-Builders-Etc%2Fdhparams-uploader/activity)) for new instances, however you may generate your own by running `docker exec swag openssl dhparam -out /config/nginx/dhparams.pem 4096` WARNING: This takes a very long time

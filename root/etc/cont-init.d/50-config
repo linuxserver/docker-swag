@@ -35,7 +35,7 @@ done
 
 # make our folders and links
 mkdir -p \
-	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf,geoip2db} \
+	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt/renewal-hooks,fail2ban,crontabs,dns-conf,geoip2db} \
 	/var/run/fail2ban
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
@@ -80,6 +80,11 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /defaults/geoip2.conf /config/nginx/geoip2.conf
 [[ ! -f /config/www/502.html ]] &&
 	cp /defaults/502.html /config/www/502.html
+
+# copy default renewal hooks
+chmod -R +x /defaults/renewal-hooks
+cp -nR /defaults/renewal-hooks/* /etc/letsencrypt/renewal-hooks/
+chown -R abc:abc /config/renewal-hooks
 
 # remove lua bits from nginx.conf if not done before
 if ! grep -q '#Removed lua' /config/nginx/nginx.conf; then 
@@ -314,9 +319,7 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
     fi
     sleep infinity
   fi
-  openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
-  sleep 1
-  cat {privkey,fullchain}.pem > priv-fullchain-bundle.pem
+  run-parts  /etc/letsencrypt/renewal-hooks/deploy/
   echo "New certificate generated; starting nginx"
 else
   echo "Certificate exists; parameters unchanged; starting nginx"

@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bash
+
+. /config/.donoteditthisfile.conf
+
+cd /config/keys/letsencrypt
+openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
+sleep 1
+cat privkey.pem fullchain.pem > priv-fullchain-bundle.pem
+chown -R abc:abc /config/etc/letsencrypt

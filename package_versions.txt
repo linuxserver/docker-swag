@@ -50,7 +50,7 @@ libjpeg-turbo-2.0.6-r0
 libksba-1.5.0-r0
 libldap-2.4.56-r0
 libmagic-5.39-r0
-libmaxminddb-1.5.0-r0
+libmaxminddb-1.5.0-r1
 libmcrypt-2.5.8-r9
 libmemcached-libs-1.0.18-r4
 libmnl-1.0.4-r1

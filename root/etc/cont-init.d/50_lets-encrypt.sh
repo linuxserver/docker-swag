@@ -59,7 +59,8 @@ ln -s /config/crontabs /etc/crontabs
   chmod +x /config/deploy/*
 # Link /config/deploy
 echo "Linking /config/deploy -> /etc/letsencrypt/renewal-hooks/deploy ..."
-ln -s /config/deploy /etc/letsencrypt/renewal-hooks/deploy
+mkdir -p /etc/letsencrypt/renewal-hooks
+ln -s /config/deploy /etc/letsencrypt/renewal-hooks
 
 # chown -R abc:abc /config
 # chown -R abc:abc /letsencrypt
@@ -134,10 +135,10 @@ echo "${VALIDATION:="DNS"} validation via ${DNSPLUGIN} plugin is selected"
 # rm -rf /letsencrypt/keys
 if [ "${ONLY_SUBDOMAINS}" = "true" ] && [ ! "${SUBDOMAINS}" = "wildcard" ] ; then
   DOMAIN="$(echo "${SUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${TLD}"
-  LINEAGE="../etc/letsencrypt/live/${DOMAIN}"
+  LINEAGE="/etc/letsencrypt/live/${DOMAIN}"
 #   ln -s /letsencrypt/live/"${DOMAIN}" /letsencrypt/keys
 else
-  LINEAGE="../etc/letsencrypt/live/${TLD}"
+  LINEAGE="/etc/letsencrypt/live/${TLD}"
 #   ln -s /letsencrypt/live/"${TLD}" /letsencrypt/keys
 fi
 # # [[ ! -d "${LE_LOC}" ]] && \
@@ -171,10 +172,12 @@ if [ ! -f "/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
   # shellcheck disable=SC2086
   certbot certonly --non-interactive --force-renewal --server ${ACMESERVER} ${PREFCHAL} --rsa-key-size 4096 ${EMAILPARAM} --agree-tos ${TLD_REAL}
-  RENEWED_LINEAGE="/etc/letsencrypt/live/${LINEAGE}"
-  echo $(printenv)
-  echo "RENEWED_LINEAGE is ${RENEWED_LINEAGE}"
-  /usr/bin/with-contenv bash /etc/letsencrypt/renewal-hooks/deploy/01-deploy_certs.sh
+  # RENEWED_LINEAGE="${LINEAGE}"
+  # export RENEWED_LINEAGE
+  # echo "RENEWED_LINEAGE is ${RENEWED_LINEAGE}"
+  if [ -f /etc/letsencrypt/renewal-hooks/deploy/01_deploy-certs.sh ]; then
+    /usr/bin/with-contenv bash /etc/letsencrypt/renewal-hooks/deploy/01_deploy-certs.sh
+  fi
 
   if [ -f /letsencrypt/fullchain.pem ]; then
     cd /letsencrypt || exit

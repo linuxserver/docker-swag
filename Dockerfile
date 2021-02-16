@@ -51,9 +51,13 @@ RUN pip3 install \
         /tmp/* \
         /root/.cache
 
-RUN mkdir -p \
-    /etc/letsencrypt/{accounts,live,renewal,renewal-hooks} \
-    /etc/letsencrypt/renewal-hooks/{deploy,post,pre}
+# RUN mkdir -p \
+#     /etc/letsencrypt/accounts \
+#     /etc/letsencrypt/live \
+#     /etc/letsencrypt/renewal \
+#     /etc/letsencrypt/renewal-hooks/deploy \
+#     /etc/letsencrypt/renewal-hooks/post \
+#     /etc/letsencrypt/renewal-hooks/pre
 
 RUN mkdir -p \
     /app \

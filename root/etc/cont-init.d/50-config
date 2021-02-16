@@ -35,10 +35,18 @@ done
 
 # make our folders and links
 mkdir -p \
-	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt/renewal-hooks,fail2ban,crontabs,dns-conf,geoip2db} \
+	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf,geoip2db,renewal-hooks} \
 	/var/run/fail2ban
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
+
+rm -rf /config/etc/letsencrypt/renewal-hooks
+ln -s ../../renewal-hooks /config/etc/letsencrypt/renewal-hooks
+
+# copy default renewal hooks
+chmod -R +x /defaults/renewal-hooks
+cp -nR /defaults/renewal-hooks/* /config/renewal-hooks/
+chown -R abc:abc /config/renewal-hooks
 
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
@@ -80,11 +88,6 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /defaults/geoip2.conf /config/nginx/geoip2.conf
 [[ ! -f /config/www/502.html ]] &&
 	cp /defaults/502.html /config/www/502.html
-
-# copy default renewal hooks
-chmod -R +x /defaults/renewal-hooks
-cp -nR /defaults/renewal-hooks/* /etc/letsencrypt/renewal-hooks/
-chown -R abc:abc /config/renewal-hooks
 
 # remove lua bits from nginx.conf if not done before
 if ! grep -q '#Removed lua' /config/nginx/nginx.conf; then 
@@ -279,6 +282,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
   [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
   rm -rf /config/etc/letsencrypt
   mkdir -p /config/etc/letsencrypt
+  ln -s ../../renewal-hooks /config/etc/letsencrypt/renewal-hooks
 fi
 
 # saving new variables

@@ -9,8 +9,6 @@
 
 echo "Running deploy script ..."
 
-KEYPATH="/letsencrypt"
-
 # Figure out cert path
 . /config/.donoteditthisfile.conf
 if [ "${ORIGONLY_SUBDOMAINS}" = "true" ] && [ ! "${ORIGSUBDOMAINS}" = "wildcard" ]; then
@@ -20,8 +18,9 @@ else
   ORIGDOMAIN="${ORIGTLD}"
   LINEAGE="/etc/letsencrypt/live/${ORIGTLD}"
 fi
-RENEWED_LINEAGE=${RENEWED_LINEAGE:-$LINEAGE}
 
+RENEWED_LINEAGE=${RENEWED_LINEAGE:-$LINEAGE}
+KEYPATH="/letsencrypt"
 echo "LINEAGE is ${RENEWED_LINEAGE}; KEYPATH is ${KEYPATH}"
 
 # Clean current KEYPATH contents

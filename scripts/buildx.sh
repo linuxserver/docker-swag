@@ -12,7 +12,7 @@ docker buildx use "${BUILDX_NAME:-certbot}"
 
 docker buildx build \
 	-f Dockerfile \
-    -t ${REGISTRY}/certbot:${TAG} \
+    -t ${REGISTRY}/certbot_only:${TAG} \
 	--platform linux/amd64,linux/arm64 \
 	--push \
 	.

@@ -52,17 +52,20 @@ RUN pip3 install \
         /root/.cache
 
 RUN mkdir -p \
+    /etc/letsencrypt/{accounts,live,renewal,renewal-hooks} \
+    /etc/letsencrypt/renewal-hooks/{deploy,post,pre}
+
+RUN mkdir -p \
     /app \
     /config \
     /defaults \
-    /letsencrypt \
-    /etc/letsencrypt/live \
-    /etc/letsencrypt/renewal-hooks/deploy
+    /letsencrypt
+    
 
 VOLUME /config
 VOLUME /letsencrypt
 
-
+# create initial user
 RUN groupmod -g 1000 users && \
  useradd -u 911 -U -d /config -s /bin/false abc && \
  usermod -G users abc

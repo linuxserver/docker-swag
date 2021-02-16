@@ -1,7 +1,22 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 # convert to fullchain.pem and privkey.pem to tls.crt and tls.key
 
-KEYPATH="/letsencrypt/keys"
+# Deploy hooks are commands to be run in a shell once for each successfully issued certificate.
+# For this command, the shell variable $RENEWED_LINEAGE will point to the
+# config live subdirectory (for example, "/etc/letsencrypt/live/example.com") containing the
+# new certificates and keys; the shell variable $RENEWED_DOMAINS will contain a space-delimited list
+# of renewed certificate domains (for example, "example.com www.example.com" (default: None)
+
+KEYPATH="/letsencrypt"
+
+# clean current KEYPATH contents
+rm -f ${KEYPATH}/*
+
+# copy certs to keypath dest
+cp -L ${RENEWED_LINEAGE}/* ${KEYPATH}
+# for CERTNAME in $(ls ${RENEWED_LINEAGE}); do
+#     cat crt >> ${KEYPATH}/${CERTNAME}
+# done
 
 # convert pems to cert and key
 echo "Converting to tls.crt and tls.key ..."
@@ -15,6 +30,7 @@ openssl rsa \
 -out "${KEYPATH}"/tls.key
 
 # converting to pfx and priv-fullchain-bundle
+echo "Converting to pfx and priv-fullchain-bundle.pem ..."
 openssl pkcs12 -export \
 -certfile chain.pem \
 -in "${KEYPATH}"/cert.pem -inkey "${KEYPATH}"/privkey.pem \

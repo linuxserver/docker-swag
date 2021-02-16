@@ -30,29 +30,40 @@ done
   sleep infinity
 
 # Make our folders and links
-mkdir -p \
-	/config/{log/letsencrypt,crontabs,deploy} \
-  /etc/letsencrypt/live \
-  /etc/letsencrypt/renewal-hooks/deploy
-# rm -rf /etc/letsencrypt
-# ln -s /letsencrypt /etc/letsencrypt/live
+mkdir -p /config/{log/letsencrypt,credentials,crontabs,deploy} 
+
+# Link letsencrypt logs
 ln -s /config/log/letsencrypt /var/log/letsencrypt
 
-# Copy crontab defaults if needed
+# Copy dns default credentials
+[[ ! -f /config/credentials/cloudflare.ini ]] && \
+  echo "Copying default cloudflare credentials to /config/credentials.  UPDATE WITH TRUE CREDENTIALS!" && \
+	cp -n /defaults/credentials/cloudflare.ini /config/credentials/
+
+# Copy crontab from defaults not already in /config
 [[ ! -f /config/crontabs/root ]] && \
-	cp /etc/crontabs/root /config/crontabs/
-# Import user crontabs
-rm /etc/crontabs/*
-cp /defaults/crontabs/* /etc/crontabs/
+  echo "Copying default crontabs to /config..." && \
+	cp -n /defaults/crontabs/root /config/crontabs/
+# Link /config/crontabs
+echo "Linking /config/crontabs -> /etc/crontabs ..."
+rm -rf /etc/crontabs
+ln -s /config/crontabs /etc/crontabs
+# rm /etc/crontabs/*
+# cp /config/crontabs/* /etc/crontabs/
 
 # Copy deploy hook defaults if needed
-[[ -z "$(ls -A /config/deploy)" ]] && [[ -z "$(ls -A /etc/letsencrypt/renewal-hooks/deploy)" ]] && \
-	cp /etc/letsencrypt/renewal-hooks/deploy/* /config/deploy/ && \
-  rm /etc/letsencrypt/renewal-hooks/deploy/*
-# Import deploy hooks
-cp /config/deploy/* /etc/letsencrypt/renewal-hooks/deploy/
+# [[ -z "$(ls -A /letsencrypt/renewal-hooks/deploy)" ]] && \
+[[ ! -f /config/deploy/deploy-certs.sh ]] && \
+  echo "Copying deploy hooks..." && \
+	cp -n /defaults/deploy/deploy-certs.sh /config/deploy/
+  chmod +x /config/deploy/*
+# Link /config/deploy
+echo "Linking /config/deploy -> /etc/letsencrypt/renewal-hooks/deploy ..."
+ln -s /config/deploy /etc/letsencrypt/renewal-hooks/deploy
 
-# chown -R $(whoami) /etc/letsencrypt
+# chown -R abc:abc /config
+# chown -R abc:abc /letsencrypt
+# chown -R $(whoami) /config
 # chown -R $(whoami) /letsencrypt
 
 # Create original config file if it doesn't exist
@@ -68,7 +79,7 @@ fi
 # If staging is set to true, use the relevant server
 if [ "${STAGING}" = "true" ]; then
   echo "NOTICE: Staging is active"
-  echo "Using Let's Encrypt as the cert provider"
+  echo "Using Let's Encrypt Staging as the cert provider"
   ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
 else
   echo "Using Let's Encrypt as the cert provider"
@@ -87,17 +98,17 @@ if [ -n "${SUBDOMAINS}" ]; then
       echo "Wildcard cert for ${TLD} will be requested"
     fi
   else
-    echo "SUBDOMAINS entered, processing"
+    echo "Processing subdomains"
     for job in $(echo "${SUBDOMAINS}" | tr "," " "); do
       export SUBDOMAINS_REAL="${SUBDOMAINS_REAL} -d ${job}.${TLD}"
     done
     if [ "${ONLY_SUBDOMAINS}" = true ]; then
       TLD_REAL="${SUBDOMAINS_REAL}"
-      echo "Only subdomains, no URL in cert"
+      echo "Only subdomains, no Top Level Domain (TLD) in cert"
     else
       TLD_REAL="-d ${TLD}${SUBDOMAINS_REAL}"
     fi
-    echo "Sub-domains processed are: ${SUBDOMAINS_REAL}"
+    echo "Sub-domain request string is: ${SUBDOMAINS_REAL}"
   fi
 else
   echo "No subdomains defined"
@@ -118,19 +129,20 @@ PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION:-60}"
 PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/credentials/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
 echo "${VALIDATION:="DNS"} validation via ${DNSPLUGIN} plugin is selected"
 
-# Set the symlink for key location
-rm -rf /letsencrypt/*
-if [ "${ONLY_SUBDOMAINS}" = "true" ] && [ ! "${SUBDOMAINS}" = "wildcard" ] ; then
-  DOMAIN="$(echo "${SUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${TLD}"
-  LE_LOC="../etc/letsencrypt/live/${DOMAIN}"
-  # ln -s ../etc/letsencrypt/live/"${DOMAIN}" /letsencrypt
-else
-  LE_LOC="../etc/letsencrypt/live/${TLD}"
-  # ln -s ../etc/letsencrypt/live/"${TLD}" /letsencrypt
-fi
-[[ ! -d "${LE_LOC}" ]] && \
-  mkdir -p ${LE_LOC}
-ln -s ${LE_LOC} /letsencrypt
+# NOTE: Skip, handled in deploy hook
+# # Set the symlink for key location
+# rm -rf /letsencrypt/keys
+# if [ "${ONLY_SUBDOMAINS}" = "true" ] && [ ! "${SUBDOMAINS}" = "wildcard" ] ; then
+#   DOMAIN="$(echo "${SUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${TLD}"
+#   # LE_LOC="../etc/letsencrypt/live/${DOMAIN}"
+#   ln -s /letsencrypt/live/"${DOMAIN}" /letsencrypt/keys
+# else
+#   # LE_LOC="../etc/letsencrypt/live/${TLD}"
+#   ln -s /letsencrypt/live/"${TLD}" /letsencrypt/keys
+# fi
+# # [[ ! -d "${LE_LOC}" ]] && \
+# #   mkdir -p ${LE_LOC}
+# # ln -s ${LE_LOC} /letsencrypt
 
 # Check for changes in cert variables; revoke certs if necessary
 if [ ! "${TLD}" = "${ORIGTLD}" ] || [ ! "${SUBDOMAINS}" = "${ORIGSUBDOMAINS}" ] || [ ! "${ONLY_SUBDOMAINS}" = "${ORIGONLY_SUBDOMAINS}" ] || [ ! "${STAGING}" = "${ORIGSTAGING}" ]; then
@@ -146,8 +158,8 @@ if [ "${ORIGSTAGING}" = "true" ]; then
     REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
   fi
   [[ -f /etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER}
-  rm -rf /letsencrypt/*
-  mkdir -p /letsencrypt
+  rm -rf /etc/letsencrypt
+  mkdir -p /etc/letsencrypt
 fi
 
 # Save new variables
@@ -158,10 +170,10 @@ if [ ! -f "/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
   # shellcheck disable=SC2086
   certbot certonly --renew-by-default --server ${ACMESERVER} ${PREFCHAL} --rsa-key-size 4096 ${EMAILPARAM} --agree-tos ${TLD_REAL}
-  if [ -d /letsencrypt ]; then
+  if [ -f /letsencrypt/fullchain.pem ]; then
     cd /letsencrypt || exit
   else
-    echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${FILENAME} file."
+    echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/credentials/cloudflare.ini file."
     sleep infinity
   fi
   echo "New certificate generated"

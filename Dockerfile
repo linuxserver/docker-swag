@@ -69,10 +69,10 @@ RUN mkdir -p \
 VOLUME /config
 VOLUME /letsencrypt
 
-# create initial user
-RUN groupmod -g 1000 users && \
- useradd -u 911 -U -d /config -s /bin/false abc && \
- usermod -G users abc
+# # create initial user
+# RUN groupmod -g 1000 users && \
+#  useradd -u 911 -U -d /config -s /bin/false abc && \
+#  usermod -G users abc
 
 COPY root/ /
 # RUN chmod -R +x /app

@@ -53,9 +53,9 @@ ln -s /config/crontabs /etc/crontabs
 
 # Copy deploy hook defaults if needed
 # [[ -z "$(ls -A /letsencrypt/renewal-hooks/deploy)" ]] && \
-[[ ! -f /config/deploy/01-deploy_certs.sh ]] && \
+[[ ! -f /config/deploy/01_deploy-certs.sh ]] && \
   echo "Copying deploy hooks..." && \
-	cp -n /defaults/deploy/01-deploy_certs.sh /config/deploy/
+	cp -n /defaults/deploy/01_deploy-certs.sh /config/deploy/
   chmod +x /config/deploy/*
 # Link /config/deploy
 echo "Linking /config/deploy -> /etc/letsencrypt/renewal-hooks/deploy ..."
@@ -132,14 +132,14 @@ echo "${VALIDATION:="DNS"} validation via ${DNSPLUGIN} plugin is selected"
 # NOTE: Skip, handled in deploy hook
 # # Set the symlink for key location
 # rm -rf /letsencrypt/keys
-# if [ "${ONLY_SUBDOMAINS}" = "true" ] && [ ! "${SUBDOMAINS}" = "wildcard" ] ; then
-#   DOMAIN="$(echo "${SUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${TLD}"
-#   # LE_LOC="../etc/letsencrypt/live/${DOMAIN}"
+if [ "${ONLY_SUBDOMAINS}" = "true" ] && [ ! "${SUBDOMAINS}" = "wildcard" ] ; then
+  DOMAIN="$(echo "${SUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${TLD}"
+  LINEAGE="../etc/letsencrypt/live/${DOMAIN}"
 #   ln -s /letsencrypt/live/"${DOMAIN}" /letsencrypt/keys
-# else
-#   # LE_LOC="../etc/letsencrypt/live/${TLD}"
+else
+  LINEAGE="../etc/letsencrypt/live/${TLD}"
 #   ln -s /letsencrypt/live/"${TLD}" /letsencrypt/keys
-# fi
+fi
 # # [[ ! -d "${LE_LOC}" ]] && \
 # #   mkdir -p ${LE_LOC}
 # # ln -s ${LE_LOC} /letsencrypt
@@ -147,17 +147,18 @@ echo "${VALIDATION:="DNS"} validation via ${DNSPLUGIN} plugin is selected"
 # Check for changes in cert variables; revoke certs if necessary
 if [ ! "${TLD}" = "${ORIGTLD}" ] || [ ! "${SUBDOMAINS}" = "${ORIGSUBDOMAINS}" ] || [ ! "${ONLY_SUBDOMAINS}" = "${ORIGONLY_SUBDOMAINS}" ] || [ ! "${STAGING}" = "${ORIGSTAGING}" ]; then
   echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
-  if [ "${ORIGONLY_SUBDOMAINS}" = "true" ] && [ ! "${ORIGSUBDOMAINS}" = "wildcard" ]; then
-    ORIGDOMAIN="$(echo "${ORIGSUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${ORIGTLD}"
-  else
-    ORIGDOMAIN="${ORIGTLD}"
-  fi
+  # if [ "${ORIGONLY_SUBDOMAINS}" = "true" ] && [ ! "${ORIGSUBDOMAINS}" = "wildcard" ]; then
+  #   ORIGDOMAIN="$(echo "${ORIGSUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${ORIGTLD}"
+  # else
+  #   ORIGDOMAIN="${ORIGTLD}"
+  # fi
 if [ "${ORIGSTAGING}" = "true" ]; then
     REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
   else
     REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
   fi
-  [[ -f /etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER}
+  # [[ -f /etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER}
+  [[ -f "${LINEAGE}"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path "${LINEAGE}"/fullchain.pem --server ${REV_ACMESERVER}
   rm -rf /etc/letsencrypt
   mkdir -p /etc/letsencrypt
 fi
@@ -170,7 +171,9 @@ if [ ! -f "/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
   # shellcheck disable=SC2086
   certbot certonly --non-interactive --force-renewal --server ${ACMESERVER} ${PREFCHAL} --rsa-key-size 4096 ${EMAILPARAM} --agree-tos ${TLD_REAL}
+  RENEWED_LINEAGE="/etc/letsencrypt/live/${LINEAGE}"
   echo $(printenv)
+  echo "RENEWED_LINEAGE is ${RENEWED_LINEAGE}"
   /usr/bin/with-contenv bash /etc/letsencrypt/renewal-hooks/deploy/01-deploy_certs.sh
 
   if [ -f /letsencrypt/fullchain.pem ]; then

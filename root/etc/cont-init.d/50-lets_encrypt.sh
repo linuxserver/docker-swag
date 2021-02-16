@@ -53,9 +53,9 @@ ln -s /config/crontabs /etc/crontabs
 
 # Copy deploy hook defaults if needed
 # [[ -z "$(ls -A /letsencrypt/renewal-hooks/deploy)" ]] && \
-[[ ! -f /config/deploy/deploy-certs.sh ]] && \
+[[ ! -f /config/deploy/01-deploy_certs.sh ]] && \
   echo "Copying deploy hooks..." && \
-	cp -n /defaults/deploy/deploy-certs.sh /config/deploy/
+	cp -n /defaults/deploy/01-deploy_certs.sh /config/deploy/
   chmod +x /config/deploy/*
 # Link /config/deploy
 echo "Linking /config/deploy -> /etc/letsencrypt/renewal-hooks/deploy ..."
@@ -169,7 +169,10 @@ echo -e "ORIGTLD=\"${TLD}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS
 if [ ! -f "/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
   # shellcheck disable=SC2086
-  certbot certonly --renew-by-default --server ${ACMESERVER} ${PREFCHAL} --rsa-key-size 4096 ${EMAILPARAM} --agree-tos ${TLD_REAL}
+  certbot certonly --non-interactive --force-renewal --server ${ACMESERVER} ${PREFCHAL} --rsa-key-size 4096 ${EMAILPARAM} --agree-tos ${TLD_REAL}
+  echo $(printenv)
+  /usr/bin/with-contenv bash /etc/letsencrypt/renewal-hooks/deploy/01-deploy_certs.sh
+
   if [ -f /letsencrypt/fullchain.pem ]; then
     cd /letsencrypt || exit
   else

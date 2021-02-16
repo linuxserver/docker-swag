@@ -7,7 +7,11 @@
 # new certificates and keys; the shell variable $RENEWED_DOMAINS will contain a space-delimited list
 # of renewed certificate domains (for example, "example.com www.example.com" (default: None)
 
+echo "Running deploy script ..."
+
 KEYPATH="/letsencrypt"
+echo "KEYPATH is ${KEYPATH}"
+echo "LINEAGE is ${RENEWED_LINEAGE}"
 
 # clean current KEYPATH contents
 rm -f ${KEYPATH}/*

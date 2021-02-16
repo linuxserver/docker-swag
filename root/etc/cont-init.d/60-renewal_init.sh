@@ -10,6 +10,6 @@ if openssl x509 -in /letsencrypt/fullchain.pem -noout -checkend 86400 >/dev/null
     echo "Letting the cron script handle the renewal attempts overnight (2:08am)."
 else
     echo "The cert is either expired or it expires within the next day. Attempting to renew. This could take up to 10 minutes."
-    /app/le-renew.sh
+    /app/le_renew.sh
     sleep 1
 fi

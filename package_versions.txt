@@ -34,7 +34,7 @@ libbsd-0.10.0-r0
 libbz2-1.0.8-r1
 libc-utils-0.7.2-r3
 libcap-2.46-r0
-libcrypto1.1-1.1.1i-r0
+libcrypto1.1-1.1.1j-r0
 libcurl-7.74.0-r0
 libedit-20191231.3.1-r1
 libevent-2.1.12-r1
@@ -48,7 +48,7 @@ libidn-1.35-r0
 libintl-0.20.2-r2
 libjpeg-turbo-2.0.6-r0
 libksba-1.5.0-r0
-libldap-2.4.56-r0
+libldap-2.4.57-r0
 libmagic-5.39-r0
 libmaxminddb-1.5.0-r1
 libmcrypt-2.5.8-r9
@@ -66,7 +66,7 @@ libseccomp-2.5.1-r0
 libsecret-0.20.4-r0
 libsm-1.2.3-r0
 libsodium-1.0.18-r0
-libssl1.1-1.1.1i-r0
+libssl1.1-1.1.1j-r0
 libstdc++-10.2.1_pre1-r3
 libtasn1-4.16.0-r1
 libtls-standalone-2.9.1-r1

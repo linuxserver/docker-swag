@@ -1,7 +1,8 @@
-# FROM ubuntu:focal
+# ARG TARGETPLATFORM
+# FROM --platform=${TARGETPLATFORM:-linux/amd64} ubuntu:focal
+FROM ubuntu:focal
 ARG TARGETPLATFORM
-FROM --platform=${TARGETPLATFORM:-linux/amd64} ubuntu:focal
-ARG TARGETPLATFORM
+ARG TARGETARCH
 ARG BUILD_DATE
 
 LABEL build_version="${TARGETPLATFORM} - ${BUILD_DATE}"
@@ -33,8 +34,13 @@ RUN apt-get update \
 # s6 overlay
 COPY ./scripts/install-s6.sh /tmp/install-s6.sh
 RUN chmod +x /tmp/install-s6.sh \
-    && /tmp/install-s6.sh "${TARGETPLATFORM}" \
-    && rm -f /tmp/install-s6
+    && /tmp/install-s6.sh ${TARGETPLATFORM} \
+    && rm -rf /tmp/*
+
+# ENV S6_ARCH=$(echo ${TARGETPLATFORM} | sed "s|linux\/||g")
+# ADD https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-${S6_ARCH}-installer /tmp
+# RUN /tmp/s6-overlay-${S6_ARCH}-installer / \
+#     && rm -rf /tmp
 
 EXPOSE 80 443
 

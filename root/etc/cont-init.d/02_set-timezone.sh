@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-echo -e "Setting time sone:\\n\
+echo -e "Setting time zone:\\n\
 TIME ZONE=${TZ}\\n\
 "
 TZ=${TZ:-"UTC"}

@@ -3,7 +3,8 @@
 REGISTRY="ahgraber"
 TAG=${1:-"test"}
 
-# clone/update keycloak container instructions
+# define build context
+# assumes run from project folder root
 DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 # buildx
@@ -13,7 +14,8 @@ docker buildx use "${BUILDX_NAME:-certbot}"
 docker buildx build \
 	-f Dockerfile \
     -t ${REGISTRY}/certbot_only:${TAG} \
-	--platform linux/amd64,linux/arm64 \
+	--no-cache \
+	--platform linux/amd64,linux/arm/v7,linux/arm64 \
 	--push \
 	.
 

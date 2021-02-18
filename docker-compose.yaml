@@ -9,4 +9,4 @@ services:
         TARGETPLATFORM: 'linux/amd64'
         # TARGETPLATFORM: 'linux/arm64'
         # TARGETPLATFORM: 'linux/arm32/v7'
-    image: certbot:test
+    image: certbot_only:test

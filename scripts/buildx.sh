@@ -12,10 +12,10 @@ docker buildx create --name "${BUILDX_NAME:-certbot}" || echo
 docker buildx use "${BUILDX_NAME:-certbot}"
 
 docker buildx build \
-	-f Dockerfile \
-    -t ${REGISTRY}/certbot_only:${TAG} \
 	--no-cache \
-	--platform linux/amd64,linux/arm/v7,linux/arm64 \
+	--platform linux/amd64,linux/arm64 \
+	--file Dockerfile \
+    --tag ${REGISTRY}/certbot_only:${TAG} \
 	--push \
 	.
 

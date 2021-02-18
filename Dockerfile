@@ -1,4 +1,5 @@
 # FROM ubuntu:focal
+ARG TARGETPLATFORM
 FROM --platform=${TARGETPLATFORM:-linux/amd64} ubuntu:focal
 ARG TARGETPLATFORM
 ARG BUILD_DATE

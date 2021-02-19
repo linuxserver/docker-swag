@@ -7,8 +7,6 @@ ARG BUILD_DATE
 
 LABEL build_version="${TARGETPLATFORM} - ${BUILD_DATE}"
 
-# ENV TLD
-# ENV SUBDOMAINS
 ENV ONLY_SUBDOMAINS=false
 ENV PROPAGATION=60
 ENV STAGING=false
@@ -37,11 +35,6 @@ RUN chmod +x /tmp/install-s6.sh \
     && /tmp/install-s6.sh ${TARGETPLATFORM} \
     && rm -rf /tmp/*
 
-# ENV S6_ARCH=$(echo ${TARGETPLATFORM} | sed "s|linux\/||g")
-# ADD https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-${S6_ARCH}-installer /tmp
-# RUN /tmp/s6-overlay-${S6_ARCH}-installer / \
-#     && rm -rf /tmp
-
 EXPOSE 80 443
 
 # install certbot
@@ -60,21 +53,12 @@ RUN pip3 install \
         /tmp/* \
         /root/.cache
 
-# RUN mkdir -p \
-#     /etc/letsencrypt/accounts \
-#     /etc/letsencrypt/live \
-#     /etc/letsencrypt/renewal \
-#     /etc/letsencrypt/renewal-hooks/deploy \
-#     /etc/letsencrypt/renewal-hooks/post \
-#     /etc/letsencrypt/renewal-hooks/pre
-
 RUN mkdir -p \
     /app \
     /config \
     /defaults \
     /letsencrypt
     
-
 VOLUME /config
 VOLUME /letsencrypt
 

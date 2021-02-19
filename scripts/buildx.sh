@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# To tag images, run with `sudo bash ./scripts/buildx.sh --tag {REGISTRY}/{IMAGE}:{TAG}`
+
 REGISTRY="ahgraber"
-TAG=${1:-"test"}
+# TAG=${1:-"test"}
 
 # define build context
 # assumes run from project folder root
@@ -15,8 +17,8 @@ docker buildx build \
 	--no-cache \
 	--platform linux/amd64,linux/arm64 \
 	--file Dockerfile \
-    --tag ${REGISTRY}/certbot_only:${TAG} \
 	--push \
+	$@ \
 	.
 
 # cleanup

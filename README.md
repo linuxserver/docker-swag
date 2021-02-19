@@ -94,6 +94,12 @@ The recommended configurations create local folders `/config` and `/letsencrypt`
   * Cloudflare provides free accounts for managing dns and is very easy to use with this image. Make sure that it is set up for "dns only" instead of "dns + proxy"
 * Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from Let's Encrypt in those circumstances.
 
+#### Rate Limits
+* [Let's Encrypt rate limits](https://letsencrypt.org/docs/rate-limits/) can be mitigated by testing using the `STAGING: 'true'` environmental variable.
+* Check on your requests count w/r/t rate limits here: https://crt.sh/
+
+
+
 ### Using certs in other containers
 * This container includes auto-generated pfx and private-fullchain-bundle pem certs that are needed by other apps like Emby and Znc, and tls.crt and tls.key certs that are needed by apps like Keycloak.
   * To use these certs in other containers, do either of the following:

@@ -59,6 +59,7 @@ ln -s /config/crontabs /etc/crontabs
   chmod +x /config/deploy/*
 # Link /config/deploy
 echo "Linking /config/deploy -> /etc/letsencrypt/renewal-hooks/deploy ..."
+rm -rf /etc/letsencrypt/renewal-hooks
 mkdir -p /etc/letsencrypt/renewal-hooks
 ln -s /config/deploy /etc/letsencrypt/renewal-hooks
 

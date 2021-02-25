@@ -48,7 +48,7 @@ libidn-1.35-r0
 libintl-0.20.2-r2
 libjpeg-turbo-2.0.6-r0
 libksba-1.5.0-r0
-libldap-2.4.57-r0
+libldap-2.4.57-r1
 libmagic-5.39-r0
 libmaxminddb-1.5.0-r1
 libmcrypt-2.5.8-r9
@@ -57,7 +57,7 @@ libmnl-1.0.4-r1
 libmount-2.36.1-r1
 libnftnl-libs-1.1.8-r0
 libpng-1.6.37-r1
-libpq-13.1-r2
+libpq-13.2-r0
 libproc-3.3.16-r0
 libressl3.1-libcrypto-3.1.5-r0
 libressl3.1-libssl-3.1.5-r0
@@ -116,7 +116,7 @@ nginx-mod-stream-geoip2-1.18.0-r13
 nginx-vim-1.18.0-r13
 npth-1.6-r0
 oniguruma-6.9.6-r0
-openssl-1.1.1i-r0
+openssl-1.1.1j-r0
 p11-kit-0.23.22-r0
 pcre-8.44-r0
 pcre2-10.36-r0
@@ -205,7 +205,7 @@ py3-six-1.15.0-r0
 py3-toml-0.10.2-r0
 py3-urllib3-1.26.2-r1
 py3-webencodings-0.5.1-r3
-python3-3.8.7-r0
+python3-3.8.7-r1
 readline-8.1.0-r0
 s6-ipcserver-2.10.0.0-r0
 scanelf-1.2.8-r0

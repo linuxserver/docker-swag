@@ -6,6 +6,7 @@ ARG TARGETARCH
 ARG BUILD_DATE
 
 LABEL build_version="${TARGETPLATFORM} - ${BUILD_DATE}"
+MAINTAINER ninerealmlabs <ahgraber@ninerealmlabs.com>
 
 ENV ONLY_SUBDOMAINS=false
 ENV PROPAGATION=60
@@ -13,7 +14,7 @@ ENV STAGING=false
 
 # install supporting packages
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
         ca-certificates \
         cron \
         curl \

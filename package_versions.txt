@@ -18,8 +18,7 @@ fail2ban-0.11.1-r4
 freetype-2.10.4-r1
 gdbm-1.19-r0
 git-2.30.1-r0
-git-perl-2.30.1-r0
-glib-2.66.7-r0
+glib-2.66.7-r1
 gmp-6.2.1-r0
 gnupg-2.2.27-r0
 gnutls-3.7.0-r0
@@ -121,8 +120,6 @@ p11-kit-0.23.22-r0
 pcre-8.44-r0
 pcre2-10.36-r0
 perl-5.32.0-r0
-perl-error-0.17029-r1
-perl-git-2.30.1-r0
 php7-7.4.15-r0
 php7-bcmath-7.4.15-r0
 php7-bz2-7.4.15-r0

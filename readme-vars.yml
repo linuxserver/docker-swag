@@ -51,7 +51,7 @@ cap_add_param_vars:
 opt_param_usage_include_env: true
 opt_param_env_vars:
   - { env_var: "CERTPROVIDER", env_value: "", desc: "Optionally define the cert provider. Set to `zerossl` for ZeroSSL certs (requires existing [ZeroSSL account](https://app.zerossl.com/signup) and the e-mail address entered in `EMAIL` env var). Otherwise defaults to Let's Encrypt." }
-  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `aliyun`, `cloudflare`, `cloudxns`, `cpanel`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `domeneshop`, `gandi`, `gehirn`, `google`, `hetzner`, `inwx`, `linode`, `luadns`, `netcup`, `njalla`, `nsone`, `ovh`, `rfc2136`, `route53`, `sakuracloud` and `transip`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`." }
+  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `aliyun`, `cloudflare`, `cloudxns`, `cpanel`, `digitalocean`, `directadmin`, `dnsimple`, `dnsmadeeasy`, `domeneshop`, `gandi`, `gehirn`, `google`, `hetzner`, `inwx`, `linode`, `luadns`, `netcup`, `njalla`, `nsone`, `ovh`, `rfc2136`, `route53`, `sakuracloud` and `transip`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`." }
   - { env_var: "PROPAGATION", env_value: "", desc: "Optionally override (in seconds) the default propagation time for the dns plugins." }
   - { env_var: "DUCKDNSTOKEN", env_value: "", desc: "Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org" }
   - { env_var: "EMAIL", env_value: "", desc: "Optional e-mail address used for cert expiration notifications (Required for ZeroSSL)." }
@@ -151,6 +151,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "14.03.21:", desc: "Add support for directadmin dns validation." }
   - { date: "12.02.21:", desc: "Clean up rust/cargo cache, which ballooned the image size in the last couple of builds." }
   - { date: "10.02.21:", desc: "Fix aliyun, domeneshop, inwx and transip dns confs for existing users." }
   - { date: "09.02.21:", desc: "Rebasing to alpine 3.13. Add nginx mods brotli and dav-ext. Remove nginx mods lua and lua-upstream (due to regression over the last couple of years)." }

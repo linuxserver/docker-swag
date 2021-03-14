@@ -101,6 +101,7 @@ RUN \
 	certbot-dns-cloudxns \
 	certbot-dns-cpanel \
 	certbot-dns-digitalocean \
+	certbot-dns-directadmin \
 	certbot-dns-dnsimple \
 	certbot-dns-dnsmadeeasy \
 	certbot-dns-domeneshop \

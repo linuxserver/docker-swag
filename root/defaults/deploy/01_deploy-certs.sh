@@ -20,16 +20,19 @@ else
 fi
 
 RENEWED_LINEAGE=${RENEWED_LINEAGE:-$LINEAGE}
-KEYPATH="/letsencrypt"
+KEYPATH="/letsencrypt/certs"
+mkdir -p $KEYPATH
 echo "LINEAGE is ${RENEWED_LINEAGE}; KEYPATH is ${KEYPATH}"
 
 # Clean current KEYPATH contents
 echo "Clearing expired certs ..."
-rm -f ${KEYPATH}/*
+# echo "Ignore warnings for directories"
+rm -f ${KEYPATH}/* 2> /dev/null  # this will hide errors (like not deleting directories)
 
 # Copy certs to keypath dest
 echo "Copying current certs ..."
 cp -L ${RENEWED_LINEAGE}/* ${KEYPATH}
+rm ${KEYPATH}/README
 # for CERTNAME in $(ls ${RENEWED_LINEAGE}); do
 #     cat crt >> ${KEYPATH}/${CERTNAME}
 # done

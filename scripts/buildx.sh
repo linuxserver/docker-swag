@@ -2,7 +2,7 @@
 
 # To tag images, run with `sudo bash ./scripts/buildx.sh --tag {REGISTRY}/{IMAGE}:{TAG}`
 
-REGISTRY="ahgraber"
+# REGISTRY="ninerealmlabs"
 # TAG=${1:-"test"}
 
 # define build context

@@ -21,6 +21,7 @@ RUN apt-get update \
         gcc \
         libssl-dev \
         libffi-dev \
+        nano \
         openssl \
         python3 \
         python3-pip \
@@ -60,8 +61,8 @@ RUN mkdir -p \
     /defaults \
     /letsencrypt
     
-VOLUME /config
-VOLUME /letsencrypt
+# VOLUME /config
+# VOLUME /letsencrypt
 
 # # create initial user
 # RUN groupmod -g 1000 users && \

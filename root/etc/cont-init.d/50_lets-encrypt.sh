@@ -54,7 +54,7 @@ ln -s /config/crontabs /etc/crontabs
 # Copy deploy hook defaults if needed
 # [[ -z "$(ls -A /letsencrypt/renewal-hooks/deploy)" ]] && \
 [[ ! -f /config/deploy/01_deploy-certs.sh ]] && \
-  echo "Copying deploy hooks..." && \
+  echo "Copying default deploy hooks..." && \
 	cp -n /defaults/deploy/01_deploy-certs.sh /config/deploy/
   chmod +x /config/deploy/*
 # Link /config/deploy
@@ -162,14 +162,16 @@ if [ "${ORIGSTAGING}" = "true" ]; then
   # [[ -f /etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER}
   [[ -f "${LINEAGE}"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path "${LINEAGE}"/fullchain.pem --server ${REV_ACMESERVER}
   rm -rf /etc/letsencrypt
-  mkdir -p /etc/letsencrypt
+  # mkdir -p /etc/letsencrypt  # redundant
+  mkdir -p /etc/letsencrypt/renewal-hooks
+  ln -s /config/deploy /etc/letsencrypt/renewal-hooks
 fi
 
 # Save new variables
 echo -e "ORIGTLD=\"${TLD}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGEMAIL=\"${EMAIL}\"" > /config/.donoteditthisfile.conf
 
 # generating certs if necessary
-if [ ! -f "/letsencrypt/certs/fullchain.pem" ]; then
+if [ ! -f "/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
   # shellcheck disable=SC2086
   certbot certonly --non-interactive --force-renewal --server ${ACMESERVER} ${PREFCHAL} --rsa-key-size 4096 ${EMAILPARAM} --agree-tos ${TLD_REAL}
@@ -177,13 +179,13 @@ if [ ! -f "/letsencrypt/certs/fullchain.pem" ]; then
   # export RENEWED_LINEAGE
   # echo "RENEWED_LINEAGE is ${RENEWED_LINEAGE}"
 
-  # force deploy script on initial generation
+  # explicitly run deploy script on initial generation
   if [ -f /etc/letsencrypt/renewal-hooks/deploy/01_deploy-certs.sh ]; then
     /usr/bin/with-contenv bash /etc/letsencrypt/renewal-hooks/deploy/01_deploy-certs.sh
   fi
 
-  if [ -f "/letsencrypt/certs/fullchain.pem" ]; then
-    cd /letsencrypt/certs || exit
+  if [ -f "/letsencrypt/fullchain.pem" ]; then
+    cd /letsencrypt || exit
   else
     echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/credentials/cloudflare.ini file."
     sleep infinity

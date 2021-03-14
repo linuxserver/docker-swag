@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bash
 
 # Check if the cert is expired or expires within a day, if so, renew
-if openssl x509 -in /letsencrypt/certs/fullchain.pem -noout -checkend 86400 >/dev/null; then 
+if openssl x509 -in /letsencrypt/fullchain.pem -noout -checkend 86400 >/dev/null; then 
     echo "The cert does not expire within the next day."
     # if [ ! "${STAGING}" = "true" ]; then
     #     echo "Testing renewal..."

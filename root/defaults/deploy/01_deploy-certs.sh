@@ -20,14 +20,16 @@ else
 fi
 
 RENEWED_LINEAGE=${RENEWED_LINEAGE:-$LINEAGE}
-KEYPATH="/letsencrypt/certs"
+KEYPATH="/letsencrypt"
 mkdir -p $KEYPATH
 echo "LINEAGE is ${RENEWED_LINEAGE}; KEYPATH is ${KEYPATH}"
 
 # Clean current KEYPATH contents
 echo "Clearing expired certs ..."
 # echo "Ignore warnings for directories"
-rm -f ${KEYPATH}/* 2> /dev/null  # this will hide errors (like not deleting directories)
+rm -f ${KEYPATH}/*.pem
+rm -f ${KEYPATH}/*.pfx
+rm -f ${KEYPATH}/tls.*
 
 # Copy certs to keypath dest
 echo "Copying current certs ..."

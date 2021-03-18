@@ -205,7 +205,7 @@ py3-six-1.15.0-r0
 py3-toml-0.10.2-r0
 py3-urllib3-1.26.2-r1
 py3-webencodings-0.5.1-r3
-python3-3.8.7-r1
+python3-3.8.8-r0
 readline-8.1.0-r0
 s6-ipcserver-2.10.0.0-r0
 scanelf-1.2.8-r0

@@ -62,7 +62,7 @@ libproc-3.3.16-r0
 libressl3.1-libcrypto-3.1.5-r0
 libressl3.1-libssl-3.1.5-r0
 libsasl-2.1.27-r10
-libseccomp-2.5.1-r0
+libseccomp-2.5.1-r1
 libsecret-0.20.4-r0
 libsm-1.2.3-r0
 libsodium-1.0.18-r0

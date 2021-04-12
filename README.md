@@ -326,6 +326,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **12.04.21:** - Add php7-gmp and php7-pecl-mailparse.
 * **12.04.21:** - Add support for vultr dns validation.
 * **14.03.21:** - Add support for directadmin dns validation.
 * **12.02.21:** - Clean up rust/cargo cache, which ballooned the image size in the last couple of builds.

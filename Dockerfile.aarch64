@@ -53,6 +53,7 @@ RUN \
 	php7-exif \
 	php7-ftp \
 	php7-gd \
+	php7-gmp \
 	php7-iconv \
 	php7-imap \
 	php7-intl \

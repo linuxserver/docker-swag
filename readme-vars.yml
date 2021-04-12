@@ -151,6 +151,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "12.04.21:", desc: "Add php7-gmp and php7-pecl-mailparse." }
   - { date: "12.04.21:", desc: "Add support for vultr dns validation." }
   - { date: "14.03.21:", desc: "Add support for directadmin dns validation." }
   - { date: "12.02.21:", desc: "Clean up rust/cargo cache, which ballooned the image size in the last couple of builds." }

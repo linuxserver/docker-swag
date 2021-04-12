@@ -1,7 +1,7 @@
 alpine-baselayout-3.2.0-r8
 alpine-keys-2.2-r0
 apache2-utils-2.4.46-r3
-apk-tools-2.12.1-r0
+apk-tools-2.12.4-r2
 apr-1.7.0-r0
 apr-util-1.6.1-r7
 argon2-libs-20190702-r1

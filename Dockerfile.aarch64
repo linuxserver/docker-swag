@@ -121,6 +121,7 @@ RUN \
 	certbot-dns-transip \
 	certbot-dns-vultr \
 	certbot-plugin-gandi \
+	git+https://github.com/kylewlacy/certbot_dns_namecheap.git@wip/python3-v3 \
 	cryptography \
 	requests && \
  echo "**** remove unnecessary fail2ban filters ****" && \

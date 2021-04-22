@@ -96,7 +96,7 @@ If you are proposing additional packages to be added, ensure that you added the 
 
 ### Testing your changes
 
-```
+```bash
 git clone https://github.com/linuxserver/docker-swag.git
 cd docker-swag
 docker build \
@@ -106,13 +106,14 @@ docker build \
 ```
 
 The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
-```
+
+```bash
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
 ```
 
 Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64`.
 
-## Update the chagelog
+## Update the changelog
 
 If you are modifying the Dockerfiles or any of the startup scripts in [root](https://github.com/linuxserver/docker-swag/tree/master/root), add an entry to the changelog
 

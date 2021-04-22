@@ -1,7 +1,7 @@
 alpine-baselayout-3.2.0-r8
 alpine-keys-2.2-r0
 apache2-utils-2.4.46-r3
-apk-tools-2.12.4-r2
+apk-tools-2.12.5-r0
 apr-1.7.0-r0
 apr-util-1.6.1-r7
 argon2-libs-20190702-r1
@@ -19,7 +19,7 @@ freetype-2.10.4-r1
 gdbm-1.19-r0
 git-2.30.2-r0
 git-perl-2.30.2-r0
-glib-2.66.7-r1
+glib-2.66.8-r0
 gmp-6.2.1-r0
 gnupg-2.2.27-r0
 gnutls-3.7.1-r0
@@ -92,7 +92,7 @@ musl-utils-1.2.2-r0
 nano-5.4-r1
 ncurses-libs-6.2_p20210109-r0
 ncurses-terminfo-base-6.2_p20210109-r0
-nettle-3.7-r0
+nettle-3.7.2-r0
 nghttp2-libs-1.42.0-r1
 nginx-1.18.0-r13
 nginx-mod-devel-kit-1.18.0-r13
@@ -153,7 +153,7 @@ php7-pdo_pgsql-7.4.15-r0
 php7-pdo_sqlite-7.4.15-r0
 php7-pear-7.4.15-r0
 php7-pecl-apcu-5.1.20-r0
-php7-pecl-igbinary-3.2.2_rc1-r0
+php7-pecl-igbinary-3.2.2-r0
 php7-pecl-mailparse-3.1.1-r1
 php7-pecl-mcrypt-1.0.4-r0
 php7-pecl-memcached-3.1.5-r2

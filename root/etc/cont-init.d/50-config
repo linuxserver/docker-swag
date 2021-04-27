@@ -81,8 +81,22 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 [[ ! -f /config/www/502.html ]] &&
 	cp /defaults/502.html /config/www/502.html
 
+# Set resolver
+if ! grep -q 'resolver' /config/nginx/resolver.conf; then
+    RESOLVER=$(awk 'BEGIN{ORS=" "} $1=="nameserver" {print $2}' /etc/resolv.conf)
+    echo "Setting resolver to ${RESOLVER}"
+    echo "resolver ${RESOLVER} valid=30s;" > /config/nginx/resolver.conf
+fi
+
+# Set worker_processes
+if ! grep -q 'worker_processes' /config/nginx/worker_processes.conf; then
+    WORKER_PROCESSES=$(wc -w < /sys/fs/cgroup/cpuacct/cpuacct.usage_percpu)
+    echo "Setting worker_processes to ${WORKER_PROCESSES}"
+    echo "worker_processes ${WORKER_PROCESSES};" > /config/nginx/worker_processes.conf
+fi
+
 # remove lua bits from nginx.conf if not done before
-if ! grep -q '#Removed lua' /config/nginx/nginx.conf; then 
+if ! grep -q '#Removed lua' /config/nginx/nginx.conf; then
   echo "Removing lua specific info from nginx.conf"
   sed -i 's|\tlua_load_resty_core off;|\t#Removed lua. Do not remove this comment|g' /config/nginx/nginx.conf
 fi

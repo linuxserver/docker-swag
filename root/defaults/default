@@ -1,4 +1,4 @@
-## Version 2021/01/03 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/default
+## Version 2021/04/27 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/default
 
 error_page 502 /502.html;
 
@@ -151,5 +151,3 @@ server {
 
 # enable subdomain method reverse proxy confs
 include /config/nginx/proxy-confs/*.subdomain.conf;
-# enable proxy cache for auth
-proxy_cache_path cache/ keys_zone=auth_cache:10m;

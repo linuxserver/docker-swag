@@ -46,7 +46,7 @@ libgpg-error-1.41-r0
 libice-1.0.10-r0
 libidn-1.35-r0
 libintl-0.20.2-r2
-libjpeg-turbo-2.0.6-r0
+libjpeg-turbo-2.1.0-r0
 libksba-1.5.0-r0
 libldap-2.4.57-r1
 libmagic-5.39-r0

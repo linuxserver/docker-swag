@@ -56,7 +56,7 @@ pipeline {
           env.CODE_URL = 'https://github.com/' + env.LS_USER + '/' + env.LS_REPO + '/commit/' + env.GIT_COMMIT
           env.DOCKERHUB_LINK = 'https://hub.docker.com/r/' + env.DOCKERHUB_IMAGE + '/tags/'
           env.PULL_REQUEST = env.CHANGE_ID
-          env.TEMPLATED_FILES = 'Jenkinsfile README.md LICENSE ./.github/CONTRIBUTING.md ./.github/FUNDING.yml ./.github/ISSUE_TEMPLATE/config.yml ./.github/ISSUE_TEMPLATE/issue.bug.md ./.github/ISSUE_TEMPLATE/issue.feature.md ./.github/PULL_REQUEST_TEMPLATE.md ./.github/workflows/greetings.yml ./.github/workflows/stale.yml ./root/donate.txt ./.github/workflows/package_trigger.yml ./.github/workflows/package_trigger_scheduler.yml ./.github/workflows/external_trigger.yml ./.github/workflows/external_trigger_scheduler.yml'
+          env.TEMPLATED_FILES = 'Jenkinsfile README.md LICENSE ./.github/CONTRIBUTING.md ./.github/FUNDING.yml ./.github/ISSUE_TEMPLATE/config.yml ./.github/ISSUE_TEMPLATE/issue.bug.md ./.github/ISSUE_TEMPLATE/issue.feature.md ./.github/PULL_REQUEST_TEMPLATE.md ./.github/workflows/external_trigger_scheduler.yml ./.github/workflows/greetings.yml ./.github/workflows/package_trigger_scheduler.yml ./.github/workflows/stale.yml ./.github/workflows/external_trigger.yml ./.github/workflows/package_trigger.yml ./root/donate.txt'
         }
         script{
           env.LS_RELEASE_NUMBER = sh(
@@ -307,22 +307,24 @@ pipeline {
                 git commit -m 'Bot Updating Documentation'
                 git push https://LinuxServer-CI:${GITHUB_TOKEN}@github.com/linuxserver/docker-documentation.git --all
               fi
-              mkdir -p ${TEMPDIR}/unraid 
+              mkdir -p ${TEMPDIR}/unraid
               git clone https://github.com/linuxserver/docker-templates.git ${TEMPDIR}/unraid/docker-templates
               git clone https://github.com/linuxserver/templates.git ${TEMPDIR}/unraid/templates
-              if [[ -f ${TEMPDIR}/unraid/docker-templates/linuxserver.io/img/${CONTAINER_NAME}-icon.png ]]; then
-                sed -i "s|master/linuxserver.io/img/linuxserver-ls-logo.png|master/linuxserver.io/img/${CONTAINER_NAME}-icon.png|" ${TEMPDIR}/docker-${CONTAINER_NAME}/.jenkins-external/${CONTAINER_NAME}.xml
+              if [[ -f ${TEMPDIR}/unraid/docker-templates/linuxserver.io/img/${CONTAINER_NAME}-logo.png ]]; then
+                sed -i "s|master/linuxserver.io/img/linuxserver-ls-logo.png|master/linuxserver.io/img/${CONTAINER_NAME}-logo.png|" ${TEMPDIR}/docker-${CONTAINER_NAME}/.jenkins-external/${CONTAINER_NAME}.xml
               fi
               if [[ ("${BRANCH_NAME}" == "master") || ("${BRANCH_NAME}" == "main") ]] && [[ (! -f ${TEMPDIR}/unraid/templates/unraid/${CONTAINER_NAME}.xml) || ("$(md5sum ${TEMPDIR}/unraid/templates/unraid/${CONTAINER_NAME}.xml | awk '{ print $1 }')" != "$(md5sum ${TEMPDIR}/docker-${CONTAINER_NAME}/.jenkins-external/${CONTAINER_NAME}.xml | awk '{ print $1 }')") ]]; then
+                cd ${TEMPDIR}/unraid/templates/
                 if grep -wq "${CONTAINER_NAME}" ${TEMPDIR}/unraid/templates/unraid/ignore.list; then
-                  echo "Image is on the ignore list, skipping Unraid template upload"
+                  echo "Image is on the ignore list, removing Unraid template"
+                  git rm unraid/${CONTAINER_NAME}.xml || :
+                  git commit -m 'Bot Removing Deprecated Unraid Template' || :
                 else
                   cp ${TEMPDIR}/docker-${CONTAINER_NAME}/.jenkins-external/${CONTAINER_NAME}.xml ${TEMPDIR}/unraid/templates/unraid/
-                  cd ${TEMPDIR}/unraid/templates/
                   git add unraid/${CONTAINER_NAME}.xml
                   git commit -m 'Bot Updating Unraid Template'
-                  git push https://LinuxServer-CI:${GITHUB_TOKEN}@github.com/linuxserver/templates.git --all
                 fi
+                git push https://LinuxServer-CI:${GITHUB_TOKEN}@github.com/linuxserver/templates.git --all
               fi
               rm -Rf ${TEMPDIR}'''
         script{
@@ -379,8 +381,21 @@ pipeline {
       }
       steps {
         echo "Running on node: ${NODE_NAME}"
-        sh "docker build --no-cache --pull -t ${IMAGE}:${META_TAG} \
-        --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
+        sh "docker build \
+          --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
+          --label \"org.opencontainers.image.authors=linuxserver.io\" \
+          --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-swag/packages\" \
+          --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-swag\" \
+          --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-swag\" \
+          --label \"org.opencontainers.image.version=${EXT_RELEASE_CLEAN}-ls${LS_TAG_NUMBER}\" \
+          --label \"org.opencontainers.image.revision=${COMMIT_SHA}\" \
+          --label \"org.opencontainers.image.vendor=linuxserver.io\" \
+          --label \"org.opencontainers.image.licenses=GPL-3.0-only\" \
+          --label \"org.opencontainers.image.ref.name=${COMMIT_SHA}\" \
+          --label \"org.opencontainers.image.title=Swag\" \
+          --label \"org.opencontainers.image.description=SWAG - Secure Web Application Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes (Let's Encrypt and ZeroSSL). It also contains fail2ban for intrusion prevention.\" \
+          --no-cache --pull -t ${IMAGE}:${META_TAG} \
+          --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
       }
     }
     // Build MultiArch Docker containers for push to LS Repo
@@ -393,8 +408,21 @@ pipeline {
         stage('Build X86') {
           steps {
             echo "Running on node: ${NODE_NAME}"
-            sh "docker build --no-cache --pull -t ${IMAGE}:amd64-${META_TAG} \
-            --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
+            sh "docker build \
+              --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
+              --label \"org.opencontainers.image.authors=linuxserver.io\" \
+              --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-swag/packages\" \
+              --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-swag\" \
+              --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-swag\" \
+              --label \"org.opencontainers.image.version=${EXT_RELEASE_CLEAN}-ls${LS_TAG_NUMBER}\" \
+              --label \"org.opencontainers.image.revision=${COMMIT_SHA}\" \
+              --label \"org.opencontainers.image.vendor=linuxserver.io\" \
+              --label \"org.opencontainers.image.licenses=GPL-3.0-only\" \
+              --label \"org.opencontainers.image.ref.name=${COMMIT_SHA}\" \
+              --label \"org.opencontainers.image.title=Swag\" \
+              --label \"org.opencontainers.image.description=SWAG - Secure Web Application Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes (Let's Encrypt and ZeroSSL). It also contains fail2ban for intrusion prevention.\" \
+              --no-cache --pull -t ${IMAGE}:amd64-${META_TAG} \
+              --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
           }
         }
         stage('Build ARMHF') {
@@ -407,8 +435,21 @@ pipeline {
             sh '''#! /bin/bash
                   echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
                '''
-            sh "docker build --no-cache --pull -f Dockerfile.armhf -t ${IMAGE}:arm32v7-${META_TAG} \
-                         --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
+            sh "docker build \
+              --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
+              --label \"org.opencontainers.image.authors=linuxserver.io\" \
+              --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-swag/packages\" \
+              --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-swag\" \
+              --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-swag\" \
+              --label \"org.opencontainers.image.version=${EXT_RELEASE_CLEAN}-ls${LS_TAG_NUMBER}\" \
+              --label \"org.opencontainers.image.revision=${COMMIT_SHA}\" \
+              --label \"org.opencontainers.image.vendor=linuxserver.io\" \
+              --label \"org.opencontainers.image.licenses=GPL-3.0-only\" \
+              --label \"org.opencontainers.image.ref.name=${COMMIT_SHA}\" \
+              --label \"org.opencontainers.image.title=Swag\" \
+              --label \"org.opencontainers.image.description=SWAG - Secure Web Application Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes (Let's Encrypt and ZeroSSL). It also contains fail2ban for intrusion prevention.\" \
+              --no-cache --pull -f Dockerfile.armhf -t ${IMAGE}:arm32v7-${META_TAG} \
+              --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
             sh "docker tag ${IMAGE}:arm32v7-${META_TAG} ghcr.io/linuxserver/lsiodev-buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER}"
             retry(5) {
               sh "docker push ghcr.io/linuxserver/lsiodev-buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER}"
@@ -428,8 +469,21 @@ pipeline {
             sh '''#! /bin/bash
                   echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
                '''
-            sh "docker build --no-cache --pull -f Dockerfile.aarch64 -t ${IMAGE}:arm64v8-${META_TAG} \
-                         --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
+            sh "docker build \
+              --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
+              --label \"org.opencontainers.image.authors=linuxserver.io\" \
+              --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-swag/packages\" \
+              --label \"org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-swag\" \
+              --label \"org.opencontainers.image.source=https://github.com/linuxserver/docker-swag\" \
+              --label \"org.opencontainers.image.version=${EXT_RELEASE_CLEAN}-ls${LS_TAG_NUMBER}\" \
+              --label \"org.opencontainers.image.revision=${COMMIT_SHA}\" \
+              --label \"org.opencontainers.image.vendor=linuxserver.io\" \
+              --label \"org.opencontainers.image.licenses=GPL-3.0-only\" \
+              --label \"org.opencontainers.image.ref.name=${COMMIT_SHA}\" \
+              --label \"org.opencontainers.image.title=Swag\" \
+              --label \"org.opencontainers.image.description=SWAG - Secure Web Application Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes (Let's Encrypt and ZeroSSL). It also contains fail2ban for intrusion prevention.\" \
+              --no-cache --pull -f Dockerfile.aarch64 -t ${IMAGE}:arm64v8-${META_TAG} \
+              --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
             sh "docker tag ${IMAGE}:arm64v8-${META_TAG} ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}"
             retry(5) {
               sh "docker push ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}"
@@ -765,7 +819,7 @@ pipeline {
                 set -e
                 TEMPDIR=$(mktemp -d)
                 docker pull ghcr.io/linuxserver/jenkins-builder:latest
-                docker run --rm -e CONTAINER_NAME=${CONTAINER_NAME} -e GITHUB_BRANCH="${BRANCH_NAME}" -v ${TEMPDIR}:/ansible/jenkins ghcr.io/linuxserver/jenkins-builder:latest 
+                docker run --rm -e CONTAINER_NAME=${CONTAINER_NAME} -e GITHUB_BRANCH="${BRANCH_NAME}" -v ${TEMPDIR}:/ansible/jenkins ghcr.io/linuxserver/jenkins-builder:latest
                 docker pull ghcr.io/linuxserver/readme-sync
                 docker run --rm=true \
                   -e DOCKERHUB_USERNAME=$DOCKERUSER \

@@ -53,6 +53,7 @@ RUN \
 	php7-exif \
 	php7-ftp \
 	php7-gd \
+	php7-gmp \
 	php7-iconv \
 	php7-imap \
 	php7-intl \
@@ -68,6 +69,7 @@ RUN \
 	php7-pdo_sqlite \
 	php7-pear \
 	php7-pecl-apcu \
+	php7-pecl-mailparse \
 	php7-pecl-redis \
 	php7-pgsql \
 	php7-phar \
@@ -101,6 +103,7 @@ RUN \
 	certbot-dns-cloudxns \
 	certbot-dns-cpanel \
 	certbot-dns-digitalocean \
+	certbot-dns-directadmin \
 	certbot-dns-dnsimple \
 	certbot-dns-dnsmadeeasy \
 	certbot-dns-domeneshop \
@@ -116,6 +119,7 @@ RUN \
 	certbot-dns-rfc2136 \
 	certbot-dns-route53 \
 	certbot-dns-transip \
+	certbot-dns-vultr \
 	certbot-plugin-gandi \
 	cryptography \
 	requests && \

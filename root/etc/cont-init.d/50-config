@@ -90,7 +90,7 @@ fi
 
 # Set worker_processes
 if ! grep -q 'worker_processes' /config/nginx/worker_processes.conf; then
-    WORKER_PROCESSES=$(wc -w < /sys/fs/cgroup/cpuacct/cpuacct.usage_percpu)
+    WORKER_PROCESSES=$(nproc)
     echo "Setting worker_processes to ${WORKER_PROCESSES}"
     echo "# This file is auto-generated only on first start, based on the cpu cores detected. Feel free to change it to any other number or to auto to let nginx handle it automatically.\nworker_processes ${WORKER_PROCESSES};" > /config/nginx/worker_processes.conf
 fi

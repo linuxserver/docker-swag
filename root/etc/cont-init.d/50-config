@@ -259,7 +259,7 @@ if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! "$SUBDOMAINS" = "wildcard" ] ; then
     DOMAIN="$(echo "$SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
     ln -s ../etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
 else
-    ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
+    ln -s ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
 fi
 
 # checking for changes in cert variables, revoking certs if necessary
@@ -275,8 +275,8 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
         REV_ZEROSSL_EAB_KID=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
         REV_ZEROSSL_EAB_HMAC_KEY=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
         if [ -z "$REV_ZEROSSL_EAB_KID" ] || [ -z "$REV_ZEROSSL_EAB_HMAC_KEY" ]; then
-        echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
-        sleep infinity
+            echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
+            sleep infinity
         fi
         REV_ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${REV_ZEROSSL_EAB_KID} --eab-hmac-key ${REV_ZEROSSL_EAB_HMAC_KEY}"
     elif [ "$ORIGSTAGING" = "true" ]; then
@@ -307,8 +307,8 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
         ZEROSSL_EAB_KID=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
         ZEROSSL_EAB_HMAC_KEY=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
         if [ -z "$ZEROSSL_EAB_KID" ] || [ -z "$ZEROSSL_EAB_HMAC_KEY" ]; then
-        echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
-        sleep infinity
+            echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
+            sleep infinity
         fi
         ZEROSSL_EAB="--eab-kid ${ZEROSSL_EAB_KID} --eab-hmac-key ${ZEROSSL_EAB_HMAC_KEY}"
     fi
@@ -319,11 +319,11 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
         cd /config/keys/letsencrypt || exit
     else
         if [ "$VALIDATION" = "dns" ]; then
-        echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${FILENAME} file."
+            echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${FILENAME} file."
         elif [ "$VALIDATION" = "duckdns" ]; then
-        echo "ERROR: Cert does not exist! Please see the validation error above. Make sure your DUCKDNSTOKEN is correct."
+            echo "ERROR: Cert does not exist! Please see the validation error above. Make sure your DUCKDNSTOKEN is correct."
         else
-        echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
+            echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
         fi
         sleep infinity
     fi

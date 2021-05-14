@@ -105,11 +105,7 @@ fi
 [[ ! -f /config/nginx/dhparams.pem ]] && \
     cp /defaults/dhparams.pem /config/nginx/dhparams.pem
 if ! grep -q 'PARAMETERS' "/config/nginx/dhparams.pem"; then
-    curl -o /config/nginx/dhparams.pem -L "https://lsio.ams3.digitaloceanspaces.com/dhparams.pem"
-fi
-if ! grep -q 'PARAMETERS' "/config/nginx/dhparams.pem"; then
-    echo "Generating dhparams.pem. This will take a long time. Do not stop the container until this process is completed."
-    openssl dhparam -out /config/nginx/dhparams.pem 4096
+    curl -o /config/nginx/dhparams.pem -L "https://ssl-config.mozilla.org/ffdhe4096.txt"
 fi
 
 # check to make sure DNSPLUGIN is selected if dns validation is used

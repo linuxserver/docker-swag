@@ -81,9 +81,17 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 [[ ! -f /config/www/502.html ]] &&
     cp /defaults/502.html /config/www/502.html
 
-# Set resolver
+# Set resolver, ignore ipv6 addresses
 if ! grep -q 'resolver' /config/nginx/resolver.conf; then
-    RESOLVER=$(awk 'BEGIN{ORS=" "} $1=="nameserver" {print $2}' /etc/resolv.conf)
+    RESOLVERRAW=$(awk 'BEGIN{ORS=" "} $1=="nameserver" {print $2}' /etc/resolv.conf)
+    for i in ${RESOLVERRAW}; do
+        if [ $(awk -F ':' '{print NF-1}' <<< ${i}) -le 2 ]; then
+            RESOLVER="${RESOLVER} ${i}"
+        fi
+    done
+    if [ -z "${RESOLVER}" ]; then
+        RESOLVER="127.0.0.11"
+    fi
     echo "Setting resolver to ${RESOLVER}"
     echo -e "# This file is auto-generated only on first start, based on the container's /etc/resolv.conf file. Feel free to modify it as you wish.\n\nresolver ${RESOLVER} valid=30s;" > /config/nginx/resolver.conf
 fi

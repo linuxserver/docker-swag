@@ -330,6 +330,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **20.05.21:** - Modify resolver.conf generation to detect and ignore ipv6.
 * **14.05.21:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf, ssl.conf, proxy.conf, and the default site-conf - Rework nginx.conf to be inline with alpine upstream and relocate lines from other files. Use linuxserver.io wheel index for pip packages. Switch to using [ffdhe4096](https://ssl-config.mozilla.org/ffdhe4096.txt) for `dhparams.pem` per [RFC7919](https://datatracker.ietf.org/doc/html/rfc7919). Added `worker_processes.conf`, which sets the number of nginx workers, and `resolver.conf`, which sets the dns resolver. Both conf files are auto-generated only on first start and can be user modified later.
 * **21.04.21:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-server.conf and authelia-location.conf - Add remote name/email headers and pass http method.
 * **12.04.21:** - Add php7-gmp and php7-pecl-mailparse.

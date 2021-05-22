@@ -13,7 +13,8 @@ VALIDATION=${VALIDATION}\\n\
 CERTPROVIDER=${CERTPROVIDER}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
-STAGING=${STAGING}\\n"
+STAGING=${STAGING}\\n\
+ALIAS_URL=${ALIAS_URL}\\n"
 
 # Echo init finish for test runs
 if [ -n "${TEST_RUN}" ]; then
@@ -121,6 +122,16 @@ fi
     echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
     sleep infinity
 
+# check to make sure DUCKDNSTOKEN is set if duckdns or dns-alias is used
+[[ "$VALIDATION" =~ ^(duckdns|dns-alias)$ ]] && [[ -z "$DUCKDNSTOKEN" ]] && \
+    echo "Please set DUCKDNSTOKEN. See docker info for more details." && \
+    sleep infinity
+
+# check to make sure ALIAS_URL is set if dns-alias validation is used
+[[ "$VALIDATION" = "dns-alias" ]] && [[ -z "$ALIAS_URL" ]] && \
+    echo "Please set ALIAS_URL. See docker info for more details." && \
+    sleep infinity
+
 # import user crontabs
 rm /etc/crontabs/*
 cp /config/crontabs/* /etc/crontabs/
@@ -130,7 +141,7 @@ if [ -f "/config/donoteditthisfile.conf" ]; then
     mv /config/donoteditthisfile.conf /config/.donoteditthisfile.conf
 fi
 if [ ! -f "/config/.donoteditthisfile.conf" ]; then
-    echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\"" > /config/.donoteditthisfile.conf
+    echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\" ORIGALIASURL=\"$ALIAS_URL\"" > /config/.donoteditthisfile.conf
     echo "Created .donoteditthisfile.conf"
 fi
 
@@ -256,6 +267,10 @@ elif [ "$VALIDATION" = "duckdns" ]; then
         echo "the resulting certificate will only cover the main domain due to a limitation of duckdns, ie. subdomain.duckdns.org"
         export URL_REAL="-d ${URL}"
     fi
+elif [ "$VALIDATION" = "dns-alias" ]; then
+    PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-auth-hook /app/duckdns-txt"
+    chmod +x /app/duckdns-txt
+    echo "dns-alias validation is selected"
 else
     PREFCHAL="--non-interactive --standalone --preferred-challenges http"
     echo "http validation is selected"
@@ -271,7 +286,7 @@ else
 fi
 
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$DUCKDNSTOKEN" = "$ORIGDUCKDNSTOKEN" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ]; then
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$DUCKDNSTOKEN" = "$ORIGDUCKDNSTOKEN" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ] || [ ! "$ALIAS_URL" = "$ORIGALIASURL" ]; then
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
     if [ "$ORIGONLY_SUBDOMAINS" = "true" ] && [ ! "$ORIGSUBDOMAINS" = "wildcard" ]; then
         ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
@@ -298,7 +313,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\"" > /config/.donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\" ORIGALIASURL=\"$ALIAS_URL\"" > /config/.donoteditthisfile.conf
 
 # alter extension for error message
 if [ "$DNSPLUGIN" = "google" ]; then

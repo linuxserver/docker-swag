@@ -2,7 +2,11 @@
 
 . /config/.donoteditthisfile.conf
 
-curl https://www.duckdns.org/update?domains=${CERTBOT_DOMAIN}\&token=${ORIGDUCKDNSTOKEN}\&txt=${CERTBOT_VALIDATION}
+if [ "$VALIDATION" = "duckdns" ]; then
+	curl https://www.duckdns.org/update?domains=${CERTBOT_DOMAIN}\&token=${ORIGDUCKDNSTOKEN}\&txt=${CERTBOT_VALIDATION}
+elif [ "$VALIDATION" = "dns-alias" ]; then
+	curl https://www.duckdns.org/update?domains=${ORIGALIASURL}\&token=${ORIGDUCKDNSTOKEN}\&txt=${CERTBOT_VALIDATION}
+fi
 
 echo "sleeping 60"
 sleep 60

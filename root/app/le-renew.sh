@@ -7,7 +7,7 @@ echo
 echo "<------------------------------------------------->"
 echo "cronjob running on "$(date)
 echo "Running certbot renew"
-if [ "$ORIGVALIDATION" = "dns" ] || [ "$ORIGVALIDATION" = "duckdns" ]; then
+if [ "$ORIGVALIDATION" = "dns" ] || [ "$ORIGVALIDATION" = "duckdns" ] || [ "$ORIGVALIDATION" = "dns-alias" ]; then
   certbot -n renew \
     --post-hook "if ps aux | grep [n]ginx: > /dev/null; then s6-svc -h /var/run/s6/services/nginx; fi; \
     cd /config/keys/letsencrypt && \

@@ -109,6 +109,11 @@ if ! grep -q '#Removed lua' /config/nginx/nginx.conf; then
     sed -i 's|\tlua_load_resty_core off;|\t#Removed lua. Do not remove this comment|g' /config/nginx/nginx.conf
 fi
 
+# patch authelia-server.conf for CVE-2021-32637
+if ! grep -q "if (\$request_uri ~" /config/nginx/authelia-server.conf; then
+    sed -i '/internal;/a \ \ \ \ if ($request_uri ~ [^a-zA-Z0-9_+-=\\!@$%&*?~.:#'\''\\;\\(\\)\\[\\]]) { return 401; }' /config/nginx/authelia-server.conf
+fi
+
 # copy pre-generated dhparams or generate if needed
 [[ ! -f /config/nginx/dhparams.pem ]] && \
     cp /defaults/dhparams.pem /config/nginx/dhparams.pem

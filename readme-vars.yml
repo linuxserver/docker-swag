@@ -151,6 +151,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "28.05.21:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-server.conf - Use `resolver.conf` and patch for `CVE-2021-32637`." }
   - { date: "20.05.21:", desc: "Modify resolver.conf generation to detect and ignore ipv6." }
   - { date: "14.05.21:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf, ssl.conf, proxy.conf, and the default site-conf - Rework nginx.conf to be inline with alpine upstream and relocate lines from other files. Use linuxserver.io wheel index for pip packages. Switch to using [ffdhe4096](https://ssl-config.mozilla.org/ffdhe4096.txt) for `dhparams.pem` per [RFC7919](https://datatracker.ietf.org/doc/html/rfc7919). Added `worker_processes.conf`, which sets the number of nginx workers, and `resolver.conf`, which sets the dns resolver. Both conf files are auto-generated only on first start and can be user modified later." }
   - { date: "21.04.21:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-server.conf and authelia-location.conf - Add remote name/email headers and pass http method." }

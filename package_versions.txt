@@ -1,6 +1,6 @@
 alpine-baselayout-3.2.0-r8
 alpine-keys-2.2-r0
-apache2-utils-2.4.46-r3
+apache2-utils-2.4.48-r0
 apk-tools-2.12.5-r0
 apr-1.7.0-r0
 apr-util-1.6.1-r7
@@ -12,7 +12,7 @@ c-client-2007f-r11
 ca-certificates-20191127-r5
 ca-certificates-bundle-20191127-r5
 coreutils-8.32-r2
-curl-7.77.0-r0
+curl-7.77.0-r1
 expat-2.2.10-r1
 fail2ban-0.11.1-r4
 freetype-2.10.4-r1
@@ -35,7 +35,7 @@ libbz2-1.0.8-r1
 libc-utils-0.7.2-r3
 libcap-2.46-r0
 libcrypto1.1-1.1.1k-r0
-libcurl-7.77.0-r0
+libcurl-7.77.0-r1
 libedit-20191231.3.1-r1
 libevent-2.1.12-r1
 libffi-3.3-r2
@@ -88,7 +88,7 @@ logrotate-3.18.0-r0
 lz4-libs-1.9.2-r0
 memcached-1.6.9-r0
 musl-1.2.2-r1
-musl-utils-1.2.2-r0
+musl-utils-1.2.2-r1
 nano-5.4-r1
 ncurses-libs-6.2_p20210109-r0
 ncurses-terminfo-base-6.2_p20210109-r0

@@ -6,7 +6,7 @@ ARG TARGETARCH
 ARG BUILD_DATE
 
 LABEL build_version="${TARGETPLATFORM} - ${BUILD_DATE}"
-LABEL maintainer="ninerealmlabs <ahgraber@ninerealmlabs.com>"
+LABEL maintainer="ninerealmlabs"
 
 ENV ONLY_SUBDOMAINS=false
 ENV PROPAGATION=60

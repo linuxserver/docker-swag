@@ -139,7 +139,7 @@ RUN \
     /tmp/proxy.tar.gz -C \
     /defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github --exclude=linux*/.gitignore --exclude=linux*/LICENSE && \
   echo "**** configure nginx ****" && \
-  rm -f /etc/nginx/conf.d/default.conf && \
+  rm -f /etc/nginx/http.d/default.conf && \
   echo "**** cleanup ****" && \
   apk del --purge \
     build-dependencies && \

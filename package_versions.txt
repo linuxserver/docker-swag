@@ -89,7 +89,7 @@ lz4-libs-1.9.2-r0
 memcached-1.6.9-r0
 musl-1.2.2-r1
 musl-utils-1.2.2-r1
-nano-5.4-r1
+nano-5.4-r2
 ncurses-libs-6.2_p20210109-r0
 ncurses-terminfo-base-6.2_p20210109-r0
 nettle-3.7.2-r0

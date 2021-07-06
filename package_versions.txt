@@ -40,7 +40,7 @@ libedit-20191231.3.1-r1
 libevent-2.1.12-r1
 libffi-3.3-r2
 libgcc-10.2.1_pre1-r3
-libgcrypt-1.8.7-r0
+libgcrypt-1.8.8-r0
 libgd-2.3.0-r2
 libgpg-error-1.41-r0
 libice-1.0.10-r0
@@ -89,7 +89,7 @@ lz4-libs-1.9.2-r0
 memcached-1.6.9-r0
 musl-1.2.2-r1
 musl-utils-1.2.2-r1
-nano-5.4-r2
+nano-5.4-r3
 ncurses-libs-6.2_p20210109-r0
 ncurses-terminfo-base-6.2_p20210109-r0
 nettle-3.7.2-r0

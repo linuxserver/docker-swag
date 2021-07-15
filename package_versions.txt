@@ -1,4 +1,4 @@
-alpine-baselayout-3.2.0-r15
+alpine-baselayout-3.2.0-r16
 alpine-keys-2.3-r1
 apache2-utils-2.4.48-r0
 apk-tools-2.12.5-r1

@@ -355,7 +355,7 @@ fi
     ln -s /config/geoip2db /var/lib/libmaxminddb
 # check GeoIP2 database
 if [ -n "$MAXMINDDB_LICENSE_KEY" ]; then
-    sed -i "s|.*MAXMINDDB_LICENSE_KEY.*|MAXMINDDB_LICENSE_KEY=\"${MAXMINDDB_LICENSE_KEY}\"|g" /etc/conf.d/libmaxminddb
+    sed -i "s|.*MAXMINDDB_LICENSE_KEY.*|MAXMINDDB_LICENSE_KEY=\"${MAXMINDDB_LICENSE_KEY}\"|g" /etc/libmaxminddb.cron.conf
     if [ ! -f /var/lib/libmaxminddb/GeoLite2-City.mmdb ]; then
         echo "Downloading GeoIP2 City database."
         /etc/periodic/weekly/libmaxminddb

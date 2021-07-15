@@ -327,6 +327,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **15.07.21:** - Fix libmaxminddb issue due to upstream change.
 * **07.07.21:** - Rebase to alpine 3.14.
 * **24.06.21:** - Update default nginx conf folder.
 * **28.05.21:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-server.conf - Use `resolver.conf` and patch for `CVE-2021-32637`.

@@ -110,6 +110,7 @@ RUN \
     certbot-dns-google \
     certbot-dns-hetzner \
     certbot-dns-inwx \
+    certbot-dns-ionos \
     certbot-dns-linode \
     certbot-dns-luadns \
     certbot-dns-netcup \

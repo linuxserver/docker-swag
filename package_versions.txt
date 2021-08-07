@@ -1,7 +1,7 @@
 alpine-baselayout-3.2.0-r16
 alpine-keys-2.3-r1
 apache2-utils-2.4.48-r0
-apk-tools-2.12.5-r1
+apk-tools-2.12.6-r0
 apr-1.7.0-r0
 apr-util-1.6.1-r7
 argon2-libs-20190702-r1
@@ -62,7 +62,7 @@ libpq-13.3-r0
 libproc-3.3.17-r0
 libressl3.3-libcrypto-3.3.3-r0
 libressl3.3-libssl-3.3.3-r0
-libretls-3.3.3-r2
+libretls-3.3.3p1-r2
 libsasl-2.1.27-r12
 libseccomp-2.5.1-r2
 libsecret-0.20.4-r1
@@ -133,8 +133,8 @@ php7-ctype-7.4.22-r0
 php7-curl-7.4.22-r0
 php7-dom-7.4.22-r0
 php7-exif-7.4.22-r0
-php7-fileinfo-7.4.21-r0
-php7-fpm-7.4.21-r0
+php7-fileinfo-7.4.22-r0
+php7-fpm-7.4.22-r0
 php7-ftp-7.4.22-r0
 php7-gd-7.4.22-r0
 php7-gmp-7.4.22-r0
@@ -164,7 +164,7 @@ php7-pgsql-7.4.22-r0
 php7-phar-7.4.22-r0
 php7-posix-7.4.22-r0
 php7-session-7.4.22-r0
-php7-simplexml-7.4.21-r0
+php7-simplexml-7.4.22-r0
 php7-soap-7.4.22-r0
 php7-sockets-7.4.22-r0
 php7-sodium-7.4.22-r0
@@ -173,7 +173,7 @@ php7-tokenizer-7.4.22-r0
 php7-xml-7.4.22-r0
 php7-xmlreader-7.4.22-r0
 php7-xmlrpc-7.4.22-r0
-php7-xmlwriter-7.4.21-r0
+php7-xmlwriter-7.4.22-r0
 php7-xsl-7.4.22-r0
 php7-zip-7.4.22-r0
 pinentry-1.1.1-r0

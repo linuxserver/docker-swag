@@ -375,7 +375,9 @@ pipeline {
     // Build Docker container for push to LS Repo
     stage('Build-Single') {
       when {
-        environment name: 'MULTIARCH', value: 'false'
+        expression {
+          env.MULTIARCH == 'false' || params.PACKAGE_CHECK == 'true' 
+        }
         environment name: 'EXIT_STATUS', value: ''
       }
       steps {
@@ -400,7 +402,10 @@ pipeline {
     // Build MultiArch Docker containers for push to LS Repo
     stage('Build-Multi') {
       when {
-        environment name: 'MULTIARCH', value: 'true'
+        allOf {
+          environment name: 'MULTIARCH', value: 'true'
+          expression { params.PACKAGE_CHECK == 'false' }
+        }
         environment name: 'EXIT_STATUS', value: ''
       }
       parallel {

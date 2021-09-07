@@ -40,7 +40,7 @@ libedit-20210216.3.1-r0
 libevent-2.1.12-r2
 libffi-3.3-r2
 libgcc-10.3.1_git20210424-r2
-libgcrypt-1.9.3-r0
+libgcrypt-1.9.4-r0
 libgd-2.3.2-r0
 libgpg-error-1.42-r0
 libice-1.0.10-r0
@@ -133,8 +133,8 @@ php7-ctype-7.4.23-r0
 php7-curl-7.4.23-r0
 php7-dom-7.4.23-r0
 php7-exif-7.4.23-r0
-php7-fileinfo-7.4.22-r0
-php7-fpm-7.4.22-r0
+php7-fileinfo-7.4.23-r0
+php7-fpm-7.4.23-r0
 php7-ftp-7.4.23-r0
 php7-gd-7.4.23-r0
 php7-gmp-7.4.23-r0
@@ -164,7 +164,7 @@ php7-pgsql-7.4.23-r0
 php7-phar-7.4.23-r0
 php7-posix-7.4.23-r0
 php7-session-7.4.23-r0
-php7-simplexml-7.4.22-r0
+php7-simplexml-7.4.23-r0
 php7-soap-7.4.23-r0
 php7-sockets-7.4.23-r0
 php7-sodium-7.4.23-r0
@@ -173,7 +173,7 @@ php7-tokenizer-7.4.23-r0
 php7-xml-7.4.23-r0
 php7-xmlreader-7.4.23-r0
 php7-xmlrpc-7.4.23-r0
-php7-xmlwriter-7.4.22-r0
+php7-xmlwriter-7.4.23-r0
 php7-xsl-7.4.23-r0
 php7-zip-7.4.23-r0
 pinentry-1.1.1-r0

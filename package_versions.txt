@@ -41,7 +41,7 @@ libevent-2.1.12-r2
 libffi-3.3-r2
 libgcc-10.3.1_git20210424-r2
 libgcrypt-1.9.4-r0
-libgd-2.3.2-r0
+libgd-2.3.2-r1
 libgpg-error-1.42-r0
 libice-1.0.10-r0
 libidn-1.37-r0

@@ -12,7 +12,7 @@ c-client-2007f-r11
 ca-certificates-20191127-r5
 ca-certificates-bundle-20191127-r5
 coreutils-8.32-r2
-curl-7.78.0-r0
+curl-7.79.0-r0
 expat-2.4.1-r0
 fail2ban-0.11.2-r0
 freetype-2.10.4-r1
@@ -35,7 +35,7 @@ libbz2-1.0.8-r1
 libc-utils-0.7.2-r3
 libcap-2.50-r0
 libcrypto1.1-1.1.1l-r0
-libcurl-7.78.0-r0
+libcurl-7.79.0-r0
 libedit-20210216.3.1-r0
 libevent-2.1.12-r2
 libffi-3.3-r2

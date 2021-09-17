@@ -32,7 +32,6 @@ param_usage_include_env: true
 param_env_vars:
   - { env_var: "TZ", env_value: "Europe/London", desc: "Specify a timezone to use EG Europe/London." }
   - { env_var: "URL", env_value: "yourdomain.url", desc: "Top url you have control over (`customdomain.com` if you own it, or `customsubdomain.ddnsprovider.com` if dynamic dns)." }
-  - { env_var: "SUBDOMAINS", env_value: "www,", desc: "Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via `dns` and `duckdns` validation only)" }
   - { env_var: "VALIDATION", env_value: "http", desc: "Certbot validation method to use, options are `http`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable must be either empty or set to `wildcard`)." }
 param_usage_include_vols: true
 param_volumes:
@@ -50,6 +49,7 @@ cap_add_param_vars:
 # optional container parameters
 opt_param_usage_include_env: true
 opt_param_env_vars:
+  - { env_var: "SUBDOMAINS", env_value: "www,", desc: "Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via `dns` and `duckdns` validation only)" }
   - { env_var: "CERTPROVIDER", env_value: "", desc: "Optionally define the cert provider. Set to `zerossl` for ZeroSSL certs (requires existing [ZeroSSL account](https://app.zerossl.com/signup) and the e-mail address entered in `EMAIL` env var). Otherwise defaults to Let's Encrypt." }
   - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `aliyun`, `cloudflare`, `cloudxns`, `cpanel`, `digitalocean`, `directadmin`, `dnsimple`, `dnsmadeeasy`, `domeneshop`, `gandi`, `gehirn`, `google`, `hetzner`, `inwx`, `ionos`, `linode`, `luadns`, `netcup`, `njalla`, `nsone`, `ovh`, `rfc2136`, `route53`, `sakuracloud`, `transip` and `vultr`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`." }
   - { env_var: "PROPAGATION", env_value: "", desc: "Optionally override (in seconds) the default propagation time for the dns plugins." }
@@ -78,17 +78,6 @@ optional_block_1_items: ""
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
-  > ### Migrating from the old `linuxserver/letsencrypt` image
-  > * If using docker cli:
-  >   * Stop and remove existing container via `docker stop letsencrypt` and `docker rm letsencrypt`
-  >   * Create new container using the sample on this page (container name: `swag`, image name: `linuxserver/swag`)
-  > * If using docker compose:
-  >   * Edit the compose yaml to change the image to `linuxserver/swag` and change the service and container names to `swag`
-  >   * Issue `docker-compose up -d --remove-orphans`
-  >   * If you don't want to or can't use the option `--remove-orphans`, then you can first do `docker-compose down`, then edit the compose yaml as above, and then issue `docker-compose up -d`
-
-  > Make sure to also update any references to this container by name. For instance, Nextcloud's `config.php` references this container in its `trusted_proxies` directive, which would have to be updated to `swag`.
-
   ### Validation and initial setup
 
   * Before running this container, make sure that the url and subdomains are properly forwarded to this container's host, and that port 443 (and/or 80) is not being used by another service on the host (NAS gui, another webserver, etc.).
@@ -158,11 +147,15 @@ app_setup_block: |
   * Proxy sample files WILL be updated, however your renamed (enabled) proxy files will not.
   * You can check the new sample and adjust your active config as needed.
 
+  ### Migration from the old `linuxserver/letsencrypt` image
+  Please follow the instructions [on this blog post](https://www.linuxserver.io/blog/2020-08-21-introducing-swag#migrate).
+
 app_setup_nginx_reverse_proxy_snippet: false
 app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "17.09.21:", desc: "Mark `SUBDOMAINS` var as optional." }
   - { date: "01.08.21:", desc: "Add support for ionos dns validation." }
   - { date: "15.07.21:", desc: "Fix libmaxminddb issue due to upstream change." }
   - { date: "07.07.21:", desc: "Rebase to alpine 3.14." }

@@ -155,6 +155,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "19.09.21:", desc: "Add an optional header to opt out of Google FLoC in `ssl.conf`." }
   - { date: "17.09.21:", desc: "Mark `SUBDOMAINS` var as optional." }
   - { date: "01.08.21:", desc: "Add support for ionos dns validation." }
   - { date: "15.07.21:", desc: "Fix libmaxminddb issue due to upstream change." }

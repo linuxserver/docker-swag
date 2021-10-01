@@ -331,6 +331,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **01.10.21:** - Check if the cert uses the old LE root cert, revoke and regenerate if necessary. [Here's more info](https://twitter.com/letsencrypt/status/1443621997288767491) on LE root cert expiration
 * **19.09.21:** - Add an optional header to opt out of Google FLoC in `ssl.conf`.
 * **17.09.21:** - Mark `SUBDOMAINS` var as optional.
 * **01.08.21:** - Add support for ionos dns validation.

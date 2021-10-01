@@ -312,6 +312,14 @@ else
     FILENAME="$DNSPLUGIN.ini"
 fi
 
+# Check if the cert is using the old LE root cert, revoke and regen if necessary
+if [ -f "/config/keys/letsencrypt/chain.pem" ] && ([ "${CERTPROVIDER}" == "letsencrypt" ] || [ "${CERTPROVIDER}" == "" ]) && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
+    echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
+    certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
+    rm -rf /config/etc/letsencrypt
+    mkdir -p /config/etc/letsencrypt
+fi
+
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
     if [ "$CERTPROVIDER" = "zerossl" ] && [ -n "$EMAIL" ]; then

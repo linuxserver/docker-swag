@@ -155,6 +155,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "06.10.21:", desc: "Corrected Hurricane Electric (HE) DNS validation to adhere to certbot PR#8131. [Here's more info] (https://github.com/certbot/certbot/pull/8131)" }
   - { date: "05.10.21:", desc: "Added support for Hurricane Electric (HE) DNS validation." }
   - { date: "01.10.21:", desc: "Check if the cert uses the old LE root cert, revoke and regenerate if necessary. [Here's more info](https://twitter.com/letsencrypt/status/1443621997288767491) on LE root cert expiration" }
   - { date: "19.09.21:", desc: "Add an optional header to opt out of Google FLoC in `ssl.conf`." }

@@ -18,6 +18,8 @@ RUN \
     g++ \
     gcc \
     libffi-dev \
+    libxml2-dev \
+    libxslt-dev \
     openssl-dev \
     python3-dev && \
   echo "**** install runtime packages ****" && \

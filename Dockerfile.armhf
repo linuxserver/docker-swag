@@ -18,6 +18,8 @@ RUN \
     g++ \
     gcc \
     libffi-dev \
+    libxml2-dev \
+    libxslt-dev \
     openssl-dev \
     python3-dev && \
   echo "**** install runtime packages ****" && \
@@ -108,6 +110,7 @@ RUN \
     certbot-dns-dnsmadeeasy \
     certbot-dns-domeneshop \
     certbot-dns-google \
+    certbot-dns-he \
     certbot-dns-hetzner \
     certbot-dns-inwx \
     certbot-dns-ionos \

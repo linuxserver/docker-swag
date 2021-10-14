@@ -155,7 +155,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
-  - { date: "14.10.21", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf - Use standard nginx.conf from lsio alpine nginx base image." }
+  - { date: "14.10.21:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf - Use standard nginx.conf from lsio alpine nginx base image." }
   - { date: "12.10.21:", desc: "Fix deprecated LE root cert check to fix failures when using `STAGING=true`, and failures in revoking." }
   - { date: "06.10.21:", desc: "Added support for Hurricane Electric (HE) DNS validation. Added lxml build deps." }
   - { date: "01.10.21:", desc: "Check if the cert uses the old LE root cert, revoke and regenerate if necessary. [Here's more info](https://twitter.com/letsencrypt/status/1443621997288767491) on LE root cert expiration" }

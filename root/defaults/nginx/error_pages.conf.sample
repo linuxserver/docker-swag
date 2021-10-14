@@ -1,0 +1,6 @@
+## Version 2022/08/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/error_pages.conf.sample
+
+error_page 502 = @lsio_error_502;
+location @lsio_error_502 {
+    alias /config/www/502.html;
+}

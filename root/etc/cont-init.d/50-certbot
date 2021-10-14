@@ -15,11 +15,6 @@ DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
 STAGING=${STAGING}\\n"
 
-# Echo init finish for test runs
-if [ -n "${TEST_RUN}" ]; then
-    echo '[services.d] done.'
-fi
-
 # Sanitize variables
 SANED_VARS=( DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION CERTPROVIDER )
 for i in "${SANED_VARS[@]}"
@@ -28,105 +23,15 @@ do
     export echo "$i"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
 done
 
-# check to make sure that the required variables are set
-[[ -z "$URL" ]] && \
-    echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details." && \
-    sleep infinity
-
-# make our folders and links
-mkdir -p \
-    /config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf,geoip2db} \
-    /var/run/fail2ban
-rm -rf /etc/letsencrypt
-ln -s /config/etc/letsencrypt /etc/letsencrypt
-
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
 chown -R abc:abc /config/dns-conf
 
-# copy reverse proxy configs
-cp -R /defaults/proxy-confs /config/nginx/
-
-# copy/update the fail2ban config defaults to/in /config
-cp -R /defaults/fail2ban/filter.d /config/fail2ban/
-cp -R /defaults/fail2ban/action.d /config/fail2ban/
-# if jail.local is missing in /config, copy default
-[[ ! -f /config/fail2ban/jail.local ]] && \
-    cp /defaults/jail.local /config/fail2ban/jail.local
-# Replace fail2ban config with user config
-[[ -d /etc/fail2ban/filter.d ]] && \
-    rm -rf /etc/fail2ban/filter.d
-[[ -d /etc/fail2ban/action.d ]] && \
-    rm -rf /etc/fail2ban/action.d
-cp -R /config/fail2ban/filter.d /etc/fail2ban/
-cp -R /config/fail2ban/action.d /etc/fail2ban/
-cp /defaults/fail2ban/fail2ban.local /etc/fail2ban/
-cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
-
-# copy crontab and proxy defaults if needed
-[[ ! -f /config/crontabs/root ]] && \
-    cp /etc/crontabs/root /config/crontabs/
-[[ ! -f /config/nginx/proxy.conf ]] && \
-    cp /defaults/proxy.conf /config/nginx/proxy.conf
-[[ ! -f /config/nginx/ssl.conf ]] && \
-    cp /defaults/ssl.conf /config/nginx/ssl.conf
-[[ ! -f /config/nginx/ldap.conf ]] && \
-    cp /defaults/ldap.conf /config/nginx/ldap.conf
-[[ ! -f /config/nginx/authelia-server.conf ]] && \
-    cp /defaults/authelia-server.conf /config/nginx/authelia-server.conf
-[[ ! -f /config/nginx/authelia-location.conf ]] && \
-    cp /defaults/authelia-location.conf /config/nginx/authelia-location.conf
-[[ ! -f /config/www/502.html ]] &&
-    cp /defaults/502.html /config/www/502.html
-
-# Set resolver, ignore ipv6 addresses
-if ! grep -q 'resolver' /config/nginx/resolver.conf; then
-    RESOLVERRAW=$(awk 'BEGIN{ORS=" "} $1=="nameserver" {print $2}' /etc/resolv.conf)
-    for i in ${RESOLVERRAW}; do
-        if [ $(awk -F ':' '{print NF-1}' <<< ${i}) -le 2 ]; then
-            RESOLVER="${RESOLVER} ${i}"
-        fi
-    done
-    if [ -z "${RESOLVER}" ]; then
-        RESOLVER="127.0.0.11"
-    fi
-    echo "Setting resolver to ${RESOLVER}"
-    echo -e "# This file is auto-generated only on first start, based on the container's /etc/resolv.conf file. Feel free to modify it as you wish.\n\nresolver ${RESOLVER} valid=30s;" > /config/nginx/resolver.conf
-fi
-
-# Set worker_processes
-if ! grep -q 'worker_processes' /config/nginx/worker_processes.conf; then
-    WORKER_PROCESSES=$(nproc)
-    echo "Setting worker_processes to ${WORKER_PROCESSES}"
-    echo -e "# This file is auto-generated only on first start, based on the cpu cores detected. Feel free to change it to any other number or to auto to let nginx handle it automatically.\n\nworker_processes ${WORKER_PROCESSES};" > /config/nginx/worker_processes.conf
-fi
-
-# remove lua bits from nginx.conf if not done before
-if ! grep -q '#Removed lua' /config/nginx/nginx.conf; then
-    echo "Removing lua specific info from nginx.conf"
-    sed -i 's|\tlua_load_resty_core off;|\t#Removed lua. Do not remove this comment|g' /config/nginx/nginx.conf
-fi
-
-# patch authelia-server.conf for CVE-2021-32637
-if ! grep -q 'if ($request_uri ~' /config/nginx/authelia-server.conf; then
-    sed -i '/internal;/a \ \ \ \ if ($request_uri ~ [^a-zA-Z0-9_+-=\\!@$%&*?~.:#'\''\\;\\(\\)\\[\\]]) { return 401; }' /config/nginx/authelia-server.conf
-fi
-
-# copy pre-generated dhparams or generate if needed
-[[ ! -f /config/nginx/dhparams.pem ]] && \
-    cp /defaults/dhparams.pem /config/nginx/dhparams.pem
-if ! grep -q 'PARAMETERS' "/config/nginx/dhparams.pem"; then
-    curl -o /config/nginx/dhparams.pem -L "https://ssl-config.mozilla.org/ffdhe4096.txt"
-fi
-
 # check to make sure DNSPLUGIN is selected if dns validation is used
-[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|domeneshop|dynu|gandi|gehirn|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]] && \
-    echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
+if [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|domeneshop|dynu|gandi|gehirn|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
+    echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details."
     sleep infinity
-
-# import user crontabs
-rm /etc/crontabs/*
-cp /config/crontabs/* /etc/crontabs/
+fi
 
 # create original config file if it doesn't exist, move non-hidden legacy file to hidden
 if [ -f "/config/donoteditthisfile.conf" ]; then
@@ -278,6 +183,10 @@ if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! "$SUBDOMAINS" = "wildcard" ] ; then
 else
     ln -s ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
 fi
+rm -rf /config/keys/cert.crt
+ln -s ./letsencrypt/fullchain.pem /config/keys/cert.crt
+rm -rf /config/keys/cert.key
+ln -s ./letsencrypt/privkey.pem /config/keys/cert.key
 
 # checking for changes in cert variables, revoking certs if necessary
 if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$DUCKDNSTOKEN" = "$ORIGDUCKDNSTOKEN" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ]; then
@@ -301,7 +210,9 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
     else
         REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
     fi
-    [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
+    if [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]]; then
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
+    fi
     rm -rf /config/etc/letsencrypt
     mkdir -p /config/etc/letsencrypt
 fi
@@ -360,26 +271,3 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
 else
     echo "Certificate exists; parameters unchanged; starting nginx"
 fi
-
-# create GeoIP2 folder symlink
-[[ -d /var/lib/libmaxminddb ]] && [[ ! -L /var/lib/libmaxminddb ]] && \
-    rm -rf /var/lib/libmaxminddb
-[[ ! -d /var/lib/libmaxminddb ]] && \
-    ln -s /config/geoip2db /var/lib/libmaxminddb
-
-# logfiles needed by fail2ban
-[[ ! -f /config/log/nginx/error.log ]] && \
-    touch /config/log/nginx/error.log
-[[ ! -f /config/log/nginx/access.log ]] && \
-    touch /config/log/nginx/access.log
-[[ ! -f /config/log/nginx/unauthorized.log ]] && \
-    touch /config/log/nginx/unauthorized.log
-
-# permissions
-chown -R abc:abc \
-    /config
-chmod -R 0644 /etc/logrotate.d
-chmod -R +r /config/log
-chmod +x /app/le-renew.sh
-chmod 700 /defaults/dns-conf
-chmod 600 /defaults/dns-conf/*

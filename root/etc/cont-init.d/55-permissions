@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bash
+
+# permissions
+chown -R abc:abc \
+    /config
+chmod -R 0644 /etc/logrotate.d
+chmod -R +r /config/log
+chmod +x /app/le-renew.sh

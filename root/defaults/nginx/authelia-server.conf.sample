@@ -1,0 +1,31 @@
+## Version 2022/08/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
+# Make sure that your authelia container is in the same user defined bridge network and is named authelia
+
+location ^~ /authelia {
+
+    set $upstream_app authelia;
+    set $upstream_port 9091;
+    set $upstream_proto http;
+    proxy_pass $upstream_proto://$upstream_app:$upstream_port;
+}
+
+location = /authelia/api/verify {
+    internal;
+    if ($request_uri ~ [^a-zA-Z0-9_+-=\!@$%&*?~.:#'\;\(\)\[\]]) {
+        return 401;
+    }
+
+    set $upstream_app authelia;
+    set $upstream_port 9091;
+    set $upstream_proto http;
+    proxy_pass $upstream_proto://$upstream_app:$upstream_port;
+
+    # Timeout if the real server is dead
+    proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
+
+    client_body_buffer_size 128k;
+    proxy_buffers 4 32k;
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+    send_timeout 5m;
+}

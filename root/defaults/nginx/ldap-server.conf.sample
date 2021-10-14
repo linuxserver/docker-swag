@@ -1,0 +1,90 @@
+## Version 2022/08/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/ldap-server.conf.sample
+## this conf is meant to be used in conjunction with our ldap-auth image: https://github.com/linuxserver/docker-ldap-auth
+## see the heimdall example in the default site config for info on enabling ldap auth
+## for further instructions on this conf, see https://github.com/nginxinc/nginx-ldap-auth
+
+location /ldaplogin {
+
+    set $upstream_auth_app ldap-auth;
+    set $upstream_auth_port 9000;
+    set $upstream_auth_proto http;
+    proxy_pass $upstream_auth_proto://$upstream_auth_app:$upstream_auth_port;
+    proxy_set_header X-Target $request_uri;
+}
+
+location = /auth {
+
+    set $upstream_auth_app ldap-auth;
+    set $upstream_auth_port 8888;
+    set $upstream_auth_proto http;
+    proxy_pass $upstream_auth_proto://$upstream_auth_app:$upstream_auth_port;
+
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+
+    #Before enabling the below caching options, make sure you have the line "proxy_cache_path cache/ keys_zone=auth_cache:10m;" at the bottom your default site config
+    #proxy_cache auth_cache;
+    #proxy_cache_valid 200 10m;
+    #proxy_cache_key "$http_authorization$cookie_nginxauth";
+
+    # As implemented in nginx-ldap-auth-daemon.py, the ldap-auth daemon
+    # communicates with a LDAP server, passing in the following
+    # parameters to specify which user account to authenticate. To
+    # eliminate the need to modify the Python code, this file contains
+    # 'proxy_set_header' directives that set the values of the
+    # parameters. Set or change them as instructed in the comments.
+    #
+    #    Parameter      Proxy header
+    #    -----------    ----------------
+    #    url            X-Ldap-URL
+    #    starttls       X-Ldap-Starttls
+    #    basedn         X-Ldap-BaseDN
+    #    binddn         X-Ldap-BindDN
+    #    bindpasswd     X-Ldap-BindPass
+    #    cookiename     X-CookieName
+    #    realm          X-Ldap-Realm
+    #    template       X-Ldap-Template
+    # (Required) Set the URL and port for connecting to the LDAP server,
+    # by replacing 'example.com'.
+    # Do not mix ldaps-style URL and X-Ldap-Starttls as it will not work.
+    proxy_set_header X-Ldap-URL "ldap://example.com";
+
+    # (Optional) Establish a TLS-enabled LDAP session after binding to the
+    # LDAP server.
+    # This is the 'proper' way to establish encrypted TLS connections, see
+    # http://www.openldap.org/faq/data/cache/185.html
+    #proxy_set_header X-Ldap-Starttls "true";
+
+    # (Required) Set the Base DN, by replacing the value enclosed in
+    # double quotes.
+    proxy_set_header X-Ldap-BaseDN "cn=Users,dc=test,dc=local";
+
+    # (Required) Set the Bind DN, by replacing the value enclosed in
+    # double quotes.
+    # If AD, use "root@test.local"
+    proxy_set_header X-Ldap-BindDN "cn=root,dc=test,dc=local";
+
+    # (Required) Set the Bind password, by replacing 'secret'.
+    proxy_set_header X-Ldap-BindPass "secret";
+
+    # (Required) The following directives set the cookie name and pass
+    # it, respectively. They are required for cookie-based
+    # authentication. Comment them out if using HTTP basic
+    # authentication.
+    proxy_set_header X-CookieName "nginxauth";
+    proxy_set_header Cookie nginxauth=$cookie_nginxauth;
+
+    # (Required if using Microsoft Active Directory as the LDAP server)
+    # Set the LDAP template by uncommenting the following directive.
+    #proxy_set_header X-Ldap-Template "(sAMAccountName=%(username)s)";
+
+    # (Optional if using OpenLDAP as the LDAP server) Set the LDAP
+    # template by uncommenting the following directive and replacing
+    # '(cn=%(username)s)' which is the default set in
+    # nginx-ldap-auth-daemon.py.
+    #proxy_set_header X-Ldap-Template "(cn=%(username)s)";
+    # (Optional) Set the realm name, by uncommenting the following
+    # directive and replacing 'Restricted' which is the default set
+    # in nginx-ldap-auth-daemon.py.
+    #proxy_set_header X-Ldap-Realm    "Restricted";
+}

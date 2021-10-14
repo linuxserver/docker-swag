@@ -1,0 +1,4 @@
+## Version 2022/08/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/ldap-location.conf.sample
+
+auth_request /auth;
+error_page 401 =200 /ldaplogin;

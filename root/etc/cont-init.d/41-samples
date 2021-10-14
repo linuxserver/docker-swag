@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bash
+
+# samples are removed on init by the nginx base
+
+# copy new samples
+if [[ -d /defaults/nginx/proxy-confs/ ]]; then
+    find /defaults/nginx/proxy-confs/ \
+        -maxdepth 1 \
+        -name "*.conf.sample" \
+        -type f \
+        -exec cp "{}" /config/nginx/proxy-confs/ +
+fi

@@ -1,4 +1,4 @@
-## Version 2022/01/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/jail.local
+## Version 2022/08/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/fail2ban/jail.local
 # This is the custom version of the jail.conf for fail2ban
 # Feel free to modify this and add additional filters
 # Then you can drop the new filter conf files into the fail2ban-filters
@@ -56,4 +56,4 @@ logpath  = /config/log/nginx/error.log
 enabled  = true
 port     = http,https
 filter   = nginx-unauthorized
-logpath  = /config/log/nginx/unauthorized.log
+logpath  = /config/log/nginx/access.log

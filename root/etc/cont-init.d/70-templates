@@ -7,7 +7,7 @@ nginx_confs=( \
     ldap.conf \
     nginx.conf \
     proxy.conf \
-    site-confs/default \
+    site-confs/default.conf \
     ssl.conf )
 
 for i in ${nginx_confs[@]}; do

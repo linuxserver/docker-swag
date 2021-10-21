@@ -1,6 +1,6 @@
 alpine-baselayout-3.2.0-r16
 alpine-keys-2.3-r1
-apache2-utils-2.4.50-r0
+apache2-utils-2.4.51-r0
 apk-tools-2.12.7-r0
 apr-1.7.0-r0
 apr-util-1.6.1-r7

@@ -91,7 +91,7 @@ if ! grep -q 'if ($request_uri ~' /config/nginx/authelia-server.conf; then
 fi
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|cloudflare|cloudxns|cpanel|digitalocean|directadmin|dnsimple|dnsmadeeasy|domeneshop|gandi|gehirn|google|hetzner|inwx|ionos|linode|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|sakuracloud|transip|vultr)$ ]] && \
+[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|cloudflare|cloudxns|cpanel|digitalocean|directadmin|dnsimple|dnsmadeeasy|domeneshop|gandi|gehirn|google|he|hetzner|inwx|ionos|linode|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|sakuracloud|transip|vultr)$ ]] && \
     echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
     sleep infinity
 

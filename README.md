@@ -332,6 +332,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **26.10.21:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) proxy.conf - Mitigate https://httpoxy.org/ vulnerabilities. Ref: https://www.nginx.com/blog/mitigating-the-httpoxy-vulnerability-with-nginx#Defeating-the-Attack-using-NGINX-and-NGINX-Plus
 * **23.10.21:** - Fix Hurricane Electric (HE) DNS validation.
 * **12.10.21:** - Fix deprecated LE root cert check to fix failures when using `STAGING=true`, and failures in revoking.
 * **06.10.21:** - Added support for Hurricane Electric (HE) DNS validation. Added lxml build deps.

@@ -125,6 +125,7 @@ RUN \
     certbot-dns-transip \
     certbot-dns-vultr \
     certbot-plugin-gandi \
+    certbot-dns-desec \
     cryptography \
     requests && \
   echo "**** remove unnecessary fail2ban filters ****" && \

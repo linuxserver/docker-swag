@@ -124,6 +124,7 @@ RUN \
     certbot-dns-route53 \
     certbot-dns-transip \
     certbot-dns-vultr \
+    certbot-dns-desec \
     certbot-plugin-gandi \
     cryptography \
     requests && \

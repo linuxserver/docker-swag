@@ -104,6 +104,7 @@ RUN \
     certbot-dns-cloudflare \
     certbot-dns-cloudxns \
     certbot-dns-cpanel \
+    certbot-dns-desec \
     certbot-dns-digitalocean \
     certbot-dns-directadmin \
     certbot-dns-dnsimple \

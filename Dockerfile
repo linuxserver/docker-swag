@@ -109,6 +109,7 @@ RUN \
     certbot-dns-directadmin \
     certbot-dns-dnsimple \
     certbot-dns-dnsmadeeasy \
+    certbot-dns-dnspod \
     certbot-dns-domeneshop \
     certbot-dns-google \
     certbot-dns-he \

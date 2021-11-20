@@ -104,6 +104,7 @@ RUN \
     certbot-dns-cloudflare \
     certbot-dns-cloudxns \
     certbot-dns-cpanel \
+    certbot-dns-desec \
     certbot-dns-digitalocean \
     certbot-dns-directadmin \
     certbot-dns-dnsimple \
@@ -125,6 +126,7 @@ RUN \
     certbot-dns-route53 \
     certbot-dns-transip \
     certbot-dns-vultr \
+    certbot-dns-desec \
     certbot-plugin-gandi \
     cryptography \
     requests && \

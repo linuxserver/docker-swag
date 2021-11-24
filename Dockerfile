@@ -114,6 +114,7 @@ RUN \
     certbot-dns-google \
     certbot-dns-he \
     certbot-dns-hetzner \
+    certbot-dns-infomaniak \
     certbot-dns-inwx \
     certbot-dns-ionos \
     certbot-dns-linode \

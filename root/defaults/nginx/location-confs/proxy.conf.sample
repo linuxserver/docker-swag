@@ -1,4 +1,4 @@
-## Version 2021/10/26 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/proxy.conf
+## Version 2021/10/26 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/location-confs/proxy.conf.sample
 
 # Timeout if the real server is dead
 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;

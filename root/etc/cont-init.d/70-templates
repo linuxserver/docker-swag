@@ -1,5 +1,9 @@
 #!/usr/bin/with-contenv bash
 
+# NEEDS TO BE REWORKED FOR NEW STRUCTURE
+## Should cycle through all *.sample files in /defaults/nginx/ (instead of hardcoded list)
+## Should be moved into the alpine nginx base image
+
 nginx_confs=( \
     authelia-location.conf \
     authelia-server.conf \

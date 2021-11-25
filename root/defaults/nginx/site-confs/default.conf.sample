@@ -1,4 +1,4 @@
-## Version 2021/10/16 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/default
+## Version 2021/10/16 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
 
 error_page 502 /502.html;
 
@@ -18,22 +18,9 @@ server {
     index index.html index.htm index.php;
 
     # enable subfolder method reverse proxy confs
-    include /config/nginx/proxy-confs/*.subfolder.conf;
+    include /config/nginx/subfolder-confs/*.subfolder.conf;
 
-    # all ssl related config moved to ssl.conf
-    include /config/nginx/ssl.conf;
-
-    # enable for ldap auth
-    #include /config/nginx/ldap.conf;
-
-    # enable for Authelia
-    #include /config/nginx/authelia-server.conf;
-
-    # enable for geo blocking
-    # See /config/nginx/geoip2.conf for more information.
-    #if ($allowed_country = no) {
-    #   return 444;
-    #}
+    include /config/nginx/server-confs/*.conf;
 
     set $htpasswd_file /config/nginx/.htpasswd;
     set $auth_basic "Restricted";
@@ -49,7 +36,7 @@ server {
         #error_page 401 =200 /ldaplogin;
 
         # enable for Authelia
-        #include /config/nginx/authelia-location.conf;
+        #include /config/nginx/location-confs/authelia-location.conf;
 
         try_files $uri $uri/ /index.html /index.php?$args =404;
     }
@@ -68,6 +55,6 @@ server {
 }
 
 # enable subdomain method reverse proxy confs
-include /config/nginx/proxy-confs/*.subdomain.conf;
+include /config/nginx/subdomain-confs/*.subdomain.conf;
 # enable proxy cache for auth
 proxy_cache_path cache/ keys_zone=auth_cache:10m;

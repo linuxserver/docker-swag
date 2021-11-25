@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bash
+
+# shellcheck source=/dev/null
+source /defaults/migrate.sh
+
+migrate "/config/nginx/proxy.conf" "/config/nginx/location-confs/proxy.conf"

@@ -104,14 +104,17 @@ RUN \
     certbot-dns-cloudflare \
     certbot-dns-cloudxns \
     certbot-dns-cpanel \
+    certbot-dns-desec \
     certbot-dns-digitalocean \
     certbot-dns-directadmin \
     certbot-dns-dnsimple \
     certbot-dns-dnsmadeeasy \
+    certbot-dns-dnspod \
     certbot-dns-domeneshop \
     certbot-dns-google \
     certbot-dns-he \
     certbot-dns-hetzner \
+    certbot-dns-infomaniak \
     certbot-dns-inwx \
     certbot-dns-ionos \
     certbot-dns-linode \
@@ -124,6 +127,7 @@ RUN \
     certbot-dns-route53 \
     certbot-dns-transip \
     certbot-dns-vultr \
+    certbot-dns-desec \
     certbot-plugin-gandi \
     cryptography \
     requests && \

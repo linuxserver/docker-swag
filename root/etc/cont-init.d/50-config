@@ -60,7 +60,7 @@ cp -R /config/fail2ban/action.d /etc/fail2ban/
 cp /defaults/fail2ban/fail2ban.local /etc/fail2ban/
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 
-# copy crontab and proxy defaults if needed
+# copy crontab and nginx defaults if needed
 [[ ! -f /config/crontabs/root ]] && \
     cp /etc/crontabs/root /config/crontabs/
 [[ ! -f /config/nginx/location-confs/proxy.conf ]] && \

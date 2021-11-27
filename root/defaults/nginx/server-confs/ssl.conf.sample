@@ -10,7 +10,7 @@ listen [::]:443 ssl http2;
 ssl_certificate /config/keys/letsencrypt/fullchain.pem;
 ssl_certificate_key /config/keys/letsencrypt/privkey.pem;
 ssl_session_timeout 1d;
-ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+ssl_session_cache shared:MozSSL:10m; # about 40000 sessions
 ssl_session_tickets off;
 
 # curl https://ssl-config.mozilla.org/ffdhe2048.txt > /path/to/dhparam

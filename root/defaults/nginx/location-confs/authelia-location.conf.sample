@@ -1,4 +1,4 @@
-## Version 2021/04/21 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/location-confs/authelia-location.conf.sample
+## Version 2021/11/25 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/location-confs/authelia-location.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
 # Make sure that the authelia configuration.yml has 'path: "authelia"' defined
 

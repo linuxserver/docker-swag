@@ -1,4 +1,4 @@
-## Version 2020/06/02 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/server-confs/ldap.conf.sample
+## Version 2021/11/25 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/server-confs/ldap-server.conf.sample
 ## this conf is meant to be used in conjunction with our ldap-auth image: https://github.com/linuxserver/docker-ldap-auth
 ## see the heimdall example in the default site config for info on enabling ldap auth
 ## for further instructions on this conf, see https://github.com/nginxinc/nginx-ldap-auth

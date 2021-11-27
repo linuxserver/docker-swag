@@ -1,4 +1,4 @@
-## Version 2020/10/27 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/server-confs/geoip2.conf.sample
+## Version 2021/11/25 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/server-confs/geoip2.conf.sample
 # To enable, uncommment the Geoip2 config line in nginx.conf
 # Add the -e MAXMINDDB_LICENSE_KEY=<licensekey> to automatically download the Geolite2 database.
 # A Maxmind license key can be acquired here: https://www.maxmind.com/en/geolite2/signup

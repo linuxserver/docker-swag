@@ -1,4 +1,4 @@
-## Version 2021/05/28 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/server-confs/authelia-server.conf.sample
+## Version 2021/11/25 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/server-confs/authelia-server.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
 
 location ^~ /authelia {

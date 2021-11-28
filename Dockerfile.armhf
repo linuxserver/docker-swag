@@ -60,8 +60,6 @@ RUN \
     php8-imap \
     php8-intl \
     php8-ldap \
-    php8-mcrypt \
-    php8-memcached \
     php8-mysqli \
     php8-mysqlnd \
     php8-opcache \
@@ -72,6 +70,8 @@ RUN \
     php8-pear \
     php8-pecl-apcu \
     php8-pecl-mailparse \
+    php8-pecl-mcrypt \
+    php8-pecl-memcached \
     php8-pecl-redis \
     php8-pgsql \
     php8-phar \
@@ -83,13 +83,15 @@ RUN \
     php8-tokenizer \
     php8-xml \
     php8-xmlreader \
-    php8-xmlrpc \
     php8-xsl \
     php8-zip \
     py3-cryptography \
     py3-future \
     py3-pip \
     whois && \
+  apk add --no-cache \
+    --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+    php8-pecl-xmlrpc && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \
     CERTBOT="certbot"; \

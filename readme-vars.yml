@@ -58,7 +58,6 @@ opt_param_env_vars:
   - { env_var: "ONLY_SUBDOMAINS", env_value: "false", desc: "If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`" }
   - { env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org,*.anotherdomain.org`" }
   - { env_var: "STAGING", env_value: "false", desc: "Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes." }
-  - { env_var: "MAXMINDDB_LICENSE_KEY", env_value: "", desc: "Add your MaxmindDB license key to automatically download the GeoLite2-City.mmdb database. Download location is /config/geoip2db. The database is updated weekly."}
 opt_param_usage_include_vols: false
 opt_param_volumes:
   - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Configuration files." }
@@ -155,6 +154,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "30.11.21:", desc: "Move maxmind to a [new mod](https://github.com/linuxserver/docker-mods/tree/swag-maxmind)" }
   - { date: "27.11.21:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf - Rebasing to alpine 3.15 with php8. Restructure nginx configs ([see changes in base](https://github.com/linuxserver/docker-baseimage-alpine-nginx/pull/84))." }
   - { date: "22.11.21:", desc: "Added support for Infomaniak DNS for certificate generation." }
   - { date: "20.11.21:", desc: "Added support for dnspod validation." }

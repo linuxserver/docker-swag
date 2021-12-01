@@ -322,18 +322,6 @@ fi
     rm -rf /var/lib/libmaxminddb
 [[ ! -d /var/lib/libmaxminddb ]] && \
     ln -s /config/geoip2db /var/lib/libmaxminddb
-# check GeoIP2 database
-if [ -n "$MAXMINDDB_LICENSE_KEY" ]; then
-    sed -i "s|.*MAXMINDDB_LICENSE_KEY.*|MAXMINDDB_LICENSE_KEY=\"${MAXMINDDB_LICENSE_KEY}\"|g" /etc/libmaxminddb.cron.conf
-    if [ ! -f /var/lib/libmaxminddb/GeoLite2-City.mmdb ]; then
-        echo "Downloading GeoIP2 City database."
-        /etc/periodic/weekly/libmaxminddb
-    fi
-elif [ -f /var/lib/libmaxminddb/GeoLite2-City.mmdb ]; then
-    echo -e "Currently using the user provided GeoLite2-City.mmdb.\nIf you want to enable weekly auto-updates of the database, retrieve a free license key from MaxMind,\nand add a new env variable \"MAXMINDDB_LICENSE_KEY\", set to your license key."
-else
-    echo -e "Starting 2019/12/30, GeoIP2 databases require personal license key to download. Please retrieve a free license key from MaxMind,\nand add a new env variable \"MAXMINDDB_LICENSE_KEY\", set to your license key."
-fi
 
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \

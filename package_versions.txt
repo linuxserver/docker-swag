@@ -133,8 +133,8 @@ php7-ctype-7.4.26-r0
 php7-curl-7.4.26-r0
 php7-dom-7.4.26-r0
 php7-exif-7.4.26-r0
-php7-fileinfo-7.4.25-r0
-php7-fpm-7.4.25-r0
+php7-fileinfo-7.4.26-r0
+php7-fpm-7.4.26-r0
 php7-ftp-7.4.26-r0
 php7-gd-7.4.26-r0
 php7-gmp-7.4.26-r0
@@ -164,7 +164,7 @@ php7-pgsql-7.4.26-r0
 php7-phar-7.4.26-r0
 php7-posix-7.4.26-r0
 php7-session-7.4.26-r0
-php7-simplexml-7.4.25-r0
+php7-simplexml-7.4.26-r0
 php7-soap-7.4.26-r0
 php7-sockets-7.4.26-r0
 php7-sodium-7.4.26-r0
@@ -173,7 +173,7 @@ php7-tokenizer-7.4.26-r0
 php7-xml-7.4.26-r0
 php7-xmlreader-7.4.26-r0
 php7-xmlrpc-7.4.26-r0
-php7-xmlwriter-7.4.25-r0
+php7-xmlwriter-7.4.26-r0
 php7-xsl-7.4.26-r0
 php7-zip-7.4.26-r0
 pinentry-1.1.1-r0

@@ -32,12 +32,6 @@ server {
     # enable for Authelia
     #include /config/nginx/authelia-server.conf;
 
-    # enable for geo blocking
-    # See /config/nginx/geoip2.conf for more information.
-    #if ($allowed_country = no) {
-    #return 444;
-    #}
-
     client_max_body_size 0;
 
     location / {

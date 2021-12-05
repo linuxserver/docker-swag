@@ -3,7 +3,6 @@
 nginx_confs=( \
     authelia-location.conf \
     authelia-server.conf \
-    geoip2.conf \
     ldap.conf \
     nginx.conf \
     proxy.conf \

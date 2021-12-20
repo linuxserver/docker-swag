@@ -41,7 +41,6 @@ Find us at:
 
 SWAG - Secure Web Application Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes (Let's Encrypt and ZeroSSL). It also contains fail2ban for intrusion prevention.
 
-[![swag](https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/swag.gif)](https://linuxserver.io)
 
 ## Supported Architectures
 

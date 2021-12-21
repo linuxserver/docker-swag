@@ -134,6 +134,9 @@ RUN \
   echo "**** remove unnecessary fail2ban filters ****" && \
   rm \
     /etc/fail2ban/jail.d/alpine-ssh.conf && \
+  echo "**** correct ip6tables legacy issue ****" && \
+  rm /sbin/ip6tables && \
+  ln -s /sbin/ip6tables-nft /sbin/ip6tables && \
   echo "**** copy fail2ban default action and filter to /default ****" && \
   mkdir -p /defaults/fail2ban && \
   mv /etc/fail2ban/action.d /defaults/fail2ban/ && \

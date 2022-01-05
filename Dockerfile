@@ -47,6 +47,7 @@ RUN \
     nginx-mod-stream \
     nginx-mod-stream-geoip2 \
     nginx-vim \
+    nginx-mod-http-cache-purge \
     php7-bcmath \
     php7-bz2 \
     php7-ctype \

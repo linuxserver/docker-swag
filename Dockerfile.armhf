@@ -30,6 +30,7 @@ RUN \
     memcached \
     nginx \
     nginx-mod-http-brotli \
+    nginx-mod-http-cache-purge \
     nginx-mod-http-dav-ext \
     nginx-mod-http-echo \
     nginx-mod-http-fancyindex \
@@ -46,7 +47,6 @@ RUN \
     nginx-mod-rtmp \
     nginx-mod-stream \
     nginx-mod-stream-geoip2 \
-    nginx-mod-http-cache-purge \
     nginx-vim \
     php7-bcmath \
     php7-bz2 \

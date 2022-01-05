@@ -30,6 +30,7 @@ RUN \
     memcached \
     nginx \
     nginx-mod-http-brotli \
+    nginx-mod-http-cache-purge \
     nginx-mod-http-dav-ext \
     nginx-mod-http-echo \
     nginx-mod-http-fancyindex \

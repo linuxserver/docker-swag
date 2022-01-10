@@ -154,6 +154,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "09.01.22:", desc: "Added a fail2ban jail for nginx unauthorized" }
   - { date: "21.12.21:", desc: "Fixed issue with iptables not working as expected" }
   - { date: "30.11.21:", desc: "Move maxmind to a [new mod](https://github.com/linuxserver/docker-mods/tree/swag-maxmind)" }
   - { date: "22.11.21:", desc: "Added support for Infomaniak DNS for certificate generation." }

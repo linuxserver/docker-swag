@@ -7,6 +7,11 @@ echo
 echo "<------------------------------------------------->"
 echo "cronjob running on "$(date)
 echo "Running certbot renew"
+
+if [ -f "/config/cabundle.pem" ]; then
+	export REQUESTS_CA_BUNDLE="/config/cabundle.pem"
+fi
+
 if [ "$ORIGVALIDATION" = "dns" ] || [ "$ORIGVALIDATION" = "duckdns" ]; then
   certbot -n renew \
     --post-hook "if ps aux | grep [n]ginx: > /dev/null; then s6-svc -h /var/run/s6/services/nginx; fi; \

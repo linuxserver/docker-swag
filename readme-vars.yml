@@ -154,6 +154,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "16.02.22:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-server.conf - Allow pipe character in request URI" }
   - { date: "09.01.22:", desc: "Added a fail2ban jail for nginx unauthorized" }
   - { date: "21.12.21:", desc: "Fixed issue with iptables not working as expected" }
   - { date: "30.11.21:", desc: "Move maxmind to a [new mod](https://github.com/linuxserver/docker-mods/tree/swag-maxmind)" }

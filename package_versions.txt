@@ -1,6 +1,6 @@
 alpine-baselayout-3.2.0-r16
 alpine-keys-2.4-r0
-apache2-utils-2.4.52-r0
+apache2-utils-2.4.53-r0
 apk-tools-2.12.7-r0
 apr-1.7.0-r0
 apr-util-1.6.1-r7
@@ -60,10 +60,10 @@ libnftnl-libs-1.2.0-r0
 libpng-1.6.37-r1
 libpq-13.6-r0
 libproc-3.3.17-r0
-libressl3.3-libcrypto-3.3.3-r0
-libressl3.3-libssl-3.3.3-r0
+libressl3.3-libcrypto-3.3.6-r0
+libressl3.3-libssl-3.3.6-r0
 libretls-3.3.3p1-r2
-libsasl-2.1.27-r12
+libsasl-2.1.28-r0
 libseccomp-2.5.1-r2
 libsecret-0.20.4-r1
 libsm-1.2.3-r0
@@ -118,7 +118,7 @@ nginx-mod-stream-geoip2-1.20.2-r0
 nginx-vim-1.20.2-r0
 npth-1.6-r0
 oniguruma-6.9.7.1-r0
-openssl-1.1.1l-r0
+openssl-1.1.1n-r0
 p11-kit-0.23.22-r0
 pcre-8.44-r0
 pcre2-10.36-r0

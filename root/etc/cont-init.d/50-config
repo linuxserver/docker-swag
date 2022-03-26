@@ -366,6 +366,8 @@ fi
     touch /config/log/nginx/error.log
 [[ ! -f /config/log/nginx/access.log ]] && \
     touch /config/log/nginx/access.log
+[[ ! -f /config/log/nginx/unauthorized.log ]] && \
+    touch /config/log/nginx/unauthorized.log
 
 # permissions
 chown -R abc:abc \

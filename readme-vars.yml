@@ -120,11 +120,12 @@ app_setup_block: |
 
   ### Using fail2ban
 
-  * This container includes fail2ban set up with 4 jails by default:
+  * This container includes fail2ban set up with 5 jails by default:
     1. nginx-http-auth
     2. nginx-badbots
     3. nginx-botsearch
     4. nginx-deny
+    5. nginx-unauthorized
   * To enable or disable other jails, modify the file `/config/fail2ban/jail.local`
   * To modify filters and actions, instead of editing the `.conf` files, create `.local` files with the same name and edit those because .conf files get overwritten when the actions and filters are updated. `.local` files will append whatever's in the `.conf` files (ie. `nginx-http-auth.conf` --> `nginx-http-auth.local`)
   * You can check which jails are active via `docker exec -it swag fail2ban-client status`

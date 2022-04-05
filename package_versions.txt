@@ -7,7 +7,7 @@ apr-util-1.6.1-r7
 argon2-libs-20190702-r1
 bash-5.1.16-r0
 brotli-libs-1.0.9-r5
-busybox-1.33.1-r6
+busybox-1.33.1-r7
 c-client-2007f-r11
 ca-certificates-20211220-r0
 ca-certificates-bundle-20211220-r0
@@ -216,7 +216,7 @@ scanelf-1.3.2-r0
 shadow-4.8.1-r0
 skalibs-2.10.0.3-r0
 sqlite-libs-3.35.5-r0
-ssl_client-1.33.1-r6
+ssl_client-1.33.1-r7
 tzdata-2022a-r0
 unixodbc-2.3.9-r1
 utmps-0.1.0.2-r0

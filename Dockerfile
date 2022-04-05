@@ -125,6 +125,7 @@ RUN \
     certbot-dns-ovh \
     certbot-dns-rfc2136 \
     certbot-dns-route53 \
+    certbot-dns-standalone \
     certbot-dns-transip \
     certbot-dns-vultr \
     certbot-dns-desec \

@@ -132,6 +132,11 @@ RUN \
     certbot-plugin-gandi \
     cryptography \
     requests && \
+  echo "**** correct ip6tables legacy issue ****" && \
+  rm \ 
+    /sbin/ip6tables && \
+  ln -s \
+    /sbin/ip6tables-nft /sbin/ip6tables && \
   echo "**** remove unnecessary fail2ban filters ****" && \
   rm \
     /etc/fail2ban/jail.d/alpine-ssh.conf && \

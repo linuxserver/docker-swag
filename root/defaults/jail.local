@@ -1,10 +1,14 @@
-## Version 2020/05/10 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/jail.local
+## Version 2022/01/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/jail.local
 # This is the custom version of the jail.conf for fail2ban
 # Feel free to modify this and add additional filters
 # Then you can drop the new filter conf files into the fail2ban-filters
 # folder and restart the container
 
 [DEFAULT]
+# Prevents banning LAN subnets
+ignoreip = 10.0.0.0/8
+           192.168.0.0/16
+           172.16.0.0/12
 
 # Changes the default ban action from "iptables-multiport", which causes issues on some platforms, to "iptables-allports".
 banaction = iptables-allports
@@ -21,37 +25,35 @@ maxretry = 5
 
 
 [ssh]
-
 enabled = false
 
-
 [nginx-http-auth]
-
 enabled  = true
 filter   = nginx-http-auth
 port     = http,https
 logpath  = /config/log/nginx/error.log
 
-
 [nginx-badbots]
-
 enabled  = true
 port     = http,https
 filter   = nginx-badbots
 logpath  = /config/log/nginx/access.log
 maxretry = 2
 
-
 [nginx-botsearch]
-
 enabled  = true
 port     = http,https
 filter   = nginx-botsearch
 logpath  = /config/log/nginx/access.log
 
 [nginx-deny]
-
 enabled  = true
 port     = http,https
 filter   = nginx-deny
 logpath  = /config/log/nginx/error.log
+
+[nginx-unauthorized]
+enabled  = true
+port     = http,https
+filter   = nginx-unauthorized
+logpath  = /config/log/nginx/unauthorized.log

@@ -29,6 +29,7 @@ Find us at:
 
 # [linuxserver/swag](https://github.com/linuxserver/docker-swag)
 
+[![Scarf.io pulls](https://scarf.sh/installs-badge/linuxserver-ci/linuxserver%2Fswag?color=94398d&label-color=555555&logo-color=ffffff&style=for-the-badge&package-type=docker)](https://scarf.sh/gateway/linuxserver-ci/docker/linuxserver%2Fswag)
 [![GitHub Stars](https://img.shields.io/github/stars/linuxserver/docker-swag.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-swag)
 [![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-swag.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-swag/releases)
 [![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub%20Package&logo=github)](https://github.com/linuxserver/docker-swag/packages)
@@ -102,11 +103,12 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 
 ### Using fail2ban
 
-* This container includes fail2ban set up with 4 jails by default:
+* This container includes fail2ban set up with 5 jails by default:
   1. nginx-http-auth
   2. nginx-badbots
   3. nginx-botsearch
   4. nginx-deny
+  5. nginx-unauthorized
 * To enable or disable other jails, modify the file `/config/fail2ban/jail.local`
 * To modify filters and actions, instead of editing the `.conf` files, create `.local` files with the same name and edit those because .conf files get overwritten when the actions and filters are updated. `.local` files will append whatever's in the `.conf` files (ie. `nginx-http-auth.conf` --> `nginx-http-auth.local`)
 * You can check which jails are active via `docker exec -it swag fail2ban-client status`
@@ -329,6 +331,9 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **28.03.22:** - created a logfile for fail2ban nginx-unauthorized in /etc/cont-init.d/50-config
+* **09.01.22:** - Added a fail2ban jail for nginx unauthorized
+* **21.12.21:** - Fixed issue with iptables not working as expected
 * **30.11.21:** - Move maxmind to a [new mod](https://github.com/linuxserver/docker-mods/tree/swag-maxmind)
 * **22.11.21:** - Added support for Infomaniak DNS for certificate generation.
 * **20.11.21:** - Added support for dnspod validation.

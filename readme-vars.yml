@@ -154,8 +154,8 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "05.04.22:", desc: "Added support for standalone DNS validation." }
   - { date: "30.11.21:", desc: "Move maxmind to a [new mod](https://github.com/linuxserver/docker-mods/tree/swag-maxmind)" }
-  - { date: "24.11.21:", desc: "Added support for standalone DNS validation." }
   - { date: "22.11.21:", desc: "Added support for Infomaniak DNS for certificate generation." }
   - { date: "20.11.21:", desc: "Added support for dnspod validation." }
   - { date: "15.11.21:", desc: "Added support for deSEC DNS for wildcard certificate generation." }

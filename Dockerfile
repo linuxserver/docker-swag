@@ -130,6 +130,7 @@ RUN \
     certbot-dns-vultr \
     certbot-dns-desec \
     certbot-plugin-gandi \
+    certbot-dns-loopia \
     cryptography \
     requests && \
   echo "**** correct ip6tables legacy issue ****" && \

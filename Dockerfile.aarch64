@@ -118,6 +118,7 @@ RUN \
     certbot-dns-inwx \
     certbot-dns-ionos \
     certbot-dns-linode \
+    certbot-dns-loopia \
     certbot-dns-luadns \
     certbot-dns-netcup \
     certbot-dns-njalla \

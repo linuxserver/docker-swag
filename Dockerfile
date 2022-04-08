@@ -118,6 +118,7 @@ RUN \
     certbot-dns-inwx \
     certbot-dns-ionos \
     certbot-dns-linode \
+    certbot-dns-loopia \
     certbot-dns-luadns \
     certbot-dns-netcup \
     certbot-dns-njalla \
@@ -130,7 +131,6 @@ RUN \
     certbot-dns-vultr \
     certbot-dns-desec \
     certbot-plugin-gandi \
-    certbot-dns-loopia \
     cryptography \
     requests && \
   echo "**** correct ip6tables legacy issue ****" && \

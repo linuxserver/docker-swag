@@ -17,7 +17,8 @@ expat-2.4.7-r0
 fail2ban-0.11.2-r0
 freetype-2.10.4-r1
 gdbm-1.19-r0
-git-2.32.0-r0
+git-2.32.1-r0
+git-perl-2.32.1-r0
 glib-2.68.3-r0
 gmp-6.2.1-r1
 gnupg-2.2.31-r0
@@ -122,6 +123,8 @@ p11-kit-0.23.22-r0
 pcre-8.44-r0
 pcre2-10.36-r0
 perl-5.32.1-r0
+perl-error-0.17029-r1
+perl-git-2.32.1-r0
 php7-7.4.26-r0
 php7-bcmath-7.4.26-r0
 php7-bz2-7.4.26-r0
@@ -218,7 +221,7 @@ tzdata-2022a-r0
 unixodbc-2.3.9-r1
 utmps-0.1.0.2-r0
 whois-5.5.10-r0
-xz-5.2.5-r0
+xz-5.2.5-r1
 xz-libs-5.2.5-r1
 zlib-1.2.12-r0
 zstd-libs-1.4.9-r1

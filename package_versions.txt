@@ -15,7 +15,7 @@ coreutils-8.32-r2
 curl-7.79.1-r1
 expat-2.4.7-r0
 fail2ban-0.11.2-r0
-freetype-2.10.4-r1
+freetype-2.10.4-r2
 gdbm-1.19-r0
 git-2.32.1-r0
 git-perl-2.32.1-r0
@@ -34,7 +34,7 @@ libbsd-0.11.3-r0
 libbz2-1.0.8-r1
 libc-utils-0.7.2-r3
 libcap-2.50-r0
-libcrypto1.1-1.1.1n-r0
+libcrypto1.1-1.1.1o-r0
 libcurl-7.79.1-r1
 libedit-20210216.3.1-r0
 libevent-2.1.12-r2
@@ -68,7 +68,7 @@ libseccomp-2.5.1-r2
 libsecret-0.20.4-r1
 libsm-1.2.3-r0
 libsodium-1.0.18-r0
-libssl1.1-1.1.1n-r0
+libssl1.1-1.1.1o-r0
 libstdc++-10.3.1_git20210424-r2
 libtasn1-4.17.0-r0
 libunistring-0.9.10-r1
@@ -79,7 +79,7 @@ libxau-1.0.9-r0
 libxcb-1.14-r2
 libxdmcp-1.1.3-r0
 libxext-1.3.4-r0
-libxml2-2.9.13-r0
+libxml2-2.9.14-r0
 libxpm-3.5.13-r0
 libxslt-1.1.35-r0
 libxt-1.2.1-r0
@@ -223,5 +223,5 @@ utmps-0.1.0.2-r0
 whois-5.5.10-r0
 xz-5.2.5-r1
 xz-libs-5.2.5-r1
-zlib-1.2.12-r0
+zlib-1.2.12-r1
 zstd-libs-1.4.9-r1

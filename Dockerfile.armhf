@@ -101,6 +101,7 @@ RUN \
   pip3 install -U --find-links https://wheel-index.linuxserver.io/alpine/ \
     ${CERTBOT} \
     certbot-dns-aliyun \
+    certbot-dns-azure \
     certbot-dns-cloudflare \
     certbot-dns-cloudxns \
     certbot-dns-cpanel \

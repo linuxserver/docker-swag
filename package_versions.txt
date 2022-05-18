@@ -118,7 +118,7 @@ nginx-mod-stream-geoip2-1.20.2-r1
 nginx-vim-1.20.2-r1
 npth-1.6-r0
 oniguruma-6.9.7.1-r0
-openssl-1.1.1n-r0
+openssl-1.1.1o-r0
 p11-kit-0.23.22-r0
 pcre-8.44-r0
 pcre2-10.36-r0

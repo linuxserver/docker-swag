@@ -58,6 +58,7 @@ opt_param_env_vars:
   - { env_var: "ONLY_SUBDOMAINS", env_value: "false", desc: "If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`" }
   - { env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org,*.anotherdomain.org`" }
   - { env_var: "STAGING", env_value: "false", desc: "Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes." }
+  - { env_var: "RSA_KEY_SIZE", env_value: "4096", desc: "RSA key size param used by certbot." }
 opt_param_usage_include_vols: false
 opt_param_volumes:
   - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Configuration files." }
@@ -155,6 +156,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "31.05.22:", desc: "Added RSA_KEY_SIZE for setting rsa-key-size param to certbot" }
   - { date: "18.05.22:", desc: "Added support for Azure DNS validation." }
   - { date: "09.04.22:", desc: "Added certbot-dns-loopia for DNS01 validation." }
   - { date: "05.04.22:", desc: "Added support for standalone DNS validation." }

@@ -13,6 +13,7 @@ VALIDATION=${VALIDATION}\\n\
 CERTPROVIDER=${CERTPROVIDER}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
+RSA_KEY_SIZE=${RSA_KEY_SIZE:=4096}\\n\
 STAGING=${STAGING}\\n"
 
 # Echo init finish for test runs
@@ -340,7 +341,7 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
     fi
     echo "Generating new certificate"
     # shellcheck disable=SC2086
-    certbot certonly --renew-by-default --server $ACMESERVER $ZEROSSL_EAB $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
+    certbot certonly --renew-by-default --server $ACMESERVER $ZEROSSL_EAB $PREFCHAL --rsa-key-size $RSA_KEY_SIZE $EMAILPARAM --agree-tos $URL_REAL
     if [ -d /config/keys/letsencrypt ]; then
         cd /config/keys/letsencrypt || exit
     else

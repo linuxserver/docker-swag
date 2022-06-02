@@ -17,7 +17,8 @@ expat-2.4.7-r0
 fail2ban-0.11.2-r0
 freetype-2.10.4-r3
 gdbm-1.19-r0
-git-2.32.1-r0
+git-2.32.2-r0
+git-perl-2.32.2-r0
 glib-2.68.3-r0
 gmp-6.2.1-r1
 gnupg-2.2.31-r0
@@ -122,6 +123,8 @@ p11-kit-0.23.22-r0
 pcre-8.44-r0
 pcre2-10.36-r0
 perl-5.32.1-r0
+perl-error-0.17029-r1
+perl-git-2.32.2-r0
 php7-7.4.26-r0
 php7-bcmath-7.4.26-r0
 php7-bz2-7.4.26-r0

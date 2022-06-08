@@ -2,7 +2,7 @@ alpine-baselayout-3.2.0-r16
 alpine-keys-2.4-r0
 apache2-utils-2.4.53-r0
 apk-tools-2.12.7-r0
-apr-1.7.0-r0
+apr-1.7.0-r1
 apr-util-1.6.1-r7
 argon2-libs-20190702-r1
 bash-5.1.16-r0
@@ -58,7 +58,7 @@ libmnl-1.0.4-r1
 libmount-2.37.4-r0
 libnftnl-libs-1.2.0-r0
 libpng-1.6.37-r1
-libpq-13.6-r0
+libpq-13.6-r1
 libproc-3.3.17-r0
 libressl3.3-libcrypto-3.3.6-r0
 libressl3.3-libssl-3.3.6-r0
@@ -85,7 +85,7 @@ libxslt-1.1.35-r0
 libxt-1.2.1-r0
 libzip-1.7.3-r2
 linux-pam-1.5.1-r1
-logrotate-3.18.1-r1
+logrotate-3.18.1-r2
 lz4-libs-1.9.3-r1
 memcached-1.6.9-r0
 mpdecimal-2.5.1-r1

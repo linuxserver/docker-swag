@@ -58,7 +58,7 @@ libmnl-1.0.4-r1
 libmount-2.37.4-r0
 libnftnl-libs-1.2.0-r0
 libpng-1.6.37-r1
-libpq-13.6-r1
+libpq-13.7-r0
 libproc-3.3.17-r0
 libressl3.3-libcrypto-3.3.6-r0
 libressl3.3-libssl-3.3.6-r0
@@ -121,7 +121,7 @@ oniguruma-6.9.7.1-r0
 openssl-1.1.1o-r0
 p11-kit-0.23.22-r0
 pcre-8.44-r0
-pcre2-10.36-r0
+pcre2-10.36-r1
 perl-5.32.1-r0
 perl-error-0.17029-r1
 perl-git-2.32.2-r0

@@ -12,7 +12,7 @@ c-client-2007f-r11
 ca-certificates-20211220-r0
 ca-certificates-bundle-20211220-r0
 coreutils-8.32-r2
-curl-7.79.1-r1
+curl-7.79.1-r2
 expat-2.4.7-r0
 fail2ban-0.11.2-r0
 freetype-2.10.4-r3
@@ -21,7 +21,7 @@ git-2.32.2-r0
 git-perl-2.32.2-r0
 glib-2.68.3-r0
 gmp-6.2.1-r1
-gnupg-2.2.31-r0
+gnupg-2.2.31-r1
 gnutls-3.7.1-r0
 icu-libs-67.1-r2
 ip6tables-1.8.7-r1
@@ -34,8 +34,8 @@ libbsd-0.11.3-r0
 libbz2-1.0.8-r1
 libc-utils-0.7.2-r3
 libcap-2.50-r0
-libcrypto1.1-1.1.1o-r0
-libcurl-7.79.1-r1
+libcrypto1.1-1.1.1q-r0
+libcurl-7.79.1-r2
 libedit-20210216.3.1-r0
 libevent-2.1.12-r2
 libffi-3.3-r2
@@ -68,7 +68,7 @@ libseccomp-2.5.1-r2
 libsecret-0.20.4-r1
 libsm-1.2.3-r0
 libsodium-1.0.18-r0
-libssl1.1-1.1.1o-r0
+libssl1.1-1.1.1q-r0
 libstdc++-10.3.1_git20210424-r2
 libtasn1-4.17.0-r0
 libunistring-0.9.10-r1

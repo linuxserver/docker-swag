@@ -353,7 +353,11 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
         fi
         sleep infinity
     fi
-    openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
+    if [[ -z "${PKCS12_PASSWORD}" ]]; then
+        openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
+    else
+        openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:"${PKCS12_PASSWORD}"
+    fi    
     sleep 1
     cat {privkey,fullchain}.pem > priv-fullchain-bundle.pem
     echo "New certificate generated; starting nginx"

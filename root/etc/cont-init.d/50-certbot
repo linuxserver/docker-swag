@@ -28,7 +28,7 @@ cp -n /defaults/dns-conf/* /config/dns-conf/
 chown -R abc:abc /config/dns-conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-if [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|domeneshop|dynu|gandi|gehirn|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
+if [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(acmedns|aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|domeneshop|dynu|gandi|gehirn|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
     echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details."
     sleep infinity
 fi

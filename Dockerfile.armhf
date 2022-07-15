@@ -125,6 +125,7 @@ RUN \
     certbot-dns-njalla \
     certbot-dns-nsone \
     certbot-dns-ovh \
+    certbot-dns-porkbun \
     certbot-dns-rfc2136 \
     certbot-dns-route53 \
     certbot-dns-standalone \

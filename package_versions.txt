@@ -7,7 +7,7 @@ apr-util-1.6.1-r7
 argon2-libs-20190702-r1
 bash-5.1.16-r0
 brotli-libs-1.0.9-r5
-busybox-1.33.1-r7
+busybox-1.33.1-r8
 c-client-2007f-r11
 ca-certificates-20211220-r0
 ca-certificates-bundle-20211220-r0
@@ -17,7 +17,8 @@ expat-2.4.7-r0
 fail2ban-0.11.2-r0
 freetype-2.10.4-r3
 gdbm-1.19-r0
-git-2.32.2-r0
+git-2.32.3-r0
+git-perl-2.32.3-r0
 glib-2.68.3-r0
 gmp-6.2.1-r1
 gnupg-2.2.31-r1
@@ -91,8 +92,8 @@ mpdecimal-2.5.1-r1
 musl-1.2.2-r3
 musl-utils-1.2.2-r3
 nano-5.7-r2
-ncurses-libs-6.2_p20210612-r0
-ncurses-terminfo-base-6.2_p20210612-r0
+ncurses-libs-6.2_p20210612-r1
+ncurses-terminfo-base-6.2_p20210612-r1
 nettle-3.7.3-r0
 nghttp2-libs-1.43.0-r0
 nginx-1.20.2-r1
@@ -122,6 +123,8 @@ p11-kit-0.23.22-r0
 pcre-8.44-r0
 pcre2-10.36-r1
 perl-5.32.1-r0
+perl-error-0.17029-r1
+perl-git-2.32.3-r0
 php7-7.4.26-r0
 php7-bcmath-7.4.26-r0
 php7-bz2-7.4.26-r0
@@ -213,7 +216,7 @@ scanelf-1.3.2-r0
 shadow-4.8.1-r0
 skalibs-2.10.0.3-r0
 sqlite-libs-3.35.5-r0
-ssl_client-1.33.1-r7
+ssl_client-1.33.1-r8
 tzdata-2022a-r0
 unixodbc-2.3.9-r1
 utmps-0.1.0.2-r0

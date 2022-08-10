@@ -112,6 +112,7 @@ RUN \
     certbot-dns-dnsmadeeasy \
     certbot-dns-dnspod \
     certbot-dns-domeneshop \
+    certbot-dns-dynu \
     certbot-dns-google \
     certbot-dns-he \
     certbot-dns-hetzner \

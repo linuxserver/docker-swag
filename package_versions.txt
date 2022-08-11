@@ -223,5 +223,5 @@ utmps-0.1.0.2-r0
 whois-5.5.10-r0
 xz-5.2.5-r1
 xz-libs-5.2.5-r1
-zlib-1.2.12-r1
+zlib-1.2.12-r3
 zstd-libs-1.4.9-r1

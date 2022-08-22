@@ -1,4 +1,4 @@
-## Version 2022/08/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
+## Version 2022/08/22 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
 
 location ^~ /authelia {
@@ -11,9 +11,6 @@ location ^~ /authelia {
 
 location = /authelia/api/verify {
     internal;
-    if ($request_uri ~ [^a-zA-Z0-9_+-=\!@$%&*?~.:#'\;\(\)\[\]]) {
-        return 401;
-    }
 
     set $upstream_app authelia;
     set $upstream_port 9091;

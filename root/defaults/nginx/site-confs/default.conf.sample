@@ -44,7 +44,7 @@ server {
         # enable for Authelia (requires authelia-server.conf in the server block)
         #include /config/nginx/authelia-location.conf;
 
-        try_files $uri $uri/ /index.html /index.php?$args =404;
+        try_files $uri $uri/ /index.html /index.php$is_args$args =404;
     }
 
     location ~ ^(.+\.php)(.*)$ {

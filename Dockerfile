@@ -99,8 +99,8 @@ RUN \
     CERTBOT="certbot==${CERTBOT_VERSION}"; \
   fi && \
   pip3 install -U \
-    pip && \
-  pip3 install -U --find-links https://wheel-index.linuxserver.io/alpine/ \
+    pip wheel && \
+  pip install -U --find-links https://wheel-index.linuxserver.io/alpine-3.15/ \
     ${CERTBOT} \
     certbot-dns-aliyun \
     certbot-dns-azure \

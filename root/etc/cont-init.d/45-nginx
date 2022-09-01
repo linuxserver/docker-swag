@@ -7,6 +7,3 @@ fi
 if [[ ! -f /config/nginx/proxy.conf ]]; then
     cp /defaults/nginx/proxy.conf.sample /config/nginx/proxy.conf
 fi
-if [[ ! -f /config/www/502.html ]]; then
-    cp /defaults/www/502.html /config/www/502.html
-fi

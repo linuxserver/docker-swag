@@ -1,6 +1,4 @@
-## Version 2022/08/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/proxy.conf.sample
-
-include /config/nginx/error_pages.conf;
+## Version 2022/09/01 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/proxy.conf.sample
 
 # Timeout if the real server is dead
 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;

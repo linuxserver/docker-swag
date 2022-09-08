@@ -7,6 +7,6 @@ fi
 if [[ -f /config/nginx/ldap.conf ]]; then
     echo "/config/nginx/ldap.conf exists.
         Please apply any customizations to /config/nginx/ldap-server.conf
-        Ensure your nginx.conf is updated and remove /config/nginx/ldap.conf
+        Ensure your configs are updated and remove /config/nginx/ldap.conf
         If you do not use this config, simply remove it."
 fi

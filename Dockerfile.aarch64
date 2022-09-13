@@ -113,6 +113,7 @@ RUN \
     certbot-dns-dnspod \
     certbot-dns-domeneshop \
     certbot-dns-dynu \
+    certbot-dns-godaddy \
     certbot-dns-google \
     certbot-dns-he \
     certbot-dns-hetzner \

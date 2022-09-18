@@ -169,27 +169,20 @@ fi
 # figuring out url only vs url & subdomains vs subdomains only
 if [ -n "$SUBDOMAINS" ]; then
     echo "SUBDOMAINS entered, processing"
-    if [ "$SUBDOMAINS" = "wildcard" ]; then
-        if [ "$ONLY_SUBDOMAINS" = true ]; then
-            export URL_REAL="-d *.${URL}"
-            echo "Wildcard cert for only the subdomains of $URL will be requested"
+    for job in $(echo "$SUBDOMAINS" | tr "," " "); do
+        if [ "$job" = "wildcard" ]; then
+            export SUBDOMAINS_REAL="$SUBDOMAINS_REAL -d *.${URL}"
         else
-            export URL_REAL="-d *.${URL} -d ${URL}"
-            echo "Wildcard cert for $URL will be requested"
-        fi
-    else
-        echo "SUBDOMAINS entered, processing"
-        for job in $(echo "$SUBDOMAINS" | tr "," " "); do
             export SUBDOMAINS_REAL="$SUBDOMAINS_REAL -d ${job}.${URL}"
-        done
-        if [ "$ONLY_SUBDOMAINS" = true ]; then
-            URL_REAL="$SUBDOMAINS_REAL"
-            echo "Only subdomains, no URL in cert"
-        else
-            URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
         fi
-        echo "Sub-domains processed are: $SUBDOMAINS_REAL"
+    done
+    if [ "$ONLY_SUBDOMAINS" = true ]; then
+        URL_REAL="$SUBDOMAINS_REAL"
+        echo "Only subdomains, no URL in cert"
+    else
+        URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
     fi
+    echo "Sub-domains processed are: $SUBDOMAINS_REAL"
 else
     echo "No subdomains defined"
     URL_REAL="-d $URL"

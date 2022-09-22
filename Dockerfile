@@ -114,6 +114,7 @@ RUN \
     certbot-dns-dnsimple \
     certbot-dns-dnsmadeeasy \
     certbot-dns-dnspod \
+    certbot-dns-do \
     certbot-dns-domeneshop \
     certbot-dns-dynu \
     certbot-dns-google \

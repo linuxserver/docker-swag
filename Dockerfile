@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.14
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.15
 
 # set version label
 ARG BUILD_DATE
@@ -47,49 +47,51 @@ RUN \
     nginx-mod-stream \
     nginx-mod-stream-geoip2 \
     nginx-vim \
-    php7-bcmath \
-    php7-bz2 \
-    php7-ctype \
-    php7-curl \
-    php7-dom \
-    php7-exif \
-    php7-ftp \
-    php7-gd \
-    php7-gmp \
-    php7-iconv \
-    php7-imap \
-    php7-intl \
-    php7-ldap \
-    php7-mcrypt \
-    php7-memcached \
-    php7-mysqli \
-    php7-mysqlnd \
-    php7-opcache \
-    php7-pdo_mysql \
-    php7-pdo_odbc \
-    php7-pdo_pgsql \
-    php7-pdo_sqlite \
-    php7-pear \
-    php7-pecl-apcu \
-    php7-pecl-mailparse \
-    php7-pecl-redis \
-    php7-pgsql \
-    php7-phar \
-    php7-posix \
-    php7-soap \
-    php7-sockets \
-    php7-sodium \
-    php7-sqlite3 \
-    php7-tokenizer \
-    php7-xml \
-    php7-xmlreader \
-    php7-xmlrpc \
-    php7-xsl \
-    php7-zip \
+    php8-bcmath \
+    php8-bz2 \
+    php8-ctype \
+    php8-curl \
+    php8-dom \
+    php8-exif \
+    php8-ftp \
+    php8-gd \
+    php8-gmp \
+    php8-iconv \
+    php8-imap \
+    php8-intl \
+    php8-ldap \
+    php8-mysqli \
+    php8-mysqlnd \
+    php8-opcache \
+    php8-pdo_mysql \
+    php8-pdo_odbc \
+    php8-pdo_pgsql \
+    php8-pdo_sqlite \
+    php8-pear \
+    php8-pecl-apcu \
+    php8-pecl-mailparse \
+    php8-pecl-mcrypt \
+    php8-pecl-memcached \
+    php8-pecl-redis \
+    php8-pgsql \
+    php8-phar \
+    php8-posix \
+    php8-soap \
+    php8-sockets \
+    php8-sodium \
+    php8-sqlite3 \
+    php8-tokenizer \
+    php8-xml \
+    php8-xmlreader \
+    php8-xsl \
+    php8-zip \
     py3-cryptography \
     py3-future \
     py3-pip \
     whois && \
+  apk add --no-cache \
+    --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+    php8-pecl-xmlrpc && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \
     CERTBOT="certbot"; \
@@ -97,8 +99,8 @@ RUN \
     CERTBOT="certbot==${CERTBOT_VERSION}"; \
   fi && \
   pip3 install -U \
-    pip && \
-  pip3 install -U --find-links https://wheel-index.linuxserver.io/alpine/ \
+    pip wheel && \
+  pip install -U --find-links https://wheel-index.linuxserver.io/alpine-3.15/ \
     ${CERTBOT} \
     certbot-dns-aliyun \
     certbot-dns-azure \
@@ -135,6 +137,16 @@ RUN \
     certbot-plugin-gandi \
     cryptography \
     requests && \
+  echo "**** enable OCSP stapling from base ****" && \
+  sed -i \
+    's|#ssl_stapling on;|ssl_stapling on;|' \
+    /defaults/nginx/ssl.conf.sample && \
+  sed -i \
+    's|#ssl_stapling_verify on;|ssl_stapling_verify on;|' \
+    /defaults/nginx/ssl.conf.sample && \
+  sed -i \
+    's|#ssl_trusted_certificate /config/keys/cert.crt;|ssl_trusted_certificate /config/keys/cert.crt;|' \
+    /defaults/nginx/ssl.conf.sample && \
   echo "**** correct ip6tables legacy issue ****" && \
   rm \ 
     /sbin/ip6tables && \
@@ -143,20 +155,19 @@ RUN \
   echo "**** remove unnecessary fail2ban filters ****" && \
   rm \
     /etc/fail2ban/jail.d/alpine-ssh.conf && \
-  echo "**** copy fail2ban default action and filter to /default ****" && \
+  echo "**** copy fail2ban default action and filter to /defaults ****" && \
   mkdir -p /defaults/fail2ban && \
   mv /etc/fail2ban/action.d /defaults/fail2ban/ && \
   mv /etc/fail2ban/filter.d /defaults/fail2ban/ && \
-  echo "**** copy proxy confs to /default ****" && \
-  mkdir -p /defaults/proxy-confs && \
+  echo "**** copy proxy confs to /defaults ****" && \
+  mkdir -p \
+    /defaults/nginx/proxy-confs && \
   curl -o \
-    /tmp/proxy.tar.gz -L \
+    /tmp/proxy-confs.tar.gz -L \
     "https://github.com/linuxserver/reverse-proxy-confs/tarball/master" && \
   tar xf \
-    /tmp/proxy.tar.gz -C \
-    /defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github --exclude=linux*/.gitignore --exclude=linux*/LICENSE && \
-  echo "**** configure nginx ****" && \
-  rm -f /etc/nginx/http.d/default.conf && \
+    /tmp/proxy-confs.tar.gz -C \
+    /defaults/nginx/proxy-confs --strip-components=1 --exclude=linux*/.editorconfig --exclude=linux*/.gitattributes --exclude=linux*/.github --exclude=linux*/.gitignore --exclude=linux*/LICENSE && \
   echo "**** cleanup ****" && \
   apk del --purge \
     build-dependencies && \
@@ -169,5 +180,9 @@ RUN \
     /root/.cache \
     /root/.cargo
 
-# add local files
+# copy local files
 COPY root/ /
+
+# ports and volumes
+EXPOSE 80 443
+VOLUME /config

@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bash
+
+if [[ -f /config/nginx/geoip2.conf ]]; then
+    echo "/config/nginx/geoip2.conf exists.
+        Please migrate to https://github.com/linuxserver/docker-mods/tree/swag-maxmind"
+fi
+if [[ -f /config/nginx/ldap.conf ]]; then
+    echo "/config/nginx/ldap.conf exists.
+        Please apply any customizations to /config/nginx/ldap-server.conf
+        Ensure your configs are updated and remove /config/nginx/ldap.conf
+        If you do not use this config, simply remove it."
+fi

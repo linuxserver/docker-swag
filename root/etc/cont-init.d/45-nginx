@@ -1,0 +1,27 @@
+#!/usr/bin/with-contenv bash
+
+# copy default config files if they don't exist
+if [[ ! -f /config/nginx/proxy.conf ]]; then
+    cp /defaults/nginx/proxy.conf.sample /config/nginx/proxy.conf
+fi
+
+# copy authelia config files if they don't exist
+if [[ ! -f /config/nginx/authelia-location.conf ]]; then
+    cp /defaults/nginx/authelia-location.conf.sample /config/nginx/authelia-location.conf
+fi
+if [[ ! -f /config/nginx/authelia-server.conf ]]; then
+    cp /defaults/nginx/authelia-server.conf.sample /config/nginx/authelia-server.conf
+fi
+
+# copy old ldap config file to new location
+if [[ -f /config/nginx/ldap.conf ]] && [[ ! -f /config/nginx/ldap-server.conf ]]; then
+    cp /config/nginx/ldap.conf /config/nginx/ldap-server.conf
+fi
+
+# copy ldap config files if they don't exist
+if [[ ! -f /config/nginx/ldap-location.conf ]]; then
+    cp /defaults/nginx/ldap-location.conf.sample /config/nginx/ldap-location.conf
+fi
+if [[ ! -f /config/nginx/ldap-server.conf ]]; then
+    cp /defaults/nginx/ldap-server.conf.sample /config/nginx/ldap-server.conf
+fi

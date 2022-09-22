@@ -1,4 +1,4 @@
-## Version 2021/10/26 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/proxy.conf
+## Version 2022/09/01 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/proxy.conf.sample
 
 # Timeout if the real server is dead
 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
@@ -10,7 +10,7 @@ proxy_headers_hash_bucket_size 128;
 proxy_headers_hash_max_size 1024;
 proxy_http_version 1.1;
 proxy_read_timeout 240;
-proxy_redirect  http://  $scheme://;
+proxy_redirect http:// $scheme://;
 proxy_send_timeout 240;
 
 # Proxy Cache and Cookie Settings
@@ -25,7 +25,11 @@ proxy_set_header Host $host;
 proxy_set_header Proxy "";
 proxy_set_header Upgrade $http_upgrade;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header X-Forwarded-Host $host;
-proxy_set_header X-Forwarded-Proto https;
+proxy_set_header X-Forwarded-Host $host:$server_port;
+proxy_set_header X-Forwarded-Method $request_method;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_set_header X-Forwarded-Server $host;
 proxy_set_header X-Forwarded-Ssl on;
+proxy_set_header X-Forwarded-Uri $request_uri;
+proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
 proxy_set_header X-Real-IP $remote_addr;

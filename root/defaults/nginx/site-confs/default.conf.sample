@@ -1,0 +1,62 @@
+## Version 2022/09/01 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
+
+# redirect all traffic to https
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# main server block
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name _;
+
+    root /config/www;
+    index index.html index.htm index.php;
+
+    # enable subfolder method reverse proxy confs
+    include /config/nginx/proxy-confs/*.subfolder.conf;
+
+    # enable for ldap auth (requires ldap-location.conf in the location block)
+    #include /config/nginx/ldap-server.conf;
+
+    # enable for Authelia (requires authelia-location.conf in the location block)
+    #include /config/nginx/authelia-server.conf;
+
+    location / {
+        # enable for basic auth
+        #auth_basic "Restricted";
+        #auth_basic_user_file /config/nginx/.htpasswd;
+
+        # enable for ldap auth (requires ldap-server.conf in the server block)
+        #include /config/nginx/ldap-location.conf;
+
+        # enable for Authelia (requires authelia-server.conf in the server block)
+        #include /config/nginx/authelia-location.conf;
+
+        try_files $uri $uri/ /index.html /index.php$is_args$args =404;
+    }
+
+    location ~ ^(.+\.php)(.*)$ {
+        fastcgi_split_path_info ^(.+\.php)(.*)$;
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
+        include /etc/nginx/fastcgi_params;
+    }
+
+    # deny access to .htaccess/.htpasswd files
+    location ~ /\.ht {
+        deny all;
+    }
+}
+
+# enable subdomain method reverse proxy confs
+include /config/nginx/proxy-confs/*.subdomain.conf;
+# enable proxy cache for auth
+proxy_cache_path cache/ keys_zone=auth_cache:10m;

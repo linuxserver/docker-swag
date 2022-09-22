@@ -102,6 +102,7 @@ RUN \
     pip wheel && \
   pip install -U --find-links https://wheel-index.linuxserver.io/alpine-3.15/ \
     ${CERTBOT} \
+    certbot-dns-acmedns \
     certbot-dns-aliyun \
     certbot-dns-azure \
     certbot-dns-cloudflare \

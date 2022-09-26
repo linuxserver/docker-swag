@@ -11,7 +11,7 @@ EXTRA_DOMAINS=${EXTRA_DOMAINS}\\n\
 ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}\\n\
 VALIDATION=${VALIDATION}\\n\
 CERTPROVIDER=${CERTPROVIDER}\\n\
-ACMESERVER=${ACMESERVER}\\n\
+ACMEURL=${ACMEURL}\\n\
 ACMECABUNDLE=${ACMECABUNDLE}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
@@ -41,7 +41,7 @@ if [ -f "/config/donoteditthisfile.conf" ]; then
     mv /config/donoteditthisfile.conf /config/.donoteditthisfile.conf
 fi
 if [ ! -f "/config/.donoteditthisfile.conf" ]; then
-    echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGACMESERVER=\"$ACMESERVER\" ORIGACMECABUNDLE=\"$ACMECABUNDLE\" ORIGEMAIL=\"$EMAIL\"" > /config/.donoteditthisfile.conf
+    echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGACMEURL=\"$ACMEURL\" ORIGACMECABUNDLE=\"$ACMECABUNDLE\" ORIGEMAIL=\"$EMAIL\"" > /config/.donoteditthisfile.conf
     echo "Created .donoteditthisfile.conf"
 fi
 
@@ -56,12 +56,13 @@ if [ -z "$VALIDATION" ]; then
 fi
 
 # Choose the relevant CA server
-if [ -n "$ACMESERVER" ]; then
+if [ -n "$ACMEURL" ]; then
 	if [ -z "$EMAIL" ]; then
-		echo 'A custom $ACMESERVER URL requires an account $EMAIL to be supplied'
+		echo 'A custom $ACMEURL requires an account $EMAIL to be supplied'
 		sleep infinity
 	fi
-	echo "Using $ACMESERVER as the cert provider; registering cert with $EMAIL"
+	echo "Using $ACMEURL as the cert provider; registering cert with $EMAIL"
+	ACMESERVER=$ACMEURL
 elif [ "$CERTPROVIDER" = "zerossl" ]; then
 	ACMESERVER="https://acme.zerossl.com/v2/DV90"
 	if [ "$STAGING" = "true" ]; then
@@ -84,6 +85,9 @@ fi
 
 if [ -n "$ACMECABUNDLE" ]; then
 	echo "$ACMECABUNDLE" | base64 -d - > /config/cabundle.pem
+fi
+
+if [ -f "/config/cabundle.pem" ]; then
 	export REQUESTS_CA_BUNDLE="/config/cabundle.pem"
 fi
 
@@ -234,7 +238,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGACMESERVER=\"$ACMESERVER\" ORIGACMECABUNDLE=\"$ACMECABUNDLE\" ORIGEMAIL=\"$EMAIL\"" > /config/.donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGACMEURL=\"$ACMEURL\" ORIGACMECABUNDLE=\"$ACMECABUNDLE\" ORIGEMAIL=\"$EMAIL\"" > /config/.donoteditthisfile.conf
 
 # alter extension for error message
 if [ "$DNSPLUGIN" = "google" ]; then

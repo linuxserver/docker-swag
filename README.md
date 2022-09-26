@@ -73,6 +73,14 @@ The architectures supported by this image are:
 * After setup, navigate to `https://yourdomain.url` to access the default homepage (http access through port 80 is disabled by default, you can enable it by editing the default site config at `/config/nginx/site-confs/default.conf`).
 * Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from Let's Encrypt in those circumstances.
 
+### Using A Private ACME Server
+
+If you are getting certificates from a private ACME server instead of Let's Encrypt or ZeroSSL, you will need to configure your ACME server URL and CA trust.
+
+* Set `CERTPROVIDER` to `custom`
+* Set `ACMEURL` to the URL of your ACME server
+* Set `ACMECABUNDLE` to a base64-wrapped PEM file containing your trusted root CA certificate bundle. (Yes, this ends up being double-encoded.)
+
 ### Security and password protection
 
 * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start.

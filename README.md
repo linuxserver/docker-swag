@@ -79,7 +79,7 @@ If you are getting certificates from a private ACME server instead of Let's Encr
 
 * Set `CERTPROVIDER` to `custom`
 * Set `ACMEURL` to the URL of your ACME server
-* Set `ACMECABUNDLE` to a base64-wrapped PEM file containing your trusted root CA certificate bundle. (Yes, this ends up being double-encoded.)
+* Set `ACMECABUNDLE` to a base64-wrapped PEM file containing your trusted root CA certificate bundle. (Yes, this ends up being double-encoded.) Or, file mount your CA bundle at `/config/cabundle.pem`.
 
 ### Security and password protection
 

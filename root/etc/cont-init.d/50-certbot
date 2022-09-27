@@ -56,12 +56,16 @@ if [ -z "$VALIDATION" ]; then
 fi
 
 # Choose the relevant CA server
-if [ -n "$ACMEURL" ]; then
-	if [ -z "$EMAIL" ]; then
-		echo 'A custom $ACMEURL requires an account $EMAIL to be supplied'
+if [ "$CERTPROVIDER" = "custom" ]; then
+    if [ -z "$ACMEURL" ]; then
+		echo 'A custom $ACMEURL must be supplied'
 		sleep infinity
 	fi
-	echo "Using $ACMEURL as the cert provider; registering cert with $EMAIL"
+	if [ -n "$EMAIL" ]; then
+		echo 'EAB is not yet supported for custom ACME servers'
+		sleep infinity
+	fi
+	echo "Using $ACMEURL as the cert provider'
 	ACMESERVER=$ACMEURL
 elif [ "$CERTPROVIDER" = "zerossl" ]; then
 	ACMESERVER="https://acme.zerossl.com/v2/DV90"
@@ -209,14 +213,16 @@ rm -rf /config/keys/cert.key
 ln -s ./letsencrypt/privkey.pem /config/keys/cert.key
 
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$DUCKDNSTOKEN" = "$ORIGDUCKDNSTOKEN" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ]; then
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$DUCKDNSTOKEN" = "$ORIGDUCKDNSTOKEN" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ] || [ ! "$ACMEURL" = "$ORIGACMEURL" ] || [ ! "ACMECABUNDLE" = "$ORIGACMECABUNDLE" ]; then
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
     if [ "$ORIGONLY_SUBDOMAINS" = "true" ] && [ ! "$ORIGSUBDOMAINS" = "wildcard" ]; then
         ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
     else
         ORIGDOMAIN="$ORIGURL"
     fi
-    if [ "$ORIGCERTPROVIDER" = "zerossl" ] && [ -n "$ORIGEMAIL" ]; then
+    if [ "$ORIGCERTPROVIDER" = "custom" ]; then
+		REV_ACMESERVER=$ORIGACMEURL
+    elif [ "$ORIGCERTPROVIDER" = "zerossl" ] && [ -n "$ORIGEMAIL" ]; then
         REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$ORIGEMAIL")
         REV_ZEROSSL_EAB_KID=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
         REV_ZEROSSL_EAB_HMAC_KEY=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
@@ -225,10 +231,12 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
             sleep infinity
         fi
         REV_ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${REV_ZEROSSL_EAB_KID} --eab-hmac-key ${REV_ZEROSSL_EAB_HMAC_KEY}"
-    elif [ "$ORIGSTAGING" = "true" ]; then
-        REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
     else
-        REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
+        if [ "$ORIGSTAGING" = "true" ]; then
+            REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
+        else
+            REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
+        fi
     fi
     if [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]]; then
         certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
@@ -248,7 +256,7 @@ else
 fi
 
 # Check if the cert is using the old LE root cert, revoke and regen if necessary
-if [ -f "/config/keys/letsencrypt/chain.pem" ] && ([ "${CERTPROVIDER}" = "letsencrypt" ] || ([ "${CERTPROVIDER}" = "" ] && [ -z "$ACMECABUNDLE" ])) && [ "${STAGING}" != "true" ] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
+if [ -f "/config/keys/letsencrypt/chain.pem" ] && ([ "${CERTPROVIDER}" = "letsencrypt" ] || [ "${CERTPROVIDER}" = "" ])) && [ "${STAGING}" != "true" ] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
     echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
     REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
     certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER

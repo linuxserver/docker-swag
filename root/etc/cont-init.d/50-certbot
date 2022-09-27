@@ -222,6 +222,10 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
     fi
     if [ "$ORIGCERTPROVIDER" = "custom" ]; then
 		REV_ACMESERVER=$ORIGACMEURL
+		if [ -n "$ORIGACMECABUNDLE" ]; then
+			echo "$ORIGACMECABUNDLE" | base64 -d - > /config/origcabundle.pem
+			export REQUESTS_CA_BUNDLE="/config/origcabundle.pem"
+		fi
     elif [ "$ORIGCERTPROVIDER" = "zerossl" ] && [ -n "$ORIGEMAIL" ]; then
         REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$ORIGEMAIL")
         REV_ZEROSSL_EAB_KID=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")

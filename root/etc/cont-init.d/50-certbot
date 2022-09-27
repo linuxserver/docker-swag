@@ -260,7 +260,7 @@ else
 fi
 
 # Check if the cert is using the old LE root cert, revoke and regen if necessary
-if [ -f "/config/keys/letsencrypt/chain.pem" ] && ([ "${CERTPROVIDER}" = "letsencrypt" ] || [ "${CERTPROVIDER}" = "" ])) && [ "${STAGING}" != "true" ] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
+if [ -f "/config/keys/letsencrypt/chain.pem" ] && ([ "${CERTPROVIDER}" = "letsencrypt" ] || [ "${CERTPROVIDER}" = "" ]) && [ "${STAGING}" != "true" ] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
     echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
     REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
     certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER

@@ -335,6 +335,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **03.10.22:** - Add default_server back to default site conf's https listen.
 * **22.09.22:** - Added support for DO DNS validation.
 * **22.09.22:** - Added certbot-dns-acmedns for DNS01 validation.
 * **20.08.22:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf - Rebasing to alpine 3.15 with php8. Restructure nginx configs ([see changes announcement](https://info.linuxserver.io/issues/2022-08-20-nginx-base)).

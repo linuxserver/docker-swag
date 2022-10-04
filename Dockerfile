@@ -135,7 +135,6 @@ RUN \
     certbot-dns-standalone \
     certbot-dns-transip \
     certbot-dns-vultr \
-    certbot-dns-desec \
     certbot-plugin-gandi \
     cryptography \
     requests && \

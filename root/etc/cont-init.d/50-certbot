@@ -28,7 +28,7 @@ cp -n /defaults/dns-conf/* /config/dns-conf/
 chown -R abc:abc /config/dns-conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-if [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(acmedns|aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|do|domeneshop|dynu|gandi|gehirn|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
+if [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(acmedns|aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|do|domeneshop|dynu|gandi|gehirn|godaddy|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|porkbun|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
     echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details."
     sleep infinity
 
@@ -140,7 +140,7 @@ if [ "$VALIDATION" = "dns" ]; then
     elif [[ "$DNSPLUGIN" =~ ^(google)$ ]]; then
         if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.json ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(aliyun|desec|dnspod|do|domeneshop|dynu|he|hetzner|infomaniak|inwx|ionos|loopia|netcup|njalla|transip|vultr)$ ]]; then
+    elif [[ "$DNSPLUGIN" =~ ^(aliyun|desec|dnspod|do|domeneshop|dynu|godaddy|he|hetzner|infomaniak|inwx|ionos|loopia|netcup|njalla|porkbun|transip|vultr)$ ]]; then
         if [ -n "$PROPAGATION" ];then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
     elif [[ "$DNSPLUGIN" =~ ^(standalone)$ ]]; then

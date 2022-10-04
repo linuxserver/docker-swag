@@ -117,6 +117,8 @@ RUN \
     certbot-dns-do \
     certbot-dns-domeneshop \
     certbot-dns-dynu \
+    certbot-dns-gehirn \
+    certbot-dns-godaddy \
     certbot-dns-google \
     certbot-dns-he \
     certbot-dns-hetzner \
@@ -130,12 +132,13 @@ RUN \
     certbot-dns-njalla \
     certbot-dns-nsone \
     certbot-dns-ovh \
+    certbot-dns-porkbun \
     certbot-dns-rfc2136 \
     certbot-dns-route53 \
+    certbot-dns-sakuracloud \
     certbot-dns-standalone \
     certbot-dns-transip \
     certbot-dns-vultr \
-    certbot-dns-desec \
     certbot-plugin-gandi \
     cryptography \
     requests && \

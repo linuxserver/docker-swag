@@ -156,7 +156,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
-  - { date: "06.10.22:", desc: "Update cpanel and gandi dns plugin handling. Minor adjustments to init logic." }
+  - { date: "06.10.22:", desc: "Switch to certbot-dns-duckdns. Update cpanel and gandi dns plugin handling. Minor adjustments to init logic." }
   - { date: "05.10.22:", desc: "Use certbot file hooks instead of command line hooks" }
   - { date: "04.10.22:", desc: "Add godaddy and porkbun dns plugins." }
   - { date: "03.10.22:", desc: "Add default_server back to default site conf's https listen." }

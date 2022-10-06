@@ -34,9 +34,11 @@ chown -R abc:abc /config/dns-conf
 
 # update plugin names in dns conf inis
 sed -i 's|^certbot_dns_aliyun:||g' /config/dns-conf/aliyun.ini
+sed -i 's|^certbot_dns_cpanel:|dns_|g' /config/dns-conf/cpanel.ini
 sed -i 's|^certbot_dns_domeneshop:||g' /config/dns-conf/domeneshop.ini
 sed -i 's|^certbot_dns_inwx:||g' /config/dns-conf/inwx.ini
 sed -i 's|^certbot_dns_transip:||g' /config/dns-conf/transip.ini
+sed -i 's|^certbot_plugin_gandi:dns_|dns_gandi_|g' /config/dns-conf/gandi.ini
 
 # copy default renewal hooks
 chmod -R +x /defaults/etc/letsencrypt/renewal-hooks
@@ -134,16 +136,13 @@ if [ "$VALIDATION" = "dns" ]; then
     if [ "$DNSPLUGIN" = "route53" ]; then
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(cpanel)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--certbot-dns-${DNSPLUGIN}:${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-        PREFCHAL="-a certbot-dns-${DNSPLUGIN}:${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(gandi)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then echo "Gandi dns plugin does not support setting propagation time"; fi
-        PREFCHAL="-a certbot-plugin-${DNSPLUGIN}:dns --certbot-plugin-${DNSPLUGIN}:dns-credentials /config/dns-conf/${DNSPLUGIN}.ini"
+    elif [[ "$DNSPLUGIN" =~ ^(azure|gandi)$ ]]; then
+        if [ -n "$PROPAGATION" ]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
+        PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini"
     elif [[ "$DNSPLUGIN" =~ ^(google)$ ]]; then
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.json ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(aliyun|desec|dnspod|do|domeneshop|dynu|godaddy|he|hetzner|infomaniak|inwx|ionos|loopia|netcup|njalla|porkbun|transip|vultr)$ ]]; then
+    elif [[ "$DNSPLUGIN" =~ ^(aliyun|cpanel|desec|dnspod|do|domeneshop|dynu|godaddy|he|hetzner|infomaniak|inwx|ionos|loopia|netcup|njalla|porkbun|transip|vultr)$ ]]; then
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
     elif [[ "$DNSPLUGIN" =~ ^(standalone)$ ]]; then
@@ -152,19 +151,16 @@ if [ "$VALIDATION" = "dns" ]; then
     elif [[ "$DNSPLUGIN" =~ ^(directadmin)$ ]]; then
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="-a ${DNSPLUGIN} --${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(azure)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then echo "Azure dns plugin does not support setting propagation time"; fi
-        PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini"
     else
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
     fi
     echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
 elif [ "$VALIDATION" = "tls-sni" ]; then
-    PREFCHAL="--non-interactive --standalone --preferred-challenges http"
+    PREFCHAL="--standalone --preferred-challenges http"
     echo "*****tls-sni validation has been deprecated, attempting http validation instead"
 elif [ "$VALIDATION" = "duckdns" ]; then
-    PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-auth-hook /app/duckdns-txt"
+    PREFCHAL="--manual --preferred-challenges dns --manual-auth-hook /app/duckdns-txt"
     chmod +x /app/duckdns-txt
     echo "duckdns validation is selected"
     if [ "$SUBDOMAINS" = "wildcard" ]; then
@@ -175,7 +171,7 @@ elif [ "$VALIDATION" = "duckdns" ]; then
         export URL_REAL="-d ${URL}"
     fi
 else
-    PREFCHAL="--non-interactive --standalone --preferred-challenges http"
+    PREFCHAL="--standalone --preferred-challenges http"
     echo "http validation is selected"
 fi
 
@@ -234,7 +230,9 @@ fi
 if [ -f "/config/keys/letsencrypt/chain.pem" ] && { [ "${CERTPROVIDER}" == "letsencrypt" ] || [ "${CERTPROVIDER}" == "" ]; } && [ "${STAGING}" != "true" ] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
     echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
     REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
-    certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
+    if [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]]; then
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
+    fi
     rm -rf /config/etc/letsencrypt/{archive,live,renewal}
 fi
 

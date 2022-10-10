@@ -23,7 +23,7 @@ for i in "${SANED_VARS[@]}"; do
 done
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-if [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(acmedns|aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|do|domeneshop|dynu|gandi|gehirn|godaddy|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|porkbun|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
+if [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(acmedns|aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|do|domeneshop|duckdns|dynu|gandi|gehirn|godaddy|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|porkbun|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
     echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details."
     sleep infinity
 fi
@@ -34,9 +34,11 @@ chown -R abc:abc /config/dns-conf
 
 # update plugin names in dns conf inis
 sed -i 's|^certbot_dns_aliyun:||g' /config/dns-conf/aliyun.ini
+sed -i 's|^certbot_dns_cpanel:|dns_|g' /config/dns-conf/cpanel.ini
 sed -i 's|^certbot_dns_domeneshop:||g' /config/dns-conf/domeneshop.ini
 sed -i 's|^certbot_dns_inwx:||g' /config/dns-conf/inwx.ini
 sed -i 's|^certbot_dns_transip:||g' /config/dns-conf/transip.ini
+sed -i 's|^certbot_plugin_gandi:dns_|dns_gandi_|g' /config/dns-conf/gandi.ini
 
 # copy default renewal hooks
 chmod -R +x /defaults/etc/letsencrypt/renewal-hooks
@@ -48,7 +50,7 @@ if [ -f "/config/donoteditthisfile.conf" ]; then
     mv /config/donoteditthisfile.conf /config/.donoteditthisfile.conf
 fi
 if [ ! -f "/config/.donoteditthisfile.conf" ]; then
-    echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\"" >/config/.donoteditthisfile.conf
+    echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\"" >/config/.donoteditthisfile.conf
     echo "Created .donoteditthisfile.conf"
 fi
 
@@ -60,6 +62,25 @@ fi
 if [ -z "$VALIDATION" ]; then
     VALIDATION="http"
     echo "VALIDATION parameter not set; setting it to http"
+fi
+
+# set duckdns validation to dns
+if [ "$VALIDATION" = "duckdns" ]; then
+    VALIDATION="dns"
+    DNSPLUGIN="duckdns"
+    if [ -n "$DUCKDNSTOKEN" ] && ! grep -q "dns_duckdns_token=${DUCKDNSTOKEN}$" /config/dns-conf/duckdns.ini;then
+        sed -i "s|^dns_duckdns_token=.*|dns_duckdns_token=${DUCKDNSTOKEN}|g" /config/dns-conf/duckdns.ini
+    fi
+fi
+if [ "$VALIDATION" = "dns" ] && [ "$DNSPLUGIN" = "duckdns" ]; then
+    if [ "$SUBDOMAINS" = "wildcard" ]; then
+        echo "the resulting certificate will only cover the subdomains due to a limitation of duckdns, so it is advised to set the root location to use www.subdomain.duckdns.org"
+        export ONLY_SUBDOMAINS=true
+    else
+        echo "the resulting certificate will only cover the main domain due to a limitation of duckdns, ie. subdomain.duckdns.org"
+        export SUBDOMAINS=""
+    fi
+    export EXTRA_DOMAINS=""
 fi
 
 # if zerossl is selected or staging is set to true, use the relevant server
@@ -134,16 +155,13 @@ if [ "$VALIDATION" = "dns" ]; then
     if [ "$DNSPLUGIN" = "route53" ]; then
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(cpanel)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--certbot-dns-${DNSPLUGIN}:${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-        PREFCHAL="-a certbot-dns-${DNSPLUGIN}:${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(gandi)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then echo "Gandi dns plugin does not support setting propagation time"; fi
-        PREFCHAL="-a certbot-plugin-${DNSPLUGIN}:dns --certbot-plugin-${DNSPLUGIN}:dns-credentials /config/dns-conf/${DNSPLUGIN}.ini"
+    elif [[ "$DNSPLUGIN" =~ ^(azure|gandi)$ ]]; then
+        if [ -n "$PROPAGATION" ]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
+        PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini"
     elif [[ "$DNSPLUGIN" =~ ^(google)$ ]]; then
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.json ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(aliyun|desec|dnspod|do|domeneshop|dynu|godaddy|he|hetzner|infomaniak|inwx|ionos|loopia|netcup|njalla|porkbun|transip|vultr)$ ]]; then
+    elif [[ "$DNSPLUGIN" =~ ^(aliyun|cpanel|desec|dnspod|do|domeneshop|duckdns|dynu|godaddy|he|hetzner|infomaniak|inwx|ionos|loopia|netcup|njalla|porkbun|transip|vultr)$ ]]; then
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
     elif [[ "$DNSPLUGIN" =~ ^(standalone)$ ]]; then
@@ -152,30 +170,16 @@ if [ "$VALIDATION" = "dns" ]; then
     elif [[ "$DNSPLUGIN" =~ ^(directadmin)$ ]]; then
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="-a ${DNSPLUGIN} --${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(azure)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then echo "Azure dns plugin does not support setting propagation time"; fi
-        PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini"
     else
         if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
     fi
     echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
 elif [ "$VALIDATION" = "tls-sni" ]; then
-    PREFCHAL="--non-interactive --standalone --preferred-challenges http"
+    PREFCHAL="--standalone --preferred-challenges http"
     echo "*****tls-sni validation has been deprecated, attempting http validation instead"
-elif [ "$VALIDATION" = "duckdns" ]; then
-    PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-auth-hook /app/duckdns-txt"
-    chmod +x /app/duckdns-txt
-    echo "duckdns validation is selected"
-    if [ "$SUBDOMAINS" = "wildcard" ]; then
-        echo "the resulting certificate will only cover the subdomains due to a limitation of duckdns, so it is advised to set the root location to use www.subdomain.duckdns.org"
-        export URL_REAL="-d *.${URL}"
-    else
-        echo "the resulting certificate will only cover the main domain due to a limitation of duckdns, ie. subdomain.duckdns.org"
-        export URL_REAL="-d ${URL}"
-    fi
 else
-    PREFCHAL="--non-interactive --standalone --preferred-challenges http"
+    PREFCHAL="--standalone --preferred-challenges http"
     echo "http validation is selected"
 fi
 
@@ -193,7 +197,7 @@ rm -rf /config/keys/cert.key
 ln -s ./letsencrypt/privkey.pem /config/keys/cert.key
 
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$DUCKDNSTOKEN" = "$ORIGDUCKDNSTOKEN" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ]; then
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ]; then
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
     if [ "$ORIGONLY_SUBDOMAINS" = "true" ] && [ ! "$ORIGSUBDOMAINS" = "wildcard" ]; then
         ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
@@ -221,7 +225,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\"" >/config/.donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\"" >/config/.donoteditthisfile.conf
 
 # alter extension for error message
 if [ "$DNSPLUGIN" = "google" ]; then
@@ -234,7 +238,9 @@ fi
 if [ -f "/config/keys/letsencrypt/chain.pem" ] && { [ "${CERTPROVIDER}" == "letsencrypt" ] || [ "${CERTPROVIDER}" == "" ]; } && [ "${STAGING}" != "true" ] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
     echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
     REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
-    certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
+    if [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]]; then
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
+    fi
     rm -rf /config/etc/letsencrypt/{archive,live,renewal}
 fi
 
@@ -257,8 +263,6 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
     if [ ! -d /config/keys/letsencrypt ]; then
         if [ "$VALIDATION" = "dns" ]; then
             echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${FILENAME} file."
-        elif [ "$VALIDATION" = "duckdns" ]; then
-            echo "ERROR: Cert does not exist! Please see the validation error above. Make sure your DUCKDNSTOKEN is correct."
         else
             echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
         fi

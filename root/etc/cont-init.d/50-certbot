@@ -221,7 +221,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
     if [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]]; then
         certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
     fi
-    rm -rf /config/etc/letsencrypt/{archive,live,renewal}
+    rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
 
 # saving new variables
@@ -241,7 +241,7 @@ if [ -f "/config/keys/letsencrypt/chain.pem" ] && { [ "${CERTPROVIDER}" == "lets
     if [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]]; then
         certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
     fi
-    rm -rf /config/etc/letsencrypt/{archive,live,renewal}
+    rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
 
 # generating certs if necessary

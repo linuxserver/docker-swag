@@ -135,8 +135,8 @@ php8-ctype-8.0.25-r0
 php8-curl-8.0.25-r0
 php8-dom-8.0.25-r0
 php8-exif-8.0.25-r0
-php8-fileinfo-8.0.18-r0
-php8-fpm-8.0.18-r0
+php8-fileinfo-8.0.25-r0
+php8-fpm-8.0.25-r0
 php8-ftp-8.0.25-r0
 php8-gd-8.0.25-r0
 php8-gmp-8.0.25-r0
@@ -166,7 +166,7 @@ php8-pgsql-8.0.25-r0
 php8-phar-8.0.25-r0
 php8-posix-8.0.25-r0
 php8-session-8.0.25-r0
-php8-simplexml-8.0.18-r0
+php8-simplexml-8.0.25-r0
 php8-soap-8.0.25-r0
 php8-sockets-8.0.25-r0
 php8-sodium-8.0.25-r0
@@ -174,7 +174,7 @@ php8-sqlite3-8.0.25-r0
 php8-tokenizer-8.0.25-r0
 php8-xml-8.0.25-r0
 php8-xmlreader-8.0.25-r0
-php8-xmlwriter-8.0.18-r0
+php8-xmlwriter-8.0.25-r0
 php8-xsl-8.0.25-r0
 php8-zip-8.0.25-r0
 pinentry-1.2.0-r0

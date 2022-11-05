@@ -335,6 +335,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **05.11.22:** - Update acmedns plugin handling.
 * **06.10.22:** - Switch to certbot-dns-duckdns. Update cpanel and gandi dns plugin handling. Minor adjustments to init logic.
 * **05.10.22:** - Use certbot file hooks instead of command line hooks
 * **04.10.22:** - Add godaddy and porkbun dns plugins.

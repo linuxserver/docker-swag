@@ -211,7 +211,7 @@ py3-toml-0.10.2-r2
 py3-tomli-1.2.2-r0
 py3-urllib3-1.26.7-r0
 py3-webencodings-0.5.1-r4
-python3-3.9.13-r1
+python3-3.9.15-r0
 readline-8.1.1-r0
 s6-ipcserver-2.11.0.0-r0
 scanelf-1.3.3-r0
@@ -219,7 +219,7 @@ shadow-4.8.1-r1
 skalibs-2.11.0.0-r0
 sqlite-libs-3.36.0-r0
 ssl_client-1.34.1-r7
-tzdata-2022c-r0
+tzdata-2022f-r1
 unixodbc-2.3.9-r1
 utmps-0.1.0.3-r0
 whois-5.5.10-r0

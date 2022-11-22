@@ -2,7 +2,12 @@
 
 # jenkins variables
 project_name: docker-swag
-external_type: pip_version
+
+# Pin certbot to 1.32.0 until plugin compatibility improves
+external_type: na
+custom_version_command: "echo '1.32.0'"
+
+#external_type: pip_version
 release_type: stable
 release_tag: latest
 ls_branch: master

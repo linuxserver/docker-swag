@@ -18,7 +18,7 @@ jobs:
           fi
           echo "**** External trigger running off of master branch. To disable this trigger, set a Github secret named \"PAUSE_EXTERNAL_TRIGGER_SWAG_MASTER\". ****"
           echo "**** Retrieving external version ****"
-          EXT_RELEASE=$(curl -sL "https://pypi.python.org/pypi/certbot/json" |jq -r '. | .info.version')
+          EXT_RELEASE=$(echo '1.32.0')
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
             echo "**** Can't retrieve external version, exiting ****"
             FAILURE_REASON="Can't retrieve external version for swag branch master"

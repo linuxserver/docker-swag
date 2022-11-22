@@ -140,7 +140,7 @@ RUN \
     certbot-dns-standalone \
     certbot-dns-transip \
     certbot-dns-vultr \
-    certbot-plugin-gandi \
+    #certbot-plugin-gandi \
     cryptography \
     requests && \
   echo "**** enable OCSP stapling from base ****" && \

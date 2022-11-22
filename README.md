@@ -335,6 +335,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **22.11.22:** - Pin acme to the same version as certbot.
 * **22.11.22:** - Pin certbot to 1.32.0 until plugin compatibility improves.
 * **05.11.22:** - Update acmedns plugin handling.
 * **06.10.22:** - Switch to certbot-dns-duckdns. Update cpanel and gandi dns plugin handling. Minor adjustments to init logic.

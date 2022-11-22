@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 # copy default config files if they don't exist
 if [[ ! -f /config/nginx/proxy.conf ]]; then

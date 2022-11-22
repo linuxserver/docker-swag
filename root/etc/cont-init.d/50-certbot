@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 # Display variables for troubleshooting
 echo -e "Variables set:\\n\
@@ -18,12 +19,12 @@ STAGING=${STAGING}\\n"
 # Sanitize variables
 SANED_VARS=(DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION CERTPROVIDER)
 for i in "${SANED_VARS[@]}"; do
-    export echo "$i"="${!i//\"/}"
-    export echo "$i"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
+    export echo "${i}"="${!i//\"/}"
+    export echo "${i}"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
 done
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-if [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(acmedns|aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|do|domeneshop|duckdns|dynu|gandi|gehirn|godaddy|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|porkbun|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
+if [[ "${VALIDATION}" = "dns" ]] && [[ ! "${DNSPLUGIN}" =~ ^(acmedns|aliyun|azure|cloudflare|cloudxns|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|do|domeneshop|duckdns|dynu|gandi|gehirn|godaddy|google|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|porkbun|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
     echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details."
     sleep infinity
 fi
@@ -50,30 +51,30 @@ if [ -f "/config/donoteditthisfile.conf" ]; then
     mv /config/donoteditthisfile.conf /config/.donoteditthisfile.conf
 fi
 if [ ! -f "/config/.donoteditthisfile.conf" ]; then
-    echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\"" >/config/.donoteditthisfile.conf
+    echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
     echo "Created .donoteditthisfile.conf"
 fi
 
 # load original config settings
-# shellcheck disable=SC1091
+# shellcheck source=/dev/null
 . /config/.donoteditthisfile.conf
 
 # set default validation to http
-if [ -z "$VALIDATION" ]; then
+if [ -z "${VALIDATION}" ]; then
     VALIDATION="http"
     echo "VALIDATION parameter not set; setting it to http"
 fi
 
 # set duckdns validation to dns
-if [ "$VALIDATION" = "duckdns" ]; then
+if [ "${VALIDATION}" = "duckdns" ]; then
     VALIDATION="dns"
     DNSPLUGIN="duckdns"
-    if [ -n "$DUCKDNSTOKEN" ] && ! grep -q "dns_duckdns_token=${DUCKDNSTOKEN}$" /config/dns-conf/duckdns.ini;then
+    if [ -n "${DUCKDNSTOKEN}" ] && ! grep -q "dns_duckdns_token=${DUCKDNSTOKEN}$" /config/dns-conf/duckdns.ini; then
         sed -i "s|^dns_duckdns_token=.*|dns_duckdns_token=${DUCKDNSTOKEN}|g" /config/dns-conf/duckdns.ini
     fi
 fi
-if [ "$VALIDATION" = "dns" ] && [ "$DNSPLUGIN" = "duckdns" ]; then
-    if [ "$SUBDOMAINS" = "wildcard" ]; then
+if [ "${VALIDATION}" = "dns" ] && [ "${DNSPLUGIN}" = "duckdns" ]; then
+    if [ "${SUBDOMAINS}" = "wildcard" ]; then
         echo "the resulting certificate will only cover the subdomains due to a limitation of duckdns, so it is advised to set the root location to use www.subdomain.duckdns.org"
         export ONLY_SUBDOMAINS=true
     else
@@ -84,16 +85,16 @@ if [ "$VALIDATION" = "dns" ] && [ "$DNSPLUGIN" = "duckdns" ]; then
 fi
 
 # if zerossl is selected or staging is set to true, use the relevant server
-if [ "$CERTPROVIDER" = "zerossl" ] && [ "$STAGING" = "true" ]; then
+if [ "${CERTPROVIDER}" = "zerossl" ] && [ "${STAGING}" = "true" ]; then
     echo "ZeroSSL does not support staging mode, ignoring STAGING variable"
 fi
-if [ "$CERTPROVIDER" = "zerossl" ] && [ -n "$EMAIL" ]; then
-    echo "ZeroSSL is selected as the cert provider, registering cert with $EMAIL"
+if [ "${CERTPROVIDER}" = "zerossl" ] && [ -n "${EMAIL}" ]; then
+    echo "ZeroSSL is selected as the cert provider, registering cert with ${EMAIL}"
     ACMESERVER="https://acme.zerossl.com/v2/DV90"
-elif [ "$CERTPROVIDER" = "zerossl" ] && [ -z "$EMAIL" ]; then
+elif [ "${CERTPROVIDER}" = "zerossl" ] && [ -z "${EMAIL}" ]; then
     echo "ZeroSSL is selected as the cert provider, but the e-mail address has not been entered. Please visit https://zerossl.com, register a new account and set the account e-mail address in the EMAIL environment variable"
     sleep infinity
-elif [ "$STAGING" = "true" ]; then
+elif [ "${STAGING}" = "true" ]; then
     echo "NOTICE: Staging is active"
     echo "Using Let's Encrypt as the cert provider"
     ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
@@ -103,46 +104,46 @@ else
 fi
 
 # figuring out url only vs url & subdomains vs subdomains only
-if [ -n "$SUBDOMAINS" ]; then
+if [ -n "${SUBDOMAINS}" ]; then
     echo "SUBDOMAINS entered, processing"
-    if [ "$SUBDOMAINS" = "wildcard" ]; then
-        if [ "$ONLY_SUBDOMAINS" = true ]; then
+    if [ "${SUBDOMAINS}" = "wildcard" ]; then
+        if [ "${ONLY_SUBDOMAINS}" = true ]; then
             export URL_REAL="-d *.${URL}"
-            echo "Wildcard cert for only the subdomains of $URL will be requested"
+            echo "Wildcard cert for only the subdomains of ${URL} will be requested"
         else
             export URL_REAL="-d *.${URL} -d ${URL}"
-            echo "Wildcard cert for $URL will be requested"
+            echo "Wildcard cert for ${URL} will be requested"
         fi
     else
         echo "SUBDOMAINS entered, processing"
-        for job in $(echo "$SUBDOMAINS" | tr "," " "); do
-            export SUBDOMAINS_REAL="$SUBDOMAINS_REAL -d ${job}.${URL}"
+        for job in $(echo "${SUBDOMAINS}" | tr "," " "); do
+            export SUBDOMAINS_REAL="${SUBDOMAINS_REAL} -d ${job}.${URL}"
         done
-        if [ "$ONLY_SUBDOMAINS" = true ]; then
-            URL_REAL="$SUBDOMAINS_REAL"
+        if [ "${ONLY_SUBDOMAINS}" = true ]; then
+            URL_REAL="${SUBDOMAINS_REAL}"
             echo "Only subdomains, no URL in cert"
         else
             URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
         fi
-        echo "Sub-domains processed are: $SUBDOMAINS_REAL"
+        echo "Sub-domains processed are: ${SUBDOMAINS_REAL}"
     fi
 else
     echo "No subdomains defined"
-    URL_REAL="-d $URL"
+    URL_REAL="-d ${URL}"
 fi
 
 # add extra domains
-if [ -n "$EXTRA_DOMAINS" ]; then
+if [ -n "${EXTRA_DOMAINS}" ]; then
     echo "EXTRA_DOMAINS entered, processing"
-    for job in $(echo "$EXTRA_DOMAINS" | tr "," " "); do
-        export EXTRA_DOMAINS_REAL="$EXTRA_DOMAINS_REAL -d ${job}"
+    for job in $(echo "${EXTRA_DOMAINS}" | tr "," " "); do
+        export EXTRA_DOMAINS_REAL="${EXTRA_DOMAINS_REAL} -d ${job}"
     done
-    echo "Extra domains processed are: $EXTRA_DOMAINS_REAL"
-    URL_REAL="$URL_REAL $EXTRA_DOMAINS_REAL"
+    echo "Extra domains processed are: ${EXTRA_DOMAINS_REAL}"
+    URL_REAL="${URL_REAL} ${EXTRA_DOMAINS_REAL}"
 fi
 
 # figuring out whether to use e-mail and which
-if [[ $EMAIL == *@* ]]; then
+if [[ ${EMAIL} == *@* ]]; then
     echo "E-mail address entered: ${EMAIL}"
     EMAILPARAM="-m ${EMAIL} --no-eff-email"
 else
@@ -151,34 +152,34 @@ else
 fi
 
 # setting the validation method to use
-if [ "$VALIDATION" = "dns" ]; then
-    if [ "$DNSPLUGIN" = "route53" ]; then
-        if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+if [ "${VALIDATION}" = "dns" ]; then
+    if [ "${DNSPLUGIN}" = "route53" ]; then
+        if [ -n "${PROPAGATION}" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(azure|gandi)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
+    elif [[ "${DNSPLUGIN}" =~ ^(azure|gandi)$ ]]; then
+        if [ -n "${PROPAGATION}" ]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
         PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini"
-    elif [[ "$DNSPLUGIN" =~ ^(duckdns)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+    elif [[ "${DNSPLUGIN}" =~ ^(duckdns)$ ]]; then
+        if [ -n "${PROPAGATION}" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --dns-duckdns-no-txt-restore ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(google)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+    elif [[ "${DNSPLUGIN}" =~ ^(google)$ ]]; then
+        if [ -n "${PROPAGATION}" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.json ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(acmedns|aliyun|cpanel|desec|dnspod|do|domeneshop|dynu|godaddy|he|hetzner|infomaniak|inwx|ionos|loopia|netcup|njalla|porkbun|transip|vultr)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+    elif [[ "${DNSPLUGIN}" =~ ^(acmedns|aliyun|cpanel|desec|dnspod|do|domeneshop|dynu|godaddy|he|hetzner|infomaniak|inwx|ionos|loopia|netcup|njalla|porkbun|transip|vultr)$ ]]; then
+        if [ -n "${PROPAGATION}" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
-    elif [[ "$DNSPLUGIN" =~ ^(standalone)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then echo "standalone dns plugin does not support setting propagation time"; fi
+    elif [[ "${DNSPLUGIN}" =~ ^(standalone)$ ]]; then
+        if [ -n "${PROPAGATION}" ]; then echo "standalone dns plugin does not support setting propagation time"; fi
         PREFCHAL="-a dns-${DNSPLUGIN}"
-    elif [[ "$DNSPLUGIN" =~ ^(directadmin)$ ]]; then
-        if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+    elif [[ "${DNSPLUGIN}" =~ ^(directadmin)$ ]]; then
+        if [ -n "${PROPAGATION}" ]; then PROPAGATIONPARAM="--${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="-a ${DNSPLUGIN} --${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
     else
-        if [ -n "$PROPAGATION" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+        if [ -n "${PROPAGATION}" ]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
         PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
     fi
     echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
-elif [ "$VALIDATION" = "tls-sni" ]; then
+elif [ "${VALIDATION}" = "tls-sni" ]; then
     PREFCHAL="--standalone --preferred-challenges http"
     echo "*****tls-sni validation has been deprecated, attempting http validation instead"
 else
@@ -188,11 +189,11 @@ fi
 
 # setting the symlink for key location
 rm -rf /config/keys/letsencrypt
-if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! "$SUBDOMAINS" = "wildcard" ]; then
-    DOMAIN="$(echo "$SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
-    ln -s ../etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
+if [ "${ONLY_SUBDOMAINS}" = "true" ] && [ ! "${SUBDOMAINS}" = "wildcard" ]; then
+    DOMAIN="$(echo "${SUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${URL}"
+    ln -s ../etc/letsencrypt/live/"${DOMAIN}" /config/keys/letsencrypt
 else
-    ln -s ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
+    ln -s ../etc/letsencrypt/live/"${URL}" /config/keys/letsencrypt
 fi
 rm -rf /config/keys/cert.crt
 ln -s ./letsencrypt/fullchain.pem /config/keys/cert.crt
@@ -200,61 +201,61 @@ rm -rf /config/keys/cert.key
 ln -s ./letsencrypt/privkey.pem /config/keys/cert.key
 
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ]; then
+if [ ! "${URL}" = "${ORIGURL}" ] || [ ! "${SUBDOMAINS}" = "${ORIGSUBDOMAINS}" ] || [ ! "${ONLY_SUBDOMAINS}" = "${ORIGONLY_SUBDOMAINS}" ] || [ ! "${EXTRA_DOMAINS}" = "${ORIGEXTRA_DOMAINS}" ] || [ ! "${VALIDATION}" = "${ORIGVALIDATION}" ] || [ ! "${DNSPLUGIN}" = "${ORIGDNSPLUGIN}" ] || [ ! "${PROPAGATION}" = "${ORIGPROPAGATION}" ] || [ ! "${STAGING}" = "${ORIGSTAGING}" ] || [ ! "${CERTPROVIDER}" = "${ORIGCERTPROVIDER}" ]; then
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
-    if [ "$ORIGONLY_SUBDOMAINS" = "true" ] && [ ! "$ORIGSUBDOMAINS" = "wildcard" ]; then
-        ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
+    if [ "${ORIGONLY_SUBDOMAINS}" = "true" ] && [ ! "${ORIGSUBDOMAINS}" = "wildcard" ]; then
+        ORIGDOMAIN="$(echo "${ORIGSUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
     else
-        ORIGDOMAIN="$ORIGURL"
+        ORIGDOMAIN="${ORIGURL}"
     fi
-    if [ "$ORIGCERTPROVIDER" = "zerossl" ] && [ -n "$ORIGEMAIL" ]; then
-        REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$ORIGEMAIL")
-        REV_ZEROSSL_EAB_KID=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
-        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "$REV_EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
-        if [ -z "$REV_ZEROSSL_EAB_KID" ] || [ -z "$REV_ZEROSSL_EAB_HMAC_KEY" ]; then
+    if [ "${ORIGCERTPROVIDER}" = "zerossl" ] && [ -n "${ORIGEMAIL}" ]; then
+        REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${ORIGEMAIL}")
+        REV_ZEROSSL_EAB_KID=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
+        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+        if [ -z "${REV_ZEROSSL_EAB_KID}" ] || [ -z "${REV_ZEROSSL_EAB_HMAC_KEY}" ]; then
             echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
             sleep infinity
         fi
         REV_ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${REV_ZEROSSL_EAB_KID} --eab-hmac-key ${REV_ZEROSSL_EAB_HMAC_KEY}"
-    elif [ "$ORIGSTAGING" = "true" ]; then
+    elif [ "${ORIGSTAGING}" = "true" ]; then
         REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
     else
         REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
     fi
-    if [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]]; then
-        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
+    if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER}
     fi
     rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGCERTPROVIDER=\"$CERTPROVIDER\" ORIGEMAIL=\"$EMAIL\"" >/config/.donoteditthisfile.conf
+echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
 
 # alter extension for error message
-if [ "$DNSPLUGIN" = "google" ]; then
-    FILENAME="$DNSPLUGIN.json"
+if [ "${DNSPLUGIN}" = "google" ]; then
+    FILENAME="${DNSPLUGIN}.json"
 else
-    FILENAME="$DNSPLUGIN.ini"
+    FILENAME="${DNSPLUGIN}.ini"
 fi
 
 # Check if the cert is using the old LE root cert, revoke and regen if necessary
 if [ -f "/config/keys/letsencrypt/chain.pem" ] && { [ "${CERTPROVIDER}" == "letsencrypt" ] || [ "${CERTPROVIDER}" == "" ]; } && [ "${STAGING}" != "true" ] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
     echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
     REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
-    if [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]]; then
-        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem --server $REV_ACMESERVER
+    if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER}
     fi
     rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
 
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
-    if [ "$CERTPROVIDER" = "zerossl" ] && [ -n "$EMAIL" ]; then
+    if [ "${CERTPROVIDER}" = "zerossl" ] && [ -n "${EMAIL}" ]; then
         echo "Retrieving EAB from ZeroSSL"
-        EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=$EMAIL")
-        ZEROSSL_EAB_KID=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
-        ZEROSSL_EAB_HMAC_KEY=$(echo "$EAB_CREDS" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
-        if [ -z "$ZEROSSL_EAB_KID" ] || [ -z "$ZEROSSL_EAB_HMAC_KEY" ]; then
+        EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${EMAIL}")
+        ZEROSSL_EAB_KID=$(echo "${EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
+        ZEROSSL_EAB_HMAC_KEY=$(echo "${EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+        if [ -z "${ZEROSSL_EAB_KID}" ] || [ -z "${ZEROSSL_EAB_HMAC_KEY}" ]; then
             echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
             sleep infinity
         fi
@@ -262,9 +263,9 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
     fi
     echo "Generating new certificate"
     # shellcheck disable=SC2086
-    certbot certonly --non-interactive --renew-by-default --server $ACMESERVER $ZEROSSL_EAB $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
+    certbot certonly --non-interactive --renew-by-default --server ${ACMESERVER} ${ZEROSSL_EAB} ${PREFCHAL} --rsa-key-size 4096 ${EMAILPARAM} --agree-tos ${URL_REAL}
     if [ ! -d /config/keys/letsencrypt ]; then
-        if [ "$VALIDATION" = "dns" ]; then
+        if [ "${VALIDATION}" = "dns" ]; then
             echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${FILENAME} file."
         else
             echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"

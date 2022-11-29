@@ -4,7 +4,7 @@
 # shellcheck source=/dev/null
 . /config/.donoteditthisfile.conf
 
-if [ ! "${ORIGVALIDATION}" = "dns" ] && [ ! "${ORIGVALIDATION}" = "duckdns" ]; then
+if [[ ! "${ORIGVALIDATION}" = "dns" ]] && [[ ! "${ORIGVALIDATION}" = "duckdns" ]]; then
 	if pgrep -f "s6-supervise nginx" >/dev/null; then
 		s6-svc -u /run/service/nginx
 	fi

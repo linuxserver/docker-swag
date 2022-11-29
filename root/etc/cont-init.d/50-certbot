@@ -194,10 +194,6 @@ if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! "$SUBDOMAINS" = "wildcard" ]; then
 else
     ln -s ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
 fi
-rm -rf /config/keys/cert.crt
-ln -s ./letsencrypt/fullchain.pem /config/keys/cert.crt
-rm -rf /config/keys/cert.key
-ln -s ./letsencrypt/privkey.pem /config/keys/cert.key
 
 # checking for changes in cert variables, revoking certs if necessary
 if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$PROPAGATION" = "$ORIGPROPAGATION" ] || [ ! "$STAGING" = "$ORIGSTAGING" ] || [ ! "$CERTPROVIDER" = "$ORIGCERTPROVIDER" ]; then
@@ -275,4 +271,12 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
     echo "New certificate generated; starting nginx"
 else
     echo "Certificate exists; parameters unchanged; starting nginx"
+fi
+
+# if certbot generated key exists, remove self-signed cert and replace it with symlink to live cert
+if [ -d /config/keys/letsencrypt ]; then
+    rm -rf /config/keys/cert.crt
+    ln -s ./letsencrypt/fullchain.pem /config/keys/cert.crt
+    rm -rf /config/keys/cert.key
+    ln -s ./letsencrypt/privkey.pem /config/keys/cert.key
 fi

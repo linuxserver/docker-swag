@@ -1,9 +1,11 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
+# shellcheck source=/dev/null
 . /config/.donoteditthisfile.conf
 
-if [ ! "$ORIGVALIDATION" = "dns" ] && [ ! "$ORIGVALIDATION" = "duckdns" ]; then
-	if ps aux | grep [n]ginx: >/dev/null; then
+if [[ ! "${ORIGVALIDATION}" = "dns" ]] && [[ ! "${ORIGVALIDATION}" = "duckdns" ]]; then
+	if pgrep -f "nginx:" >/dev/null; then
 		s6-svc -d /run/service/nginx
 	fi
 fi

@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 # check to make sure that the required variables are set
 if [[ -z "${URL}" ]]; then

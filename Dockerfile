@@ -107,7 +107,6 @@ RUN \
     certbot-dns-aliyun \
     certbot-dns-azure \
     certbot-dns-cloudflare \
-    certbot-dns-cloudxns \
     certbot-dns-cpanel \
     certbot-dns-desec \
     certbot-dns-digitalocean \

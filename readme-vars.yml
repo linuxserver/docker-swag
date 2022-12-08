@@ -157,6 +157,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "08.12.22:", desc: "Revamp certbot init."}
   - { date: "03.12.22:", desc: "Remove defunct cloudxns plugin."}
   - { date: "22.11.22:", desc: "Pin acme to the same version as certbot."}
   - { date: "22.11.22:", desc: "Pin certbot to 1.32.0 until plugin compatibility improves."}

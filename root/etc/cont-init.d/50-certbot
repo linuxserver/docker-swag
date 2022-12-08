@@ -33,14 +33,6 @@ fi
 cp -n /defaults/dns-conf/* /config/dns-conf/
 chown -R abc:abc /config/dns-conf
 
-# update plugin names in dns conf inis
-sed -i 's|^certbot_dns_aliyun:||g' /config/dns-conf/aliyun.ini
-sed -i 's|^certbot_dns_cpanel:|dns_|g' /config/dns-conf/cpanel.ini
-sed -i 's|^certbot_dns_domeneshop:||g' /config/dns-conf/domeneshop.ini
-sed -i 's|^certbot_dns_inwx:||g' /config/dns-conf/inwx.ini
-sed -i 's|^certbot_dns_transip:||g' /config/dns-conf/transip.ini
-sed -i 's|^certbot_plugin_gandi:dns_|dns_gandi_|g' /config/dns-conf/gandi.ini
-
 # copy default renewal hooks
 chmod -R +x /defaults/etc/letsencrypt/renewal-hooks
 cp -nR /defaults/etc/letsencrypt/renewal-hooks/* /config/etc/letsencrypt/renewal-hooks/
@@ -58,6 +50,45 @@ fi
 # load original config settings
 # shellcheck source=/dev/null
 . /config/.donoteditthisfile.conf
+
+# setting ORIGDOMAIN for use in revoke sections
+if [[ "${ORIGONLY_SUBDOMAINS}" = "true" ]] && [[ ! "${ORIGSUBDOMAINS}" = "wildcard" ]]; then
+    ORIGDOMAIN="$(echo "${ORIGSUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
+else
+    ORIGDOMAIN="${ORIGURL}"
+fi
+
+# update plugin names in dns conf inis
+sed -i 's|^certbot_dns_aliyun:||g' /config/dns-conf/aliyun.ini
+sed -i 's|^certbot_dns_cpanel:||g' /config/dns-conf/cpanel.ini
+sed -i 's|^certbot_dns_domeneshop:||g' /config/dns-conf/domeneshop.ini
+sed -i 's|^certbot_dns_inwx:||g' /config/dns-conf/inwx.ini
+sed -i 's|^certbot_dns_transip:||g' /config/dns-conf/transip.ini
+sed -i 's|^certbot_plugin_gandi:dns_|dns_gandi_|g' /config/dns-conf/gandi.ini
+sed -i 's|^dns_cpanel_|cpanel_|g' /config/dns-conf/cpanel.ini
+
+# update plugin names in renewal conf
+if [[ -f "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf" ]] && [[ "${ORIGVALIDATION}" = "dns" ]]; then
+    if [[ "${ORIGDNSPLUGIN}" =~ ^(aliyun)$ ]]; then
+        sed -i 's|^certbot_dns_aliyun:||g' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf"
+    fi
+    if [[ "${ORIGDNSPLUGIN}" =~ ^(cpanel)$ ]]; then
+        sed -i 's|^certbot_dns_cpanel:||g' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf"
+        sed -i 's|^dns_cpanel_|cpanel_|g' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf"
+    fi
+    if [[ "${ORIGDNSPLUGIN}" =~ ^(domeneshop)$ ]]; then
+        sed -i 's|^certbot_dns_domeneshop:||g' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf"
+    fi
+    if [[ "${ORIGDNSPLUGIN}" =~ ^(inwx)$ ]]; then
+        sed -i 's|^certbot_dns_inwx:||g' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf"
+    fi
+    if [[ "${ORIGDNSPLUGIN}" =~ ^(transip)$ ]]; then
+        sed -i 's|^certbot_dns_transip:||g' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf"
+    fi
+    if [[ "${ORIGDNSPLUGIN}" =~ ^(gandi)$ ]]; then
+        sed -i 's|^certbot_plugin_gandi:dns_|dns_gandi_|g' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf"
+    fi
+fi
 
 # set default validation to http
 if [[ -z "${VALIDATION}" ]]; then
@@ -82,6 +113,59 @@ if [[ "${VALIDATION}" = "dns" ]] && [[ "${DNSPLUGIN}" = "duckdns" ]]; then
         export SUBDOMAINS=""
     fi
     export EXTRA_DOMAINS=""
+fi
+
+# setting the symlink for key location
+rm -rf /config/keys/letsencrypt
+if [[ "${ONLY_SUBDOMAINS}" = "true" ]] && [[ ! "${SUBDOMAINS}" = "wildcard" ]]; then
+    DOMAIN="$(echo "${SUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${URL}"
+    ln -s ../etc/letsencrypt/live/"${DOMAIN}" /config/keys/letsencrypt
+else
+    ln -s ../etc/letsencrypt/live/"${URL}" /config/keys/letsencrypt
+fi
+
+# checking for changes in cert variables, revoking certs if necessary
+if [[ ! "${URL}" = "${ORIGURL}" ]] ||
+    [[ ! "${SUBDOMAINS}" = "${ORIGSUBDOMAINS}" ]] ||
+    [[ ! "${ONLY_SUBDOMAINS}" = "${ORIGONLY_SUBDOMAINS}" ]] ||
+    [[ ! "${EXTRA_DOMAINS}" = "${ORIGEXTRA_DOMAINS}" ]] ||
+    [[ ! "${VALIDATION}" = "${ORIGVALIDATION}" ]] ||
+    [[ ! "${DNSPLUGIN}" = "${ORIGDNSPLUGIN}" ]] ||
+    [[ ! "${PROPAGATION}" = "${ORIGPROPAGATION}" ]] ||
+    [[ ! "${STAGING}" = "${ORIGSTAGING}" ]] ||
+    [[ ! "${CERTPROVIDER}" = "${ORIGCERTPROVIDER}" ]]; then
+    echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
+    if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]] && [[ -n "${ORIGEMAIL}" ]]; then
+        REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${ORIGEMAIL}")
+        REV_ZEROSSL_EAB_KID=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
+        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+        if [[ -z "${REV_ZEROSSL_EAB_KID}" ]] || [[ -z "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
+            echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
+            sleep infinity
+        fi
+        REV_ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${REV_ZEROSSL_EAB_KID} --eab-hmac-key ${REV_ZEROSSL_EAB_HMAC_KEY}"
+    elif [[ "${ORIGSTAGING}" = "true" ]]; then
+        REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
+    else
+        REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
+    fi
+    if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER} || true
+    fi
+    rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
+fi
+
+# saving new variables
+echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
+
+# Check if the cert is using the old LE root cert, revoke and regen if necessary
+if [[ -f "/config/keys/letsencrypt/chain.pem" ]] && { [[ "${CERTPROVIDER}" == "letsencrypt" ]] || [[ "${CERTPROVIDER}" == "" ]]; } && [[ "${STAGING}" != "true" ]] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
+    echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
+    REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
+    if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER} || true
+    fi
+    rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
 
 # if zerossl is selected or staging is set to true, use the relevant server
@@ -151,33 +235,40 @@ else
     EMAILPARAM="--register-unsafely-without-email"
 fi
 
+# alter extension for error message
+if [[ "${DNSPLUGIN}" = "google" ]]; then
+    DNSCREDENTIALFILE="/config/dns-conf/${DNSPLUGIN}.json"
+else
+    DNSCREDENTIALFILE="/config/dns-conf/${DNSPLUGIN}.ini"
+fi
+
 # setting the validation method to use
 if [[ "${VALIDATION}" = "dns" ]]; then
-    if [[ "${DNSPLUGIN}" = "route53" ]]; then
-        if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-        PREFCHAL="--dns-${DNSPLUGIN} ${PROPAGATIONPARAM}"
-    elif [[ "${DNSPLUGIN}" =~ ^(azure|gandi)$ ]]; then
-        if [[ -n "${PROPAGATION}" ]]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
-        PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini"
-    elif [[ "${DNSPLUGIN}" =~ ^(duckdns)$ ]]; then
-        if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-        PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --dns-duckdns-no-txt-restore ${PROPAGATIONPARAM}"
-    elif [[ "${DNSPLUGIN}" =~ ^(google)$ ]]; then
-        if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-        PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.json ${PROPAGATIONPARAM}"
-    elif [[ "${DNSPLUGIN}" =~ ^(acmedns|aliyun|cpanel|desec|dnspod|do|domeneshop|dynu|godaddy|he|hetzner|infomaniak|inwx|ionos|loopia|netcup|njalla|porkbun|transip|vultr)$ ]]; then
-        if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-        PREFCHAL="-a dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
-    elif [[ "${DNSPLUGIN}" =~ ^(standalone)$ ]]; then
-        if [[ -n "${PROPAGATION}" ]]; then echo "standalone dns plugin does not support setting propagation time"; fi
-        PREFCHAL="-a dns-${DNSPLUGIN}"
-    elif [[ "${DNSPLUGIN}" =~ ^(directadmin)$ ]]; then
-        if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-        PREFCHAL="-a ${DNSPLUGIN} --${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
-    else
-        if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
-        PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini ${PROPAGATIONPARAM}"
+    AUTHENTICATORPARAM="--authenticator dns-${DNSPLUGIN}"
+    DNSCREDENTIALSPARAM="--dns-${DNSPLUGIN}-credentials ${DNSCREDENTIALFILE}"
+    if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+
+    # plugins that don't support setting credentials file
+    if [[ "${DNSPLUGIN}" =~ ^(route53|standalone)$ ]]; then
+        DNSCREDENTIALSPARAM=""
     fi
+    # plugins that don't support setting propogation
+    if [[ "${DNSPLUGIN}" =~ ^(azure|gandi|standalone)$ ]]; then
+        if [[ -n "${PROPAGATION}" ]]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
+        PROPAGATIONPARAM=""
+    fi
+    # plugins that use old parameter naming convention
+    if [[ "${DNSPLUGIN}" =~ ^(cpanel|directadmin)$ ]]; then
+        AUTHENTICATORPARAM="--authenticator ${DNSPLUGIN}"
+        DNSCREDENTIALSPARAM="--${DNSPLUGIN}-credentials ${DNSCREDENTIALFILE}"
+        if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+    fi
+    # don't restore txt records when using DuckDNS plugin
+    if [[ "${DNSPLUGIN}" =~ ^(duckdns)$ ]]; then
+        AUTHENTICATORPARAM="${AUTHENTICATORPARAM} --dns-${DNSPLUGIN}-no-txt-restore"
+    fi
+
+    PREFCHAL="${AUTHENTICATORPARAM} ${DNSCREDENTIALSPARAM} ${PROPAGATIONPARAM}"
     echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
 elif [[ "${VALIDATION}" = "tls-sni" ]]; then
     PREFCHAL="--standalone --preferred-challenges http"
@@ -185,63 +276,6 @@ elif [[ "${VALIDATION}" = "tls-sni" ]]; then
 else
     PREFCHAL="--standalone --preferred-challenges http"
     echo "http validation is selected"
-fi
-
-# setting the symlink for key location
-rm -rf /config/keys/letsencrypt
-if [[ "${ONLY_SUBDOMAINS}" = "true" ]] && [[ ! "${SUBDOMAINS}" = "wildcard" ]]; then
-    DOMAIN="$(echo "${SUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${URL}"
-    ln -s ../etc/letsencrypt/live/"${DOMAIN}" /config/keys/letsencrypt
-else
-    ln -s ../etc/letsencrypt/live/"${URL}" /config/keys/letsencrypt
-fi
-
-# checking for changes in cert variables, revoking certs if necessary
-if [[ ! "${URL}" = "${ORIGURL}" ]] || [[ ! "${SUBDOMAINS}" = "${ORIGSUBDOMAINS}" ]] || [[ ! "${ONLY_SUBDOMAINS}" = "${ORIGONLY_SUBDOMAINS}" ]] || [[ ! "${EXTRA_DOMAINS}" = "${ORIGEXTRA_DOMAINS}" ]] || [[ ! "${VALIDATION}" = "${ORIGVALIDATION}" ]] || [[ ! "${DNSPLUGIN}" = "${ORIGDNSPLUGIN}" ]] || [[ ! "${PROPAGATION}" = "${ORIGPROPAGATION}" ]] || [[ ! "${STAGING}" = "${ORIGSTAGING}" ]] || [[ ! "${CERTPROVIDER}" = "${ORIGCERTPROVIDER}" ]]; then
-    echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
-    if [[ "${ORIGONLY_SUBDOMAINS}" = "true" ]] && [[ ! "${ORIGSUBDOMAINS}" = "wildcard" ]]; then
-        ORIGDOMAIN="$(echo "${ORIGSUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
-    else
-        ORIGDOMAIN="${ORIGURL}"
-    fi
-    if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]] && [[ -n "${ORIGEMAIL}" ]]; then
-        REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${ORIGEMAIL}")
-        REV_ZEROSSL_EAB_KID=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
-        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
-        if [[ -z "${REV_ZEROSSL_EAB_KID}" ]] || [[ -z "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
-            echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
-            sleep infinity
-        fi
-        REV_ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${REV_ZEROSSL_EAB_KID} --eab-hmac-key ${REV_ZEROSSL_EAB_HMAC_KEY}"
-    elif [[ "${ORIGSTAGING}" = "true" ]]; then
-        REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
-    else
-        REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
-    fi
-    if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
-        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER}
-    fi
-    rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
-fi
-
-# saving new variables
-echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
-
-# alter extension for error message
-if [[ "${DNSPLUGIN}" = "google" ]]; then
-    FILENAME="${DNSPLUGIN}.json"
-else
-    FILENAME="${DNSPLUGIN}.ini"
-fi
-
-# Check if the cert is using the old LE root cert, revoke and regen if necessary
-if [[ -f "/config/keys/letsencrypt/chain.pem" ]] && { [[ "${CERTPROVIDER}" == "letsencrypt" ]] || [[ "${CERTPROVIDER}" == "" ]]; } && [[ "${STAGING}" != "true" ]] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
-    echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
-    REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
-    if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
-        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER}
-    fi
-    rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
 
 # generating certs if necessary
@@ -262,7 +296,7 @@ if [[ ! -f "/config/keys/letsencrypt/fullchain.pem" ]]; then
     certbot certonly --non-interactive --renew-by-default --server ${ACMESERVER} ${ZEROSSL_EAB} ${PREFCHAL} --rsa-key-size 4096 ${EMAILPARAM} --agree-tos ${URL_REAL}
     if [[ ! -d /config/keys/letsencrypt ]]; then
         if [[ "${VALIDATION}" = "dns" ]]; then
-            echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${FILENAME} file."
+            echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the ${DNSCREDENTIALFILE} file."
         else
             echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
         fi

@@ -101,7 +101,6 @@ RUN \
   pip3 install -U \
     pip wheel && \
   pip install -U --find-links https://wheel-index.linuxserver.io/alpine-3.15/ \
-    acme==${CERTBOT_VERSION} \
     ${CERTBOT} \
     certbot-dns-acmedns \
     certbot-dns-aliyun \

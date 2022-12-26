@@ -152,8 +152,8 @@ app_setup_block: |
 
   Please follow the instructions [on this blog post](https://www.linuxserver.io/blog/2020-08-21-introducing-swag#migrate).
 
-app_setup_nginx_reverse_proxy_snippet: false
-app_setup_nginx_reverse_proxy_block: ""
+nginx_reverse_proxy_snippet_enabled: false
+nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:

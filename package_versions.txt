@@ -54,7 +54,7 @@ libice-1.0.10-r0
 libidn-1.38-r0
 libintl-0.21-r0
 libjpeg-turbo-2.1.2-r0
-libksba-1.6.0-r0
+libksba-1.6.3-r0
 libldap-2.6.2-r0
 libmaxminddb-1.6.0-r0
 libmcrypt-2.5.8-r9

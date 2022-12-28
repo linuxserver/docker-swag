@@ -152,9 +152,6 @@ app_setup_block: |
 
   Please follow the instructions [on this blog post](https://www.linuxserver.io/blog/2020-08-21-introducing-swag#migrate).
 
-app_setup_nginx_reverse_proxy_snippet: false
-app_setup_nginx_reverse_proxy_block: ""
-
 # changelog
 changelogs:
   - { date: "03.12.22:", desc: "Remove defunct cloudxns plugin."}

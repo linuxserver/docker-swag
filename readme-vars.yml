@@ -154,6 +154,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "16.01.23:", desc: "Remove nchan module because it keeps causing crashes." }
   - { date: "08.12.22:", desc: "Revamp certbot init."}
   - { date: "03.12.22:", desc: "Remove defunct cloudxns plugin."}
   - { date: "22.11.22:", desc: "Pin acme to the same version as certbot."}

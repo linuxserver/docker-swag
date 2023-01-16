@@ -107,7 +107,6 @@ nginx-mod-http-fancyindex-1.20.2-r1
 nginx-mod-http-geoip2-1.20.2-r1
 nginx-mod-http-headers-more-1.20.2-r1
 nginx-mod-http-image-filter-1.20.2-r1
-nginx-mod-http-nchan-1.20.2-r1
 nginx-mod-http-perl-1.20.2-r1
 nginx-mod-http-redis2-1.20.2-r1
 nginx-mod-http-set-misc-1.20.2-r1

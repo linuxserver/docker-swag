@@ -31,12 +31,15 @@ fi
 
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
-chown -R abc:abc /config/dns-conf
+lsiown -R abc:abc /config/dns-conf
 
 # copy default renewal hooks
 chmod -R +x /defaults/etc/letsencrypt/renewal-hooks
 cp -nR /defaults/etc/letsencrypt/renewal-hooks/* /config/etc/letsencrypt/renewal-hooks/
-chown -R abc:abc /config/etc/letsencrypt/renewal-hooks
+lsiown -R abc:abc /config/etc/letsencrypt/renewal-hooks
+
+# replace nginx service location in renewal hooks
+find /config/etc/letsencrypt/renewal-hooks/ -type f -exec sed -i 's|/run/service/nginx|/run/service/svc-nginx|g' {} \;
 
 # create original config file if it doesn't exist, move non-hidden legacy file to hidden
 if [[ -f "/config/donoteditthisfile.conf" ]]; then

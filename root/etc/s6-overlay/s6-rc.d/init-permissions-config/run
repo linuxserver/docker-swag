@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 
 # permissions
-chown -R abc:abc \
+lsiown -R abc:abc \
     /config
 chmod -R 0644 /etc/logrotate.d
 chmod -R +r /config/log

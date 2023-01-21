@@ -154,6 +154,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "20.01.23:", desc: "Rebase to alpine 3.17 with php8.1." }
   - { date: "16.01.23:", desc: "Remove nchan module because it keeps causing crashes." }
   - { date: "08.12.22:", desc: "Revamp certbot init."}
   - { date: "03.12.22:", desc: "Remove defunct cloudxns plugin."}

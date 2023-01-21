@@ -6,6 +6,6 @@
 
 if [[ ! "${ORIGVALIDATION}" = "dns" ]] && [[ ! "${ORIGVALIDATION}" = "duckdns" ]]; then
 	if pgrep -f "nginx:" >/dev/null; then
-		s6-svc -d /run/service/nginx
+		s6-svc -d /run/service/svc-nginx
 	fi
 fi

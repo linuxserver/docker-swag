@@ -83,7 +83,7 @@ RUN \
     php81-zip \
     whois && \
   apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-    php81-pecl-mcrypt && \
+    php81-pecl-mcrypt \
     php81-pecl-xmlrpc && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \

@@ -1,4 +1,6 @@
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:arm32v7-3.15
+# syntax=docker/dockerfile:1
+
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:arm32v7-3.17
 
 # set version label
 ARG BUILD_DATE
@@ -14,9 +16,8 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 RUN \
   echo "**** install build packages ****" && \
   apk add --no-cache --virtual=build-dependencies \
+    build-base \
     cargo \
-    g++ \
-    gcc \
     libffi-dev \
     libxml2-dev \
     libxslt-dev \
@@ -24,11 +25,9 @@ RUN \
     python3-dev && \
   echo "**** install runtime packages ****" && \
   apk add --no-cache --upgrade \
-    curl \
     fail2ban \
     gnupg \
     memcached \
-    nginx \
     nginx-mod-http-brotli \
     nginx-mod-http-dav-ext \
     nginx-mod-http-echo \
@@ -46,62 +45,58 @@ RUN \
     nginx-mod-stream \
     nginx-mod-stream-geoip2 \
     nginx-vim \
-    php8-bcmath \
-    php8-bz2 \
-    php8-ctype \
-    php8-curl \
-    php8-dom \
-    php8-exif \
-    php8-ftp \
-    php8-gd \
-    php8-gmp \
-    php8-iconv \
-    php8-imap \
-    php8-intl \
-    php8-ldap \
-    php8-mysqli \
-    php8-mysqlnd \
-    php8-opcache \
-    php8-pdo_mysql \
-    php8-pdo_odbc \
-    php8-pdo_pgsql \
-    php8-pdo_sqlite \
-    php8-pear \
-    php8-pecl-apcu \
-    php8-pecl-mailparse \
-    php8-pecl-mcrypt \
-    php8-pecl-memcached \
-    php8-pecl-redis \
-    php8-pgsql \
-    php8-phar \
-    php8-posix \
-    php8-soap \
-    php8-sockets \
-    php8-sodium \
-    php8-sqlite3 \
-    php8-tokenizer \
-    php8-xml \
-    php8-xmlreader \
-    php8-xsl \
-    php8-zip \
-    py3-cryptography \
-    py3-future \
-    py3-pip \
+    php81-bcmath \
+    php81-bz2 \
+    php81-ctype \
+    php81-curl \
+    php81-dom \
+    php81-exif \
+    php81-ftp \
+    php81-gd \
+    php81-gmp \
+    php81-iconv \
+    php81-imap \
+    php81-intl \
+    php81-ldap \
+    php81-mysqli \
+    php81-mysqlnd \
+    php81-opcache \
+    php81-pdo_mysql \
+    php81-pdo_odbc \
+    php81-pdo_pgsql \
+    php81-pdo_sqlite \
+    php81-pear \
+    php81-pecl-apcu \
+    php81-pecl-mailparse \
+    php81-pecl-mcrypt \
+    php81-pecl-memcached \
+    php81-pecl-redis \
+    php81-pgsql \
+    php81-phar \
+    php81-posix \
+    php81-soap \
+    php81-sockets \
+    php81-sodium \
+    php81-sqlite3 \
+    php81-tokenizer \
+    php81-xmlreader \
+    php81-xsl \
+    php81-zip \
     whois && \
   apk add --no-cache \
     --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-    php8-pecl-xmlrpc && \
+    php81-pecl-xmlrpc && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \
-    CERTBOT="certbot"; \
-  else \
-    CERTBOT="certbot==${CERTBOT_VERSION}"; \
+    CERTBOT_VERSION=$(curl -sL  https://pypi.python.org/pypi/certbot/json |jq -r '. | .info.version'); \
   fi && \
-  pip3 install -U \
-    pip wheel && \
-  pip install -U --find-links https://wheel-index.linuxserver.io/alpine-3.15/ \
+  python3 -m ensurepip && \
+  pip3 install -U --no-cache-dir \
+    pip \
+    wheel && \
+  pip3 install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.17/ \
     acme==${CERTBOT_VERSION} \
-    ${CERTBOT} \
+    certbot==${CERTBOT_VERSION} \
     certbot-dns-acmedns \
     certbot-dns-aliyun \
     certbot-dns-azure \
@@ -141,6 +136,7 @@ RUN \
     certbot-dns-vultr \
     certbot-plugin-gandi \
     cryptography \
+    future \
     requests && \
   echo "**** enable OCSP stapling from base ****" && \
   sed -i \
@@ -176,14 +172,10 @@ RUN \
   echo "**** cleanup ****" && \
   apk del --purge \
     build-dependencies && \
-  for cleanfiles in *.pyc *.pyo; \
-    do \
-    find /usr/lib/python3.*  -iname "${cleanfiles}" -exec rm -f '{}' + \
-    ; done && \
   rm -rf \
     /tmp/* \
-    /root/.cache \
-    /root/.cargo
+    $HOME/.cache \
+    $HOME/.cargo
 
 # copy local files
 COPY root/ /

@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+# if root crontabs do not exist in config
+# copy root crontab from system
+if [[ ! -f /config/crontabs/root ]] && crontab -l -u root; then
+    crontab -l -u root >/config/crontabs/root
+fi
+
+# if root crontabs still do not exist in config (were not copied from system)
+# copy root crontab from included defaults
+if [[ ! -f /config/crontabs/root ]]; then
+    cp /etc/crontabs/root /config/crontabs/
+fi
+
+# import user crontabs
+crontab -u root /config/crontabs/root

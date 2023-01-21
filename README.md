@@ -335,6 +335,9 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **20.01.23:** - Rebase to alpine 3.17 with php8.1.
+* **16.01.23:** - Remove nchan module because it keeps causing crashes.
+* **08.12.22:** - Revamp certbot init.
 * **03.12.22:** - Remove defunct cloudxns plugin.
 * **22.11.22:** - Pin acme to the same version as certbot.
 * **22.11.22:** - Pin certbot to 1.32.0 until plugin compatibility improves.

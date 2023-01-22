@@ -94,7 +94,6 @@ RUN \
     pip \
     wheel && \
   pip3 install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.17/ \
-    acme==${CERTBOT_VERSION} \
     certbot==${CERTBOT_VERSION} \
     certbot-dns-acmedns \
     certbot-dns-aliyun \
@@ -126,7 +125,6 @@ RUN \
     certbot-dns-njalla \
     certbot-dns-nsone \
     certbot-dns-ovh \
-    certbot-dns-porkbun \
     certbot-dns-rfc2136 \
     certbot-dns-route53 \
     certbot-dns-sakuracloud \

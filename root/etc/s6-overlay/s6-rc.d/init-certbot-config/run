@@ -40,6 +40,7 @@ lsiown -R abc:abc /config/etc/letsencrypt/renewal-hooks
 
 # replace nginx service location in renewal hooks
 find /config/etc/letsencrypt/renewal-hooks/ -type f -exec sed -i 's|/run/service/nginx|/run/service/svc-nginx|g' {} \;
+find /config/etc/letsencrypt/renewal-hooks/ -type f -exec sed -i 's|/var/run/s6/services/nginx|/run/service/svc-nginx|g' {} \;
 
 # create original config file if it doesn't exist, move non-hidden legacy file to hidden
 if [[ -f "/config/donoteditthisfile.conf" ]]; then

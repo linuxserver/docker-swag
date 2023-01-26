@@ -13,5 +13,18 @@ if [[ ! -f /config/crontabs/root ]]; then
     cp /etc/crontabs/root /config/crontabs/
 fi
 
+# if abc crontabs do not exist in config
+# copy abc crontab from system
+if [[ ! -f /config/crontabs/abc ]] && crontab -l -u abc; then
+    crontab -l -u abc >/config/crontabs/abc
+fi
+
+# if abc crontabs still do not exist in config (were not copied from system)
+# copy abc crontab from included defaults
+if [[ ! -f /config/crontabs/abc ]]; then
+    cp /etc/crontabs/abc /config/crontabs/
+fi
+
 # import user crontabs
 crontab -u root /config/crontabs/root
+crontab -u abc /config/crontabs/abc

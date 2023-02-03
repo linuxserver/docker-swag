@@ -34,7 +34,7 @@ add_header Set-Cookie $set_cookie;
 
 ## Set $authelia_backend to route requests to the current domain by default
 set $authelia_backend $http_host;
-## In order for Webauthn to work with multiple subdomains Authelia must operate on a separate subdomain
+## In order for Webauthn to work with multiple domains Authelia must operate on a separate subdomain
 ## To use Authelia on a separate subdomain:
 ##  * comment the $authelia_backend line above
 ##  * rename /config/nginx/site-conf/authelia.conf.sample to /config/nginx/site-conf/authelia.conf

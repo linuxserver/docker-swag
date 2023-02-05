@@ -3,6 +3,8 @@
 
 ## Send a subrequest to Authentik to verify if the user is authenticated and has permission to access the resource.
 auth_request /outpost.goauthentik.io/auth/nginx;
+## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal.
+error_page 401 = @goauthentik_proxy_signin;
 
 ## Save the upstream metadata response headers from Authentik to variables.
 auth_request_set $authentik_username $upstream_http_x_authentik_username;
@@ -18,5 +20,6 @@ proxy_set_header X-authentik-email $authentik_email;
 proxy_set_header X-authentik-name $authentik_name;
 proxy_set_header X-authentik-uid $authentik_uid;
 
-## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal.
-error_page 401 = @authentik_auth_request;
+## Include the Set-Cookie header if present.
+auth_request_set $set_cookie $upstream_http_set_cookie;
+add_header Set-Cookie $set_cookie;

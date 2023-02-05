@@ -26,13 +26,16 @@ location @goauthentik_proxy_signin {
     auth_request_set $set_cookie $upstream_http_set_cookie;
     add_header Set-Cookie $set_cookie;
 
+    ## Set $authentik_backend to route requests to the current domain by default
+    set $authentik_backend $http_host;
     ## In order for Webauthn to work with multiple domains authentik must operate on a separate subdomain
     ## To use authentik on a separate subdomain:
+    ##  * comment the $authentik_backend line above
     ##  * rename /config/nginx/proxy-confs/authentik.conf.sample to /config/nginx/proxy-confs/authentik.conf
     ##  * make sure that your dns has a cname set for authentik
-    ##  * modify the $authentik_backend line below to set example.com to your domain
+    ##  * uncomment the $authentik_backend line below and change example.com to your domain
     ##  * restart the swag container
-    set $authentik_backend authentik.example.com;
+    #set $authentik_backend authentik.example.com;
 
     return 302 https://$authentik_backend/authentik/?rd=$target_url;
 }

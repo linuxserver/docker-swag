@@ -3,7 +3,6 @@
 
 # location for authentik auth requests
 location /outpost.goauthentik.io {
-    include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
     set $upstream_authentik authentik-server;
     proxy_pass http://$upstream_authentik:9000/outpost.goauthentik.io;

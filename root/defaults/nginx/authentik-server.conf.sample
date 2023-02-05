@@ -1,0 +1,45 @@
+## Version 2023/02/05 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-server.conf.sample
+# Make sure that your authentik container is in the same user defined bridge network and is named authentik-server
+
+# location for authentik auth requests
+location /outpost.goauthentik.io {
+    include /config/nginx/proxy.conf;
+    include /config/nginx/resolver.conf;
+    set $upstream_authentik authentik-server;
+    proxy_pass http://$upstream_authentik:9000/outpost.goauthentik.io;
+
+    ## Headers
+    proxy_set_header Content-Length "";
+
+    ## Basic Proxy Configuration
+    proxy_pass_request_body off;
+    client_body_buffer_size 128k;
+
+    ## Advanced Proxy Configuration
+    send_timeout 5m;
+}
+
+# Virtual location for authentik 401 redirects
+location @authentik_401_redirect {
+    internal;
+
+    ## Set the $target_url variable based on the original request.
+    set_escape_uri $target_url $scheme://$http_host$request_uri;
+
+    ## Include the Set-Cookie header if present.
+    auth_request_set $set_cookie $upstream_http_set_cookie;
+    add_header Set-Cookie $set_cookie;
+
+    ## Set $authentik_backend to route requests to the current domain by default
+    set $authentik_backend $http_host;
+    ## In order for Webauthn to work with multiple domains authentik must operate on a separate subdomain
+    ## To use authentik on a separate subdomain:
+    ##  * comment the $authentik_backend line above
+    ##  * rename /config/nginx/proxy-confs/authentik.conf.sample to /config/nginx/proxy-confs/authentik.conf
+    ##  * make sure that your dns has a cname set for authentik
+    ##  * uncomment the $authentik_backend line below and change example.com to your domain
+    ##  * restart the swag container
+    #set $authentik_backend authentik.example.com;
+
+    return 302 https://$authentik_backend/authentik/?rd=$target_url;
+}

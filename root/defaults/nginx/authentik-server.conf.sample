@@ -9,6 +9,7 @@ location /outpost.goauthentik.io {
     proxy_pass http://$upstream_authentik:9000/outpost.goauthentik.io;
 
     ## Headers
+    proxy_set_header X-Forwarded-Host $host; # overwrite header from proxy.conf to not include $server_port
     proxy_set_header Content-Length "";
 
     ## Basic Proxy Configuration

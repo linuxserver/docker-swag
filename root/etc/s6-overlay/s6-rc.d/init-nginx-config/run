@@ -13,9 +13,6 @@ fi
 if [[ ! -f /config/nginx/authelia-server.conf ]]; then
     cp /defaults/nginx/authelia-server.conf.sample /config/nginx/authelia-server.conf
 fi
-if [[ ! -f /config/nginx/site-confs/authelia.conf ]]; then
-    cp /defaults/nginx/site-confs/authelia.conf.sample /config/nginx/site-confs/authelia.conf
-fi
 
 # copy old ldap config file to new location
 if [[ -f /config/nginx/ldap.conf ]] && [[ ! -f /config/nginx/ldap-server.conf ]]; then

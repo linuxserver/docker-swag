@@ -154,6 +154,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "06.02.23:", desc: "Add porkbun support back in." }
   - { date: "21.01.23:", desc: "Unpin certbot version (allow certbot 2.x). !!BREAKING CHANGE!! We are temporarily removing the certbot porkbun plugin until a new version is released that is compatible with certbot 2.x." }
   - { date: "20.01.23:", desc: "Rebase to alpine 3.17 with php8.1." }
   - { date: "16.01.23:", desc: "Remove nchan module because it keeps causing crashes." }

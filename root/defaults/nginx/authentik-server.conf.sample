@@ -37,5 +37,5 @@ location @goauthentik_proxy_signin {
     ##  * restart the swag container
     #set $authentik_backend authentik.example.com;
 
-    return 302 https://$authentik_backend/authentik/?rd=$target_url;
+    return 302 https://$authentik_backend/outpost.goauthentik.io/start?rd=$target_url;
 }

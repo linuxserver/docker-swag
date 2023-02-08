@@ -1,14 +1,23 @@
 ## Version 2023/02/05 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-server.conf.sample
 # Make sure that your authentik container is in the same user defined bridge network and is named authentik-server
 
-# location for authentik auth requests
-location /outpost.goauthentik.io {
+# location for authentik subfolder requests
+location ^~ /outpost.goauthentik.io {
+    include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
     set $upstream_authentik authentik-server;
-    proxy_pass http://$upstream_authentik:9000/outpost.goauthentik.io;
+    proxy_pass http://$upstream_authentik:9000;
+}
 
-    proxy_set_header        Host $host;
-    proxy_set_header        X-Original-URL $scheme://$http_host$request_uri;
+# location for authentik auth requests
+location = /outpost.goauthentik.io/auth/nginx {
+    internal;
+
+    include /config/nginx/proxy.conf;
+    include /config/nginx/resolver.conf;
+    set $upstream_authentik authentik-server;
+    proxy_pass http://$upstream_authentik:9000/outpost.goauthentik.io/auth/nginx;
+
     add_header              Set-Cookie $auth_cookie;
     auth_request_set        $auth_cookie $upstream_http_set_cookie;
     proxy_pass_request_body off;
@@ -28,14 +37,5 @@ location @goauthentik_proxy_signin {
 
     ## Set $authentik_backend to route requests to the current domain by default
     set $authentik_backend $http_host;
-    ## In order for Webauthn to work with multiple domains authentik must operate on a separate subdomain
-    ## To use authentik on a separate subdomain:
-    ##  * comment the $authentik_backend line above
-    ##  * rename /config/nginx/proxy-confs/authentik.conf.sample to /config/nginx/proxy-confs/authentik.conf
-    ##  * make sure that your dns has a cname set for authentik
-    ##  * uncomment the $authentik_backend line below and change example.com to your domain
-    ##  * restart the swag container
-    #set $authentik_backend authentik.example.com;
-
     return 302 https://$authentik_backend/outpost.goauthentik.io/start?rd=$target_url;
 }

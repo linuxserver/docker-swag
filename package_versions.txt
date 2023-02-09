@@ -5,8 +5,8 @@ alpine-release-3.17.1-r0
 aom-libs-3.5.0-r0
 apache2-utils-2.4.55-r0
 apk-tools-2.12.10-r1
-apr-1.7.1-r0
-apr-util-1.6.1-r14
+apr-1.7.2-r0
+apr-util-1.6.3-r0
 argon2-libs-20190702-r2
 bash-5.2.15-r0
 brotli-libs-1.0.9-r9
@@ -126,7 +126,7 @@ nginx-mod-stream-geoip2-1.22.1-r0
 nginx-vim-1.22.1-r0
 npth-1.6-r2
 oniguruma-6.9.8-r0
-openssl-3.0.7-r2
+openssl-3.0.8-r0
 p11-kit-0.24.1-r1
 pcre-8.45-r2
 pcre2-10.42-r0
@@ -141,8 +141,8 @@ php81-ctype-8.1.15-r0
 php81-curl-8.1.15-r0
 php81-dom-8.1.15-r0
 php81-exif-8.1.15-r0
-php81-fileinfo-8.1.14-r0
-php81-fpm-8.1.14-r0
+php81-fileinfo-8.1.15-r0
+php81-fpm-8.1.15-r0
 php81-ftp-8.1.15-r0
 php81-gd-8.1.15-r0
 php81-gmp-8.1.15-r0
@@ -172,7 +172,7 @@ php81-pgsql-8.1.15-r0
 php81-phar-8.1.15-r0
 php81-posix-8.1.15-r0
 php81-session-8.1.15-r0
-php81-simplexml-8.1.14-r0
+php81-simplexml-8.1.15-r0
 php81-soap-8.1.15-r0
 php81-sockets-8.1.15-r0
 php81-sodium-8.1.15-r0
@@ -180,7 +180,7 @@ php81-sqlite3-8.1.15-r0
 php81-tokenizer-8.1.15-r0
 php81-xml-8.1.15-r0
 php81-xmlreader-8.1.15-r0
-php81-xmlwriter-8.1.14-r0
+php81-xmlwriter-8.1.15-r0
 php81-xsl-8.1.15-r0
 php81-zip-8.1.15-r0
 pinentry-1.2.1-r0

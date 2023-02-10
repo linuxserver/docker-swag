@@ -335,7 +335,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **01.02.23:** - Add includable confs for authentik.
+* **09.02.23:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) proxy.conf, authelia-location.conf and authelia-server.conf - Add Authentik configs, update Authelia configs.
 * **21.01.23:** - Unpin certbot version (allow certbot 2.x). !!BREAKING CHANGE!! We are temporarily removing the certbot porkbun plugin until a new version is released that is compatible with certbot 2.x.
 * **20.01.23:** - Rebase to alpine 3.17 with php8.1.
 * **16.01.23:** - Remove nchan module because it keeps causing crashes.

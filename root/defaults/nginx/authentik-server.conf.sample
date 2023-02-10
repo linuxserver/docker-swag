@@ -1,5 +1,6 @@
 ## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-server.conf.sample
 # Make sure that your authentik container is in the same user defined bridge network and is named authentik-server
+# Rename /config/nginx/proxy-confs/authentik.conf.sample to /config/nginx/proxy-confs/authentik.conf
 
 # location for authentik subfolder requests
 location ^~ /outpost.goauthentik.io {
@@ -19,10 +20,12 @@ location = /outpost.goauthentik.io/auth/nginx {
     set $upstream_authentik authentik-server;
     proxy_pass http://$upstream_authentik:9000/outpost.goauthentik.io/auth/nginx;
 
-    add_header              Set-Cookie $auth_cookie;
-    auth_request_set        $auth_cookie $upstream_http_set_cookie;
+    ## Include the Set-Cookie header if present.
+    auth_request_set $set_cookie $upstream_http_set_cookie;
+    add_header Set-Cookie $set_cookie;
+
     proxy_pass_request_body off;
-    proxy_set_header        Content-Length "";
+    proxy_set_header Content-Length "";
 }
 
 # Virtual location for authentik 401 redirects

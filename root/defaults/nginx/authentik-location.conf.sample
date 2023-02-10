@@ -1,5 +1,6 @@
 ## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-location.conf.sample
 # Make sure that your authentik container is in the same user defined bridge network and is named authentik-server
+# Rename /config/nginx/proxy-confs/authentik.conf.sample to /config/nginx/proxy-confs/authentik.conf
 
 ## Send a subrequest to Authentik to verify if the user is authenticated and has permission to access the resource.
 auth_request /outpost.goauthentik.io/auth/nginx;

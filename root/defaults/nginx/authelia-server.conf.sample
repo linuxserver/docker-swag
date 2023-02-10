@@ -1,9 +1,11 @@
-## Version 2023/02/05 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
+## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
+# Rename /config/nginx/proxy-confs/authelia.conf.sample to /config/nginx/proxy-confs/authelia.conf
 # Make sure that the authelia configuration.yml has 'path: "authelia"' defined
 
 # location for authelia subfolder requests
 location ^~ /authelia {
+    auth_request off; # requests to this subfolder must be accessible without authentication
     include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
     set $upstream_authelia authelia;
@@ -19,15 +21,12 @@ location = /authelia/api/verify {
     set $upstream_authelia authelia;
     proxy_pass http://$upstream_authelia:9091/authelia/api/verify;
 
-    ## Headers
-    proxy_set_header Content-Length "";
+    ## Include the Set-Cookie header if present.
+    auth_request_set $set_cookie $upstream_http_set_cookie;
+    add_header Set-Cookie $set_cookie;
 
-    ## Basic Proxy Configuration
     proxy_pass_request_body off;
-    client_body_buffer_size 128k;
-
-    ## Advanced Proxy Configuration
-    send_timeout 5m;
+    proxy_set_header Content-Length "";
 }
 
 # Virtual location for authelia 401 redirects

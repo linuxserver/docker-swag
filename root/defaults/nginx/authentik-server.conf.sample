@@ -1,0 +1,45 @@
+## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-server.conf.sample
+# Make sure that your authentik container is in the same user defined bridge network and is named authentik-server
+# Rename /config/nginx/proxy-confs/authentik.conf.sample to /config/nginx/proxy-confs/authentik.conf
+
+# location for authentik subfolder requests
+location ^~ /outpost.goauthentik.io {
+    auth_request off; # requests to this subfolder must be accessible without authentication
+    include /config/nginx/proxy.conf;
+    include /config/nginx/resolver.conf;
+    set $upstream_authentik authentik-server;
+    proxy_pass http://$upstream_authentik:9000;
+}
+
+# location for authentik auth requests
+location = /outpost.goauthentik.io/auth/nginx {
+    internal;
+
+    include /config/nginx/proxy.conf;
+    include /config/nginx/resolver.conf;
+    set $upstream_authentik authentik-server;
+    proxy_pass http://$upstream_authentik:9000/outpost.goauthentik.io/auth/nginx;
+
+    ## Include the Set-Cookie header if present.
+    auth_request_set $set_cookie $upstream_http_set_cookie;
+    add_header Set-Cookie $set_cookie;
+
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+}
+
+# Virtual location for authentik 401 redirects
+location @goauthentik_proxy_signin {
+    internal;
+
+    ## Set the $target_url variable based on the original request.
+    set_escape_uri $target_url $scheme://$http_host$request_uri;
+
+    ## Include the Set-Cookie header if present.
+    auth_request_set $set_cookie $upstream_http_set_cookie;
+    add_header Set-Cookie $set_cookie;
+
+    ## Set $authentik_backend to route requests to the current domain by default
+    set $authentik_backend $http_host;
+    return 302 https://$authentik_backend/outpost.goauthentik.io/start?rd=$target_url;
+}

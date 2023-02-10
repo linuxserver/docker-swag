@@ -1,4 +1,4 @@
-## Version 2022/10/03 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
+## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
 
 # redirect all traffic to https
 server {
@@ -29,6 +29,9 @@ server {
     # enable for Authelia (requires authelia-location.conf in the location block)
     #include /config/nginx/authelia-server.conf;
 
+    # enable for Authentik (requires authentik-location.conf in the location block)
+    #include /config/nginx/authentik-server.conf;
+
     location / {
         # enable for basic auth
         #auth_basic "Restricted";
@@ -39,6 +42,9 @@ server {
 
         # enable for Authelia (requires authelia-server.conf in the server block)
         #include /config/nginx/authelia-location.conf;
+
+        # enable for Authentik (requires authentik-server.conf in the server block)
+        #include /config/nginx/authentik-location.conf;
 
         try_files $uri $uri/ /index.html /index.php$is_args$args =404;
     }

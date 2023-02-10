@@ -1,4 +1,4 @@
-## Version 2023/02/05 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-location.conf.sample
+## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-location.conf.sample
 # Make sure that your authentik container is in the same user defined bridge network and is named authentik-server
 
 ## Send a subrequest to Authentik to verify if the user is authenticated and has permission to access the resource.
@@ -6,14 +6,14 @@ auth_request /outpost.goauthentik.io/auth/nginx;
 ## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal.
 error_page 401 = @goauthentik_proxy_signin;
 
-## Save the upstream metadata response headers from Authentik to variables.
+## Translate response headers from Authentik into variables
 auth_request_set $authentik_username $upstream_http_x_authentik_username;
 auth_request_set $authentik_groups $upstream_http_x_authentik_groups;
 auth_request_set $authentik_email $upstream_http_x_authentik_email;
 auth_request_set $authentik_name $upstream_http_x_authentik_name;
 auth_request_set $authentik_uid $upstream_http_x_authentik_uid;
 
-## Inject the metadata response headers from the variables into the request made to the backend.
+## Inject the response header variables into the request made to the actual upstream
 proxy_set_header X-authentik-username $authentik_username;
 proxy_set_header X-authentik-groups $authentik_groups;
 proxy_set_header X-authentik-email $authentik_email;

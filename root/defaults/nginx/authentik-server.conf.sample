@@ -1,8 +1,9 @@
-## Version 2023/02/05 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-server.conf.sample
+## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-server.conf.sample
 # Make sure that your authentik container is in the same user defined bridge network and is named authentik-server
 
 # location for authentik subfolder requests
 location ^~ /outpost.goauthentik.io {
+    auth_request off; # requests to this subfolder must be accessible without authentication
     include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
     set $upstream_authentik authentik-server;

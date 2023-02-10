@@ -71,7 +71,7 @@ libmemcached-libs-1.0.18-r5
 libmnl-1.0.5-r0
 libnftnl-1.2.4-r0
 libpng-1.6.38-r0
-libpq-15.1-r0
+libpq-15.2-r0
 libproc-3.3.17-r2
 libsasl-2.1.28-r3
 libseccomp-2.5.4-r0

@@ -1,6 +1,8 @@
-## Version 2022/09/22 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
+## Version 2023/02/05 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
+# Make sure that the authelia configuration.yml has 'path: "authelia"' defined
 
+# location for authelia subfolder requests
 location ^~ /authelia {
     include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
@@ -8,43 +10,47 @@ location ^~ /authelia {
     proxy_pass http://$upstream_authelia:9091;
 }
 
+# location for authelia auth requests
 location = /authelia/api/verify {
     internal;
 
+    include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
     set $upstream_authelia authelia;
-    proxy_pass_request_body off;
-    proxy_pass http://$upstream_authelia:9091;
+    proxy_pass http://$upstream_authelia:9091/authelia/api/verify;
+
+    ## Headers
     proxy_set_header Content-Length "";
 
-    # Timeout if the real server is dead
-    proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
-
-    # [REQUIRED] Needed by Authelia to check authorizations of the resource.
-    # Provide either X-Original-URL and X-Forwarded-Proto or
-    # X-Forwarded-Proto, X-Forwarded-Host and X-Forwarded-Uri or both.
-    # Those headers will be used by Authelia to deduce the target url of the user.
-    # Basic Proxy Config
+    ## Basic Proxy Configuration
+    proxy_pass_request_body off;
     client_body_buffer_size 128k;
-    proxy_set_header Host $host;
-    proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $remote_addr;
-    proxy_set_header X-Forwarded-Method $request_method;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header X-Forwarded-Host $http_host;
-    proxy_set_header X-Forwarded-Uri $request_uri;
-    proxy_set_header X-Forwarded-Ssl on;
-    proxy_redirect  http://  $scheme://;
-    proxy_http_version 1.1;
-    proxy_set_header Connection "";
-    proxy_cache_bypass $cookie_session;
-    proxy_no_cache $cookie_session;
-    proxy_buffers 4 32k;
 
-    # Advanced Proxy Config
+    ## Advanced Proxy Configuration
     send_timeout 5m;
-    proxy_read_timeout 240;
-    proxy_send_timeout 240;
-    proxy_connect_timeout 240;
+}
+
+# Virtual location for authelia 401 redirects
+location @authelia_proxy_signin {
+    internal;
+
+    ## Set the $target_url variable based on the original request.
+    set_escape_uri $target_url $scheme://$http_host$request_uri;
+
+    ## Include the Set-Cookie header if present.
+    auth_request_set $set_cookie $upstream_http_set_cookie;
+    add_header Set-Cookie $set_cookie;
+
+    ## Set $authelia_backend to route requests to the current domain by default
+    set $authelia_backend $http_host;
+    ## In order for Webauthn to work with multiple domains authelia must operate on a separate subdomain
+    ## To use authelia on a separate subdomain:
+    ##  * comment the $authelia_backend line above
+    ##  * rename /config/nginx/proxy-confs/authelia.conf.sample to /config/nginx/proxy-confs/authelia.conf
+    ##  * make sure that your dns has a cname set for authelia
+    ##  * uncomment the $authelia_backend line below and change example.com to your domain
+    ##  * restart the swag container
+    #set $authelia_backend authelia.example.com;
+
+    return 302 https://$authelia_backend/authelia/?rd=$target_url;
 }

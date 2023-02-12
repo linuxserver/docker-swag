@@ -29,7 +29,7 @@ gnupg-dirmngr-2.2.40-r0
 gnupg-gpgconf-2.2.40-r0
 gnupg-utils-2.2.40-r0
 gnupg-wks-client-2.2.40-r0
-gnutls-3.7.8-r2
+gnutls-3.7.8-r3
 gpg-2.2.40-r0
 gpg-agent-2.2.40-r0
 gpg-wks-server-2.2.40-r0

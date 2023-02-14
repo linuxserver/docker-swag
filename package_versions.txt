@@ -22,7 +22,6 @@ fontconfig-2.14.1-r0
 freetype-2.12.1-r0
 gdbm-1.23-r0
 git-2.38.3-r1
-git-perl-2.38.3-r1
 gmp-6.2.1-r2
 gnupg-2.2.40-r0
 gnupg-dirmngr-2.2.40-r0
@@ -131,8 +130,6 @@ p11-kit-0.24.1-r1
 pcre-8.45-r2
 pcre2-10.42-r0
 perl-5.36.0-r0
-perl-error-0.17029-r1
-perl-git-2.38.3-r1
 php81-8.1.15-r0
 php81-bcmath-8.1.15-r0
 php81-bz2-8.1.15-r0

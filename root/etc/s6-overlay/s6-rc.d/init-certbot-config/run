@@ -171,7 +171,7 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
     if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]] && [[ -n "${ORIGEMAIL}" ]]; then
         REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${ORIGEMAIL}")
         REV_ZEROSSL_EAB_KID=$(echo "${REV_EAB_CREDS}" | jq .eab_kid)
-        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "${REV_EAB_CREDS}" | js .eab_hmac_key)
+        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "${REV_EAB_CREDS}" | jq .eab_hmac_key)
         if [[ -z "${REV_ZEROSSL_EAB_KID}" ]] || [[ -z "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
             echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
             sleep infinity

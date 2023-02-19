@@ -44,7 +44,7 @@ function set_ini_value() {
 
 # ensure config files exist and has at least one value set (set_ini_value does not work on empty files)
 touch /config/etc/letsencrypt/cli.ini
-grep -qF 'agree-tos' /config/etc/letsencrypt/cli.ini || echo 'agree-tos=true' >> /config/etc/letsencrypt/cli.ini
+grep -qF 'agree-tos' /config/etc/letsencrypt/cli.ini || echo 'agree-tos=true' >>/config/etc/letsencrypt/cli.ini
 
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
@@ -169,14 +169,16 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
     [[ ! "${CERTPROVIDER}" = "${ORIGCERTPROVIDER}" ]]; then
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
     if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]] && [[ -n "${ORIGEMAIL}" ]]; then
-        REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${ORIGEMAIL}")
-        REV_ZEROSSL_EAB_KID=$(echo "${REV_EAB_CREDS}" | jq .eab_kid)
-        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "${REV_EAB_CREDS}" | jq .eab_hmac_key)
+        REV_ACMESERVER=("https://acme.zerossl.com/v2/DV90")
+        REV_ZEROSSL_EAB_KID=$(awk -F "=" '/eab-kid/ {print $2}' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf" | tr -d ' ')
+        REV_ZEROSSL_EAB_HMAC_KEY=$(awk -F "=" '/eab-hmac-key/ {print $2}' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf" | tr -d ' ')
         if [[ -z "${REV_ZEROSSL_EAB_KID}" ]] || [[ -z "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
-            echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
-            sleep infinity
+            REV_ZEROSSL_EAB_KID=$(awk -F "=" '/eab-kid/ {print $2}' /config/etc/letsencrypt/cli.ini | tr -d ' ')
+            REV_ZEROSSL_EAB_HMAC_KEY=$(awk -F "=" '/eab-hmac-key/ {print $2}' /config/etc/letsencrypt/cli.ini | tr -d ' ')
         fi
-        REV_ACMESERVER=("https://acme.zerossl.com/v2/DV90" "--eab-kid" "${REV_ZEROSSL_EAB_KID}" "--eab-hmac-key" "${REV_ZEROSSL_EAB_HMAC_KEY}")
+        if [[ -n "${REV_ZEROSSL_EAB_KID}" ]] && [[ -n "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
+            REV_ACMESERVER+=("--eab-kid" "${REV_ZEROSSL_EAB_KID}" "--eab-hmac-key" "${REV_ZEROSSL_EAB_HMAC_KEY}")
+        fi
     elif [[ "${ORIGSTAGING}" = "true" ]]; then
         REV_ACMESERVER=("https://acme-staging-v02.api.letsencrypt.org/directory")
     else
@@ -184,6 +186,8 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
     fi
     if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
         certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
+    else
+        certbot revoke --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
     fi
     rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
@@ -197,6 +201,8 @@ if [[ -f "/config/keys/letsencrypt/chain.pem" ]] && { [[ "${CERTPROVIDER}" == "l
     REV_ACMESERVER=("https://acme-v02.api.letsencrypt.org/directory")
     if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
         certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
+    else
+        certbot revoke --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
     fi
     rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi

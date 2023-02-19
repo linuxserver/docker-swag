@@ -29,7 +29,7 @@ if [[ "${VALIDATION}" = "dns" ]] && [[ ! "${DNSPLUGIN}" =~ ^(acmedns|aliyun|azur
     sleep infinity
 fi
 
-# call option with parameters: $1=name $2=value $3=file
+# call set_ini_value with parameters: $1=name $2=value $3=file
 function set_ini_value() {
     name=${1//\//\\/}
     value=${2//\//\\/}
@@ -166,8 +166,8 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
     if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]] && [[ -n "${ORIGEMAIL}" ]]; then
         REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${ORIGEMAIL}")
-        REV_ZEROSSL_EAB_KID=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
-        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+        REV_ZEROSSL_EAB_KID=$(echo "${REV_EAB_CREDS}" | jq .eab_kid)
+        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "${REV_EAB_CREDS}" | js .eab_hmac_key)
         if [[ -z "${REV_ZEROSSL_EAB_KID}" ]] || [[ -z "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
             echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
             sleep infinity
@@ -218,45 +218,39 @@ fi
 
 set_ini_value "server" "${ACMESERVER}" /config/etc/letsencrypt/cli.ini
 
-# figuring out url only vs url & subdomains vs subdomains only
+# figuring out domain only vs domain & subdomains vs subdomains only
+DOMAINS_ARRAY=()
+if [[ -z "${SUBDOMAINS}" ]] || [[ "${ONLY_SUBDOMAINS}" != true ]]; then
+    DOMAINS_ARRAY+=("${URL}")
+fi
 if [[ -n "${SUBDOMAINS}" ]]; then
     echo "SUBDOMAINS entered, processing"
+    SUBDOMAINS_ARRAY=()
     if [[ "${SUBDOMAINS}" = "wildcard" ]]; then
-        if [[ "${ONLY_SUBDOMAINS}" = true ]]; then
-            export URL_REAL="*.${URL}"
-            echo "Wildcard cert for only the subdomains of ${URL} will be requested"
-        else
-            export URL_REAL="*.${URL},${URL}"
-            echo "Wildcard cert for ${URL} will be requested"
-        fi
+        SUBDOMAINS_ARRAY+=("*.${URL}")
+        echo "Wildcard cert for ${URL} will be requested"
     else
-        echo "SUBDOMAINS entered, processing"
         for job in $(echo "${SUBDOMAINS}" | tr "," " "); do
-            export SUBDOMAINS_REAL="${SUBDOMAINS_REAL},${job}.${URL}"
+            SUBDOMAINS_ARRAY+=("${job}.${URL}")
         done
-        if [[ "${ONLY_SUBDOMAINS}" = true ]]; then
-            URL_REAL="${SUBDOMAINS_REAL}"
-            echo "Only subdomains, no URL in cert"
-        else
-            URL_REAL="${URL}${SUBDOMAINS_REAL}"
-        fi
-        echo "Sub-domains processed are: ${SUBDOMAINS_REAL}"
+        echo "Sub-domains processed are: $(echo "${SUBDOMAINS_ARRAY[*]}" | tr " " ",")"
     fi
-else
-    echo "No subdomains defined"
-    URL_REAL="${URL}"
+    DOMAINS_ARRAY+=("${SUBDOMAINS_ARRAY[@]}")
 fi
 
 # add extra domains
 if [[ -n "${EXTRA_DOMAINS}" ]]; then
     echo "EXTRA_DOMAINS entered, processing"
+    EXTRA_DOMAINS_ARRAY=()
     for job in $(echo "${EXTRA_DOMAINS}" | tr "," " "); do
-        export EXTRA_DOMAINS_REAL="${EXTRA_DOMAINS_REAL},${job}"
+        EXTRA_DOMAINS_ARRAY+=("${job}")
     done
-    echo "Extra domains processed are: ${EXTRA_DOMAINS_REAL}"
-    URL_REAL="${URL_REAL}${EXTRA_DOMAINS_REAL}"
+    echo "Extra domains processed are: $(echo "${EXTRA_DOMAINS_ARRAY[*]}" | tr " " ",")"
+    DOMAINS_ARRAY+=("${EXTRA_DOMAINS_ARRAY[@]}")
 fi
-set_ini_value "domains" "${URL_REAL}" /config/etc/letsencrypt/cli.ini
+
+# setting domains in cli.ini
+set_ini_value "domains" "$(echo "${DOMAINS_ARRAY[*]}" | tr " " ",")" /config/etc/letsencrypt/cli.ini
 
 # figuring out whether to use e-mail and which
 if [[ ${EMAIL} == *@* ]]; then
@@ -321,8 +315,8 @@ if [[ ! -f "/config/keys/letsencrypt/fullchain.pem" ]]; then
     if [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ -n "${EMAIL}" ]]; then
         echo "Retrieving EAB from ZeroSSL"
         EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${EMAIL}")
-        ZEROSSL_EAB_KID=$(echo "${EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
-        ZEROSSL_EAB_HMAC_KEY=$(echo "${EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+        ZEROSSL_EAB_KID=$(echo "${EAB_CREDS}" | jq .eab_kid)
+        ZEROSSL_EAB_HMAC_KEY=$(echo "${EAB_CREDS}" | jq .eab_hmac_key)
         if [[ -z "${ZEROSSL_EAB_KID}" ]] || [[ -z "${ZEROSSL_EAB_HMAC_KEY}" ]]; then
             echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
             sleep infinity

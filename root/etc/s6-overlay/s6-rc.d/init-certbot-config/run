@@ -29,6 +29,10 @@ if [[ "${VALIDATION}" = "dns" ]] && [[ ! "${DNSPLUGIN}" =~ ^(acmedns|aliyun|azur
     sleep infinity
 fi
 
+# set_ini_value logic:
+# - if the name is not found in the file, append the name=value to the end of the file
+# - if the name is found in the file, replace the value
+# - if the name is found in the file but commented out, uncomment the line and replace the value
 # call set_ini_value with parameters: $1=name $2=value $3=file
 function set_ini_value() {
     name=${1//\//\\/}

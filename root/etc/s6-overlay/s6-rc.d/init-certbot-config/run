@@ -44,7 +44,7 @@ function set_ini_value() {
 
 # ensure config files exist and has at least one value set (set_ini_value does not work on empty files)
 touch /config/etc/letsencrypt/cli.ini
-grep -qxF 'agree-tos' /config/etc/letsencrypt/cli.ini || echo 'agree-tos=true' >> /config/etc/letsencrypt/cli.ini
+grep -qF 'agree-tos' /config/etc/letsencrypt/cli.ini || echo 'agree-tos=true' >> /config/etc/letsencrypt/cli.ini
 
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/

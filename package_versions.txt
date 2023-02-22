@@ -1,7 +1,7 @@
 alpine-baselayout-3.4.0-r0
 alpine-baselayout-data-3.4.0-r0
 alpine-keys-2.4-r1
-alpine-release-3.17.1-r0
+alpine-release-3.17.2-r0
 aom-libs-3.5.0-r0
 apache2-utils-2.4.55-r0
 apk-tools-2.12.10-r1
@@ -21,7 +21,8 @@ fail2ban-1.0.2-r0
 fontconfig-2.14.1-r0
 freetype-2.12.1-r0
 gdbm-1.23-r0
-git-2.38.3-r1
+git-2.38.4-r0
+git-perl-2.38.4-r0
 gmp-6.2.1-r2
 gnupg-2.2.40-r0
 gnupg-dirmngr-2.2.40-r0
@@ -47,7 +48,7 @@ libbsd-0.11.7-r0
 libbz2-1.0.8-r4
 libc-utils-0.7.2-r3
 libcrypto3-3.0.8-r0
-libcurl-7.87.0-r1
+libcurl-7.87.0-r2
 libdav1d-1.0.0-r2
 libedit-20221030.3.1-r0
 libevent-2.1.12-r5
@@ -130,6 +131,8 @@ p11-kit-0.24.1-r1
 pcre-8.45-r2
 pcre2-10.42-r0
 perl-5.36.0-r0
+perl-error-0.17029-r1
+perl-git-2.38.4-r0
 php81-8.1.16-r0
 php81-bcmath-8.1.16-r0
 php81-bz2-8.1.16-r0
@@ -138,8 +141,8 @@ php81-ctype-8.1.16-r0
 php81-curl-8.1.16-r0
 php81-dom-8.1.16-r0
 php81-exif-8.1.16-r0
-php81-fileinfo-8.1.15-r0
-php81-fpm-8.1.15-r0
+php81-fileinfo-8.1.16-r0
+php81-fpm-8.1.16-r0
 php81-ftp-8.1.16-r0
 php81-gd-8.1.16-r0
 php81-gmp-8.1.16-r0
@@ -169,7 +172,7 @@ php81-pgsql-8.1.16-r0
 php81-phar-8.1.16-r0
 php81-posix-8.1.16-r0
 php81-session-8.1.16-r0
-php81-simplexml-8.1.15-r0
+php81-simplexml-8.1.16-r0
 php81-soap-8.1.16-r0
 php81-sockets-8.1.16-r0
 php81-sodium-8.1.16-r0
@@ -177,7 +180,7 @@ php81-sqlite3-8.1.16-r0
 php81-tokenizer-8.1.16-r0
 php81-xml-8.1.16-r0
 php81-xmlreader-8.1.16-r0
-php81-xmlwriter-8.1.15-r0
+php81-xmlwriter-8.1.16-r0
 php81-xsl-8.1.16-r0
 php81-zip-8.1.16-r0
 pinentry-1.2.1-r0

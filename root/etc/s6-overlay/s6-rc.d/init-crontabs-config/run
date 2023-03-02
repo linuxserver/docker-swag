@@ -25,6 +25,12 @@ if [[ ! -f /config/crontabs/abc ]]; then
     cp /etc/crontabs/abc /config/crontabs/
 fi
 
+# set permissions on crontabs
+lsiown root:root \
+    /config/crontabs/root
+lsiown abc:abc \
+    /config/crontabs/abc
+
 # import user crontabs
 crontab -u root /config/crontabs/root
 crontab -u abc /config/crontabs/abc

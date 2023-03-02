@@ -1,204 +1,331 @@
-alpine-baselayout-3.4.0-r0
-alpine-baselayout-data-3.4.0-r0
-alpine-keys-2.4-r1
-alpine-release-3.17.2-r0
-aom-libs-3.5.0-r0
-apache2-utils-2.4.55-r0
-apk-tools-2.12.10-r1
-apr-1.7.2-r0
-apr-util-1.6.3-r0
-argon2-libs-20190702-r2
-bash-5.2.15-r0
-brotli-libs-1.0.9-r9
-busybox-1.35.0-r29
-busybox-binsh-1.35.0-r29
-c-client-2007f-r14
-ca-certificates-20220614-r4
-ca-certificates-bundle-20220614-r4
-coreutils-9.1-r0
-curl-7.87.0-r1
-fail2ban-1.0.2-r0
-fontconfig-2.14.1-r0
-freetype-2.12.1-r0
-gdbm-1.23-r0
-git-2.38.4-r0
-git-perl-2.38.4-r0
-gmp-6.2.1-r2
-gnupg-2.2.40-r0
-gnupg-dirmngr-2.2.40-r0
-gnupg-gpgconf-2.2.40-r0
-gnupg-utils-2.2.40-r0
-gnupg-wks-client-2.2.40-r0
-gnutls-3.7.8-r3
-gpg-2.2.40-r0
-gpg-agent-2.2.40-r0
-gpg-wks-server-2.2.40-r0
-gpgsm-2.2.40-r0
-gpgv-2.2.40-r0
-icu-data-en-72.1-r1
-icu-libs-72.1-r1
-ip6tables-1.8.8-r2
-iptables-1.8.8-r2
-jq-1.6-r2
-libacl-2.3.1-r1
-libassuan-2.5.5-r1
-libattr-2.5.1-r2
-libavif-0.11.1-r0
-libbsd-0.11.7-r0
-libbz2-1.0.8-r4
-libc-utils-0.7.2-r3
-libcrypto3-3.0.8-r0
-libcurl-7.87.0-r2
-libdav1d-1.0.0-r2
-libedit-20221030.3.1-r0
-libevent-2.1.12-r5
-libexpat-2.5.0-r0
-libffi-3.4.4-r0
-libgcc-12.2.1_git20220924-r4
-libgcrypt-1.10.1-r0
-libgd-2.3.3-r3
-libgpg-error-1.46-r1
-libice-1.0.10-r1
-libidn-1.41-r0
-libintl-0.21.1-r1
-libjpeg-turbo-2.1.4-r0
-libksba-1.6.3-r0
-libldap-2.6.3-r6
-libmaxminddb-libs-1.7.1-r0
-libmcrypt-2.5.8-r10
-libmd-1.0.4-r0
-libmemcached-libs-1.0.18-r5
-libmnl-1.0.5-r0
-libnftnl-1.2.4-r0
-libpng-1.6.38-r0
-libpq-15.2-r0
-libproc-3.3.17-r2
-libsasl-2.1.28-r3
-libseccomp-2.5.4-r0
-libsm-1.2.3-r1
-libsodium-1.0.18-r2
-libssl3-3.0.8-r0
-libstdc++-12.2.1_git20220924-r4
-libtasn1-4.19.0-r0
-libunistring-1.1-r0
-libuuid-2.38.1-r1
-libwebp-1.2.4-r1
-libx11-1.8.4-r0
-libxau-1.0.10-r0
-libxcb-1.15-r0
-libxdmcp-1.1.4-r0
-libxext-1.3.5-r0
-libxml2-2.10.3-r1
-libxpm-3.5.15-r0
-libxslt-1.1.37-r0
-libxt-1.2.1-r0
-libzip-1.9.2-r2
-linux-pam-1.5.2-r1
-logrotate-3.20.1-r3
-lz4-libs-1.9.4-r1
-memcached-1.6.17-r0
-mpdecimal-2.5.1-r1
-musl-1.2.3-r4
-musl-utils-1.2.3-r4
-nano-7.0-r0
-ncurses-libs-6.3_p20221119-r0
-ncurses-terminfo-base-6.3_p20221119-r0
-nettle-3.8.1-r0
-nghttp2-libs-1.51.0-r0
-nginx-1.22.1-r0
-nginx-mod-devel-kit-1.22.1-r0
-nginx-mod-http-brotli-1.22.1-r0
-nginx-mod-http-dav-ext-1.22.1-r0
-nginx-mod-http-echo-1.22.1-r0
-nginx-mod-http-fancyindex-1.22.1-r0
-nginx-mod-http-geoip2-1.22.1-r0
-nginx-mod-http-headers-more-1.22.1-r0
-nginx-mod-http-image-filter-1.22.1-r0
-nginx-mod-http-perl-1.22.1-r0
-nginx-mod-http-redis2-1.22.1-r0
-nginx-mod-http-set-misc-1.22.1-r0
-nginx-mod-http-upload-progress-1.22.1-r0
-nginx-mod-http-xslt-filter-1.22.1-r0
-nginx-mod-mail-1.22.1-r0
-nginx-mod-rtmp-1.22.1-r0
-nginx-mod-stream-1.22.1-r0
-nginx-mod-stream-geoip2-1.22.1-r0
-nginx-vim-1.22.1-r0
-npth-1.6-r2
-oniguruma-6.9.8-r0
-openssl-3.0.8-r0
-p11-kit-0.24.1-r1
-pcre-8.45-r2
-pcre2-10.42-r0
-perl-5.36.0-r0
-perl-error-0.17029-r1
-perl-git-2.38.4-r0
-php81-8.1.16-r0
-php81-bcmath-8.1.16-r0
-php81-bz2-8.1.16-r0
-php81-common-8.1.16-r0
-php81-ctype-8.1.16-r0
-php81-curl-8.1.16-r0
-php81-dom-8.1.16-r0
-php81-exif-8.1.16-r0
-php81-fileinfo-8.1.16-r0
-php81-fpm-8.1.16-r0
-php81-ftp-8.1.16-r0
-php81-gd-8.1.16-r0
-php81-gmp-8.1.16-r0
-php81-iconv-8.1.16-r0
-php81-imap-8.1.16-r0
-php81-intl-8.1.16-r0
-php81-ldap-8.1.16-r0
-php81-mbstring-8.1.16-r0
-php81-mysqli-8.1.16-r0
-php81-mysqlnd-8.1.16-r0
-php81-opcache-8.1.16-r0
-php81-openssl-8.1.16-r0
-php81-pdo-8.1.16-r0
-php81-pdo_mysql-8.1.16-r0
-php81-pdo_odbc-8.1.16-r0
-php81-pdo_pgsql-8.1.16-r0
-php81-pdo_sqlite-8.1.16-r0
-php81-pear-8.1.16-r0
-php81-pecl-apcu-5.1.22-r0
-php81-pecl-igbinary-3.2.12-r0
-php81-pecl-mailparse-3.1.4-r0
-php81-pecl-mcrypt-1.0.4-r0
-php81-pecl-memcached-3.2.0-r0
-php81-pecl-redis-5.3.7-r0
-php81-pecl-xmlrpc-1.0.0_rc3-r0
-php81-pgsql-8.1.16-r0
-php81-phar-8.1.16-r0
-php81-posix-8.1.16-r0
-php81-session-8.1.16-r0
-php81-simplexml-8.1.16-r0
-php81-soap-8.1.16-r0
-php81-sockets-8.1.16-r0
-php81-sodium-8.1.16-r0
-php81-sqlite3-8.1.16-r0
-php81-tokenizer-8.1.16-r0
-php81-xml-8.1.16-r0
-php81-xmlreader-8.1.16-r0
-php81-xmlwriter-8.1.16-r0
-php81-xsl-8.1.16-r0
-php81-zip-8.1.16-r0
-pinentry-1.2.1-r0
-popt-1.19-r0
-procps-3.3.17-r2
-python3-3.10.10-r0
-readline-8.2.0-r0
-scanelf-1.3.5-r1
-shadow-4.13-r0
-skalibs-2.12.0.1-r0
-sqlite-libs-3.40.1-r0
-ssl_client-1.35.0-r29
-tiff-4.4.0-r1
-tzdata-2022f-r1
-unixodbc-2.3.11-r0
-utmps-libs-0.1.2.0-r1
-whois-5.5.14-r0
-xz-5.2.9-r0
-xz-libs-5.2.9-r0
-zlib-1.2.13-r0
-zstd-libs-1.5.2-r9
+NAME                            VERSION                TYPE   
+ConfigArgParse                  1.5.3                  python  
+PyJWT                           2.6.0                  python  
+PyYAML                          6.0                    python  
+acme                            2.3.0                  python  
+alpine-baselayout               3.4.0-r0               apk     
+alpine-baselayout-data          3.4.0-r0               apk     
+alpine-keys                     2.4-r1                 apk     
+alpine-release                  3.17.2-r0              apk     
+aom-libs                        3.5.0-r0               apk     
+apache2-utils                   2.4.55-r0              apk     
+apk-tools                       2.12.10-r1             apk     
+apr                             1.7.2-r0               apk     
+apr-util                        1.6.3-r0               apk     
+argon2-libs                     20190702-r2            apk     
+attrs                           22.2.0                 python  
+azure-common                    1.1.28                 python  
+azure-core                      1.26.3                 python  
+azure-identity                  1.12.0                 python  
+azure-mgmt-core                 1.3.2                  python  
+azure-mgmt-dns                  8.0.0                  python  
+bash                            5.2.15-r0              apk     
+beautifulsoup4                  4.11.2                 python  
+boto3                           1.26.82                python  
+botocore                        1.29.82                python  
+brotli-libs                     1.0.9-r9               apk     
+bs4                             0.0.1                  python  
+busybox                         1.35.0                 binary  
+busybox                         1.35.0-r29             apk     
+busybox-binsh                   1.35.0-r29             apk     
+c-client                        2007f-r14              apk     
+ca-certificates                 20220614-r4            apk     
+ca-certificates-bundle          20220614-r4            apk     
+cachetools                      5.3.0                  python  
+certbot                         2.3.0                  python  
+certbot-dns-acmedns             0.1.0                  python  
+certbot-dns-aliyun              0.38.1                 python  
+certbot-dns-azure               1.5.0                  python  
+certbot-dns-cloudflare          2.3.0                  python  
+certbot-dns-cpanel              0.4.0                  python  
+certbot-dns-desec               1.2.1                  python  
+certbot-dns-digitalocean        2.3.0                  python  
+certbot-dns-directadmin         1.0.3                  python  
+certbot-dns-dnsimple            2.3.0                  python  
+certbot-dns-dnsmadeeasy         2.3.0                  python  
+certbot-dns-dnspod              0.1.0                  python  
+certbot-dns-do                  0.31.0                 python  
+certbot-dns-domeneshop          0.2.9                  python  
+certbot-dns-duckdns             1.2.1                  python  
+certbot-dns-dynu                0.0.4                  python  
+certbot-dns-gehirn              2.3.0                  python  
+certbot-dns-godaddy             0.2.2                  python  
+certbot-dns-google              2.3.0                  python  
+certbot-dns-he                  1.0.0                  python  
+certbot-dns-hetzner             2.0.0                  python  
+certbot-dns-infomaniak          0.2.1                  python  
+certbot-dns-inwx                2.2.0                  python  
+certbot-dns-ionos               2022.11.24             python  
+certbot-dns-linode              2.3.0                  python  
+certbot-dns-loopia              1.0.1                  python  
+certbot-dns-luadns              2.3.0                  python  
+certbot-dns-netcup              1.2.0                  python  
+certbot-dns-njalla              1.0.0                  python  
+certbot-dns-nsone               2.3.0                  python  
+certbot-dns-ovh                 2.3.0                  python  
+certbot-dns-porkbun             0.7                    python  
+certbot-dns-rfc2136             2.3.0                  python  
+certbot-dns-route53             2.3.0                  python  
+certbot-dns-sakuracloud         2.3.0                  python  
+certbot-dns-standalone          1.1                    python  
+certbot-dns-transip             0.5.2                  python  
+certbot-dns-vultr               1.0.3                  python  
+certbot-plugin-gandi            1.4.3                  python  
+certifi                         2022.12.7              python  
+cffi                            1.15.1                 python  
+charset-normalizer              3.0.1                  python  
+cloudflare                      2.11.1                 python  
+configobj                       5.0.8                  python  
+coreutils                       9.1-r0                 apk     
+cryptography                    39.0.1                 python  
+curl                            7.87.0-r2              apk     
+distro                          1.8.0                  python  
+dns-lexicon                     3.11.7                 python  
+dnslib                          0.9.23                 python  
+dnspython                       2.3.0                  python  
+domeneshop                      0.4.3                  python  
+fail2ban                        1.0.2                  python  
+fail2ban                        1.0.2-r0               apk     
+filelock                        3.9.0                  python  
+fontconfig                      2.14.1-r0              apk     
+freetype                        2.12.1-r0              apk     
+future                          0.18.3                 python  
+gdbm                            1.23-r0                apk     
+git                             2.38.4-r0              apk     
+git-perl                        2.38.4-r0              apk     
+gmp                             6.2.1-r2               apk     
+gnupg                           2.2.40-r0              apk     
+gnupg-dirmngr                   2.2.40-r0              apk     
+gnupg-gpgconf                   2.2.40-r0              apk     
+gnupg-utils                     2.2.40-r0              apk     
+gnupg-wks-client                2.2.40-r0              apk     
+gnutls                          3.7.8-r3               apk     
+google-api-core                 2.11.0                 python  
+google-api-python-client        2.80.0                 python  
+google-auth                     2.16.1                 python  
+google-auth-httplib2            0.1.0                  python  
+googleapis-common-protos        1.58.0                 python  
+gpg                             2.2.40-r0              apk     
+gpg-agent                       2.2.40-r0              apk     
+gpg-wks-server                  2.2.40-r0              apk     
+gpgsm                           2.2.40-r0              apk     
+gpgv                            2.2.40-r0              apk     
+httplib2                        0.21.0                 python  
+icu-data-en                     72.1-r1                apk     
+icu-libs                        72.1-r1                apk     
+idna                            3.4                    python  
+importlib-metadata              6.0.0                  python  
+ip6tables                       1.8.8-r2               apk     
+iptables                        1.8.8-r2               apk     
+isodate                         0.6.1                  python  
+jmespath                        1.0.1                  python  
+josepy                          1.13.0                 python  
+jq                              1.6-r2                 apk     
+jsonlines                       3.1.0                  python  
+jsonpickle                      3.0.1                  python  
+libacl                          2.3.1-r1               apk     
+libassuan                       2.5.5-r1               apk     
+libattr                         2.5.1-r2               apk     
+libavif                         0.11.1-r0              apk     
+libbsd                          0.11.7-r0              apk     
+libbz2                          1.0.8-r4               apk     
+libc-utils                      0.7.2-r3               apk     
+libcrypto3                      3.0.8-r0               apk     
+libcurl                         7.88.1-r0              apk     
+libdav1d                        1.0.0-r2               apk     
+libedit                         20221030.3.1-r0        apk     
+libevent                        2.1.12-r5              apk     
+libexpat                        2.5.0-r0               apk     
+libffi                          3.4.4-r0               apk     
+libgcc                          12.2.1_git20220924-r4  apk     
+libgcrypt                       1.10.1-r0              apk     
+libgd                           2.3.3-r3               apk     
+libgpg-error                    1.46-r1                apk     
+libice                          1.0.10-r1              apk     
+libidn                          1.41-r0                apk     
+libintl                         0.21.1-r1              apk     
+libjpeg-turbo                   2.1.4-r0               apk     
+libksba                         1.6.3-r0               apk     
+libldap                         2.6.3-r6               apk     
+libmaxminddb-libs               1.7.1-r0               apk     
+libmcrypt                       2.5.8-r10              apk     
+libmd                           1.0.4-r0               apk     
+libmemcached-libs               1.0.18-r5              apk     
+libmnl                          1.0.5-r0               apk     
+libnftnl                        1.2.4-r0               apk     
+libpng                          1.6.38-r0              apk     
+libpq                           15.2-r0                apk     
+libproc                         3.3.17-r2              apk     
+libsasl                         2.1.28-r3              apk     
+libseccomp                      2.5.4-r0               apk     
+libsm                           1.2.3-r1               apk     
+libsodium                       1.0.18-r2              apk     
+libssl3                         3.0.8-r0               apk     
+libstdc++                       12.2.1_git20220924-r4  apk     
+libtasn1                        4.19.0-r0              apk     
+libunistring                    1.1-r0                 apk     
+libuuid                         2.38.1-r1              apk     
+libwebp                         1.2.4-r1               apk     
+libx11                          1.8.4-r0               apk     
+libxau                          1.0.10-r0              apk     
+libxcb                          1.15-r0                apk     
+libxdmcp                        1.1.4-r0               apk     
+libxext                         1.3.5-r0               apk     
+libxml2                         2.10.3-r1              apk     
+libxpm                          3.5.15-r0              apk     
+libxslt                         1.1.37-r0              apk     
+libxt                           1.2.1-r0               apk     
+libzip                          1.9.2-r2               apk     
+linux-pam                       1.5.2-r1               apk     
+logrotate                       3.20.1-r3              apk     
+loopialib                       0.2.0                  python  
+lxml                            4.9.2                  python  
+lz4-libs                        1.9.4-r1               apk     
+memcached                       1.6.17                 binary  
+memcached                       1.6.17-r0              apk     
+mock                            5.0.1                  python  
+mpdecimal                       2.5.1-r1               apk     
+msal                            1.21.0                 python  
+msal-extensions                 1.0.0                  python  
+msrest                          0.7.1                  python  
+musl                            1.2.3-r4               apk     
+musl-utils                      1.2.3-r4               apk     
+nano                            7.0-r0                 apk     
+ncurses-libs                    6.3_p20221119-r0       apk     
+ncurses-terminfo-base           6.3_p20221119-r0       apk     
+nettle                          3.8.1-r0               apk     
+nghttp2-libs                    1.51.0-r0              apk     
+nginx                           1.22.1-r0              apk     
+nginx-mod-devel-kit             1.22.1-r0              apk     
+nginx-mod-http-brotli           1.22.1-r0              apk     
+nginx-mod-http-dav-ext          1.22.1-r0              apk     
+nginx-mod-http-echo             1.22.1-r0              apk     
+nginx-mod-http-fancyindex       1.22.1-r0              apk     
+nginx-mod-http-geoip2           1.22.1-r0              apk     
+nginx-mod-http-headers-more     1.22.1-r0              apk     
+nginx-mod-http-image-filter     1.22.1-r0              apk     
+nginx-mod-http-perl             1.22.1-r0              apk     
+nginx-mod-http-redis2           1.22.1-r0              apk     
+nginx-mod-http-set-misc         1.22.1-r0              apk     
+nginx-mod-http-upload-progress  1.22.1-r0              apk     
+nginx-mod-http-xslt-filter      1.22.1-r0              apk     
+nginx-mod-mail                  1.22.1-r0              apk     
+nginx-mod-rtmp                  1.22.1-r0              apk     
+nginx-mod-stream                1.22.1-r0              apk     
+nginx-mod-stream-geoip2         1.22.1-r0              apk     
+nginx-vim                       1.22.1-r0              apk     
+npth                            1.6-r2                 apk     
+oauth2client                    4.1.3                  python  
+oauthlib                        3.2.2                  python  
+oniguruma                       6.9.8-r0               apk     
+openssl                         3.0.8-r0               apk     
+p11-kit                         0.24.1-r1              apk     
+parsedatetime                   2.6                    python  
+pcre                            8.45-r2                apk     
+pcre2                           10.42-r0               apk     
+perl                            5.36.0-r0              apk     
+perl-error                      0.17029-r1             apk     
+perl-git                        2.38.4-r0              apk     
+php-cli                         8.1.16                 binary  
+php-fpm                         8.1.16                 binary  
+php81                           8.1.16-r0              apk     
+php81-bcmath                    8.1.16-r0              apk     
+php81-bz2                       8.1.16-r0              apk     
+php81-common                    8.1.16-r0              apk     
+php81-ctype                     8.1.16-r0              apk     
+php81-curl                      8.1.16-r0              apk     
+php81-dom                       8.1.16-r0              apk     
+php81-exif                      8.1.16-r0              apk     
+php81-fileinfo                  8.1.16-r0              apk     
+php81-fpm                       8.1.16-r0              apk     
+php81-ftp                       8.1.16-r0              apk     
+php81-gd                        8.1.16-r0              apk     
+php81-gmp                       8.1.16-r0              apk     
+php81-iconv                     8.1.16-r0              apk     
+php81-imap                      8.1.16-r0              apk     
+php81-intl                      8.1.16-r0              apk     
+php81-ldap                      8.1.16-r0              apk     
+php81-mbstring                  8.1.16-r0              apk     
+php81-mysqli                    8.1.16-r0              apk     
+php81-mysqlnd                   8.1.16-r0              apk     
+php81-opcache                   8.1.16-r0              apk     
+php81-openssl                   8.1.16-r0              apk     
+php81-pdo                       8.1.16-r0              apk     
+php81-pdo_mysql                 8.1.16-r0              apk     
+php81-pdo_odbc                  8.1.16-r0              apk     
+php81-pdo_pgsql                 8.1.16-r0              apk     
+php81-pdo_sqlite                8.1.16-r0              apk     
+php81-pear                      8.1.16-r0              apk     
+php81-pecl-apcu                 5.1.22-r0              apk     
+php81-pecl-igbinary             3.2.12-r0              apk     
+php81-pecl-mailparse            3.1.4-r0               apk     
+php81-pecl-mcrypt               1.0.6-r0               apk     
+php81-pecl-memcached            3.2.0-r0               apk     
+php81-pecl-redis                5.3.7-r0               apk     
+php81-pecl-xmlrpc               1.0.0_rc3-r0           apk     
+php81-pgsql                     8.1.16-r0              apk     
+php81-phar                      8.1.16-r0              apk     
+php81-posix                     8.1.16-r0              apk     
+php81-session                   8.1.16-r0              apk     
+php81-simplexml                 8.1.16-r0              apk     
+php81-soap                      8.1.16-r0              apk     
+php81-sockets                   8.1.16-r0              apk     
+php81-sodium                    8.1.16-r0              apk     
+php81-sqlite3                   8.1.16-r0              apk     
+php81-tokenizer                 8.1.16-r0              apk     
+php81-xml                       8.1.16-r0              apk     
+php81-xmlreader                 8.1.16-r0              apk     
+php81-xmlwriter                 8.1.16-r0              apk     
+php81-xsl                       8.1.16-r0              apk     
+php81-zip                       8.1.16-r0              apk     
+pinentry                        1.2.1-r0               apk     
+pip                             23.0.1                 python  
+pkb-client                      1.2                    python  
+popt                            1.19-r0                apk     
+portalocker                     2.7.0                  python  
+procps                          3.3.17-r2              apk     
+protobuf                        4.22.0                 python  
+pyOpenSSL                       23.0.0                 python  
+pyRFC3339                       1.1                    python  
+pyacmedns                       0.4                    python  
+pyasn1                          0.4.8                  python  
+pyasn1-modules                  0.2.8                  python  
+pycparser                       2.21                   python  
+pyparsing                       3.0.9                  python  
+python                          3.10.10                binary  
+python-dateutil                 2.8.2                  python  
+python-digitalocean             1.17.0                 python  
+python-transip                  0.6.0                  python  
+python3                         3.10.10-r0             apk     
+pytz                            2022.7.1               python  
+readline                        8.2.0-r0               apk     
+requests                        2.28.2                 python  
+requests-file                   1.5.1                  python  
+requests-mock                   1.10.0                 python  
+requests-oauthlib               1.3.1                  python  
+rsa                             4.9                    python  
+s3transfer                      0.6.0                  python  
+scanelf                         1.3.5-r1               apk     
+setuptools                      65.5.0                 python  
+shadow                          4.13-r0                apk     
+six                             1.16.0                 python  
+skalibs                         2.12.0.1-r0            apk     
+soupsieve                       2.4                    python  
+sqlite-libs                     3.40.1-r0              apk     
+ssl_client                      1.35.0-r29             apk     
+tiff                            4.4.0-r1               apk     
+tldextract                      3.4.0                  python  
+typing_extensions               4.5.0                  python  
+tzdata                          2022f-r1               apk     
+unixodbc                        2.3.11-r0              apk     
+uritemplate                     4.1.1                  python  
+urllib3                         1.26.14                python  
+utmps-libs                      0.1.2.0-r1             apk     
+wheel                           0.38.4                 python  
+whois                           5.5.14-r0              apk     
+xz                              5.2.9-r0               apk     
+xz-libs                         5.2.9-r0               apk     
+zipp                            3.15.0                 python  
+zlib                            1.2.13-r0              apk     
+zope.interface                  5.5.2                  python  
+zstd-libs                       1.5.2-r9               apk     

@@ -140,6 +140,10 @@ else
     ln -s ../etc/letsencrypt/live/"${URL}" /config/keys/letsencrypt
 fi
 
+# cleanup unused csr and keys folders
+rm -rf /etc/letsencrypt/csr
+rm -rf /etc/letsencrypt/keys
+
 # checking for changes in cert variables, revoking certs if necessary
 if [[ ! "${URL}" = "${ORIGURL}" ]] ||
     [[ ! "${SUBDOMAINS}" = "${ORIGSUBDOMAINS}" ]] ||

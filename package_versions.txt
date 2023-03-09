@@ -21,8 +21,8 @@ azure-mgmt-core                 1.3.2                  python
 azure-mgmt-dns                  8.0.0                  python  
 bash                            5.2.15-r0              apk     
 beautifulsoup4                  4.11.2                 python  
-boto3                           1.26.86                python  
-botocore                        1.29.86                python  
+boto3                           1.26.87                python  
+botocore                        1.29.87                python  
 brotli-libs                     1.0.9-r9               apk     
 bs4                             0.0.1                  python  
 busybox                         1.35.0                 binary  

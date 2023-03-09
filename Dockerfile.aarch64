@@ -113,6 +113,7 @@ RUN \
     certbot-dns-gehirn \
     certbot-dns-godaddy \
     certbot-dns-google \
+    certbot-dns-google-domains \
     certbot-dns-he \
     certbot-dns-hetzner \
     certbot-dns-infomaniak \
@@ -147,7 +148,7 @@ RUN \
     's|#ssl_trusted_certificate /config/keys/cert.crt;|ssl_trusted_certificate /config/keys/cert.crt;|' \
     /defaults/nginx/ssl.conf.sample && \
   echo "**** correct ip6tables legacy issue ****" && \
-  rm \ 
+  rm \
     /sbin/ip6tables && \
   ln -s \
     /sbin/ip6tables-nft /sbin/ip6tables && \

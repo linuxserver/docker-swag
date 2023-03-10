@@ -336,6 +336,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **10.03.23:** - Cleanup unused csr and keys folders. See [certbot 2.3.0 release notes](https://github.com/certbot/certbot/releases/tag/v2.3.0).
 * **09.03.23:** - Add Google Domains DNS support, `google-domains`.
 * **02.03.23:** - Set permissions on crontabs during init.
 * **09.02.23:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) proxy.conf, authelia-location.conf and authelia-server.conf - Add Authentik configs, update Authelia configs.

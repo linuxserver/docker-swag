@@ -154,6 +154,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "25.03.23:", desc: "Fix renewal post hook." }
   - { date: "10.03.23:", desc: "Cleanup unused csr and keys folders. See [certbot 2.3.0 release notes](https://github.com/certbot/certbot/releases/tag/v2.3.0)." }
   - { date: "09.03.23:", desc: "Add Google Domains DNS support, `google-domains`." }
   - { date: "02.03.23:", desc: "Set permissions on crontabs during init." }

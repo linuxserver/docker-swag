@@ -5,7 +5,7 @@
 . /config/.donoteditthisfile.conf
 
 if [[ ! "${ORIGVALIDATION}" = "dns" ]] && [[ ! "${ORIGVALIDATION}" = "duckdns" ]]; then
-    if pgrep -f "s6-supervise nginx" >/dev/null; then
+    if pgrep -f "s6-supervise svc-nginx" >/dev/null; then
         s6-svc -u /run/service/svc-nginx
     fi
 else

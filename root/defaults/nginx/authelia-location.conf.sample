@@ -1,6 +1,6 @@
 ## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-location.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
-# Rename /config/nginx/proxy-confs/authelia.conf.sample to /config/nginx/proxy-confs/authelia.conf
+# Rename /config/nginx/proxy-confs/authelia.subdomain.conf.sample to /config/nginx/proxy-confs/authelia.subdomain.conf
 # Make sure that the authelia configuration.yml has 'path: "authelia"' defined
 
 ## Send a subrequest to Authelia to verify if the user is authenticated and has permission to access the resource.

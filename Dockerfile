@@ -160,7 +160,7 @@ RUN \
   mv /etc/fail2ban/action.d /defaults/fail2ban/ && \
   mv /etc/fail2ban/filter.d /defaults/fail2ban/ && \
   echo "**** define allowipv6 to silence warning ****" && \
-  sed -i 's/#allowipv6 = auto/allowipv6 = auto/g' /etc/fail2ban.conf && \
+  sed -i 's/#allowipv6 = auto/allowipv6 = auto/g' /etc/fail2ban/fail2ban.conf && \
   echo "**** copy proxy confs to /defaults ****" && \
   mkdir -p \
     /defaults/nginx/proxy-confs && \

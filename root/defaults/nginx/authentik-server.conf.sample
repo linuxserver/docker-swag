@@ -1,6 +1,6 @@
 ## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-server.conf.sample
 # Make sure that your authentik container is in the same user defined bridge network and is named authentik-server
-# Rename /config/nginx/proxy-confs/authentik-server.conf.sample to /config/nginx/proxy-confs/authentik-server.conf
+# Rename /config/nginx/proxy-confs/authentik.subdomain.conf.sample to /config/nginx/proxy-confs/authentik.subdomain.conf
 
 # location for authentik subfolder requests
 location ^~ /outpost.goauthentik.io {

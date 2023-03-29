@@ -21,8 +21,8 @@ azure-mgmt-core                 1.3.2                  python
 azure-mgmt-dns                  8.0.0                  python  
 bash                            5.2.15-r0              apk     
 beautifulsoup4                  4.12.0                 python  
-boto3                           1.26.101               python  
-botocore                        1.29.101               python  
+boto3                           1.26.102               python  
+botocore                        1.29.102               python  
 brotli-libs                     1.0.9-r9               apk     
 bs4                             0.0.1                  python  
 busybox                         1.35.0                 binary  
@@ -132,7 +132,7 @@ libavif                         0.11.1-r0              apk
 libbsd                          0.11.7-r0              apk     
 libbz2                          1.0.8-r4               apk     
 libc-utils                      0.7.2-r3               apk     
-libcrypto3                      3.0.8-r2               apk     
+libcrypto3                      3.0.8-r3               apk     
 libcurl                         7.88.1-r1              apk     
 libdav1d                        1.0.0-r2               apk     
 libedit                         20221030.3.1-r0        apk     
@@ -162,7 +162,7 @@ libsasl                         2.1.28-r3              apk
 libseccomp                      2.5.4-r0               apk     
 libsm                           1.2.3-r1               apk     
 libsodium                       1.0.18-r2              apk     
-libssl3                         3.0.8-r2               apk     
+libssl3                         3.0.8-r3               apk     
 libstdc++                       12.2.1_git20220924-r4  apk     
 libtasn1                        4.19.0-r0              apk     
 libunistring                    1.1-r0                 apk     
@@ -305,7 +305,7 @@ python-dateutil                 2.8.2                  python
 python-digitalocean             1.17.0                 python  
 python-transip                  0.6.0                  python  
 python3                         3.10.10-r0             apk     
-pytz                            2023.2                 python  
+pytz                            2023.3                 python  
 readline                        8.2.0-r0               apk     
 requests                        2.28.2                 python  
 requests-file                   1.5.1                  python  

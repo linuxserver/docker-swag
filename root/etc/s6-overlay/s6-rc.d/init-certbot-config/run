@@ -274,7 +274,7 @@ if [[ "${VALIDATION}" = "dns" ]]; then
         DNSCREDENTIALSPARAM=""
     fi
     # plugins that don't support setting propagation
-    if [[ "${DNSPLUGIN}" =~ ^(azure|gandi|standalone)$ ]]; then
+    if [[ "${DNSPLUGIN}" =~ ^(azure|gandi|route53|standalone)$ ]]; then
         if [[ -n "${PROPAGATION}" ]]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
         PROPAGATIONPARAM=""
     fi

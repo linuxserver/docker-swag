@@ -1,4 +1,4 @@
-## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-location.conf.sample
+## Version 2023/04/13 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-location.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
 # Rename /config/nginx/proxy-confs/authelia.subdomain.conf.sample to /config/nginx/proxy-confs/authelia.subdomain.conf
 # Make sure that the authelia configuration.yml has 'path: "authelia"' defined
@@ -9,20 +9,16 @@ auth_request /authelia/api/verify;
 error_page 401 = @authelia_proxy_signin;
 
 ## Translate response headers from Authelia into variables
-auth_request_set $user $upstream_http_remote_user;
+auth_request_set $email $upstream_http_remote_email;
 auth_request_set $groups $upstream_http_remote_groups;
 auth_request_set $name $upstream_http_remote_name;
-auth_request_set $email $upstream_http_remote_email;
-auth_request_set $authorization $upstream_http_authorization;
-auth_request_set $proxy_authorization $upstream_http_proxy_authorization;
+auth_request_set $user $upstream_http_remote_user;
 
 ## Inject the response header variables into the request made to the actual upstream
-proxy_set_header Remote-User $user;
+proxy_set_header Remote-Email $email;
 proxy_set_header Remote-Groups $groups;
 proxy_set_header Remote-Name $name;
-proxy_set_header Remote-Email $email;
-proxy_set_header Authorization $authorization;
-proxy_set_header Proxy-Authorization $proxy_authorization;
+proxy_set_header Remote-User $user;
 
 ## Include the Set-Cookie header if present.
 auth_request_set $set_cookie $upstream_http_set_cookie;

@@ -336,6 +336,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **13.04.23:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf and site-confs/default.conf - Move ssl.conf include to default.conf.
 * **25.03.23:** - Fix renewal post hook.
 * **10.03.23:** - Cleanup unused csr and keys folders. See [certbot 2.3.0 release notes](https://github.com/certbot/certbot/releases/tag/v2.3.0).
 * **09.03.23:** - Add Google Domains DNS support, `google-domains`.

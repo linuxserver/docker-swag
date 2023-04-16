@@ -1,4 +1,4 @@
-## Version 2023/02/09 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
+## Version 2023/04/13 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
 
 # redirect all traffic to https
 server {
@@ -16,6 +16,8 @@ server {
     listen [::]:443 ssl http2 default_server;
 
     server_name _;
+
+    include /config/nginx/ssl.conf;
 
     root /config/www;
     index index.html index.htm index.php;

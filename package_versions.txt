@@ -318,7 +318,7 @@ setuptools                      65.5.0                 python
 shadow                          4.13-r0                apk     
 six                             1.16.0                 python  
 skalibs                         2.12.0.1-r0            apk     
-soupsieve                       2.4                    python  
+soupsieve                       2.4.1                  python  
 sqlite-libs                     3.40.1-r0              apk     
 ssl_client                      1.35.0-r29             apk     
 tiff                            4.4.0-r3               apk     

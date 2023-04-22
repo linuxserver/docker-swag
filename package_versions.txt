@@ -21,8 +21,8 @@ azure-mgmt-core                 1.4.0                  python
 azure-mgmt-dns                  8.0.0                  python  
 bash                            5.2.15-r0              apk     
 beautifulsoup4                  4.12.2                 python  
-boto3                           1.26.117               python  
-botocore                        1.29.117               python  
+boto3                           1.26.118               python  
+botocore                        1.29.118               python  
 brotli-libs                     1.0.9-r9               apk     
 bs4                             0.0.1                  python  
 busybox                         1.35.0                 binary  
@@ -116,7 +116,7 @@ httplib2                        0.22.0                 python
 icu-data-en                     72.1-r1                apk     
 icu-libs                        72.1-r1                apk     
 idna                            3.4                    python  
-importlib-metadata              6.5.0                  python  
+importlib-metadata              6.5.1                  python  
 ip6tables                       1.8.8-r2               apk     
 iptables                        1.8.8-r2               apk     
 isodate                         0.6.1                  python  

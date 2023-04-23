@@ -58,6 +58,7 @@ lsiown -R abc:abc /config/etc/letsencrypt/renewal-hooks
 # replace nginx service location in renewal hooks
 find /config/etc/letsencrypt/renewal-hooks/ -type f -exec sed -i 's|/run/service/nginx|/run/service/svc-nginx|g' {} \;
 find /config/etc/letsencrypt/renewal-hooks/ -type f -exec sed -i 's|/var/run/s6/services/nginx|/run/service/svc-nginx|g' {} \;
+find /config/etc/letsencrypt/renewal-hooks/ -type f -exec sed -i 's|s6-supervise nginx|s6-supervise svc-nginx|g' {} \;
 
 # create original config file if it doesn't exist, move non-hidden legacy file to hidden
 if [[ -f "/config/donoteditthisfile.conf" ]]; then
@@ -156,6 +157,10 @@ if [[ "${ONLY_SUBDOMAINS}" = "true" ]] && [[ ! "${SUBDOMAINS}" = "wildcard" ]]; 
 else
     ln -s ../etc/letsencrypt/live/"${URL}" /config/keys/letsencrypt
 fi
+
+# cleanup unused csr and keys folders
+rm -rf /etc/letsencrypt/csr
+rm -rf /etc/letsencrypt/keys
 
 # checking for changes in cert variables, revoking certs if necessary
 if [[ ! "${URL}" = "${ORIGURL}" ]] ||
@@ -292,7 +297,7 @@ if [[ "${VALIDATION}" = "dns" ]]; then
         sed "/^dns-${DNSPLUGIN}-credentials /d" /config/etc/letsencrypt/cli.ini
     fi
     # plugins that don't support setting propagation
-    if [[ "${DNSPLUGIN}" =~ ^(azure|gandi|standalone)$ ]]; then
+    if [[ "${DNSPLUGIN}" =~ ^(azure|gandi|route53|standalone)$ ]]; then
         if [[ -n "${PROPAGATION}" ]]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
         sed "/^dns-${DNSPLUGIN}-propagation-seconds /d" /config/etc/letsencrypt/cli.ini
     fi

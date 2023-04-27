@@ -11,6 +11,7 @@ location ^~ /outpost.goauthentik.io {
     proxy_pass http://$upstream_authentik:9000;
 
     ## Include the Set-Cookie header if present
+    auth_request_set $set_cookie $upstream_http_set_cookie;
     add_header Set-Cookie $set_cookie;
 
     proxy_pass_request_body off;
@@ -22,16 +23,15 @@ location @goauthentik_proxy_signin {
     internal;
 
     ## Include the Set-Cookie header if present
+    auth_request_set $set_cookie $upstream_http_set_cookie;
     add_header Set-Cookie $set_cookie;
 
-    ## Set the $target_url variable based on the original request.
+    ## Set the $target_url variable based on the original request
     set_escape_uri $target_url $scheme://$http_host$request_uri;
 
-    ## Set $redirection_url if it is empty
-    if ($redirection_url = false) {
-        set $redirection_url https://$http_host/outpost.goauthentik.io/start?rd=$target_url;
-    }
+    ## Set the $signin_url variable
+    set $signin_url https://$http_host/outpost.goauthentik.io/start?rd=$target_url;
 
     ## Redirect to login
-    return 302 $redirection_url;
+    return 302 $signin_url;
 }

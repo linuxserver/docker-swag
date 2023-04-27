@@ -3,9 +3,9 @@
 # Rename /config/nginx/proxy-confs/authelia.subdomain.conf.sample to /config/nginx/proxy-confs/authelia.subdomain.conf
 # Make sure that the authelia configuration.yml has 'path: "authelia"' defined
 
-## Send a subrequest to Authelia to verify if the user is authenticated and has permission to access the resource.
+## Send a subrequest to Authelia to verify if the user is authenticated and has permission to access the resource
 auth_request /authelia/api/verify;
-## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal.
+## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal
 error_page 401 = @authelia_proxy_signin;
 
 ## Translate the user information response headers from the auth subrequest into variables
@@ -20,8 +20,8 @@ proxy_set_header Remote-Groups $groups;
 proxy_set_header Remote-Name $name;
 proxy_set_header Remote-User $user;
 
-## Translate the Set-Cookie response header from auth subrequest into a variable
+## Translate the Set-Cookie response header from the auth subrequest into a variable
 auth_request_set $set_cookie $upstream_http_set_cookie;
 
-## Translate the Location response header from auth subrequest into a variable
-auth_request_set $redirection_url $upstream_http_location;
+## Translate the Location response header from the auth subrequest into a variable
+auth_request_set $signin_url $upstream_http_location;

@@ -10,6 +10,16 @@ location ^~ /authelia {
     include /config/nginx/resolver.conf;
     set $upstream_authelia authelia;
     proxy_pass http://$upstream_authelia:9091;
+}
+
+# location for authelia auth requests
+location = /authelia/api/verify {
+    internal;
+
+    include /config/nginx/proxy.conf;
+    include /config/nginx/resolver.conf;
+    set $upstream_authelia authelia;
+    proxy_pass http://$upstream_authelia:9091;
 
     ## Include the Set-Cookie header if present
     auth_request_set $set_cookie $upstream_http_set_cookie;
@@ -19,7 +29,7 @@ location ^~ /authelia {
     proxy_set_header Content-Length "";
 }
 
-# Virtual location for authelia 401 redirects
+# virtual location for authelia 401 redirects
 location @authelia_proxy_signin {
     internal;
 

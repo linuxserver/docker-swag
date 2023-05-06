@@ -21,8 +21,8 @@ azure-mgmt-core                 1.4.0                  python
 azure-mgmt-dns                  8.0.0                  python  
 bash                            5.2.15-r0              apk     
 beautifulsoup4                  4.12.2                 python  
-boto3                           1.26.123               python  
-botocore                        1.29.123               python  
+boto3                           1.26.129               python  
+botocore                        1.29.129               python  
 brotli-libs                     1.0.9-r9               apk     
 bs4                             0.0.1                  python  
 busybox                         1.35.0                 binary  
@@ -269,7 +269,7 @@ php81-pecl-mailparse            3.1.4-r0               apk
 php81-pecl-mcrypt               1.0.6-r0               apk     
 php81-pecl-memcached            3.2.0-r0               apk     
 php81-pecl-redis                5.3.7-r0               apk     
-php81-pecl-xmlrpc               1.0.0_rc3-r0           apk     
+php81-pecl-xmlrpc               1.0.0_rc3-r1           apk     
 php81-pgsql                     8.1.18-r0              apk     
 php81-phar                      8.1.18-r0              apk     
 php81-posix                     8.1.18-r0              apk     
@@ -291,7 +291,7 @@ pkb-client                      1.2                    python
 popt                            1.19-r0                apk     
 portalocker                     2.7.0                  python  
 procps                          3.3.17-r2              apk     
-protobuf                        4.22.3                 python  
+protobuf                        4.22.4                 python  
 publicsuffixlist                0.9.4                  python  
 pyOpenSSL                       23.1.1                 python  
 pyRFC3339                       1.1                    python  
@@ -307,12 +307,12 @@ python-transip                  0.6.0                  python
 python3                         3.10.11-r0             apk     
 pytz                            2023.3                 python  
 readline                        8.2.0-r0               apk     
-requests                        2.29.0                 python  
+requests                        2.30.0                 python  
 requests-file                   1.5.1                  python  
 requests-mock                   1.10.0                 python  
 requests-oauthlib               1.3.1                  python  
 rsa                             4.9                    python  
-s3transfer                      0.6.0                  python  
+s3transfer                      0.6.1                  python  
 scanelf                         1.3.5-r1               apk     
 setuptools                      65.5.0                 python  
 shadow                          4.13-r0                apk     

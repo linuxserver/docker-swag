@@ -14,9 +14,11 @@ jobs:
         run: |
           if [ -n "${{ secrets.PAUSE_EXTERNAL_TRIGGER_SWAG_MASTER }}" ]; then
             echo "**** Github secret PAUSE_EXTERNAL_TRIGGER_SWAG_MASTER is set; skipping trigger. ****"
+            echo "Github secret \`PAUSE_EXTERNAL_TRIGGER_SWAG_MASTER\` is set; skipping trigger." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
           echo "**** External trigger running off of master branch. To disable this trigger, set a Github secret named \"PAUSE_EXTERNAL_TRIGGER_SWAG_MASTER\". ****"
+          echo "External trigger running off of master branch. To disable this trigger, set a Github secret named \`PAUSE_EXTERNAL_TRIGGER_SWAG_MASTER\`" >> $GITHUB_STEP_SUMMARY
           echo "**** Retrieving external version ****"
           EXT_RELEASE=$(curl -sL "https://pypi.python.org/pypi/certbot/json" |jq -r '. | .info.version')
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
@@ -30,6 +32,7 @@ jobs:
           fi
           EXT_RELEASE=$(echo ${EXT_RELEASE} | sed 's/[~,%@+;:/]//g')
           echo "**** External version: ${EXT_RELEASE} ****"
+          echo "External version: ${EXT_RELEASE}" >> $GITHUB_STEP_SUMMARY
           echo "**** Retrieving last pushed version ****"
           image="linuxserver/swag"
           tag="latest"
@@ -65,14 +68,18 @@ jobs:
             exit 1
           fi
           echo "**** Last pushed version: ${IMAGE_VERSION} ****"
+          echo "Last pushed version: ${IMAGE_VERSION}" >> $GITHUB_STEP_SUMMARY
           if [ "${EXT_RELEASE}" == "${IMAGE_VERSION}" ]; then
             echo "**** Version ${EXT_RELEASE} already pushed, exiting ****"
+            echo "Version ${EXT_RELEASE} already pushed, exiting" >> $GITHUB_STEP_SUMMARY
             exit 0
           elif [ $(curl -s https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-swag/job/master/lastBuild/api/json | jq -r '.building') == "true" ]; then
             echo "**** New version ${EXT_RELEASE} found; but there already seems to be an active build on Jenkins; exiting ****"
+            echo "New version ${EXT_RELEASE} found; but there already seems to be an active build on Jenkins; exiting" >> $GITHUB_STEP_SUMMARY
             exit 0
           else
             echo "**** New version ${EXT_RELEASE} found; old version was ${IMAGE_VERSION}. Triggering new build ****"
+            echo "New version ${EXT_RELEASE} found; old version was ${IMAGE_VERSION}. Triggering new build" >> $GITHUB_STEP_SUMMARY
             response=$(curl -iX POST \
               https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-swag/job/master/buildWithParameters?PACKAGE_CHECK=false \
               --user ${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }} | grep -i location | sed "s|^[L|l]ocation: \(.*\)|\1|")
@@ -82,6 +89,7 @@ jobs:
             buildurl=$(curl -s "${response%$'\r'}api/json" | jq -r '.executable.url')
             buildurl="${buildurl%$'\r'}"
             echo "**** Jenkins job build url: ${buildurl} ****"
+            echo "Jenkins job build url: ${buildurl}" >> $GITHUB_STEP_SUMMARY
             echo "**** Attempting to change the Jenkins job description ****"
             curl -iX POST \
               "${buildurl}submitDescription" \

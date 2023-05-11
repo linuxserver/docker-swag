@@ -1,26 +1,25 @@
-## Version 2023/04/13 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-location.conf.sample
+## Version 2023/04/27 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authentik-location.conf.sample
 # Make sure that your authentik container is in the same user defined bridge network and is named authentik-server
 # Rename /config/nginx/proxy-confs/authentik.subdomain.conf.sample to /config/nginx/proxy-confs/authentik.subdomain.conf
 
-## Send a subrequest to Authentik to verify if the user is authenticated and has permission to access the resource.
+## Send a subrequest to Authentik to verify if the user is authenticated and has permission to access the resource
 auth_request /outpost.goauthentik.io/auth/nginx;
-## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal.
+## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal
 error_page 401 = @goauthentik_proxy_signin;
 
-## Translate response headers from Authentik into variables
+## Translate the user information response headers from the auth subrequest into variables
 auth_request_set $authentik_email $upstream_http_x_authentik_email;
 auth_request_set $authentik_groups $upstream_http_x_authentik_groups;
 auth_request_set $authentik_name $upstream_http_x_authentik_name;
 auth_request_set $authentik_uid $upstream_http_x_authentik_uid;
 auth_request_set $authentik_username $upstream_http_x_authentik_username;
 
-## Inject the response header variables into the request made to the actual upstream
+## Inject the user information into the request made to the actual upstream
 proxy_set_header X-authentik-email $authentik_email;
 proxy_set_header X-authentik-groups $authentik_groups;
 proxy_set_header X-authentik-name $authentik_name;
 proxy_set_header X-authentik-uid $authentik_uid;
 proxy_set_header X-authentik-username $authentik_username;
 
-## Include the Set-Cookie header if present.
+## Translate the Set-Cookie response header from the auth subrequest into a variable
 auth_request_set $set_cookie $upstream_http_set_cookie;
-add_header Set-Cookie $set_cookie;

@@ -21,8 +21,8 @@ azure-mgmt-core                 1.4.0                  python
 azure-mgmt-dns                  8.0.0                  python  
 bash                            5.2.15-r0              apk     
 beautifulsoup4                  4.12.2                 python  
-boto3                           1.26.131               python  
-botocore                        1.29.131               python  
+boto3                           1.26.132               python  
+botocore                        1.29.132               python  
 brotli-libs                     1.0.9-r9               apk     
 bs4                             0.0.1                  python  
 busybox                         1.35.0                 binary  
@@ -104,7 +104,7 @@ gnupg-wks-client                2.2.40-r0              apk
 gnutls                          3.7.8-r3               apk     
 google-api-core                 2.11.0                 python  
 google-api-python-client        2.86.0                 python  
-google-auth                     2.17.3                 python  
+google-auth                     2.18.0                 python  
 google-auth-httplib2            0.1.0                  python  
 googleapis-common-protos        1.59.0                 python  
 gpg                             2.2.40-r0              apk     

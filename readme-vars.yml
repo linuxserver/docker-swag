@@ -51,6 +51,8 @@ opt_param_env_vars:
   - { env_var: "SUBDOMAINS", env_value: "www,", desc: "Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this *exactly* to `wildcard` (wildcard cert is available via `dns` validation only)" }
   - { env_var: "CERTPROVIDER", env_value: "", desc: "Optionally define the cert provider. Set to `zerossl` for ZeroSSL certs (requires existing [ZeroSSL account](https://app.zerossl.com/signup) and the e-mail address entered in `EMAIL` env var). Otherwise defaults to Let's Encrypt." }
   - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `acmedns`, `aliyun`, `azure`, `bunny`, `cloudflare`, `cpanel`, `desec`, `digitalocean`, `directadmin`, `dnsimple`, `dnsmadeeasy`, `dnspod`, `do`, `domeneshop`, `dreamhost`, `duckdns`, `freedns`, `gandi`, `gehirn`, `glesys`, `godaddy`, `google`, `google-domains`, `he`, `hetzner`, `infomaniak`, `inwx`, `ionos`, `linode`, `loopia`, `luadns`, `namecheap`, `netcup`, `njalla`, `nsone`, `ovh`, `porkbun`, `rfc2136`, `route53`, `sakuracloud`, `standalone`, `transip`, and `vultr`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`." }
+  - { env_var: "ACMESERVER", env_value: "", desc: "The URL of a custom ACME server to use." }
+  - { env_var: "ACMECABUNDLE", env_value: "", desc: "A base64-encoded PEM file containing a CA bundle to trust, for use with an internal ACME CA. Required for a custom ACME CA." }
   - { env_var: "PROPAGATION", env_value: "", desc: "Optionally override (in seconds) the default propagation time for the dns plugins." }
   - { env_var: "EMAIL", env_value: "", desc: "Optional e-mail address used for cert expiration notifications (Required for ZeroSSL)." }
   - { env_var: "ONLY_SUBDOMAINS", env_value: "false", desc: "If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`" }
@@ -168,6 +170,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+<<<<<<< HEAD
   - { date: "23.01.24:", desc: "Rebase to Alpine 3.19 with php 8.3, add root periodic crontabs for logrotate." }
   - { date: "01.01.24:", desc: "Add GleSYS DNS plugin." }
   - { date: "11.12.23:", desc: "Deprecate certbot-dns-dynu to resolve dependency conflicts with other plugins." }
@@ -179,6 +182,9 @@ changelogs:
   - { date: "07.08.23:", desc: "Add Bunny DNS Configuration." }
   - { date: "27.07.23:", desc: "Added support for dreamhost validation." }
   - { date: "25.05.23:", desc: "Rebase to Alpine 3.18, deprecate armhf." }
+=======
+  - { date: "21.05.23:", desc: "Allow custom ACME servers. Supply URL and CA bundle" }
+>>>>>>> 4d46d70 (Implements custom ACME servers)
   - { date: "27.04.23:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-location.conf, authelia-server.conf, authentik-location.conf, authentik-server.conf - Simplify auth configs and fix Set-Cookie header bug." }
   - { date: "13.04.23:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf, authelia-location.conf, authentik-location.conf, and site-confs/default.conf - Move ssl.conf include to default.conf. Remove Authorization headers in authelia. Sort proxy_set_header in authelia and authentik." }
   - { date: "25.03.23:", desc: "Fix renewal post hook." }

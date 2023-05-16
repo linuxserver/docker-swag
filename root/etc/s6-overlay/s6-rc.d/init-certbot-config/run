@@ -12,6 +12,8 @@ EXTRA_DOMAINS=${EXTRA_DOMAINS}\\n\
 ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}\\n\
 VALIDATION=${VALIDATION}\\n\
 CERTPROVIDER=${CERTPROVIDER}\\n\
+ACMESERVER=${ACMESERVER}\\n\
+ACMECABUNDLE=${ACMECABUNDLE}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
 STAGING=${STAGING}\\n"
@@ -81,7 +83,7 @@ if [[ -f "/config/donoteditthisfile.conf" ]]; then
     mv /config/donoteditthisfile.conf /config/.donoteditthisfile.conf
 fi
 if [[ ! -f "/config/.donoteditthisfile.conf" ]]; then
-    echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
+    echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\"  ORIGACMESERVER=\"$ACMESERVER\" ORIGACMECABUNDLE=\"$ACMECABUNDLE\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
     echo "Created .donoteditthisfile.conf"
 fi
 
@@ -214,10 +216,10 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
+echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGACMESERVER=\"$ACMESERVER\" ORIGACMECABUNDLE=\"$ACMECABUNDLE\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
 
 # Check if the cert is using the old LE root cert, revoke and regen if necessary
-if [[ -f "/config/keys/letsencrypt/chain.pem" ]] && { [[ "${CERTPROVIDER}" == "letsencrypt" ]] || [[ "${CERTPROVIDER}" == "" ]]; } && [[ "${STAGING}" != "true" ]] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
+if [[ -f "/config/keys/letsencrypt/chain.pem" ]] && { [[ "${CERTPROVIDER}" == "letsencrypt" ]] || ([[ "${CERTPROVIDER}" == "" ]] && [[ -z "$ACMECABUNDLE" ]]); } && [[ "${STAGING}" != "true" ]] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
     echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
     REV_ACMESERVER=("https://acme-v02.api.letsencrypt.org/directory")
     if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
@@ -232,11 +234,23 @@ fi
 if [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ "${STAGING}" = "true" ]]; then
     echo "ZeroSSL does not support staging mode, ignoring STAGING variable"
 fi
+if [[ "${CERTPROVIDER}" = "custom" ]] && [[ "${STAGING}" = "true" ]]; then
+    echo "Custom ACME does not support staging mode, ignoring STAGING variable"
+fi
 if [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ -n "${EMAIL}" ]]; then
     echo "ZeroSSL is selected as the cert provider, registering cert with ${EMAIL}"
     ACMESERVER="https://acme.zerossl.com/v2/DV90"
 elif [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ -z "${EMAIL}" ]]; then
     echo "ZeroSSL is selected as the cert provider, but the e-mail address has not been entered. Please visit https://zerossl.com, register a new account and set the account e-mail address in the EMAIL environment variable"
+    sleep infinity
+elif [[ "${CERTPROVIDER}" = "custom" ]] && [[ -n "${EMAIL}" ]]; then
+    echo "Using $ACMESERVER as the cert provider; registering cert with $EMAIL"
+    if [ -n "$ACMECABUNDLE" ]; then
+        echo "$ACMECABUNDLE" | base64 -d - > /config/cabundle.pem
+        export REQUESTS_CA_BUNDLE="/config/cabundle.pem"
+    fi
+elif [[ "${CERTPROVIDER}" = "custom" ]] && [[ -z "${EMAIL}" ]]; then
+    echo "A custom ACME server is selected as the cert provider, but the e-email address has not been entered."
     sleep infinity
 elif [[ "${STAGING}" = "true" ]]; then
     echo "NOTICE: Staging is active"

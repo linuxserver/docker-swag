@@ -21,8 +21,8 @@ azure-mgmt-core                 1.4.0                  python
 azure-mgmt-dns                  8.0.0                  python  
 bash                            5.2.15-r0              apk     
 beautifulsoup4                  4.12.2                 python  
-boto3                           1.26.133               python  
-botocore                        1.29.133               python  
+boto3                           1.26.135               python  
+botocore                        1.29.135               python  
 brotli-libs                     1.0.9-r9               apk     
 bs4                             0.0.1                  python  
 busybox                         1.35.0                 binary  
@@ -133,7 +133,7 @@ libbsd                          0.11.7-r0              apk
 libbz2                          1.0.8-r4               apk     
 libc-utils                      0.7.2-r3               apk     
 libcrypto3                      3.0.8-r4               apk     
-libcurl                         8.0.1-r0               apk     
+libcurl                         8.1.0-r0               apk     
 libdav1d                        1.0.0-r2               apk     
 libedit                         20221030.3.1-r0        apk     
 libevent                        2.1.12-r5              apk     
@@ -233,7 +233,7 @@ perl                            5.36.0-r1              apk
 perl-error                      0.17029-r1             apk     
 perl-git                        2.38.5-r0              apk     
 php-cli                         8.1.19                 binary  
-php-fpm                         8.1.18                 binary  
+php-fpm                         8.1.19                 binary  
 php81                           8.1.19-r0              apk     
 php81-bcmath                    8.1.19-r0              apk     
 php81-bz2                       8.1.19-r0              apk     
@@ -242,8 +242,8 @@ php81-ctype                     8.1.19-r0              apk
 php81-curl                      8.1.19-r0              apk     
 php81-dom                       8.1.19-r0              apk     
 php81-exif                      8.1.19-r0              apk     
-php81-fileinfo                  8.1.18-r0              apk     
-php81-fpm                       8.1.18-r0              apk     
+php81-fileinfo                  8.1.19-r0              apk     
+php81-fpm                       8.1.19-r0              apk     
 php81-ftp                       8.1.19-r0              apk     
 php81-gd                        8.1.19-r0              apk     
 php81-gmp                       8.1.19-r0              apk     
@@ -273,7 +273,7 @@ php81-pgsql                     8.1.19-r0              apk
 php81-phar                      8.1.19-r0              apk     
 php81-posix                     8.1.19-r0              apk     
 php81-session                   8.1.19-r0              apk     
-php81-simplexml                 8.1.18-r0              apk     
+php81-simplexml                 8.1.19-r0              apk     
 php81-soap                      8.1.19-r0              apk     
 php81-sockets                   8.1.19-r0              apk     
 php81-sodium                    8.1.19-r0              apk     
@@ -281,7 +281,7 @@ php81-sqlite3                   8.1.19-r0              apk
 php81-tokenizer                 8.1.19-r0              apk     
 php81-xml                       8.1.19-r0              apk     
 php81-xmlreader                 8.1.19-r0              apk     
-php81-xmlwriter                 8.1.18-r0              apk     
+php81-xmlwriter                 8.1.19-r0              apk     
 php81-xsl                       8.1.19-r0              apk     
 php81-zip                       8.1.19-r0              apk     
 pinentry                        1.2.1-r0               apk     
@@ -321,7 +321,7 @@ soupsieve                       2.4.1                  python
 sqlite-libs                     3.40.1-r0              apk     
 ssl_client                      1.35.0-r29             apk     
 tiff                            4.4.0-r3               apk     
-tldextract                      3.4.1                  python  
+tldextract                      3.4.2                  python  
 typing-inspect                  0.8.0                  python  
 typing_extensions               4.5.0                  python  
 tzdata                          2023c-r0               apk     

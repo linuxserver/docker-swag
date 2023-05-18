@@ -104,7 +104,7 @@ gnupg-wks-client                2.2.40-r0              apk
 gnutls                          3.7.8-r3               apk     
 google-api-core                 2.11.0                 python  
 google-api-python-client        2.86.0                 python  
-google-auth                     2.18.0                 python  
+google-auth                     2.18.1                 python  
 google-auth-httplib2            0.1.0                  python  
 googleapis-common-protos        1.59.0                 python  
 gpg                             2.2.40-r0              apk     
@@ -290,7 +290,7 @@ pkb-client                      1.2                    python
 popt                            1.19-r0                apk     
 portalocker                     2.7.0                  python  
 procps                          3.3.17-r2              apk     
-protobuf                        4.23.0                 python  
+protobuf                        4.23.1                 python  
 publicsuffixlist                0.9.4                  python  
 pyOpenSSL                       23.1.1                 python  
 pyRFC3339                       1.1                    python  

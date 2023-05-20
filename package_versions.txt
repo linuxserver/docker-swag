@@ -21,8 +21,8 @@ azure-mgmt-core                 1.4.0                  python
 azure-mgmt-dns                  8.0.0                  python  
 bash                            5.2.15-r0              apk     
 beautifulsoup4                  4.12.2                 python  
-boto3                           1.26.135               python  
-botocore                        1.29.135               python  
+boto3                           1.26.137               python  
+botocore                        1.29.137               python  
 brotli-libs                     1.0.9-r9               apk     
 bs4                             0.0.1                  python  
 busybox                         1.35.0                 binary  
@@ -75,7 +75,7 @@ certbot-plugin-gandi            1.4.3                  python
 certifi                         2023.5.7               python  
 cffi                            1.15.1                 python  
 charset-normalizer              3.1.0                  python  
-cloudflare                      2.11.1                 python  
+cloudflare                      2.11.3                 python  
 configobj                       5.0.8                  python  
 coreutils                       9.1-r0                 apk     
 cryptography                    40.0.2                 python  
@@ -133,7 +133,7 @@ libbsd                          0.11.7-r0              apk
 libbz2                          1.0.8-r4               apk     
 libc-utils                      0.7.2-r3               apk     
 libcrypto3                      3.0.8-r4               apk     
-libcurl                         8.1.0-r0               apk     
+libcurl                         8.1.0-r1               apk     
 libdav1d                        1.0.0-r2               apk     
 libedit                         20221030.3.1-r0        apk     
 libevent                        2.1.12-r5              apk     
@@ -192,7 +192,7 @@ mpdecimal                       2.5.1-r1               apk
 msal                            1.22.0                 python  
 msal-extensions                 1.0.0                  python  
 msrest                          0.7.1                  python  
-musl                            1.2.3-r4               apk     
+musl                            1.2.3-r5               apk     
 musl-utils                      1.2.3-r4               apk     
 mypy-extensions                 1.0.0                  python  
 nano                            7.0-r0                 apk     
@@ -321,7 +321,7 @@ soupsieve                       2.4.1                  python
 sqlite-libs                     3.40.1-r0              apk     
 ssl_client                      1.35.0-r29             apk     
 tiff                            4.4.0-r3               apk     
-tldextract                      3.4.2                  python  
+tldextract                      3.4.4                  python  
 typing-inspect                  0.8.0                  python  
 typing_extensions               4.5.0                  python  
 tzdata                          2023c-r0               apk     

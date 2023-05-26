@@ -6,6 +6,7 @@ external_type: pip_version
 release_type: stable
 release_tag: latest
 ls_branch: master
+build_armhf: false
 repo_vars:
   - EXT_PIP = 'certbot'
   - BUILD_VERSION_ARG = 'CERTBOT_VERSION'

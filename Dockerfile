@@ -64,7 +64,6 @@ RUN \
     php82-pdo_sqlite \
     php82-pear \
     php82-pecl-apcu \
-    php82-pecl-mailparse \
     php82-pecl-memcached \
     php82-pecl-redis \
     php82-pgsql \

@@ -21,8 +21,8 @@ azure-mgmt-core                 1.4.0                   python
 azure-mgmt-dns                  8.0.0                   python  
 bash                            5.2.15-r5               apk     
 beautifulsoup4                  4.12.2                  python  
-boto3                           1.26.142                python  
-botocore                        1.29.142                python  
+boto3                           1.26.143                python  
+botocore                        1.29.143                python  
 brotli-libs                     1.0.9-r14               apk     
 bs4                             0.0.1                   python  
 busybox                         1.36.0                  binary  
@@ -78,7 +78,7 @@ charset-normalizer              3.1.0                   python
 cloudflare                      2.11.6                  python  
 configobj                       5.0.8                   python  
 coreutils                       9.3-r1                  apk     
-cryptography                    40.0.2                  python  
+cryptography                    41.0.0                  python  
 curl                            8.1.1-r1                apk     
 dataclasses-json                0.5.7                   python  
 distro                          1.8.0                   python  
@@ -134,7 +134,7 @@ libavif                         0.11.1-r2               apk
 libbsd                          0.11.7-r1               apk     
 libbz2                          1.0.8-r5                apk     
 libc-utils                      0.7.2-r5                apk     
-libcrypto3                      3.1.0-r4                apk     
+libcrypto3                      3.1.1-r1                apk     
 libcurl                         8.1.1-r1                apk     
 libdav1d                        1.2.0-r0                apk     
 libedit                         20221030.3.1-r1         apk     
@@ -166,7 +166,7 @@ libsasl                         2.1.28-r4               apk
 libseccomp                      2.5.4-r2                apk     
 libsm                           1.2.4-r1                apk     
 libsodium                       1.0.18-r3               apk     
-libssl3                         3.1.0-r4                apk     
+libssl3                         3.1.1-r1                apk     
 libstdc++                       12.2.1_git20220924-r10  apk     
 libtasn1                        4.19.0-r1               apk     
 libunistring                    1.1-r1                  apk     
@@ -294,7 +294,7 @@ portalocker                     2.7.0                   python
 procps-ng                       4.0.3-r1                apk     
 protobuf                        4.23.2                  python  
 publicsuffixlist                0.9.4                   python  
-pyOpenSSL                       23.1.1                  python  
+pyOpenSSL                       23.2.0                  python  
 pyRFC3339                       1.1                     python  
 pyacmedns                       0.4                     python  
 pyasn1                          0.5.0                   python  

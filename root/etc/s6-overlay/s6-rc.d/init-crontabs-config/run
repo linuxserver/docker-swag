@@ -15,7 +15,7 @@ if [[ ! -f /config/crontabs/root ]]; then
 
     # if crontabs still do not exist in config (were not copied from system)
     # copy crontab from included defaults (using -n, do not overwrite an existing file)
-    cp -n /etc/crontabs/root /config/crontabs/
+    cp -n /etc/crontabs/root /config/crontabs/ 2> >(grep -v 'cp: not replacing')
 fi
 # set permissions and import user crontabs
 lsiown root:root /config/crontabs/root
@@ -31,7 +31,7 @@ if [[ ! -f /config/crontabs/abc ]]; then
 
     # if crontabs still do not exist in config (were not copied from system)
     # copy crontab from included defaults (using -n, do not overwrite an existing file)
-    cp -n /etc/crontabs/abc /config/crontabs/
+    cp -n /etc/crontabs/abc /config/crontabs/ 2> >(grep -v 'cp: not replacing')
 fi
 # set permissions and import user crontabs
 lsiown abc:abc /config/crontabs/abc

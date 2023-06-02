@@ -30,12 +30,12 @@ if [[ "${VALIDATION}" = "dns" ]] && [[ ! "${DNSPLUGIN}" =~ ^(acmedns|aliyun|azur
 fi
 
 # copy dns default configs
-cp -n /defaults/dns-conf/* /config/dns-conf/
+cp -n /defaults/dns-conf/* /config/dns-conf/ 2> >(grep -v 'cp: not replacing')
 lsiown -R abc:abc /config/dns-conf
 
 # copy default renewal hooks
 chmod -R +x /defaults/etc/letsencrypt/renewal-hooks
-cp -nR /defaults/etc/letsencrypt/renewal-hooks/* /config/etc/letsencrypt/renewal-hooks/
+cp -nR /defaults/etc/letsencrypt/renewal-hooks/* /config/etc/letsencrypt/renewal-hooks/ 2> >(grep -v 'cp: not replacing')
 lsiown -R abc:abc /config/etc/letsencrypt/renewal-hooks
 
 # replace nginx service location in renewal hooks

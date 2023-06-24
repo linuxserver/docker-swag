@@ -6,7 +6,7 @@ acme                            2.6.0                   python
 alpine-baselayout               3.4.3-r1                apk     
 alpine-baselayout-data          3.4.3-r1                apk     
 alpine-keys                     2.4-r1                  apk     
-alpine-release                  3.18.0-r0               apk     
+alpine-release                  3.18.2-r0               apk     
 aom-libs                        3.6.1-r0                apk     
 apache2-utils                   2.4.57-r2               apk     
 apk-tools                       2.14.0-r2               apk     
@@ -21,8 +21,8 @@ azure-mgmt-core                 1.4.0                   python
 azure-mgmt-dns                  8.1.0                   python  
 bash                            5.2.15-r5               apk     
 beautifulsoup4                  4.12.2                  python  
-boto3                           1.26.155                python  
-botocore                        1.29.155                python  
+boto3                           1.26.160                python  
+botocore                        1.29.160                python  
 brotli-libs                     1.0.9-r14               apk     
 bs4                             0.0.1                   python  
 busybox                         1.36.1                  binary  
@@ -35,7 +35,7 @@ cachetools                      5.3.1                   python
 certbot                         2.6.0                   python  
 certbot-dns-acmedns             0.1.0                   python  
 certbot-dns-aliyun              2.0.0                   python  
-certbot-dns-azure               2.2.0                   python  
+certbot-dns-azure               2.3.0                   python  
 certbot-dns-cloudflare          2.6.0                   python  
 certbot-dns-cpanel              0.4.0                   python  
 certbot-dns-desec               1.2.1                   python  
@@ -105,7 +105,7 @@ gnupg-utils                     2.4.1-r1                apk
 gnupg-wks-client                2.4.1-r1                apk     
 gnutls                          3.8.0-r2                apk     
 google-api-core                 2.11.1                  python  
-google-api-python-client        2.89.0                  python  
+google-api-python-client        2.90.0                  python  
 google-auth                     2.20.0                  python  
 google-auth-httplib2            0.1.0                   python  
 googleapis-common-protos        1.59.1                  python  
@@ -118,7 +118,7 @@ httplib2                        0.22.0                  python
 icu-data-en                     73.2-r0                 apk     
 icu-libs                        73.2-r0                 apk     
 idna                            3.4                     python  
-importlib-metadata              6.6.0                   python  
+importlib-metadata              6.7.0                   python  
 ip6tables                       1.8.9-r2                apk     
 iptables                        1.8.9-r2                apk     
 isodate                         0.6.1                   python  
@@ -128,7 +128,7 @@ jq                              1.6-r3                  apk
 jsonlines                       3.1.0                   python  
 jsonpickle                      3.0.1                   python  
 libacl                          2.3.1-r3                apk     
-libassuan                       2.5.5-r2                apk     
+libassuan                       2.5.6-r0                apk     
 libattr                         2.5.1-r4                apk     
 libavif                         0.11.1-r2               apk     
 libbsd                          0.11.7-r1               apk     
@@ -149,7 +149,7 @@ libice                          1.1.1-r2                apk
 libidn2                         2.3.4-r1                apk     
 libintl                         0.21.1-r7               apk     
 libjpeg-turbo                   2.1.5.1-r3              apk     
-libksba                         1.6.3-r2                apk     
+libksba                         1.6.4-r0                apk     
 libldap                         2.6.4-r3                apk     
 libmaxminddb-libs               1.7.1-r1                apk     
 libmcrypt                       2.5.8-r10               apk     
@@ -189,8 +189,8 @@ lxml                            4.9.2                   python
 lz4-libs                        1.9.4-r4                apk     
 marshmallow                     3.19.0                  python  
 marshmallow-enum                1.5.1                   python  
-memcached                       1.6.20                  binary  
-memcached                       1.6.20-r0               apk     
+memcached                       1.6.21                  binary  
+memcached                       1.6.21-r0               apk     
 mock                            5.0.2                   python  
 mpdecimal                       2.5.1-r2                apk     
 msal                            1.22.0                  python  
@@ -299,7 +299,7 @@ pyasn1                          0.5.0                   python
 pyasn1-modules                  0.3.0                   python  
 pyc                             0.1-r0                  apk     
 pycparser                       2.21                    python  
-pyparsing                       3.0.9                   python  
+pyparsing                       3.1.0                   python  
 python                          3.11.4                  binary  
 python-dateutil                 2.8.2                   python  
 python-digitalocean             1.17.0                  python  
@@ -316,7 +316,7 @@ rsa                             4.9                     python
 s3transfer                      0.6.1                   python  
 scanelf                         1.3.7-r1                apk     
 setuptools                      65.5.0                  python  
-shadow                          4.13-r2                 apk     
+shadow                          4.13-r4                 apk     
 six                             1.16.0                  python  
 skalibs                         2.13.1.1-r1             apk     
 soupsieve                       2.4.1                   python  

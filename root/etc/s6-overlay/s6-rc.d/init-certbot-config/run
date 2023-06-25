@@ -24,7 +24,7 @@ for i in "${SANED_VARS[@]}"; do
 done
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-if [[ "${VALIDATION}" = "dns" ]] && [[ ! "${DNSPLUGIN}" =~ ^(acmedns|aliyun|azure|cloudflare|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|do|domeneshop|duckdns|dynu|gandi|gehirn|godaddy|google|google-domains|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|porkbun|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
+if [[ "${VALIDATION}" = "dns" ]] && [[ ! "${DNSPLUGIN}" =~ ^(acmedns|aliyun|azure|bunny|cloudflare|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|do|domeneshop|duckdns|dynu|gandi|gehirn|godaddy|google|google-domains|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|porkbun|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
     echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details."
     sleep infinity
 fi

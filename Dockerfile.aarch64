@@ -91,6 +91,7 @@ RUN \
     certbot-dns-acmedns \
     certbot-dns-aliyun \
     certbot-dns-azure \
+    certbot-dns-bunny \
     certbot-dns-cloudflare \
     certbot-dns-cpanel \
     certbot-dns-desec \

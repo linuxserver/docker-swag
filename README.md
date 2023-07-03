@@ -68,7 +68,7 @@ The architectures supported by this image are:
 * For `dns` validation, make sure to enter your credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`
   * Cloudflare provides free accounts for managing dns and is very easy to use with this image. Make sure that it is set up for "dns only" instead of "dns + proxy"
   * Google dns plugin is meant to be used with "Google Cloud DNS", a paid enterprise product, and not for "Google Domains DNS"
-  * DuckDNS only supoprts two types of DNS validated certificates (not both at the same time):
+  * DuckDNS only supports two types of DNS validated certificates (not both at the same time):
     1. Certs that only cover your main subdomain (ie. `yoursubdomain.duckdns.org`, leave the `SUBDOMAINS` variable empty)
     2. Certs that cover sub-subdomains of your main subdomain (ie. `*.yoursubdomain.duckdns.org`, set the `SUBDOMAINS` variable to `wildcard`)
 * `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables

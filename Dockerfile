@@ -5,7 +5,6 @@ FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.18
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG CERTBOT_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="nemchik"
 
@@ -78,58 +77,6 @@ RUN \
     whois && \
   apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
     php82-pecl-mcrypt && \
-  echo "**** install certbot plugins ****" && \
-  if [ -z ${CERTBOT_VERSION+x} ]; then \
-    CERTBOT_VERSION=$(curl -sL  https://pypi.python.org/pypi/certbot/json |jq -r '. | .info.version'); \
-  fi && \
-  python3 -m venv /lsiopy && \
-  pip install -U --no-cache-dir \
-    pip \
-    wheel && \
-  pip install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.18/ \
-    certbot==${CERTBOT_VERSION} \
-    certbot-dns-acmedns \
-    certbot-dns-aliyun \
-    certbot-dns-azure \
-    certbot-dns-cloudflare \
-    certbot-dns-cpanel \
-    certbot-dns-desec \
-    certbot-dns-digitalocean \
-    certbot-dns-directadmin \
-    certbot-dns-dnsimple \
-    certbot-dns-dnsmadeeasy \
-    certbot-dns-dnspod \
-    certbot-dns-do \
-    certbot-dns-domeneshop \
-    certbot-dns-duckdns \
-    certbot-dns-dynu \
-    certbot-dns-gehirn \
-    certbot-dns-godaddy \
-    certbot-dns-google \
-    certbot-dns-google-domains \
-    certbot-dns-he \
-    certbot-dns-hetzner \
-    certbot-dns-infomaniak \
-    certbot-dns-inwx \
-    certbot-dns-ionos \
-    certbot-dns-linode \
-    certbot-dns-loopia \
-    certbot-dns-luadns \
-    certbot-dns-netcup \
-    certbot-dns-njalla \
-    certbot-dns-nsone \
-    certbot-dns-ovh \
-    certbot-dns-porkbun \
-    certbot-dns-rfc2136 \
-    certbot-dns-route53 \
-    certbot-dns-sakuracloud \
-    certbot-dns-standalone \
-    certbot-dns-transip \
-    certbot-dns-vultr \
-    certbot-plugin-gandi \
-    cryptography \
-    future \
-    requests && \
   echo "**** enable OCSP stapling from base ****" && \
   sed -i \
     's|#ssl_stapling on;|ssl_stapling on;|' \

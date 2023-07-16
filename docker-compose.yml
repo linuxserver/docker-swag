@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  swag:
+    image: swag
+    container_name: swag
+    restart: unless-stopped
+    
+    environment:
+      - TZ=Europe/Berlin
+      - PUID=1000
+      - PGID=1000
+      - URL=lshallo.eu
+      - SUBDOMAINS=wildcard
+      - VALIDATION=dns
+      - DNSPLUGIN=cloudflare
+      - PROPAGATION=45
+      - EMAIL=xlshallox@gmail.com
+    ports:
+      - 443:443
+      - 80:80

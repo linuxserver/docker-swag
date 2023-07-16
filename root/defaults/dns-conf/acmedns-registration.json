@@ -1,9 +1,0 @@
-{
-    "yourdomain.com": {
-      "username":"yourusername",
-      "password":"yourpassword",
-      "fulldomain":"<guid>.acme.yourdomain.com",
-      "subdomain":"<guid>",
-      "allowfrom":[]
-    }
-  }

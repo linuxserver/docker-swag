@@ -29,6 +29,23 @@ if [[ "${VALIDATION}" = "dns" ]] && [[ ! "${DNSPLUGIN}" =~ ^(acmedns|aliyun|azur
     sleep infinity
 fi
 
+# set_ini_value logic:
+# - if the name is not found in the file, append the name=value to the end of the file
+# - if the name is found in the file, replace the value
+# - if the name is found in the file but commented out, uncomment the line and replace the value
+# call set_ini_value with parameters: $1=name $2=value $3=file
+function set_ini_value() {
+    name=${1//\//\\/}
+    value=${2//\//\\/}
+    sed -i \
+        -e '/^#\?\(\s*'"${name}"'\s*=\s*\).*/{s//\1'"${value}"'/;:a;n;ba;q}' \
+        -e '$a'"${name}"'='"${value}" "${3}"
+}
+
+# ensure config files exist and has at least one value set (set_ini_value does not work on empty files)
+touch /config/etc/letsencrypt/cli.ini
+grep -qF 'agree-tos' /config/etc/letsencrypt/cli.ini || echo 'agree-tos=true' >>/config/etc/letsencrypt/cli.ini
+
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/ 2> >(grep -v 'cp: not replacing')
 lsiown -R abc:abc /config/dns-conf
@@ -157,21 +174,25 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
     [[ ! "${CERTPROVIDER}" = "${ORIGCERTPROVIDER}" ]]; then
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
     if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]] && [[ -n "${ORIGEMAIL}" ]]; then
-        REV_EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${ORIGEMAIL}")
-        REV_ZEROSSL_EAB_KID=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
-        REV_ZEROSSL_EAB_HMAC_KEY=$(echo "${REV_EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+        REV_ACMESERVER=("https://acme.zerossl.com/v2/DV90")
+        REV_ZEROSSL_EAB_KID=$(awk -F "=" '/eab-kid/ {print $2}' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf" | tr -d ' ')
+        REV_ZEROSSL_EAB_HMAC_KEY=$(awk -F "=" '/eab-hmac-key/ {print $2}' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf" | tr -d ' ')
         if [[ -z "${REV_ZEROSSL_EAB_KID}" ]] || [[ -z "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
-            echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
-            sleep infinity
+            REV_ZEROSSL_EAB_KID=$(awk -F "=" '/eab-kid/ {print $2}' /config/etc/letsencrypt/cli.ini | tr -d ' ')
+            REV_ZEROSSL_EAB_HMAC_KEY=$(awk -F "=" '/eab-hmac-key/ {print $2}' /config/etc/letsencrypt/cli.ini | tr -d ' ')
         fi
-        REV_ACMESERVER="https://acme.zerossl.com/v2/DV90 --eab-kid ${REV_ZEROSSL_EAB_KID} --eab-hmac-key ${REV_ZEROSSL_EAB_HMAC_KEY}"
+        if [[ -n "${REV_ZEROSSL_EAB_KID}" ]] && [[ -n "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
+            REV_ACMESERVER+=("--eab-kid" "${REV_ZEROSSL_EAB_KID}" "--eab-hmac-key" "${REV_ZEROSSL_EAB_HMAC_KEY}")
+        fi
     elif [[ "${ORIGSTAGING}" = "true" ]]; then
-        REV_ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
+        REV_ACMESERVER=("https://acme-staging-v02.api.letsencrypt.org/directory")
     else
-        REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
+        REV_ACMESERVER=("https://acme-v02.api.letsencrypt.org/directory")
     fi
     if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
-        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER} || true
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
+    else
+        certbot revoke --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
     fi
     rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
@@ -182,9 +203,11 @@ echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS
 # Check if the cert is using the old LE root cert, revoke and regen if necessary
 if [[ -f "/config/keys/letsencrypt/chain.pem" ]] && { [[ "${CERTPROVIDER}" == "letsencrypt" ]] || [[ "${CERTPROVIDER}" == "" ]]; } && [[ "${STAGING}" != "true" ]] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
     echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
-    REV_ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
+    REV_ACMESERVER=("https://acme-v02.api.letsencrypt.org/directory")
     if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
-        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server ${REV_ACMESERVER} || true
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
+    else
+        certbot revoke --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
     fi
     rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
@@ -208,52 +231,51 @@ else
     ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
 fi
 
-# figuring out url only vs url & subdomains vs subdomains only
+set_ini_value "server" "${ACMESERVER}" /config/etc/letsencrypt/cli.ini
+
+# figuring out domain only vs domain & subdomains vs subdomains only
+DOMAINS_ARRAY=()
+if [[ -z "${SUBDOMAINS}" ]] || [[ "${ONLY_SUBDOMAINS}" != true ]]; then
+    DOMAINS_ARRAY+=("${URL}")
+fi
 if [[ -n "${SUBDOMAINS}" ]]; then
     echo "SUBDOMAINS entered, processing"
+    SUBDOMAINS_ARRAY=()
     if [[ "${SUBDOMAINS}" = "wildcard" ]]; then
-        if [[ "${ONLY_SUBDOMAINS}" = true ]]; then
-            export URL_REAL="-d *.${URL}"
-            echo "Wildcard cert for only the subdomains of ${URL} will be requested"
-        else
-            export URL_REAL="-d *.${URL} -d ${URL}"
-            echo "Wildcard cert for ${URL} will be requested"
-        fi
+        SUBDOMAINS_ARRAY+=("*.${URL}")
+        echo "Wildcard cert for ${URL} will be requested"
     else
-        echo "SUBDOMAINS entered, processing"
         for job in $(echo "${SUBDOMAINS}" | tr "," " "); do
-            export SUBDOMAINS_REAL="${SUBDOMAINS_REAL} -d ${job}.${URL}"
+            SUBDOMAINS_ARRAY+=("${job}.${URL}")
         done
-        if [[ "${ONLY_SUBDOMAINS}" = true ]]; then
-            URL_REAL="${SUBDOMAINS_REAL}"
-            echo "Only subdomains, no URL in cert"
-        else
-            URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
-        fi
-        echo "Sub-domains processed are: ${SUBDOMAINS_REAL}"
+        echo "Sub-domains processed are: $(echo "${SUBDOMAINS_ARRAY[*]}" | tr " " ",")"
     fi
-else
-    echo "No subdomains defined"
-    URL_REAL="-d ${URL}"
+    DOMAINS_ARRAY+=("${SUBDOMAINS_ARRAY[@]}")
 fi
 
 # add extra domains
 if [[ -n "${EXTRA_DOMAINS}" ]]; then
     echo "EXTRA_DOMAINS entered, processing"
+    EXTRA_DOMAINS_ARRAY=()
     for job in $(echo "${EXTRA_DOMAINS}" | tr "," " "); do
-        export EXTRA_DOMAINS_REAL="${EXTRA_DOMAINS_REAL} -d ${job}"
+        EXTRA_DOMAINS_ARRAY+=("${job}")
     done
-    echo "Extra domains processed are: ${EXTRA_DOMAINS_REAL}"
-    URL_REAL="${URL_REAL} ${EXTRA_DOMAINS_REAL}"
+    echo "Extra domains processed are: $(echo "${EXTRA_DOMAINS_ARRAY[*]}" | tr " " ",")"
+    DOMAINS_ARRAY+=("${EXTRA_DOMAINS_ARRAY[@]}")
 fi
+
+# setting domains in cli.ini
+set_ini_value "domains" "$(echo "${DOMAINS_ARRAY[*]}" | tr " " ",")" /config/etc/letsencrypt/cli.ini
 
 # figuring out whether to use e-mail and which
 if [[ ${EMAIL} == *@* ]]; then
     echo "E-mail address entered: ${EMAIL}"
-    EMAILPARAM="-m ${EMAIL} --no-eff-email"
+    set_ini_value "email" "${EMAIL}" /config/etc/letsencrypt/cli.ini
+    set_ini_value "no-eff-email" "true" /config/etc/letsencrypt/cli.ini
+    set_ini_value "register-unsafely-without-email" "false" /config/etc/letsencrypt/cli.ini
 else
     echo "No e-mail address entered or address invalid"
-    EMAILPARAM="--register-unsafely-without-email"
+    set_ini_value "register-unsafely-without-email" "true" /config/etc/letsencrypt/cli.ini
 fi
 
 # alter extension for error message
@@ -265,37 +287,41 @@ fi
 
 # setting the validation method to use
 if [[ "${VALIDATION}" = "dns" ]]; then
-    AUTHENTICATORPARAM="--authenticator dns-${DNSPLUGIN}"
-    DNSCREDENTIALSPARAM="--dns-${DNSPLUGIN}-credentials ${DNSCREDENTIALFILE}"
-    if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--dns-${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+    set_ini_value "preferred-challenges" "dns" /config/etc/letsencrypt/cli.ini
+    set_ini_value "authenticator" "dns-${DNSPLUGIN}" /config/etc/letsencrypt/cli.ini
+    set_ini_value "dns-${DNSPLUGIN}-credentials" "${DNSCREDENTIALFILE}" /config/etc/letsencrypt/cli.ini
+    if [[ -n "${PROPAGATION}" ]]; then set_ini_value "dns-${DNSPLUGIN}-propagation-seconds" "${PROPAGATION}" /config/etc/letsencrypt/cli.ini; fi
 
     # plugins that don't support setting credentials file
     if [[ "${DNSPLUGIN}" =~ ^(route53|standalone)$ ]]; then
-        DNSCREDENTIALSPARAM=""
+        sed "/^dns-${DNSPLUGIN}-credentials /d" /config/etc/letsencrypt/cli.ini
     fi
     # plugins that don't support setting propagation
     if [[ "${DNSPLUGIN}" =~ ^(azure|gandi|route53|standalone)$ ]]; then
         if [[ -n "${PROPAGATION}" ]]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
-        PROPAGATIONPARAM=""
+        sed "/^dns-${DNSPLUGIN}-propagation-seconds /d" /config/etc/letsencrypt/cli.ini
     fi
     # plugins that use old parameter naming convention
-    if [[ "${DNSPLUGIN}" =~ ^(cpanel)$ ]]; then
-        AUTHENTICATORPARAM="--authenticator ${DNSPLUGIN}"
-        DNSCREDENTIALSPARAM="--${DNSPLUGIN}-credentials ${DNSCREDENTIALFILE}"
-        if [[ -n "${PROPAGATION}" ]]; then PROPAGATIONPARAM="--${DNSPLUGIN}-propagation-seconds ${PROPAGATION}"; fi
+    if [[ "${DNSPLUGIN}" =~ ^(cpanel|directadmin)$ ]]; then
+        sed "/^dns-${DNSPLUGIN}-credentials /d" /config/etc/letsencrypt/cli.ini
+        sed "/^dns-${DNSPLUGIN}-propagation-seconds /d" /config/etc/letsencrypt/cli.ini
+        set_ini_value "authenticator" "${DNSPLUGIN}" /config/etc/letsencrypt/cli.ini
+        set_ini_value "${DNSPLUGIN}-credentials" "${DNSCREDENTIALFILE}" /config/etc/letsencrypt/cli.ini
+        if [[ -n "${PROPAGATION}" ]]; then set_ini_value "${DNSPLUGIN}-propagation-seconds" "${PROPAGATION}" /config/etc/letsencrypt/cli.ini; fi
     fi
     # don't restore txt records when using DuckDNS plugin
     if [[ "${DNSPLUGIN}" =~ ^(duckdns)$ ]]; then
-        AUTHENTICATORPARAM="${AUTHENTICATORPARAM} --dns-${DNSPLUGIN}-no-txt-restore"
+        set_ini_value "dns-${DNSPLUGIN}-no-txt-restore" "true" /config/etc/letsencrypt/cli.ini
     fi
 
-    PREFCHAL="${AUTHENTICATORPARAM} ${DNSCREDENTIALSPARAM} ${PROPAGATIONPARAM}"
     echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
 elif [[ "${VALIDATION}" = "tls-sni" ]]; then
-    PREFCHAL="--standalone --preferred-challenges http"
+    set_ini_value "preferred-challenges" "http" /config/etc/letsencrypt/cli.ini
+    set_ini_value "authenticator" "standalone" /config/etc/letsencrypt/cli.ini
     echo "*****tls-sni validation has been deprecated, attempting http validation instead"
 else
-    PREFCHAL="--standalone --preferred-challenges http"
+    set_ini_value "preferred-challenges" "http" /config/etc/letsencrypt/cli.ini
+    set_ini_value "authenticator" "standalone" /config/etc/letsencrypt/cli.ini
     echo "http validation is selected"
 fi
 
@@ -304,17 +330,17 @@ if [[ ! -f "/config/keys/letsencrypt/fullchain.pem" ]]; then
     if [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ -n "${EMAIL}" ]]; then
         echo "Retrieving EAB from ZeroSSL"
         EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${EMAIL}")
-        ZEROSSL_EAB_KID=$(echo "${EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_kid'])")
-        ZEROSSL_EAB_HMAC_KEY=$(echo "${EAB_CREDS}" | python3 -c "import sys, json; print(json.load(sys.stdin)['eab_hmac_key'])")
+        ZEROSSL_EAB_KID=$(echo "${EAB_CREDS}" | jq .eab_kid)
+        ZEROSSL_EAB_HMAC_KEY=$(echo "${EAB_CREDS}" | jq .eab_hmac_key)
         if [[ -z "${ZEROSSL_EAB_KID}" ]] || [[ -z "${ZEROSSL_EAB_HMAC_KEY}" ]]; then
             echo "Unable to retrieve EAB credentials from ZeroSSL. Check the outgoing connections to api.zerossl.com and dns. Sleeping."
             sleep infinity
         fi
-        ZEROSSL_EAB="--eab-kid ${ZEROSSL_EAB_KID} --eab-hmac-key ${ZEROSSL_EAB_HMAC_KEY}"
+        set_ini_value "eab-kid" "${ZEROSSL_EAB_KID}" /config/etc/letsencrypt/cli.ini
+        set_ini_value "eab-hmac-key" "${ZEROSSL_EAB_HMAC_KEY}" /config/etc/letsencrypt/cli.ini
     fi
     echo "Generating new certificate"
-    # shellcheck disable=SC2086
-    certbot certonly --non-interactive --renew-by-default --server ${ACMESERVER} ${ZEROSSL_EAB} ${PREFCHAL} --rsa-key-size 4096 ${EMAILPARAM} --agree-tos ${URL_REAL}
+    certbot certonly --non-interactive --renew-by-default
     if [[ ! -d /config/keys/letsencrypt ]]; then
         if [[ "${VALIDATION}" = "dns" ]]; then
             echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the ${DNSCREDENTIALFILE} file."

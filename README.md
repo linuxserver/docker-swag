@@ -336,7 +336,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **31.05.23:** - Added support for dreamhost validation.
+* **27.07.23:** - Added support for dreamhost validation.
 * **25.05.23:** - Rebase to Alpine 3.18, deprecate armhf.
 * **27.04.23:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-location.conf, authelia-server.conf, authentik-location.conf, authentik-server.conf - Simplify auth configs and fix Set-Cookie header bug.
 * **13.04.23:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf, authelia-location.conf, authentik-location.conf, and site-confs/default.conf - Move ssl.conf include to default.conf. Remove Authorization headers in authelia. Sort proxy_set_header in authelia and authentik.

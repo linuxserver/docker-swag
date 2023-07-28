@@ -102,6 +102,7 @@ RUN \
     certbot-dns-dnspod \
     certbot-dns-do \
     certbot-dns-domeneshop \
+    certbot-dns-dreamhost \
     certbot-dns-duckdns \
     certbot-dns-dynu \
     certbot-dns-gehirn \

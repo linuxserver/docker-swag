@@ -294,17 +294,17 @@ if [[ "${VALIDATION}" = "dns" ]]; then
 
     # plugins that don't support setting credentials file
     if [[ "${DNSPLUGIN}" =~ ^(route53|standalone)$ ]]; then
-        sed "/^dns-${DNSPLUGIN}-credentials /d" /config/etc/letsencrypt/cli.ini
+        sed -i "/^dns-${DNSPLUGIN}-credentials\b/d" /config/etc/letsencrypt/cli.ini
     fi
     # plugins that don't support setting propagation
     if [[ "${DNSPLUGIN}" =~ ^(azure|gandi|route53|standalone)$ ]]; then
         if [[ -n "${PROPAGATION}" ]]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
-        sed "/^dns-${DNSPLUGIN}-propagation-seconds /d" /config/etc/letsencrypt/cli.ini
+        sed -i "/^dns-${DNSPLUGIN}-propagation-seconds\b/d" /config/etc/letsencrypt/cli.ini
     fi
     # plugins that use old parameter naming convention
     if [[ "${DNSPLUGIN}" =~ ^(cpanel|directadmin)$ ]]; then
-        sed "/^dns-${DNSPLUGIN}-credentials /d" /config/etc/letsencrypt/cli.ini
-        sed "/^dns-${DNSPLUGIN}-propagation-seconds /d" /config/etc/letsencrypt/cli.ini
+        sed -i "/^dns-${DNSPLUGIN}-credentials\b/d" /config/etc/letsencrypt/cli.ini
+        sed -i "/^dns-${DNSPLUGIN}-propagation-seconds\b/d" /config/etc/letsencrypt/cli.ini
         set_ini_value "authenticator" "${DNSPLUGIN}" /config/etc/letsencrypt/cli.ini
         set_ini_value "${DNSPLUGIN}-credentials" "${DNSCREDENTIALFILE}" /config/etc/letsencrypt/cli.ini
         if [[ -n "${PROPAGATION}" ]]; then set_ini_value "${DNSPLUGIN}-propagation-seconds" "${PROPAGATION}" /config/etc/letsencrypt/cli.ini; fi

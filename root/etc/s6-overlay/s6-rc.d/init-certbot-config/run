@@ -44,6 +44,7 @@ function set_ini_value() {
 
 # ensure config files exist and has at least one value set (set_ini_value does not work on empty files)
 touch /config/etc/letsencrypt/cli.ini
+lsiown abc:abc /config/etc/letsencrypt/cli.ini
 grep -qF 'agree-tos' /config/etc/letsencrypt/cli.ini || echo 'agree-tos=true' >>/config/etc/letsencrypt/cli.ini
 
 # copy dns default configs
@@ -190,9 +191,9 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
         REV_ACMESERVER=("https://acme-v02.api.letsencrypt.org/directory")
     fi
     if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
-        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
+        s6-setuidgid abc certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
     else
-        certbot revoke --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
+        s6-setuidgid abc certbot revoke --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
     fi
     rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
@@ -205,9 +206,9 @@ if [[ -f "/config/keys/letsencrypt/chain.pem" ]] && { [[ "${CERTPROVIDER}" == "l
     echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
     REV_ACMESERVER=("https://acme-v02.api.letsencrypt.org/directory")
     if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
-        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
+        s6-setuidgid abc certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
     else
-        certbot revoke --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
+        s6-setuidgid abc certbot revoke --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
     fi
     rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
 fi
@@ -340,7 +341,7 @@ if [[ ! -f "/config/keys/letsencrypt/fullchain.pem" ]]; then
         set_ini_value "eab-hmac-key" "${ZEROSSL_EAB_HMAC_KEY}" /config/etc/letsencrypt/cli.ini
     fi
     echo "Generating new certificate"
-    certbot certonly --non-interactive --renew-by-default
+    s6-setuidgid abc certbot certonly --non-interactive --renew-by-default
     if [[ ! -d /config/keys/letsencrypt ]]; then
         if [[ "${VALIDATION}" = "dns" ]]; then
             echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the ${DNSCREDENTIALFILE} file."

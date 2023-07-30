@@ -1,0 +1,2 @@
+# min   hour    day     month   weekday command
+8       2       *       *       *       /app/le-renew.sh >> /config/log/letsencrypt/letsencrypt.log 2>&1

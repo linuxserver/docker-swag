@@ -31,6 +31,12 @@ if [[ "${VALIDATION}" = "dns" ]] && ! echo "${CERTBOT_DNS_AUTHENTICATORS}" | gre
     sleep infinity
 fi
 
+# set owner of certbot's CONFIG_DIR, WORK_DIR, and LOGS_DIR to abc
+lsiown -R abc \
+    /etc/letsencrypt \
+    /var/lib/letsencrypt \
+    /var/log/letsencrypt
+
 # set_ini_value logic:
 # - if the name is not found in the file, append the name=value to the end of the file
 # - if the name is found in the file, replace the value

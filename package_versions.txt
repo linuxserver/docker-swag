@@ -2,6 +2,7 @@ NAME                            VERSION                 TYPE
 ConfigArgParse                  1.7                     python  
 PyJWT                           2.8.0                   python  
 PyYAML                          6.0.1                   python  
+Simple Launcher Executable      1.1.0.14                dotnet  
 acme                            2.6.0                   python  
 alpine-baselayout               3.4.3-r1                apk     
 alpine-baselayout-data          3.4.3-r1                apk     
@@ -21,13 +22,13 @@ azure-mgmt-core                 1.4.0                   python
 azure-mgmt-dns                  8.1.0                   python  
 bash                            5.2.15-r5               apk     
 beautifulsoup4                  4.12.2                  python  
-boto3                           1.28.15                 python  
-botocore                        1.31.15                 python  
+boto3                           1.28.20                 python  
+botocore                        1.31.20                 python  
 brotli-libs                     1.0.9-r14               apk     
 bs4                             0.0.1                   python  
 busybox                         1.36.1                  binary  
-busybox                         1.36.1-r1               apk     
-busybox-binsh                   1.36.1-r1               apk     
+busybox                         1.36.1-r2               apk     
+busybox-binsh                   1.36.1-r2               apk     
 c-client                        2007f-r15               apk     
 ca-certificates                 20230506-r0             apk     
 ca-certificates-bundle          20230506-r0             apk     
@@ -79,9 +80,9 @@ charset-normalizer              3.2.0                   python
 cloudflare                      2.11.6                  python  
 configobj                       5.0.8                   python  
 coreutils                       9.3-r1                  apk     
-cryptography                    41.0.2                  python  
-curl                            8.2.0-r1                apk     
-dataclasses-json                0.5.13                  python  
+cryptography                    41.0.3                  python  
+curl                            8.2.1-r0                apk     
+dataclasses-json                0.5.14                  python  
 distro                          1.8.0                   python  
 dns-lexicon                     3.11.7                  python  
 dnslib                          0.9.23                  python  
@@ -109,7 +110,7 @@ google-api-core                 2.11.1                  python
 google-api-python-client        2.95.0                  python  
 google-auth                     2.22.0                  python  
 google-auth-httplib2            0.1.0                   python  
-googleapis-common-protos        1.59.1                  python  
+googleapis-common-protos        1.60.0                  python  
 gpg                             2.4.3-r0                apk     
 gpg-agent                       2.4.3-r0                apk     
 gpg-wks-server                  2.4.3-r0                apk     
@@ -135,8 +136,8 @@ libavif                         0.11.1-r2               apk
 libbsd                          0.11.7-r1               apk     
 libbz2                          1.0.8-r5                apk     
 libc-utils                      0.7.2-r5                apk     
-libcrypto3                      3.1.1-r3                apk     
-libcurl                         8.2.0-r1                apk     
+libcrypto3                      3.1.2-r0                apk     
+libcurl                         8.2.1-r0                apk     
 libdav1d                        1.2.1-r0                apk     
 libedit                         20221030.3.1-r1         apk     
 libevent                        2.1.12-r6               apk     
@@ -167,7 +168,7 @@ libsasl                         2.1.28-r4               apk
 libseccomp                      2.5.4-r2                apk     
 libsm                           1.2.4-r1                apk     
 libsodium                       1.0.18-r3               apk     
-libssl3                         3.1.1-r3                apk     
+libssl3                         3.1.2-r0                apk     
 libstdc++                       12.2.1_git20220924-r10  apk     
 libtasn1                        4.19.0-r1               apk     
 libunistring                    1.1-r1                  apk     
@@ -196,7 +197,7 @@ mpdecimal                       2.5.1-r2                apk
 msal                            1.23.0                  python  
 msal-extensions                 1.0.0                   python  
 musl                            1.2.4-r1                apk     
-musl-utils                      1.2.4-r0                apk     
+musl-utils                      1.2.4-r1                apk     
 mypy-extensions                 1.0.0                   python  
 nano                            7.2-r1                  apk     
 ncurses-terminfo-base           6.4_p20230506-r0        apk     
@@ -224,7 +225,7 @@ nginx-mod-stream-geoip2         1.24.0-r6               apk
 nginx-vim                       1.24.0-r6               apk     
 npth                            1.6-r4                  apk     
 oniguruma                       6.9.8-r1                apk     
-openssl                         3.1.1-r3                apk     
+openssl                         3.1.2-r0                apk     
 p11-kit                         0.24.1-r2               apk     
 packaging                       23.1                    python  
 parsedatetime                   2.6                     python  
@@ -299,7 +300,7 @@ pyasn1                          0.5.0                   python
 pyasn1-modules                  0.3.0                   python  
 pyc                             0.1-r0                  apk     
 pycparser                       2.21                    python  
-pyparsing                       3.1.0                   python  
+pyparsing                       3.1.1                   python  
 python                          3.11.4                  binary  
 python-dateutil                 2.8.2                   python  
 python-digitalocean             1.17.0                  python  
@@ -321,7 +322,7 @@ six                             1.16.0                  python
 skalibs                         2.13.1.1-r1             apk     
 soupsieve                       2.4.1                   python  
 sqlite-libs                     3.41.2-r2               apk     
-ssl_client                      1.36.1-r1               apk     
+ssl_client                      1.36.1-r2               apk     
 tiff                            4.5.1-r0                apk     
 tldextract                      3.4.4                   python  
 typing-inspect                  0.9.0                   python  

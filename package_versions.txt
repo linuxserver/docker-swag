@@ -37,6 +37,7 @@ certbot                         2.6.0                   python
 certbot-dns-acmedns             0.1.0                   python  
 certbot-dns-aliyun              2.0.0                   python  
 certbot-dns-azure               2.3.0                   python  
+certbot-dns-bunny               0.0.9                   python  
 certbot-dns-cloudflare          2.6.0                   python  
 certbot-dns-cpanel              0.4.0                   python  
 certbot-dns-desec               1.2.1                   python  
@@ -332,7 +333,7 @@ unixodbc                        2.3.11-r2               apk
 uritemplate                     4.1.1                   python  
 urllib3                         1.26.16                 python  
 utmps-libs                      0.1.2.1-r1              apk     
-wheel                           0.41.0                  python  
+wheel                           0.41.1                  python  
 whois                           5.5.17-r0               apk     
 xz-libs                         5.4.3-r0                apk     
 zipp                            3.16.2                  python  

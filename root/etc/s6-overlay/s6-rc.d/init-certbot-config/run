@@ -24,8 +24,10 @@ for i in "${SANED_VARS[@]}"; do
 done
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-if [[ "${VALIDATION}" = "dns" ]] && [[ ! "${DNSPLUGIN}" =~ ^(acmedns|aliyun|azure|bunny|cloudflare|cpanel|desec|digitalocean|directadmin|dnsimple|dnsmadeeasy|dnspod|do|domeneshop|dreamhost|duckdns|dynu|gandi|gehirn|godaddy|google|google-domains|he|hetzner|infomaniak|inwx|ionos|linode|loopia|luadns|netcup|njalla|nsone|ovh|porkbun|rfc2136|route53|sakuracloud|standalone|transip|vultr)$ ]]; then
-    echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details."
+CERTBOT_DNS_AUTHENTICATORS=$(certbot plugins --authenticators 2>/dev/null | sed -e 's/^Entry point: cpanel =/Entry point: dns-cpanel =/' -e '/^Entry point: dns-/!d' -e 's/^Entry point: dns-\([^ ]*\) =.*/\1/' | sort)
+if [[ "${VALIDATION}" = "dns" ]] && ! echo "${CERTBOT_DNS_AUTHENTICATORS}" | grep -q "${DNSPLUGIN}"; then
+    echo "Please set the DNSPLUGIN variable to one of the following:"
+    echo "${CERTBOT_DNS_AUTHENTICATORS}"
     sleep infinity
 fi
 

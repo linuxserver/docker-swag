@@ -51,6 +51,7 @@ certbot-dns-domeneshop          0.2.9                   python
 certbot-dns-dreamhost           1.0                     python  
 certbot-dns-duckdns             1.3                     python  
 certbot-dns-dynu                0.0.4                   python  
+certbot-dns-freedns             0.1.0                   python  
 certbot-dns-gehirn              2.6.0                   python  
 certbot-dns-godaddy             2.6.0                   python  
 certbot-dns-google              2.6.0                   python  

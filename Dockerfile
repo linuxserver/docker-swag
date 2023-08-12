@@ -105,6 +105,7 @@ RUN \
     certbot-dns-dreamhost \
     certbot-dns-duckdns \
     certbot-dns-dynu \
+    certbot-dns-freedns \
     certbot-dns-gehirn \
     certbot-dns-godaddy \
     certbot-dns-google \

@@ -118,6 +118,7 @@ RUN \
     certbot-dns-linode \
     certbot-dns-loopia \
     certbot-dns-luadns \
+    certbot-dns-namecheap \
     certbot-dns-netcup \
     certbot-dns-njalla \
     certbot-dns-nsone \

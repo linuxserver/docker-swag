@@ -79,7 +79,7 @@ certbot-dns-vultr               1.1.0                   python
 certbot-plugin-gandi            1.4.3                   python  
 certifi                         2023.7.22               python  
 cffi                            1.16.0                  python  
-charset-normalizer              3.2.0                   python  
+charset-normalizer              3.3.0                   python  
 cloudflare                      2.12.4                  python  
 configobj                       5.0.8                   python  
 coreutils                       9.3-r1                  apk     
@@ -229,7 +229,7 @@ npth                            1.6-r4                  apk
 oniguruma                       6.9.8-r1                apk     
 openssl                         3.1.3-r0                apk     
 p11-kit                         0.24.1-r2               apk     
-packaging                       23.1                    python  
+packaging                       23.2                    python  
 parsedatetime                   2.6                     python  
 pcre                            8.45-r3                 apk     
 pcre2                           10.42-r1                apk     

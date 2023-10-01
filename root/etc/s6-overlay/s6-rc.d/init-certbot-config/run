@@ -304,7 +304,7 @@ if [[ "${VALIDATION}" = "dns" ]]; then
         sed -i "/^dns-${DNSPLUGIN}-propagation-seconds\b/d" /config/etc/letsencrypt/cli.ini
     fi
     # plugins that use old parameter naming convention
-    if [[ "${DNSPLUGIN}" =~ ^(cpanel|directadmin)$ ]]; then
+    if [[ "${DNSPLUGIN}" =~ ^(cpanel)$ ]]; then
         sed -i "/^dns-${DNSPLUGIN}-credentials\b/d" /config/etc/letsencrypt/cli.ini
         sed -i "/^dns-${DNSPLUGIN}-propagation-seconds\b/d" /config/etc/letsencrypt/cli.ini
         set_ini_value "authenticator" "${DNSPLUGIN}" /config/etc/letsencrypt/cli.ini

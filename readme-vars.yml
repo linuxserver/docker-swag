@@ -153,6 +153,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "01.10.23:", desc: "Fix \"unrecognized arguments\" issue in DirectAdmin DNS plugin." }
   - { date: "28.08.23:", desc: "Add Namecheap DNS plugin." }
   - { date: "12.08.23:", desc: "Add FreeDNS plugin. Detect certbot DNS authenticators using CLI." }
   - { date: "07.08.23:", desc: "Add Bunny DNS Configuration." }

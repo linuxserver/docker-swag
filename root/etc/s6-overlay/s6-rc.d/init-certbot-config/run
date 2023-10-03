@@ -24,7 +24,7 @@ for i in "${SANED_VARS[@]}"; do
 done
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-CERTBOT_DNS_AUTHENTICATORS=$(certbot plugins --authenticators 2>/dev/null | sed -e 's/^Entry point: cpanel =/Entry point: dns-cpanel =/' -e '/^Entry point: dns-/!d' -e 's/^Entry point: dns-\([^ ]*\) =.*/\1/' | sort)
+CERTBOT_DNS_AUTHENTICATORS=$(certbot plugins --authenticators 2>/dev/null | sed -e 's/^Entry point: EntryPoint(name='\''cpanel'\''/Entry point: EntryPoint(name='\''dns-cpanel'\''/' -e '/EntryPoint(name='\''dns-/!d' -e 's/^Entry point: EntryPoint(name='\''dns-\([^ ]*\)'\'',/\1/' | sort)
 if [[ "${VALIDATION}" = "dns" ]] && ! echo "${CERTBOT_DNS_AUTHENTICATORS}" | grep -q "${DNSPLUGIN}"; then
     echo "Please set the DNSPLUGIN variable to one of the following:"
     echo "${CERTBOT_DNS_AUTHENTICATORS}"

@@ -87,7 +87,7 @@ RUN \
     pip \
     wheel && \
   pip install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.18/ \
-    certbot==${CERTBOT_VERSION} \
+    certbot \
     certbot-dns-acmedns \
     certbot-dns-aliyun \
     certbot-dns-azure \

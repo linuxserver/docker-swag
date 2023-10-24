@@ -23,8 +23,8 @@ azure-mgmt-core                 1.4.0                   python
 azure-mgmt-dns                  8.1.0                   python  
 bash                            5.2.15-r5               apk     
 beautifulsoup4                  4.12.2                  python  
-boto3                           1.28.68                 python  
-botocore                        1.31.68                 python  
+boto3                           1.28.69                 python  
+botocore                        1.31.69                 python  
 brotli-libs                     1.0.9-r14               apk     
 bs4                             0.0.1                   python  
 busybox                         1.36.1-r4               apk     
@@ -79,7 +79,7 @@ certbot-dns-vultr               1.1.0                   python
 certbot-plugin-gandi            1.4.3                   python  
 certifi                         2023.7.22               python  
 cffi                            1.16.0                  python  
-charset-normalizer              3.3.0                   python  
+charset-normalizer              3.3.1                   python  
 cloudflare                      2.12.4                  python  
 configobj                       5.0.8                   python  
 coreutils                       9.3-r1                  apk     
@@ -269,7 +269,7 @@ php82-pecl-igbinary             3.2.14-r0               apk
 php82-pecl-mcrypt               1.0.6-r0                apk     
 php82-pecl-memcached            3.2.0-r1                apk     
 php82-pecl-msgpack              2.2.0-r0                apk     
-php82-pecl-redis                6.0.1-r0                apk     
+php82-pecl-redis                6.0.2-r0                apk     
 php82-pgsql                     8.2.10-r0               apk     
 php82-phar                      8.2.10-r0               apk     
 php82-posix                     8.2.10-r0               apk     
@@ -286,7 +286,7 @@ php82-xmlwriter                 8.2.10-r0               apk
 php82-xsl                       8.2.10-r0               apk     
 php82-zip                       8.2.10-r0               apk     
 pinentry                        1.2.1-r1                apk     
-pip                             23.3                    python  
+pip                             23.3.1                  python  
 pkb-client                      1.2                     python  
 popt                            1.19-r2                 apk     
 portalocker                     2.8.2                   python  

@@ -18,13 +18,13 @@ argon2-libs                     20190702-r4             apk
 attrs                           23.1.0                  python  
 azure-common                    1.1.28                  python  
 azure-core                      1.29.5                  python  
-azure-identity                  1.14.1                  python  
+azure-identity                  1.15.0                  python  
 azure-mgmt-core                 1.4.0                   python  
 azure-mgmt-dns                  8.1.0                   python  
 bash                            5.2.15-r5               apk     
 beautifulsoup4                  4.12.2                  python  
-boto3                           1.28.70                 python  
-botocore                        1.31.70                 python  
+boto3                           1.28.73                 python  
+botocore                        1.31.73                 python  
 brotli-libs                     1.0.9-r14               apk     
 bs4                             0.0.1                   python  
 busybox                         1.36.1-r4               apk     
@@ -94,7 +94,7 @@ domeneshop                      0.4.3                   python
 fail2ban                        1.0.2                   python  
 fail2ban                        1.0.2-r2                apk     
 fail2ban-pyc                    1.0.2-r2                apk     
-filelock                        3.12.4                  python  
+filelock                        3.13.0                  python  
 fontconfig                      2.14.2-r3               apk     
 freetype                        2.13.0-r5               apk     
 future                          0.18.3                  python  
@@ -293,7 +293,7 @@ portalocker                     2.8.2                   python
 procps-ng                       4.0.4-r0                apk     
 protobuf                        4.24.4                  python  
 publicsuffixlist                0.9.4                   python  
-pyOpenSSL                       23.2.0                  python  
+pyOpenSSL                       23.3.0                  python  
 pyRFC3339                       1.1                     python  
 pyacmedns                       0.4                     python  
 pyasn1                          0.5.0                   python  

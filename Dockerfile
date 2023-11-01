@@ -91,6 +91,7 @@ RUN \
     certbot-dns-acmedns \
     certbot-dns-aliyun \
     certbot-dns-azure \
+    certbot-dns-bunny \
     certbot-dns-cloudflare \
     certbot-dns-cpanel \
     certbot-dns-desec \
@@ -104,6 +105,7 @@ RUN \
     certbot-dns-dreamhost \
     certbot-dns-duckdns \
     certbot-dns-dynu \
+    certbot-dns-freedns \
     certbot-dns-gehirn \
     certbot-dns-godaddy \
     certbot-dns-google \
@@ -116,6 +118,7 @@ RUN \
     certbot-dns-linode \
     certbot-dns-loopia \
     certbot-dns-luadns \
+    certbot-dns-namecheap \
     certbot-dns-netcup \
     certbot-dns-njalla \
     certbot-dns-nsone \

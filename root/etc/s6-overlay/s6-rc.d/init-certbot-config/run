@@ -32,7 +32,7 @@ if [[ "${VALIDATION}" = "dns" ]] && ! echo "${CERTBOT_DNS_AUTHENTICATORS}" | gre
 fi
 
 # set owner of certbot's CONFIG_DIR, WORK_DIR, and LOGS_DIR to abc
-lsiown -R abc \
+lsiown -R abc:abc \
     /etc/letsencrypt \
     /var/lib/letsencrypt \
     /var/log/letsencrypt

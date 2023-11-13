@@ -23,8 +23,8 @@ azure-mgmt-core                 1.4.0                   python
 azure-mgmt-dns                  8.1.0                   python  
 bash                            5.2.15-r5               apk     
 beautifulsoup4                  4.12.2                  python  
-boto3                           1.28.84                 python  
-botocore                        1.31.84                 python  
+boto3                           1.28.85                 python  
+botocore                        1.31.85                 python  
 brotli-libs                     1.0.9-r14               apk     
 bs4                             0.0.1                   python  
 busybox                         1.36.1-r4               apk     
@@ -60,7 +60,7 @@ certbot-dns-he                  1.0.0                   python
 certbot-dns-hetzner             2.0.0                   python  
 certbot-dns-infomaniak          0.2.1                   python  
 certbot-dns-inwx                2.2.0                   python  
-certbot-dns-ionos               2022.11.24              python  
+certbot-dns-ionos               2023.11.13.post1        python  
 certbot-dns-linode              2.6.0                   python  
 certbot-dns-loopia              1.0.1                   python  
 certbot-dns-luadns              2.6.0                   python  
@@ -139,7 +139,7 @@ libavif                         0.11.1-r2               apk
 libbsd                          0.11.7-r1               apk     
 libbz2                          1.0.8-r5                apk     
 libc-utils                      0.7.2-r5                apk     
-libcrypto3                      3.1.4-r0                apk     
+libcrypto3                      3.1.4-r1                apk     
 libcurl                         8.4.0-r0                apk     
 libdav1d                        1.2.1-r0                apk     
 libedit                         20221030.3.1-r1         apk     
@@ -171,7 +171,7 @@ libsasl                         2.1.28-r4               apk
 libseccomp                      2.5.4-r2                apk     
 libsm                           1.2.4-r1                apk     
 libsodium                       1.0.18-r3               apk     
-libssl3                         3.1.4-r0                apk     
+libssl3                         3.1.4-r1                apk     
 libstdc++                       12.2.1_git20220924-r10  apk     
 libtasn1                        4.19.0-r1               apk     
 libunistring                    1.1-r1                  apk     
@@ -227,7 +227,7 @@ nginx-mod-stream-geoip2         1.24.0-r7               apk
 nginx-vim                       1.24.0-r7               apk     
 npth                            1.6-r4                  apk     
 oniguruma                       6.9.8-r1                apk     
-openssl                         3.1.4-r0                apk     
+openssl                         3.1.4-r1                apk     
 p11-kit                         0.24.1-r2               apk     
 packaging                       23.2                    python  
 parsedatetime                   2.6                     python  

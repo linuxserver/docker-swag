@@ -3,7 +3,7 @@
 
 # make our folders and links
 mkdir -p \
-    /config/{fail2ban,crontabs,dns-conf} \
+    /config/{fail2ban,dns-conf} \
     /config/etc/letsencrypt/renewal-hooks \
     /config/log/{fail2ban,letsencrypt,nginx} \
     /config/nginx/proxy-confs \

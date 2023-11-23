@@ -155,6 +155,7 @@ app_setup_block: |
 changelogs:
   - { date: "01.01.24:", desc: "Add GleSYS DNS plugin." }
   - { date: "27.04.23:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) site-confs/default.conf - Fix index.php being downloaded on 404." }
+  - { date: "23.11.23:", desc: "Run certbot as root to allow fix http validation." }
   - { date: "01.10.23:", desc: "Fix \"unrecognized arguments\" issue in DirectAdmin DNS plugin." }
   - { date: "28.08.23:", desc: "Add Namecheap DNS plugin." }
   - { date: "12.08.23:", desc: "Add FreeDNS plugin. Detect certbot DNS authenticators using CLI." }

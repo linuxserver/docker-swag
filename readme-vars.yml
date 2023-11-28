@@ -153,6 +153,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "23.11.23:", desc: "Run certbot as root to allow fix http validation." }
   - { date: "01.10.23:", desc: "Fix \"unrecognized arguments\" issue in DirectAdmin DNS plugin." }
   - { date: "28.08.23:", desc: "Add Namecheap DNS plugin." }
   - { date: "12.08.23:", desc: "Add FreeDNS plugin. Detect certbot DNS authenticators using CLI." }

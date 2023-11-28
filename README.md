@@ -401,6 +401,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **23.11.23:** - Run certbot as root to allow fix http validation.
 * **01.10.23:** - Fix "unrecognized arguments" issue in DirectAdmin DNS plugin.
 * **28.08.23:** - Add Namecheap DNS plugin.
 * **12.08.23:** - Add FreeDNS plugin. Detect certbot DNS authenticators using CLI.

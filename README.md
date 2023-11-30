@@ -401,6 +401,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **30.11.23:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) site-confs/default.conf - Fix index.php being downloaded on 404.
 * **23.11.23:** - Run certbot as root to allow fix http validation.
 * **01.10.23:** - Fix "unrecognized arguments" issue in DirectAdmin DNS plugin.
 * **28.08.23:** - Add Namecheap DNS plugin.

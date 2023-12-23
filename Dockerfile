@@ -76,7 +76,7 @@ RUN \
     php83-xmlreader \
     php83-xsl \
     whois && \
-  apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
+  apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
     php83-pecl-mcrypt && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \

@@ -168,6 +168,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "25.12.23:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) site-confs/default.conf - Cleanup default site conf." }
   - { date: "11.12.23:", desc: "Deprecate certbot-dns-dynu to resolve dependency conflicts with other plugins." }
   - { date: "30.11.23:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) site-confs/default.conf - Fix index.php being downloaded on 404." }
   - { date: "23.11.23:", desc: "Run certbot as root to allow fix http validation." }

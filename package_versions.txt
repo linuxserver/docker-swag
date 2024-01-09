@@ -24,8 +24,8 @@ azure-mgmt-core                 1.4.0                   python
 azure-mgmt-dns                  8.1.0                   python  
 bash                            5.2.15-r5               apk     
 beautifulsoup4                  4.12.2                  python  
-boto3                           1.34.14                 python  
-botocore                        1.34.14                 python  
+boto3                           1.34.15                 python  
+botocore                        1.34.15                 python  
 brotli-libs                     1.0.9-r14               apk     
 bs4                             0.0.1                   python  
 busybox                         1.36.1-r5               apk     
@@ -53,6 +53,7 @@ certbot-dns-dreamhost           1.0                     python
 certbot-dns-duckdns             1.3                     python  
 certbot-dns-freedns             0.1.0                   python  
 certbot-dns-gehirn              2.8.0                   python  
+certbot-dns-glesys              2.1.0                   python  
 certbot-dns-godaddy             2.8.0                   python  
 certbot-dns-google              2.8.0                   python  
 certbot-dns-google-domains      0.1.11                  python  
@@ -60,7 +61,7 @@ certbot-dns-he                  1.0.0                   python
 certbot-dns-hetzner             2.0.0                   python  
 certbot-dns-infomaniak          0.2.1                   python  
 certbot-dns-inwx                2.2.0                   python  
-certbot-dns-ionos               2023.11.13.post1        python  
+certbot-dns-ionos               2024.1.8                python  
 certbot-dns-linode              2.8.0                   python  
 certbot-dns-loopia              1.0.1                   python  
 certbot-dns-luadns              2.8.0                   python  
@@ -111,7 +112,7 @@ gnupg-utils                     2.4.3-r0                apk
 gnupg-wks-client                2.4.3-r0                apk     
 gnutls                          3.8.0-r2                apk     
 google-api-core                 2.15.0                  python  
-google-api-python-client        2.112.0                 python  
+google-api-python-client        2.113.0                 python  
 google-auth                     2.26.1                  python  
 google-auth-httplib2            0.2.0                   python  
 googleapis-common-protos        1.62.0                  python  
@@ -190,7 +191,7 @@ libzip                          1.9.2-r2                apk
 linux-pam                       1.5.2-r10               apk     
 logrotate                       3.21.0-r1               apk     
 loopialib                       0.2.0                   python  
-lxml                            5.0.1                   python  
+lxml                            5.1.0                   python  
 lz4-libs                        1.9.4-r4                apk     
 marshmallow                     3.20.1                  python  
 memcached                       1.6.21-r0               apk     

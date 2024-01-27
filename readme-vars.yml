@@ -34,7 +34,7 @@ param_env_vars:
   - { env_var: "VALIDATION", env_value: "http", desc: "Certbot validation method to use, options are `http` or `dns` (`dns` method also requires `DNSPLUGIN` variable set)." }
 param_usage_include_vols: true
 param_volumes:
-  - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "All the config files including the webroot reside here." }
+  - { vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Persistent config files" }
 param_usage_include_ports: true
 param_ports:
   - { external_port: "443", internal_port: "443", port_desc: "Https port" }
@@ -58,7 +58,7 @@ opt_param_env_vars:
   - { env_var: "STAGING", env_value: "false", desc: "Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes." }
 opt_param_usage_include_vols: false
 opt_param_volumes:
-  - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Configuration files." }
+  - { vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Persistent config files" }
 opt_param_usage_include_ports: true
 opt_param_ports:
   - { external_port: "80", internal_port: "80", port_desc: "Http port (required for http validation and http -> https redirect)" }
@@ -168,6 +168,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "23.01.24:", desc: "Rebase to Alpine 3.19 with php 8.3, add root periodic crontabs for logrotate." }
   - { date: "01.01.24:", desc: "Add GleSYS DNS plugin." }
   - { date: "11.12.23:", desc: "Deprecate certbot-dns-dynu to resolve dependency conflicts with other plugins." }
   - { date: "30.11.23:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) site-confs/default.conf - Fix index.php being downloaded on 404." }

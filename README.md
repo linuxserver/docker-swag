@@ -179,7 +179,7 @@ services:
       - EXTRA_DOMAINS= #optional
       - STAGING=false #optional
     volumes:
-      - /path/to/appdata/config:/config
+      - /path/to/swag/config:/config
     ports:
       - 443:443
       - 80:80 #optional
@@ -207,7 +207,7 @@ docker run -d \
   -e STAGING=false `#optional` \
   -p 443:443 \
   -p 80:80 `#optional` \
-  -v /path/to/appdata/config:/config \
+  -v /path/to/swag/config:/config \
   --restart unless-stopped \
   lscr.io/linuxserver/swag:latest
 ```
@@ -233,7 +233,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e ONLY_SUBDOMAINS=false` | If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true` |
 | `-e EXTRA_DOMAINS=` | Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org,*.anotherdomain.org` |
 | `-e STAGING=false` | Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes. |
-| `-v /config` | All the config files including the webroot reside here. |
+| `-v /config` | Persistent config files |
 
 ### Portainer notice
 
@@ -400,6 +400,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **23.01.24:** - Rebase to Alpine 3.19 with php 8.3, add root periodic crontabs for logrotate.
 * **01.01.24:** - Add GleSYS DNS plugin.
 * **11.12.23:** - Deprecate certbot-dns-dynu to resolve dependency conflicts with other plugins.
 * **30.11.23:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) site-confs/default.conf - Fix index.php being downloaded on 404.

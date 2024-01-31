@@ -170,7 +170,6 @@ app_setup_block: |
 
 # changelog
 changelogs:
-<<<<<<< HEAD
   - { date: "23.01.24:", desc: "Rebase to Alpine 3.19 with php 8.3, add root periodic crontabs for logrotate." }
   - { date: "01.01.24:", desc: "Add GleSYS DNS plugin." }
   - { date: "11.12.23:", desc: "Deprecate certbot-dns-dynu to resolve dependency conflicts with other plugins." }
@@ -182,9 +181,7 @@ changelogs:
   - { date: "07.08.23:", desc: "Add Bunny DNS Configuration." }
   - { date: "27.07.23:", desc: "Added support for dreamhost validation." }
   - { date: "25.05.23:", desc: "Rebase to Alpine 3.18, deprecate armhf." }
-=======
   - { date: "21.05.23:", desc: "Allow custom ACME servers. Supply URL and CA bundle" }
->>>>>>> 4d46d70 (Implements custom ACME servers)
   - { date: "27.04.23:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-location.conf, authelia-server.conf, authentik-location.conf, authentik-server.conf - Simplify auth configs and fix Set-Cookie header bug." }
   - { date: "13.04.23:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) nginx.conf, authelia-location.conf, authentik-location.conf, and site-confs/default.conf - Move ssl.conf include to default.conf. Remove Authorization headers in authelia. Sort proxy_set_header in authelia and authentik." }
   - { date: "25.03.23:", desc: "Fix renewal post hook." }

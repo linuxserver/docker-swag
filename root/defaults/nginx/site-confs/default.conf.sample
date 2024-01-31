@@ -20,7 +20,7 @@ server {
     include /config/nginx/ssl.conf;
 
     root /config/www;
-    index index.html index.htm index.php;
+    index index.html index.htm;
 
     # enable subfolder method reverse proxy confs
     include /config/nginx/proxy-confs/*.subfolder.conf;
@@ -48,28 +48,7 @@ server {
         # enable for Authentik (requires authentik-server.conf in the server block)
         #include /config/nginx/authentik-location.conf;
 
-        try_files $uri $uri/ /index.html /index.htm /index.php$is_args$args;
-    }
-
-    location ~ ^(.+\.php)(.*)$ {
-        # enable the next two lines for http auth
-        #auth_basic "Restricted";
-        #auth_basic_user_file /config/nginx/.htpasswd;
-
-        # enable for ldap auth (requires ldap-server.conf in the server block)
-        #include /config/nginx/ldap-location.conf;
-
-        # enable for Authelia (requires authelia-server.conf in the server block)
-        #include /config/nginx/authelia-location.conf;
-
-        # enable for Authentik (requires authentik-server.conf in the server block)
-        #include /config/nginx/authentik-location.conf;
-
-        fastcgi_split_path_info ^(.+\.php)(.*)$;
-        if (!-f $document_root$fastcgi_script_name) { return 404; }
-        fastcgi_pass 127.0.0.1:9000;
-        fastcgi_index index.php;
-        include /etc/nginx/fastcgi_params;
+        try_files $uri $uri/ /index.html;
     }
 
     # deny access to .htaccess/.htpasswd files

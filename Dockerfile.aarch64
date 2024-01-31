@@ -45,39 +45,8 @@ RUN \
     nginx-mod-stream \
     nginx-mod-stream-geoip2 \
     nginx-vim \
-    php83-bcmath \
-    php83-bz2 \
-    php83-dom \
-    php83-exif \
-    php83-ftp \
-    php83-gd \
-    php83-gmp \
-    php83-imap \
-    php83-intl \
-    php83-ldap \
-    php83-mysqli \
-    php83-mysqlnd \
-    php83-opcache \
-    php83-pdo_mysql \
-    php83-pdo_odbc \
-    php83-pdo_pgsql \
-    php83-pdo_sqlite \
-    php83-pear \
-    php83-pecl-apcu \
-    php83-pecl-memcached \
-    php83-pecl-redis \
-    php83-pgsql \
-    php83-posix \
-    php83-soap \
-    php83-sockets \
-    php83-sodium \
-    php83-sqlite3 \
-    php83-tokenizer \
-    php83-xmlreader \
-    php83-xsl \
     whois && \
   apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
-    php83-pecl-mcrypt && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \
     CERTBOT_VERSION=$(curl -sL  https://pypi.python.org/pypi/certbot/json |jq -r '. | .info.version'); \

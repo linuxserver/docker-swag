@@ -17,7 +17,6 @@ RUN \
   echo "**** install build packages ****" && \
   apk add --no-cache --virtual=build-dependencies \
     build-base \
-    cargo \
     libffi-dev \
     libxml2-dev \
     libxslt-dev \
@@ -27,57 +26,10 @@ RUN \
   apk add --no-cache \
     fail2ban \
     gnupg \
-    memcached \
     nginx-mod-http-brotli \
-    nginx-mod-http-dav-ext \
-    nginx-mod-http-echo \
-    nginx-mod-http-fancyindex \
-    nginx-mod-http-geoip2 \
-    nginx-mod-http-headers-more \
-    nginx-mod-http-image-filter \
-    nginx-mod-http-perl \
-    nginx-mod-http-redis2 \
-    nginx-mod-http-set-misc \
-    nginx-mod-http-upload-progress \
-    nginx-mod-http-xslt-filter \
-    nginx-mod-mail \
-    nginx-mod-rtmp \
-    nginx-mod-stream \
-    nginx-mod-stream-geoip2 \
-    nginx-vim \
-    php83-bcmath \
-    php83-bz2 \
-    php83-dom \
-    php83-exif \
-    php83-ftp \
-    php83-gd \
-    php83-gmp \
-    php83-imap \
-    php83-intl \
-    php83-ldap \
-    php83-mysqli \
-    php83-mysqlnd \
-    php83-opcache \
-    php83-pdo_mysql \
-    php83-pdo_odbc \
-    php83-pdo_pgsql \
-    php83-pdo_sqlite \
-    php83-pear \
-    php83-pecl-apcu \
-    php83-pecl-memcached \
-    php83-pecl-redis \
-    php83-pgsql \
-    php83-posix \
-    php83-soap \
-    php83-sockets \
-    php83-sodium \
-    php83-sqlite3 \
-    php83-tokenizer \
-    php83-xmlreader \
-    php83-xsl \
     whois && \
   apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
-    php83-pecl-mcrypt && \
+  && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \
     CERTBOT_VERSION=$(curl -sL  https://pypi.python.org/pypi/certbot/json |jq -r '. | .info.version'); \
@@ -88,50 +40,6 @@ RUN \
     wheel && \
   pip install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.19/ \
     certbot==${CERTBOT_VERSION} \
-    certbot-dns-acmedns \
-    certbot-dns-aliyun \
-    certbot-dns-azure \
-    certbot-dns-bunny \
-    certbot-dns-cloudflare \
-    certbot-dns-cpanel \
-    certbot-dns-desec \
-    certbot-dns-digitalocean \
-    certbot-dns-directadmin \
-    certbot-dns-dnsimple \
-    certbot-dns-dnsmadeeasy \
-    certbot-dns-dnspod \
-    certbot-dns-do \
-    certbot-dns-domeneshop \
-    certbot-dns-dreamhost \
-    certbot-dns-duckdns \
-    certbot-dns-dynudns \
-    certbot-dns-freedns \
-    certbot-dns-gehirn \
-    certbot-dns-glesys \
-    certbot-dns-godaddy \
-    certbot-dns-google \
-    certbot-dns-google-domains \
-    certbot-dns-he \
-    certbot-dns-hetzner \
-    certbot-dns-infomaniak \
-    certbot-dns-inwx \
-    certbot-dns-ionos \
-    certbot-dns-linode \
-    certbot-dns-loopia \
-    certbot-dns-luadns \
-    certbot-dns-namecheap \
-    certbot-dns-netcup \
-    certbot-dns-njalla \
-    certbot-dns-nsone \
-    certbot-dns-ovh \
-    certbot-dns-porkbun \
-    certbot-dns-rfc2136 \
-    certbot-dns-route53 \
-    certbot-dns-sakuracloud \
-    certbot-dns-standalone \
-    certbot-dns-transip \
-    certbot-dns-vultr \
-    certbot-plugin-gandi \
     cryptography \
     future \
     requests && \
@@ -172,8 +80,31 @@ RUN \
     /defaults/nginx/proxy-confs --strip-components=1 --exclude=linux*/.editorconfig --exclude=linux*/.gitattributes --exclude=linux*/.github --exclude=linux*/.gitignore --exclude=linux*/LICENSE && \
   echo "**** cleanup ****" && \
   apk del --purge \
-    build-dependencies && \
+    build-dependencies \
+    php83 \
+    php83-ctype \
+    php83-curl \
+    php83-fileinfo \
+    php83-fpm \
+    php83-iconv \
+    php83-json \
+    php83-mbstring \
+    php83-openssl \
+    php83-phar \
+    php83-session \
+    php83-simplexml \
+    php83-xml \
+    php83-xmlwriter \
+    php83-zip \
+    php83-zlib && \
   rm -rf \
+    /etc/s6-overlay/s6-rc.d/init-php/ \
+    /etc/s6-overlay/s6-rc.d/svc-php-fpm/ \
+    /etc/s6-overlay/s6-rc.d/user/contents.d/svc-php-fpm \
+    /etc/s6-overlay/s6-rc.d/user/contents.d/init-php \
+    /etc/s6-overlay/s6-rc.d/init-keygen/dependencies.d/init-php \
+    /etc/logrotate.d/php-fpm \
+    ./config/php \
     /tmp/* \
     $HOME/.cache \
     $HOME/.cargo

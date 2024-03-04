@@ -144,6 +144,7 @@ RUN \
   sed -i \
     's|#ssl_trusted_certificate /config/keys/cert.crt;|ssl_trusted_certificate /config/keys/cert.crt;|' \
     /defaults/nginx/ssl.conf.sample && \
+  rm -f /etc/nginx/conf.d/stream.conf && \
   echo "**** correct ip6tables legacy issue ****" && \
   rm \
     /sbin/ip6tables && \

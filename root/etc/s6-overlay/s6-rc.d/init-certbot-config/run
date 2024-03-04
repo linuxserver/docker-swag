@@ -23,6 +23,13 @@ for i in "${SANED_VARS[@]}"; do
     export echo "${i}"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
 done
 
+# Check for and install requested DNS plugins
+if echo ${DOCKER_MODS} | grep -q "universal-package-install" && echo ${INSTALL_PIP_PACKAGES} | grep -q "dns"; then
+    echo "**** Installing requested dns plugins ****"
+    exec /etc/s6-overlay/s6-rc.d/init-mod-universal-package-install-add-package/run
+    exec /etc/s6-overlay/s6-rc.d/init-mods-package-install/run
+fi
+
 # check to make sure DNSPLUGIN is selected if dns validation is used
 CERTBOT_DNS_AUTHENTICATORS=$(certbot plugins --authenticators 2>/dev/null | sed -e 's/^Entry point: EntryPoint(name='\''cpanel'\''/Entry point: EntryPoint(name='\''dns-cpanel'\''/' -e '/EntryPoint(name='\''dns-/!d' -e 's/^Entry point: EntryPoint(name='\''dns-\([^ ]*\)'\'',/\1/' | sort)
 if [[ "${VALIDATION}" = "dns" ]] && ! echo "${CERTBOT_DNS_AUTHENTICATORS}" | grep -q "${DNSPLUGIN}"; then

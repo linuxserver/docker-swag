@@ -26,8 +26,8 @@ done
 # Check for and install requested DNS plugins
 if echo ${DOCKER_MODS} | grep -q "universal-package-install" && echo ${INSTALL_PIP_PACKAGES} | grep -q "dns"; then
     echo "**** Installing requested dns plugins ****"
-    exec /etc/s6-overlay/s6-rc.d/init-mod-universal-package-install-add-package/run
-    exec /etc/s6-overlay/s6-rc.d/init-mods-package-install/run
+    /etc/s6-overlay/s6-rc.d/init-mod-universal-package-install-add-package/run
+    /etc/s6-overlay/s6-rc.d/init-mods-package-install/run
 fi
 
 # check to make sure DNSPLUGIN is selected if dns validation is used

@@ -28,8 +28,6 @@ if grep -q "universal-package-install" <<< "${DOCKER_MODS}" && grep -q "certbot-
     echo "**** Installing requested dns plugins ****"
     /etc/s6-overlay/s6-rc.d/init-mod-universal-package-install-add-package/run
     /etc/s6-overlay/s6-rc.d/init-mods-package-install/run
-    echo "#!/usr/bin/with-contenv bash" >/etc/s6-overlay/s6-rc.d/init-mod-universal-package-install-add-package/run
-    echo "#!/usr/bin/with-contenv bash" >/etc/s6-overlay/s6-rc.d/init-mods-package-install/run
 fi
 
 # check to make sure DNSPLUGIN is selected if dns validation is used

@@ -1,4 +1,4 @@
-## Version 2023/11/27 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
+## Version 2024/03/06 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
 
 # redirect all traffic to https
 server {
@@ -48,7 +48,7 @@ server {
         # enable for Authentik (requires authentik-server.conf in the server block)
         #include /config/nginx/authentik-location.conf;
 
-        try_files $uri $uri/ /index.html /index.php$is_args$args;
+        try_files $uri $uri/ /index.html /index.htm /index.php$is_args$args;
     }
 
     location ~ ^(.+\.php)(.*)$ {
@@ -65,8 +65,8 @@ server {
         # enable for Authentik (requires authentik-server.conf in the server block)
         #include /config/nginx/authentik-location.conf;
 
-        try_files $fastcgi_script_name =404;
         fastcgi_split_path_info ^(.+\.php)(.*)$;
+        if (!-f $document_root$fastcgi_script_name) { return 404; }
         fastcgi_pass 127.0.0.1:9000;
         fastcgi_index index.php;
         include /etc/nginx/fastcgi_params;

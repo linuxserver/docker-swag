@@ -76,7 +76,7 @@ RUN \
     php83-xmlreader \
     php83-xsl \
     whois && \
-  apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+  apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
     php83-pecl-mcrypt && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \
@@ -144,6 +144,8 @@ RUN \
   sed -i \
     's|#ssl_trusted_certificate /config/keys/cert.crt;|ssl_trusted_certificate /config/keys/cert.crt;|' \
     /defaults/nginx/ssl.conf.sample && \
+  echo "**** remove stream.conf ****" && \
+  rm -f /etc/nginx/conf.d/stream.conf && \
   echo "**** correct ip6tables legacy issue ****" && \
   rm \
     /sbin/ip6tables && \

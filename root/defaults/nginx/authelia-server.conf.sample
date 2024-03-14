@@ -1,25 +1,42 @@
-## Version 2023/04/27 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
+## Version 2024/03/14 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
 # Rename /config/nginx/proxy-confs/authelia.subdomain.conf.sample to /config/nginx/proxy-confs/authelia.subdomain.conf
-# Make sure that the authelia configuration.yml has 'path: "authelia"' defined
+# if you are using a version older than 4.38 you may need to define 'path: "authelia"' in authelia's configuration.yml
 
-# location for authelia subfolder requests
+# Define the upstream
+set $upstream_authelia authelia:9091;
+
+# location for authelia subfolder requests for authelia 4.37 and below
 location ^~ /authelia {
     auth_request off; # requests to this subfolder must be accessible without authentication
     include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
-    set $upstream_authelia authelia;
-    proxy_pass http://$upstream_authelia:9091;
+    proxy_pass http://$upstream_authelia;
 }
 
-# location for authelia auth requests
+# location for authelia auth requests for authelia 4.37 and below
 location = /authelia/api/verify {
     internal;
 
     include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
-    set $upstream_authelia authelia;
-    proxy_pass http://$upstream_authelia:9091;
+    proxy_pass http://$upstream_authelia;
+
+    ## Include the Set-Cookie header if present
+    auth_request_set $set_cookie $upstream_http_set_cookie;
+    add_header Set-Cookie $set_cookie;
+
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+}
+
+# location for new authelia auth requests for authelia 4.38+
+location = /authelia/api/authz {
+    internal;
+
+    include /config/nginx/proxy.conf;
+    include /config/nginx/resolver.conf;
+    proxy_pass http://$upstream_authelia/api/authz/auth-request;
 
     ## Include the Set-Cookie header if present
     auth_request_set $set_cookie $upstream_http_set_cookie;
@@ -45,7 +62,10 @@ location @authelia_proxy_signin {
 
     if ($signin_url = '') {
         ## Set the $signin_url variable
-        set $signin_url https://$http_host/authelia/?rd=$target_url;
+        ## uncomment the below line and comment out the other, for authelia 4.37 and below
+        #set $signin_url https://$http_host/authelia/?rd=$target_url;
+        ## for Authelia 4.38+, comment out the below line if using an older version
+        set $signin_url https://$upstream_authelia/authelia/auth-request;
     }
 
     ## Redirect to login

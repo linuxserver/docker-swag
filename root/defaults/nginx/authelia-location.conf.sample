@@ -1,10 +1,13 @@
-## Version 2023/04/27 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-location.conf.sample
+## Version 2024/03/14 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-location.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
 # Rename /config/nginx/proxy-confs/authelia.subdomain.conf.sample to /config/nginx/proxy-confs/authelia.subdomain.conf
-# Make sure that the authelia configuration.yml has 'path: "authelia"' defined
+# if you are using a version older than 4.38 you may need to define 'path: "authelia"' in authelia's configuration.yml
 
 ## Send a subrequest to Authelia to verify if the user is authenticated and has permission to access the resource
-auth_request /authelia/api/verify;
+## Uncomment the below to support versions prior to authelia 4.38
+#auth_request /authelia/api/verify;
+## The below line is for authelia 4.38 (and possibly later)
+auth_request /authelia/api/authz;
 ## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal
 error_page 401 = @authelia_proxy_signin;
 

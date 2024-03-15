@@ -2,7 +2,7 @@
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
 # Rename /config/nginx/proxy-confs/authelia.subdomain.conf.sample to /config/nginx/proxy-confs/authelia.subdomain.conf
 # For authelia 4.37 and below, make sure that the authelia configuration.yml has 'path: "authelia"' defined
-# For authelia 4.38 and above, make sure that the authelia configuration.yml has 'address: "tcp://0.0.0.0:9091/authelia"' defined
+# For authelia 4.38 and above, make sure that the authelia configuration.yml has 'address: "tcp://:9091/authelia"' defined
 
 ## Send a subrequest to Authelia to verify if the user is authenticated and has permission to access the resource
 ## For authelia 4.37 and below, use the following line

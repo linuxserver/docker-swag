@@ -400,6 +400,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **14.03.24:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-location.conf, authelia-server.conf - Update Authelia conf samples with support for 4.38.
 * **06.03.24:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) site-confs/default.conf - Cleanup default site conf.
 * **04.03.24:** - Remove `stream.conf` inside the container to allow users to include their own block in `nginx.conf`.
 * **23.01.24:** - Rebase to Alpine 3.19 with php 8.3, add root periodic crontabs for logrotate.

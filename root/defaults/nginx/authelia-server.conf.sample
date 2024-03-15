@@ -1,7 +1,8 @@
-## Version 2023/04/27 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
+## Version 2024/03/14 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
 # Rename /config/nginx/proxy-confs/authelia.subdomain.conf.sample to /config/nginx/proxy-confs/authelia.subdomain.conf
-# Make sure that the authelia configuration.yml has 'path: "authelia"' defined
+# For authelia 4.37 and below, make sure that the authelia configuration.yml has 'path: "authelia"' defined
+# For authelia 4.38 and above, make sure that the authelia configuration.yml has 'address: "tcp://:9091/authelia"' defined
 
 # location for authelia subfolder requests
 location ^~ /authelia {
@@ -13,7 +14,7 @@ location ^~ /authelia {
 }
 
 # location for authelia auth requests
-location = /authelia/api/verify {
+location ~ /authelia/api/(authz/auth-request|verify) {
     internal;
 
     include /config/nginx/proxy.conf;

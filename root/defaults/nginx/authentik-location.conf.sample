@@ -4,6 +4,7 @@
 
 ## Send a subrequest to Authentik to verify if the user is authenticated and has permission to access the resource
 auth_request /outpost.goauthentik.io/auth/nginx;
+
 ## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal
 error_page 401 = @goauthentik_proxy_signin;
 

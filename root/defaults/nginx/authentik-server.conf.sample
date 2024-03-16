@@ -5,6 +5,7 @@
 # location for authentik subfolder requests
 location ^~ /outpost.goauthentik.io {
     auth_request off; # requests to this subfolder must be accessible without authentication
+
     include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
     set $upstream_authentik authentik-server;

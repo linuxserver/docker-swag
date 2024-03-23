@@ -400,6 +400,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **23.03.24:** - Fix perms on the generated `priv-fullchain-bundle.pem`.
 * **14.03.24:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-location.conf, authelia-server.conf - Update Authelia conf samples with support for 4.38.
 * **11.03.24:** - Restore support for DynuDNS using `certbot-dns-dynudns`.
 * **06.03.24:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) site-confs/default.conf - Cleanup default site conf.

@@ -168,6 +168,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "23.03.24:", desc: "Fix perms on the generated `priv-fullchain-bundle.pem`." }
   - { date: "14.03.24:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-location.conf, authelia-server.conf - Update Authelia conf samples with support for 4.38." }
   - { date: "11.03.24:", desc: "Restore support for DynuDNS using `certbot-dns-dynudns`." }
   - { date: "06.03.24:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) site-confs/default.conf - Cleanup default site conf." }

@@ -51,6 +51,7 @@ certbot-dns-do                  0.31.0                 python
 certbot-dns-domeneshop          0.2.9                  python                   
 certbot-dns-dreamhost           1.0                    python                   
 certbot-dns-duckdns             1.3                    python                   
+certbot-dns-dynudns             0.0.6                  python                   
 certbot-dns-freedns             0.1.0                  python                   
 certbot-dns-gehirn              2.9.0                  python                   
 certbot-dns-glesys              2.1.0                  python                   

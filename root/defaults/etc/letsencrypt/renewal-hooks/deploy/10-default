@@ -5,4 +5,5 @@ cd /config/keys/letsencrypt || exit 1
 openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 sleep 1
 cat {privkey,fullchain}.pem >priv-fullchain-bundle.pem
+chmod 600 priv-fullchain-bundle.pem
 chown -R abc:abc /config/etc/letsencrypt

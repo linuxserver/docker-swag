@@ -9,5 +9,5 @@ if [[ -d /defaults/nginx/proxy-confs/ ]]; then
         -maxdepth 1 \
         -name "*.conf.sample" \
         -type f \
-        -exec cp "{}" /config/nginx/proxy-confs/ +
+        -exec cp "{}" /config/nginx/proxy-confs/ \;
 fi

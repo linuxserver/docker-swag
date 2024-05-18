@@ -23,8 +23,8 @@ azure-mgmt-core                 1.4.0                  python
 azure-mgmt-dns                  8.1.0                  python                   
 bash                            5.2.21-r0              apk                      
 beautifulsoup4                  4.12.3                 python                   
-boto3                           1.34.103               python                   
-botocore                        1.34.103               python                   
+boto3                           1.34.108               python                   
+botocore                        1.34.108               python                   
 brotli-libs                     1.1.0-r1               apk                      
 bs4                             0.0.2                  python                   
 busybox                         1.36.1-r15             apk                      
@@ -107,8 +107,8 @@ fontconfig                      2.14.2-r4              apk
 freetype                        2.13.2-r0              apk                      
 future                          1.0.0                  python                   
 gdbm                            1.23-r1                apk                      
-git                             2.43.0-r0              apk                      
-git-perl                        2.43.0-r0              apk                      
+git                             2.43.4-r0              apk                      
+git-perl                        2.43.4-r0              apk                      
 gmp                             6.3.0-r0               apk                      
 gnupg                           2.4.4-r0               apk                      
 gnupg-dirmngr                   2.4.4-r0               apk                      
@@ -171,7 +171,7 @@ libncursesw                     6.4_p20231125-r0       apk
 libnftnl                        1.2.6-r0               apk                      
 libpanelw                       6.4_p20231125-r0       apk                      
 libpng                          1.6.40-r0              apk                      
-libpq                           16.2-r1                apk                      
+libpq                           16.3-r0                apk                      
 libproc2                        4.0.4-r0               apk                      
 libsasl                         2.1.28-r5              apk                      
 libseccomp                      2.5.5-r0               apk                      
@@ -198,7 +198,7 @@ libzip                          1.10.1-r0              apk
 linux-pam                       1.5.3-r7               apk                      
 logrotate                       3.21.0-r1              apk                      
 loopialib                       0.2.0                  python                   
-lxml                            5.2.1                  python                   
+lxml                            5.2.2                  python                   
 lz4-libs                        1.9.4-r5               apk                      
 marshmallow                     3.21.2                 python                   
 memcached                       1.6.22-r0              apk                      
@@ -243,7 +243,7 @@ pcre                            8.45-r3                apk
 pcre2                           10.42-r2               apk                      
 perl                            5.38.2-r0              apk                      
 perl-error                      0.17029-r2             apk                      
-perl-git                        2.43.0-r0              apk                      
+perl-git                        2.43.4-r0              apk                      
 php83                           8.3.7-r0               apk                      
 php83-bcmath                    8.3.7-r0               apk                      
 php83-bz2                       8.3.7-r0               apk                      
@@ -345,5 +345,5 @@ wheel                           0.43.0                 python
 whois                           5.5.20-r0              apk                      
 xz-libs                         5.4.5-r0               apk                      
 zlib                            1.3.1-r0               apk                      
-zope.interface                  6.3                    python                   
+zope.interface                  6.4                    python                   
 zstd-libs                       1.5.5-r8               apk                      

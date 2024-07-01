@@ -76,7 +76,7 @@ The architectures supported by this image are:
 
 ### Certbot Plugins
 
-SWAG includes many Certbot plugins out of the box, but not all plugins can be includes.
+SWAG includes many Certbot plugins out of the box, but not all plugins can be included.
 If you need a plugin that is not included, the quickest way to have the plugin available is to use our [Universal Package Install Docker Mod](https://github.com/linuxserver/docker-mods/tree/universal-package-install).
 
 Set the following environment variables on your container:

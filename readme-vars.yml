@@ -7,40 +7,24 @@ project_logo: "https://github.com/linuxserver/docker-templates/raw/master/linuxs
 project_blurb: "SWAG - Secure Web Application Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes (Let's Encrypt and ZeroSSL). It also contains fail2ban for intrusion prevention."
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
 
-project_blurb_optional_extras_enabled: false
-project_blurb_optional_extras: []
-
 # supported architectures
 available_architectures:
   - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
   - { arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
 
-# development version
-development_versions: false
-development_versions_items:
-  - { tag: "latest", desc: "Stable releases" }
-
-
 # container parameters
-common_param_env_vars_enabled: true #PGID, PUID, etc, you can set it to 'optional'
+common_param_env_vars_enabled: true
 param_container_name: "{{ project_name }}"
-param_usage_include_net: false #you can set it to 'optional'
-param_net: "host"
-param_net_desc: "Shares host networking with container."
 param_usage_include_env: true
 param_env_vars:
-  - { env_var: "TZ", env_value: "Europe/London", desc: "Specify a timezone to use EG Europe/London." }
   - { env_var: "URL", env_value: "yourdomain.url", desc: "Top url you have control over (`customdomain.com` if you own it, or `customsubdomain.ddnsprovider.com` if dynamic dns)." }
-  - { env_var: "VALIDATION", env_value: "http", desc: "Certbot validation method to use, options are `http` or `dns` (`dns` method also requires `DNSPLUGIN` variable set)." }
+  - { env_var: "VALIDATION", env_value: "http", desc: "Certbot validation method to use, options are `http` or `dns` (`dns` method also requires `DNSPLUGIN` variable set).", env_options: ["http", "dns"] }
 param_usage_include_vols: true
 param_volumes:
   - { vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Persistent config files" }
 param_usage_include_ports: true
 param_ports:
   - { external_port: "443", internal_port: "443", port_desc: "Https port" }
-param_device_map: false
-param_devices:
-  - { device_path: "/dev/dri", device_host_path: "/dev/dri", desc: "For hardware transcoding" }
 cap_add_param: true
 cap_add_param_vars:
   - { cap_add_var: "NET_ADMIN" }
@@ -56,21 +40,9 @@ opt_param_env_vars:
   - { env_var: "ONLY_SUBDOMAINS", env_value: "false", desc: "If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`" }
   - { env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org,*.anotherdomain.org`" }
   - { env_var: "STAGING", env_value: "false", desc: "Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes." }
-opt_param_usage_include_vols: false
-opt_param_volumes:
-  - { vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Persistent config files" }
 opt_param_usage_include_ports: true
 opt_param_ports:
   - { external_port: "80", internal_port: "80", port_desc: "Http port (required for http validation and http -> https redirect)" }
-opt_param_device_map: false
-opt_param_devices:
-  - { device_path: "/dev/dri", device_host_path: "/dev/dri", desc: "For hardware transcoding" }
-opt_cap_add_param: false
-opt_cap_add_param_vars:
-  - { cap_add_var: "NET_ADMIN" }
-
-optional_block_1: false
-optional_block_1_items: ""
 
 # application setup block
 app_setup_block_enabled: true
@@ -168,6 +140,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "24.07.14:", desc: "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."}
   - { date: "23.03.24:", desc: "Fix perms on the generated `priv-fullchain-bundle.pem`." }
   - { date: "14.03.24:", desc: "[Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) authelia-location.conf, authelia-server.conf - Update Authelia conf samples with support for 4.38." }
   - { date: "11.03.24:", desc: "Restore support for DynuDNS using `certbot-dns-dynudns`." }

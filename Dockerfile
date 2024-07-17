@@ -109,7 +109,6 @@ RUN \
     certbot-dns-glesys \
     certbot-dns-godaddy \
     certbot-dns-google \
-    certbot-dns-google-domains \
     certbot-dns-he \
     certbot-dns-hetzner \
     certbot-dns-infomaniak \

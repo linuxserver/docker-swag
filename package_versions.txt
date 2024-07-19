@@ -333,7 +333,7 @@ requests-mock                   1.12.1                 python
 rsa                             4.9                    python                   
 s3transfer                      0.10.2                 python                   
 scanelf                         1.3.7-r2               apk                      
-setuptools                      71.0.3                 python                   
+setuptools                      71.0.4                 python                   
 shadow                          4.15.1-r0              apk                      
 six                             1.16.0                 python                   
 skalibs                         2.14.1.1-r0            apk                      

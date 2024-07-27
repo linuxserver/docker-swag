@@ -10,7 +10,7 @@ alpine-baselayout-data          3.6.5-r0               apk
 alpine-keys                     2.4-r1                 apk                      
 alpine-release                  3.20.1-r0              apk                      
 aom-libs                        3.9.0-r0               apk                      
-apache2-utils                   2.4.61-r0              apk                      
+apache2-utils                   2.4.62-r0              apk                      
 apk-tools                       2.14.4-r0              apk                      
 apr                             1.7.4-r0               apk                      
 apr-util                        1.6.3-r1               apk                      
@@ -25,8 +25,8 @@ azure-mgmt-dns                  8.1.0                  python
 backports.tarfile               1.2.0                  python                   
 bash                            5.2.26-r0              apk                      
 beautifulsoup4                  4.12.3                 python                   
-boto3                           1.34.145               python                   
-botocore                        1.34.145               python                   
+boto3                           1.34.149               python                   
+botocore                        1.34.149               python                   
 brotli-libs                     1.1.0-r2               apk                      
 bs4                             0.0.2                  python                   
 busybox                         1.36.1-r29             apk                      
@@ -91,7 +91,7 @@ coreutils                       9.5-r1                 apk
 coreutils-env                   9.5-r1                 apk                      
 coreutils-fmt                   9.5-r1                 apk                      
 coreutils-sha512sum             9.5-r1                 apk                      
-cryptography                    42.0.8                 python                   
+cryptography                    43.0.0                 python                   
 curl                            8.8.0-r0               apk                      
 distro                          1.9.0                  python                   
 dns-lexicon                     3.17.0                 python                   
@@ -119,7 +119,7 @@ gnupg-utils                     2.4.5-r0               apk
 gnupg-wks-client                2.4.5-r0               apk                      
 gnutls                          3.8.5-r0               apk                      
 google-api-core                 2.19.1                 python                   
-google-api-python-client        2.137.0                python                   
+google-api-python-client        2.138.0                python                   
 google-auth                     2.32.0                 python                   
 google-auth-httplib2            0.2.0                  python                   
 googleapis-common-protos        1.63.2                 python                   
@@ -310,7 +310,7 @@ portalocker                     2.10.1                 python
 procps-ng                       4.0.4-r0               apk                      
 proto-plus                      1.24.0                 python                   
 protobuf                        5.27.2                 python                   
-pyOpenSSL                       24.1.0                 python                   
+pyOpenSSL                       24.2.1                 python                   
 pyRFC3339                       1.1                    python                   
 pyacmedns                       0.4                    python                   
 pyasn1                          0.6.0                  python                   
@@ -333,7 +333,7 @@ requests-mock                   1.12.1                 python
 rsa                             4.9                    python                   
 s3transfer                      0.10.2                 python                   
 scanelf                         1.3.7-r2               apk                      
-setuptools                      71.0.4                 python                   
+setuptools                      71.1.0                 python                   
 shadow                          4.15.1-r0              apk                      
 six                             1.16.0                 python                   
 skalibs                         2.14.1.1-r0            apk                      

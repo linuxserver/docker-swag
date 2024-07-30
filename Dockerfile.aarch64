@@ -27,6 +27,7 @@ RUN \
   apk add --no-cache \
     fail2ban \
     gnupg \
+    iptables-legacy \
     memcached \
     nginx-mod-http-brotli \
     nginx-mod-http-dav-ext \

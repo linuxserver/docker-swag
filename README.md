@@ -400,6 +400,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **30.08.24:** - Fix zerossl cert revocation.
 * **24.07.14:** - Rebase to Alpine 3.20. Remove deprecated Google Domains certbot plugin. Existing users should update their nginx confs to avoid http2 deprecation warnings.
 * **01.07.24:** - Fall back to iptables-legacy if iptables doesn't work.
 * **23.03.24:** - Fix perms on the generated `priv-fullchain-bundle.pem`.

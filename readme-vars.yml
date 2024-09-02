@@ -140,6 +140,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "30.08.24:", desc: "Fix zerossl cert revocation." }
   - { date: "24.07.14:", desc: "Rebase to Alpine 3.20. Remove deprecated Google Domains certbot plugin. Existing users should update their nginx confs to avoid http2 deprecation warnings."}
   - { date: "01.07.24:", desc: "Fall back to iptables-legacy if iptables doesn't work." }
   - { date: "23.03.24:", desc: "Fix perms on the generated `priv-fullchain-bundle.pem`." }

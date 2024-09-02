@@ -189,24 +189,15 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
     [[ ! "${STAGING}" = "${ORIGSTAGING}" ]] ||
     [[ ! "${CERTPROVIDER}" = "${ORIGCERTPROVIDER}" ]]; then
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
-    if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]] && [[ -n "${ORIGEMAIL}" ]]; then
+    if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]]; then
         REV_ACMESERVER=("https://acme.zerossl.com/v2/DV90")
-        REV_ZEROSSL_EAB_KID=$(awk -F "=" '/eab-kid/ {print $2}' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf" | tr -d ' ')
-        REV_ZEROSSL_EAB_HMAC_KEY=$(awk -F "=" '/eab-hmac-key/ {print $2}' "/config/etc/letsencrypt/renewal/${ORIGDOMAIN}.conf" | tr -d ' ')
-        if [[ -z "${REV_ZEROSSL_EAB_KID}" ]] || [[ -z "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
-            REV_ZEROSSL_EAB_KID=$(awk -F "=" '/eab-kid/ {print $2}' /config/etc/letsencrypt/cli.ini | tr -d ' ')
-            REV_ZEROSSL_EAB_HMAC_KEY=$(awk -F "=" '/eab-hmac-key/ {print $2}' /config/etc/letsencrypt/cli.ini | tr -d ' ')
-        fi
-        if [[ -n "${REV_ZEROSSL_EAB_KID}" ]] && [[ -n "${REV_ZEROSSL_EAB_HMAC_KEY}" ]]; then
-            REV_ACMESERVER+=("--eab-kid" "${REV_ZEROSSL_EAB_KID}" "--eab-hmac-key" "${REV_ZEROSSL_EAB_HMAC_KEY}")
-        fi
     elif [[ "${ORIGSTAGING}" = "true" ]]; then
         REV_ACMESERVER=("https://acme-staging-v02.api.letsencrypt.org/directory")
     else
         REV_ACMESERVER=("https://acme-v02.api.letsencrypt.org/directory")
     fi
     if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
-        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
+        certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --key-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/privkey.pem --server "${REV_ACMESERVER[@]}" || true
     else
         certbot revoke --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
     fi

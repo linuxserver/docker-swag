@@ -1,7 +1,9 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
+# Notice: This file will be overwritten when updated by lsio. Add your custom scripts into a new file in this folder.
 
 cd /config/keys/letsencrypt || exit 1
+echo "**** Generating pfx and fullchain bundle certs ****"
 openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 sleep 1
 cat {privkey,fullchain}.pem >priv-fullchain-bundle.pem

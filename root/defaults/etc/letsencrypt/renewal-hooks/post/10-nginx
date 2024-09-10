@@ -1,15 +1,18 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
+# Notice: This file will be overwritten when updated by lsio. Add your custom scripts into a new file in this folder.
 
 # shellcheck source=/dev/null
 . /config/.donoteditthisfile.conf
 
 if [[ ! "${ORIGVALIDATION}" = "dns" ]] && [[ ! "${ORIGVALIDATION}" = "duckdns" ]]; then
     if pgrep -f "s6-supervise svc-nginx" >/dev/null; then
+        echo "**** Starting Nginx ****"
         s6-svc -u /run/service/svc-nginx
     fi
 else
     if pgrep -f "nginx:" >/dev/null; then
+        echo "**** Reloading Nginx to load the new cert ****"
         s6-svc -h /run/service/svc-nginx
     fi
 fi

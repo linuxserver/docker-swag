@@ -68,13 +68,8 @@ lsiown -R abc:abc /config/dns-conf
 
 # copy default renewal hooks
 chmod -R +x /defaults/etc/letsencrypt/renewal-hooks
-cp -nR /defaults/etc/letsencrypt/renewal-hooks/* /config/etc/letsencrypt/renewal-hooks/ 2> >(grep -v 'cp: not replacing')
+cp -Rf /defaults/etc/letsencrypt/renewal-hooks/* /config/etc/letsencrypt/renewal-hooks/ 2> >(grep -v 'cp: not replacing')
 lsiown -R abc:abc /config/etc/letsencrypt/renewal-hooks
-
-# replace nginx service location in renewal hooks
-find /config/etc/letsencrypt/renewal-hooks/ -type f -exec sed -i 's|/run/service/nginx|/run/service/svc-nginx|g' {} \;
-find /config/etc/letsencrypt/renewal-hooks/ -type f -exec sed -i 's|/var/run/s6/services/nginx|/run/service/svc-nginx|g' {} \;
-find /config/etc/letsencrypt/renewal-hooks/ -type f -exec sed -i 's|s6-supervise nginx|s6-supervise svc-nginx|g' {} \;
 
 # create original config file if it doesn't exist, move non-hidden legacy file to hidden
 if [[ -f "/config/donoteditthisfile.conf" ]]; then

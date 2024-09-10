@@ -1,11 +1,13 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
+# Notice: This file will be overwritten when updated by lsio. Add your custom scripts into a new file in this folder.
 
 # shellcheck source=/dev/null
 . /config/.donoteditthisfile.conf
 
 if [[ ! "${ORIGVALIDATION}" = "dns" ]] && [[ ! "${ORIGVALIDATION}" = "duckdns" ]]; then
     if pgrep -f "nginx:" >/dev/null; then
+        echo "**** Stopping Nginx in preparation of cert generation/renewal ****"
         s6-svc -d /run/service/svc-nginx
     fi
 fi

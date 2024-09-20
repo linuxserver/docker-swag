@@ -17,6 +17,10 @@ cp -R /defaults/fail2ban/action.d /config/fail2ban/
 if [[ ! -f /config/fail2ban/jail.local ]]; then
     cp /defaults/fail2ban/jail.local /config/fail2ban/jail.local
 fi
+# if fail2ban.local is missing in /config, copy default
+if [[ ! -f /config/fail2ban/fail2ban.local ]]; then
+    cp /defaults/fail2ban/fail2ban.local /config/fail2ban/fail2ban.local
+fi
 # Replace fail2ban config with user config
 if [[ -d /etc/fail2ban/filter.d ]]; then
     rm -rf /etc/fail2ban/filter.d
@@ -26,7 +30,7 @@ if [[ -d /etc/fail2ban/action.d ]]; then
 fi
 cp -R /config/fail2ban/filter.d /etc/fail2ban/
 cp -R /config/fail2ban/action.d /etc/fail2ban/
-cp /defaults/fail2ban/fail2ban.local /etc/fail2ban/
+cp /config/fail2ban/fail2ban.local /etc/fail2ban/fail2ban.local
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 
 # logfiles needed by fail2ban

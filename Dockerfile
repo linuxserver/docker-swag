@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.19
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.20
 
 # set version label
 ARG BUILD_DATE
@@ -27,6 +27,7 @@ RUN \
   apk add --no-cache \
     fail2ban \
     gnupg \
+    iptables-legacy \
     memcached \
     nginx-mod-http-brotli \
     nginx-mod-http-dav-ext \
@@ -64,6 +65,7 @@ RUN \
     php83-pdo_sqlite \
     php83-pear \
     php83-pecl-apcu \
+    php83-pecl-mcrypt \
     php83-pecl-memcached \
     php83-pecl-redis \
     php83-pgsql \
@@ -76,8 +78,6 @@ RUN \
     php83-xmlreader \
     php83-xsl \
     whois && \
-  apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community \
-    php83-pecl-mcrypt && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \
     CERTBOT_VERSION=$(curl -sL  https://pypi.python.org/pypi/certbot/json |jq -r '. | .info.version'); \
@@ -86,7 +86,7 @@ RUN \
   pip install -U --no-cache-dir \
     pip \
     wheel && \
-  pip install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.19/ \
+  pip install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.20/ \
     certbot==${CERTBOT_VERSION} \
     certbot-dns-acmedns \
     certbot-dns-aliyun \
@@ -110,7 +110,6 @@ RUN \
     certbot-dns-glesys \
     certbot-dns-godaddy \
     certbot-dns-google \
-    certbot-dns-google-domains \
     certbot-dns-he \
     certbot-dns-hetzner \
     certbot-dns-infomaniak \
@@ -170,6 +169,7 @@ RUN \
   tar xf \
     /tmp/proxy-confs.tar.gz -C \
     /defaults/nginx/proxy-confs --strip-components=1 --exclude=linux*/.editorconfig --exclude=linux*/.gitattributes --exclude=linux*/.github --exclude=linux*/.gitignore --exclude=linux*/LICENSE && \
+  printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
   apk del --purge \
     build-dependencies && \

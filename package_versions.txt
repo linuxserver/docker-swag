@@ -21,8 +21,8 @@ azure-mgmt-dns                  8.2.0                  python
 backports-tarfile               1.2.0                  python                   
 bash                            5.2.26-r0              apk                      
 beautifulsoup4                  4.12.3                 python                   
-boto3                           1.35.54                python                   
-botocore                        1.35.54                python                   
+boto3                           1.35.56                python                   
+botocore                        1.35.56                python                   
 brotli-libs                     1.1.0-r2               apk                      
 bs4                             0.0.2                  python                   
 busybox                         1.36.1-r29             apk                      
@@ -49,7 +49,7 @@ certbot-dns-dnspod              0.1.0                  python
 certbot-dns-do                  0.31.0                 python                   
 certbot-dns-domeneshop          0.2.9                  python                   
 certbot-dns-dreamhost           1.0                    python                   
-certbot-dns-duckdns             1.0                    python                   
+certbot-dns-duckdns             1.4                    python                   
 certbot-dns-dynudns             0.0.6                  python                   
 certbot-dns-freedns             0.2.0                  python                   
 certbot-dns-gehirn              3.0.0                  python                   
@@ -69,7 +69,7 @@ certbot-dns-netcup              1.4.3                  python
 certbot-dns-njalla              1.0.0                  python                   
 certbot-dns-nsone               3.0.0                  python                   
 certbot-dns-ovh                 3.0.0                  python                   
-certbot-dns-porkbun             0.5.1                  python                   
+certbot-dns-porkbun             0.9                    python                   
 certbot-dns-rfc2136             3.0.0                  python                   
 certbot-dns-route53             3.0.0                  python                   
 certbot-dns-sakuracloud         3.0.0                  python                   
@@ -117,7 +117,7 @@ gnupg-wks-client                2.4.5-r0               apk
 gnutls                          3.8.5-r0               apk                      
 google-api-core                 2.22.0                 python                   
 google-api-python-client        2.151.0                python                   
-google-auth                     2.35.0                 python                   
+google-auth                     2.36.0                 python                   
 google-auth-httplib2            0.2.0                  python                   
 googleapis-common-protos        1.65.0                 python                   
 gpg                             2.4.5-r0               apk                      
@@ -143,7 +143,7 @@ jmespath                        1.0.1                  python
 josepy                          1.14.0                 python                   
 jq                              1.7.1-r0               apk                      
 jsonlines                       4.0.0                  python                   
-jsonpickle                      3.4.1                  python                   
+jsonpickle                      3.4.2                  python                   
 libacl                          2.3.2-r0               apk                      
 libassuan                       2.5.7-r0               apk                      
 libattr                         2.5.2-r0               apk                      

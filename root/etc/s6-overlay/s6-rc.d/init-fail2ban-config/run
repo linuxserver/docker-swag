@@ -2,12 +2,12 @@
 # shellcheck shell=bash
 
 if ! iptables -L &> /dev/null; then
-  ln -sf /sbin/xtables-legacy-multi /sbin/iptables
-  ln -sf /sbin/xtables-legacy-multi /sbin/iptables-save
-  ln -sf /sbin/xtables-legacy-multi /sbin/iptables-restore
-  ln -sf /sbin/xtables-legacy-multi /sbin/ip6tables
-  ln -sf /sbin/xtables-legacy-multi /sbin/ip6tables-save
-  ln -sf /sbin/xtables-legacy-multi /sbin/ip6tables-restore
+    ln -sf /sbin/xtables-legacy-multi /sbin/iptables
+    ln -sf /sbin/xtables-legacy-multi /sbin/iptables-save
+    ln -sf /sbin/xtables-legacy-multi /sbin/iptables-restore
+    ln -sf /sbin/xtables-legacy-multi /sbin/ip6tables
+    ln -sf /sbin/xtables-legacy-multi /sbin/ip6tables-save
+    ln -sf /sbin/xtables-legacy-multi /sbin/ip6tables-restore
 fi
 
 # copy/update the fail2ban config defaults to/in /config

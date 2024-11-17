@@ -315,7 +315,7 @@ pyasn1                          0.6.1                  python
 pyasn1-modules                  0.4.1                  python                   
 pyc                             3.12.7-r0              apk                      
 pycparser                       2.22                   python                   
-pyjwt                           2.9.0                  python                   
+pyjwt                           2.10.0                 python                   
 pynamecheap                     0.0.3                  python                   
 pyopenssl                       24.2.1                 python                   
 pyotp                           2.9.0                  python                   

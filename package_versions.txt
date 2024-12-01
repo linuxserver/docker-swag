@@ -66,7 +66,7 @@ certbot-dns-loopia              1.0.1                  python
 certbot-dns-luadns              3.0.1                  python                   
 certbot-dns-namecheap           1.0.0                  python                   
 certbot-dns-netcup              1.4.4                  python                   
-certbot-dns-njalla              2.0.0                  python                   
+certbot-dns-njalla              2.0.2                  python                   
 certbot-dns-nsone               3.0.1                  python                   
 certbot-dns-ovh                 3.0.1                  python                   
 certbot-dns-porkbun             0.9.1                  python                   

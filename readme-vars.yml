@@ -17,17 +17,17 @@ common_param_env_vars_enabled: true
 param_container_name: "{{ project_name }}"
 param_usage_include_env: true
 param_env_vars:
-  - { env_var: "URL", env_value: "yourdomain.url", desc: "Top url you have control over (`customdomain.com` if you own it, or `customsubdomain.ddnsprovider.com` if dynamic dns)." }
+  - { env_var: "URL", env_value: "example.com", desc: "Top url you have control over (e.g. `example.com` if you own it, or `customsubdomain.example.com` if dynamic dns)." }
   - { env_var: "VALIDATION", env_value: "http", desc: "Certbot validation method to use, options are `http` or `dns` (`dns` method also requires `DNSPLUGIN` variable set).", env_options: ["http", "dns"] }
 param_usage_include_vols: true
 param_volumes:
   - { vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Persistent config files" }
 param_usage_include_ports: true
 param_ports:
-  - { external_port: "443", internal_port: "443", port_desc: "Https port" }
+  - { external_port: "443", internal_port: "443", port_desc: "HTTPS port" }
 cap_add_param: true
 cap_add_param_vars:
-  - { cap_add_var: "NET_ADMIN" }
+  - { cap_add_var: "NET_ADMIN", desc: "Required for fail2Ban to be able to modify iptables rules." }
 
 # optional container parameters
 opt_param_usage_include_env: true
@@ -38,11 +38,11 @@ opt_param_env_vars:
   - { env_var: "PROPAGATION", env_value: "", desc: "Optionally override (in seconds) the default propagation time for the dns plugins." }
   - { env_var: "EMAIL", env_value: "", desc: "Optional e-mail address used for cert expiration notifications (Required for ZeroSSL)." }
   - { env_var: "ONLY_SUBDOMAINS", env_value: "false", desc: "If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`" }
-  - { env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org,*.anotherdomain.org`" }
+  - { env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `example.net,subdomain.example.net,*.example.org`" }
   - { env_var: "STAGING", env_value: "false", desc: "Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes." }
 opt_param_usage_include_ports: true
 opt_param_ports:
-  - { external_port: "80", internal_port: "80", port_desc: "Http port (required for http validation and http -> https redirect)" }
+  - { external_port: "80", internal_port: "80", port_desc: "HTTP port (required for HTTP validation and HTTP -> HTTPS redirect)" }
 
 # application setup block
 app_setup_block_enabled: true
@@ -59,7 +59,7 @@ app_setup_block: |
       1. Certs that only cover your main subdomain (ie. `yoursubdomain.duckdns.org`, leave the `SUBDOMAINS` variable empty)
       2. Certs that cover sub-subdomains of your main subdomain (ie. `*.yoursubdomain.duckdns.org`, set the `SUBDOMAINS` variable to `wildcard`)
   * `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables
-  * After setup, navigate to `https://yourdomain.url` to access the default homepage (http access through port 80 is disabled by default, you can enable it by editing the default site config at `/config/nginx/site-confs/default.conf`).
+  * After setup, navigate to `https://example.com` to access the default homepage (http access through port 80 is disabled by default, you can enable it by editing the default site config at `/config/nginx/site-confs/default.conf`).
   * Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from Let's Encrypt in those circumstances.
 
   ### Certbot Plugins

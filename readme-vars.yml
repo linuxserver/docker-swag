@@ -17,7 +17,7 @@ common_param_env_vars_enabled: true
 param_container_name: "{{ project_name }}"
 param_usage_include_env: true
 param_env_vars:
-  - { env_var: "URL", env_value: "example.com", desc: "Top url you have control over (`example.com` if you own it, or `customsubdomain.example.com` if dynamic dns)." }
+  - { env_var: "URL", env_value: "example.com", desc: "Top url you have control over (e.g. `example.com` if you own it, or `customsubdomain.example.com` if dynamic dns)." }
   - { env_var: "VALIDATION", env_value: "http", desc: "Certbot validation method to use, options are `http` or `dns` (`dns` method also requires `DNSPLUGIN` variable set).", env_options: ["http", "dns"] }
 param_usage_include_vols: true
 param_volumes:
@@ -38,7 +38,7 @@ opt_param_env_vars:
   - { env_var: "PROPAGATION", env_value: "", desc: "Optionally override (in seconds) the default propagation time for the dns plugins." }
   - { env_var: "EMAIL", env_value: "", desc: "Optional e-mail address used for cert expiration notifications (Required for ZeroSSL)." }
   - { env_var: "ONLY_SUBDOMAINS", env_value: "false", desc: "If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`" }
-  - { env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `example.com,subdomain.example.org,*.example.org`" }
+  - { env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `example.net,subdomain.example.org,*.example.org`" }
   - { env_var: "STAGING", env_value: "false", desc: "Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes." }
 opt_param_usage_include_ports: true
 opt_param_ports:

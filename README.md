@@ -70,7 +70,7 @@ The architectures supported by this image are:
     1. Certs that only cover your main subdomain (ie. `yoursubdomain.duckdns.org`, leave the `SUBDOMAINS` variable empty)
     2. Certs that cover sub-subdomains of your main subdomain (ie. `*.yoursubdomain.duckdns.org`, set the `SUBDOMAINS` variable to `wildcard`)
 * `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables
-* After setup, navigate to `https://yourdomain.url` to access the default homepage (http access through port 80 is disabled by default, you can enable it by editing the default site config at `/config/nginx/site-confs/default.conf`).
+* After setup, navigate to `https://example.com` to access the default homepage (http access through port 80 is disabled by default, you can enable it by editing the default site config at `/config/nginx/site-confs/default.conf`).
 * Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from Let's Encrypt in those circumstances.
 
 ### Certbot Plugins
@@ -149,10 +149,12 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 
 Please follow the instructions [on this blog post](https://www.linuxserver.io/blog/2020-08-21-introducing-swag#migrate).
 
- 
 ## Usage
 
 To help you get started creating a container from this image you can either use docker-compose or the docker cli.
+
+>[!NOTE]
+>Unless a parameter is flaged as 'optional', it is *mandatory* and a value must be provided.
 
 ### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
@@ -168,7 +170,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - URL=yourdomain.url
+      - URL=example.com
       - VALIDATION=http
       - SUBDOMAINS=www, #optional
       - CERTPROVIDER= #optional
@@ -195,7 +197,7 @@ docker run -d \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \
-  -e URL=yourdomain.url \
+  -e URL=example.com \
   -e VALIDATION=http \
   -e SUBDOMAINS=www, `#optional` \
   -e CERTPROVIDER= `#optional` \
@@ -218,12 +220,12 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `-p 443` | Https port |
-| `-p 80` | Http port (required for http validation and http -> https redirect) |
+| `-p 443:443` | HTTPS port |
+| `-p 80` | HTTP port (required for HTTP validation and HTTP -> HTTPS redirect) |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
-| `-e URL=yourdomain.url` | Top url you have control over (`customdomain.com` if you own it, or `customsubdomain.ddnsprovider.com` if dynamic dns). |
+| `-e URL=example.com` | Top url you have control over (e.g. `example.com` if you own it, or `customsubdomain.example.com` if dynamic dns). |
 | `-e VALIDATION=http` | Certbot validation method to use, options are `http` or `dns` (`dns` method also requires `DNSPLUGIN` variable set). |
 | `-e SUBDOMAINS=www,` | Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this *exactly* to `wildcard` (wildcard cert is available via `dns` validation only) |
 | `-e CERTPROVIDER=` | Optionally define the cert provider. Set to `zerossl` for ZeroSSL certs (requires existing [ZeroSSL account](https://app.zerossl.com/signup) and the e-mail address entered in `EMAIL` env var). Otherwise defaults to Let's Encrypt. |
@@ -231,9 +233,10 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e PROPAGATION=` | Optionally override (in seconds) the default propagation time for the dns plugins. |
 | `-e EMAIL=` | Optional e-mail address used for cert expiration notifications (Required for ZeroSSL). |
 | `-e ONLY_SUBDOMAINS=false` | If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true` |
-| `-e EXTRA_DOMAINS=` | Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org,*.anotherdomain.org` |
+| `-e EXTRA_DOMAINS=` | Additional fully qualified domain names (comma separated, no spaces) ie. `example.net,subdomain.example.net,*.example.org` |
 | `-e STAGING=false` | Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes. |
 | `-v /config` | Persistent config files |
+| `--cap-add=NET_ADMIN` | Required for fail2Ban to be able to modify iptables rules. |
 
 ### Portainer notice
 

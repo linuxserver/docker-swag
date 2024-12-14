@@ -7,7 +7,7 @@ alpine-keys                     2.4-r1                 apk
 alpine-release                  3.20.3-r0              apk                      
 aom-libs                        3.9.1-r0               apk                      
 apache2-utils                   2.4.62-r0              apk                      
-apk-tools                       2.14.4-r0              apk                      
+apk-tools                       2.14.4-r1              apk                      
 apr                             1.7.5-r0               apk                      
 apr-util                        1.6.3-r1               apk                      
 argon2-libs                     20190702-r5            apk                      
@@ -21,8 +21,8 @@ azure-mgmt-dns                  8.2.0                  python
 backports-tarfile               1.2.0                  python                   
 bash                            5.2.26-r0              apk                      
 beautifulsoup4                  4.12.3                 python                   
-boto3                           1.35.76                python                   
-botocore                        1.35.76                python                   
+boto3                           1.35.81                python                   
+botocore                        1.35.81                python                   
 brotli-libs                     1.1.0-r2               apk                      
 bs4                             0.0.2                  python                   
 busybox                         1.36.1-r29             apk                      
@@ -81,7 +81,7 @@ certifi                         2024.8.30              python
 cffi                            1.17.1                 python                   
 charset-normalizer              3.4.0                  python                   
 cloudflare                      2.19.4                 python                   
-composer                        2.8.3                  binary                   
+composer                        2.8.4                  binary                   
 configargparse                  1.7                    python                   
 configobj                       5.0.9                  python                   
 coreutils                       9.5-r1                 apk                      
@@ -89,9 +89,9 @@ coreutils-env                   9.5-r1                 apk
 coreutils-fmt                   9.5-r1                 apk                      
 coreutils-sha512sum             9.5-r1                 apk                      
 cryptography                    44.0.0                 python                   
-curl                            8.9.1-r2               apk                      
+curl                            8.11.0-r2              apk                      
 distro                          1.9.0                  python                   
-dns-lexicon                     3.19.0                 python                   
+dns-lexicon                     3.20.0                 python                   
 dnslib                          0.9.25                 python                   
 dnspython                       2.7.0                  python                   
 domeneshop                      0.4.4                  python                   
@@ -115,9 +115,9 @@ gnupg-keyboxd                   2.4.5-r0               apk
 gnupg-utils                     2.4.5-r0               apk                      
 gnupg-wks-client                2.4.5-r0               apk                      
 gnutls                          3.8.5-r0               apk                      
-google-api-core                 2.23.0                 python                   
-google-api-python-client        2.154.0                python                   
-google-auth                     2.36.0                 python                   
+google-api-core                 2.24.0                 python                   
+google-api-python-client        2.155.0                python                   
+google-auth                     2.37.0                 python                   
 google-auth-httplib2            0.2.0                  python                   
 googleapis-common-protos        1.66.0                 python                   
 gpg                             2.4.5-r0               apk                      
@@ -151,7 +151,7 @@ libavif                         1.0.4-r0               apk
 libbsd                          0.12.2-r0              apk                      
 libbz2                          1.0.8-r6               apk                      
 libcrypto3                      3.3.2-r1               apk                      
-libcurl                         8.9.1-r2               apk                      
+libcurl                         8.11.0-r2              apk                      
 libdav1d                        1.4.2-r0               apk                      
 libedit                         20240517.3.1-r0        apk                      
 libevent                        2.1.12-r7              apk                      
@@ -313,7 +313,7 @@ protobuf                        5.29.1                 python
 pyacmedns                       0.4                    python                   
 pyasn1                          0.6.1                  python                   
 pyasn1-modules                  0.4.1                  python                   
-pyc                             3.12.8-r0              apk                      
+pyc                             3.12.8-r1              apk                      
 pycparser                       2.22                   python                   
 pyjwt                           2.10.1                 python                   
 pynamecheap                     0.0.3                  python                   
@@ -324,9 +324,9 @@ pyrfc3339                       2.0.1                  python
 python-dateutil                 2.9.0.post0            python                   
 python-digitalocean             1.17.0                 python                   
 python-transip                  0.6.0                  python                   
-python3                         3.12.8-r0              apk                      
-python3-pyc                     3.12.8-r0              apk                      
-python3-pycache-pyc0            3.12.8-r0              apk                      
+python3                         3.12.8-r1              apk                      
+python3-pyc                     3.12.8-r1              apk                      
+python3-pycache-pyc0            3.12.8-r1              apk                      
 pytz                            2024.2                 python                   
 pyyaml                          6.0.2                  python                   
 readline                        8.2.10-r0              apk                      

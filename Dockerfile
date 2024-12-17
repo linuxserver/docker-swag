@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.20
+FROM cr.spad.uk/linuxserver/baseimage-alpine-nginx:3.21
 
 # set version label
 ARG BUILD_DATE
@@ -88,7 +88,7 @@ RUN \
   pip install -U --no-cache-dir \
     pip \
     wheel && \
-  pip install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.20/ \
+  pip install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.21/ \
     certbot==${CERTBOT_VERSION} \
     certbot-dns-acmedns \
     certbot-dns-aliyun \
@@ -150,9 +150,9 @@ RUN \
   rm -f /etc/nginx/conf.d/stream.conf && \
   echo "**** correct ip6tables legacy issue ****" && \
   rm \
-    /sbin/ip6tables && \
+    /usr/sbin/ip6tables && \
   ln -s \
-    /sbin/ip6tables-nft /sbin/ip6tables && \
+    /usr/sbin/ip6tables-nft /usr/sbin/ip6tables && \
   echo "**** remove unnecessary fail2ban filters ****" && \
   rm \
     /etc/fail2ban/jail.d/alpine-ssh.conf && \

@@ -8,6 +8,5 @@ mkdir -p \
     /config/log/{fail2ban,letsencrypt,nginx} \
     /config/nginx/proxy-confs \
     /run/fail2ban \
-    /tmp/letsencrypt \
-    /tmp/nginx/cache
+    /tmp/letsencrypt
 

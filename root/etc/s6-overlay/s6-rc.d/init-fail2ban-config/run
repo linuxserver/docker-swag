@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
-if [[ -z ${LSIO_READ_ONLY_FS} ]] && [[ -z ${LSIO_NON_ROOT_USER} ]]; then
+if [[ -z ${LSIO_READ_ONLY_FS} ]] && [[ -z ${LSIO_NON_ROOT_USER} ]] && [[ "${DISABLE_F2B,,}" != "true" ]]; then
     if ! iptables -L &> /dev/null; then
         ln -sf /usr/sbin/xtables-legacy-multi /usr/sbin/iptables
         ln -sf /usr/sbin/xtables-legacy-multi /usr/sbin/iptables-save

@@ -5,4 +5,4 @@
 0       3       *       *       6       run-parts /etc/periodic/weekly
 0       5       1       *       *       run-parts /etc/periodic/monthly
 
-8       2       *       *       *       /app/le-renew.sh >> /config/log/letsencrypt/letsencrypt.log 2>&1
+8       2       *       *       *       /app/le-renew.sh >> /config/log/letsencrypt/renewal.log 2>&1

@@ -37,6 +37,4 @@ if [[ -z ${LSIO_READ_ONLY_FS} ]] && [[ -z ${LSIO_NON_ROOT_USER} ]] && [[ "${DISA
     if [[ ! -f /config/log/nginx/access.log ]]; then
         touch /config/log/nginx/access.log
     fi
-else
-    rm -rf /etc/logrotate.d/fail2ban
 fi

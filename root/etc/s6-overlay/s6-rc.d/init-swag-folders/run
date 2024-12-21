@@ -7,6 +7,6 @@ mkdir -p \
     /config/etc/letsencrypt/renewal-hooks \
     /config/log/{fail2ban,letsencrypt,nginx} \
     /config/nginx/proxy-confs \
-    /run/fail2ban
-rm -rf /etc/letsencrypt
-ln -s /config/etc/letsencrypt /etc/letsencrypt
+    /run/fail2ban \
+    /tmp/letsencrypt
+

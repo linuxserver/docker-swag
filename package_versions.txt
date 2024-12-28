@@ -21,8 +21,8 @@ azure-mgmt-dns                  8.2.0                  python
 backports-tarfile               1.2.0                  python                   
 bash                            5.2.26-r0              apk                      
 beautifulsoup4                  4.12.3                 python                   
-boto3                           1.35.86                python                   
-botocore                        1.35.86                python                   
+boto3                           1.35.89                python                   
+botocore                        1.35.89                python                   
 brotli-libs                     1.1.0-r2               apk                      
 bs4                             0.0.2                  python                   
 busybox                         1.36.1-r29             apk                      
@@ -79,7 +79,7 @@ certbot-dns-vultr               1.1.0                  python
 certbot-plugin-gandi            1.5.0                  python                   
 certifi                         2024.12.14             python                   
 cffi                            1.17.1                 python                   
-charset-normalizer              3.4.0                  python                   
+charset-normalizer              3.4.1                  python                   
 cloudflare                      2.19.4                 python                   
 composer                        2.8.4                  binary                   
 configargparse                  1.7                    python                   
@@ -351,7 +351,7 @@ typing-extensions               4.12.2                 python  (+1 duplicate)
 tzdata                          2024b-r0               apk                      
 unixodbc                        2.3.12-r0              apk                      
 uritemplate                     4.1.1                  python                   
-urllib3                         2.2.3                  python                   
+urllib3                         2.3.0                  python                   
 utmps-libs                      0.1.2.2-r1             apk                      
 wheel                           0.43.0                 python                   
 wheel                           0.45.1                 python                   

@@ -5,9 +5,6 @@
 lsiown -R abc:abc \
     /config
 chmod -R +r /config/log
-if [[ -z ${LSIO_READ_ONLY_FS} ]]; then
-    chmod -R 0644 /etc/logrotate.d
-fi
 
 # Workaround for systems with chmod errors
 true

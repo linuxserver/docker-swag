@@ -4,7 +4,6 @@
 # permissions
 lsiown -R abc:abc \
     /config
-chmod -R 0644 /etc/logrotate.d
 chmod -R +r /config/log
 
 # Workaround for systems with chmod errors

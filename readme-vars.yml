@@ -37,9 +37,14 @@ opt_param_env_vars:
   - {env_var: "ONLY_SUBDOMAINS", env_value: "false", desc: "If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`"}
   - {env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `example.net,subdomain.example.net,*.example.org`"}
   - {env_var: "STAGING", env_value: "false", desc: "Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes."}
+  - {env_var: "DISABLE_F2B", env_value: "", desc: "Set to `true` to disable the Fail2ban service in the container, if you're already running it elsewhere or using a different IPS."}
 opt_param_usage_include_ports: true
 opt_param_ports:
   - {external_port: "80", internal_port: "80", port_desc: "HTTP port (required for HTTP validation and HTTP -> HTTPS redirect)"}
+readonly_supported: true
+readonly_message: |
+  * `/tmp` must be mounted to tmpfs
+  * fail2ban will not be available
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
@@ -200,6 +205,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "17.12.24:", desc: "Rebase to Alpine 3.21."}
   - {date: "21.10.24:", desc: "Fix naming issue with Dynu plugin. If you are using Dynu, please make sure your credentials are set in /config/dns-conf/dynu.ini and your DNSPLUGIN variable is set to dynu (not dynudns)."}
   - {date: "30.08.24:", desc: "Fix zerossl cert revocation."}
   - {date: "24.07.14:", desc: "Rebase to Alpine 3.20. Remove deprecated Google Domains certbot plugin. Existing users should update their nginx confs to avoid http2 deprecation warnings."}

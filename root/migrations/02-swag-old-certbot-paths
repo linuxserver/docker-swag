@@ -3,5 +3,5 @@
 
 # Migrate existing confs with old paths from /etc/letsencrypt to /config/etc/letsencrypt
 if [[ ! -f "/config/etc/letsencrypt/02-swag-old-certbot-paths" ]] && ls /config/etc/letsencrypt/renewal/*.conf >/dev/null 2>&1; then
-    sed -i 's| /etc/letsencrypt|/config/etc/letsencrypt|' /config/etc/letsencrypt/renewal/*.conf && touch /config/etc/letsencrypt/02-swag-old-certbot-paths
+    sed -i 's| /etc/letsencrypt| /config/etc/letsencrypt|' /config/etc/letsencrypt/renewal/*.conf && touch /config/etc/letsencrypt/02-swag-old-certbot-paths
 fi

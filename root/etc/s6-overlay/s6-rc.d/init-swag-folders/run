@@ -10,3 +10,5 @@ mkdir -p \
     /run/fail2ban \
     /tmp/letsencrypt
 
+rm -rf /etc/letsencrypt
+ln -s /config/etc/letsencrypt /etc/letsencrypt

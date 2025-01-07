@@ -11,3 +11,9 @@ if [[ -f /config/nginx/ldap.conf ]]; then
         Ensure your configs are updated and remove /config/nginx/ldap.conf
         If you do not use this config, simply remove it."
 fi
+if grep -qrle ' /etc/letsencrypt' /config/nginx; then
+    echo "    The following nginx confs are using certificates from the obsolete location
+    /etc/letsencrypt and should be updated to point to /config/etc/letsencrypt
+        "
+    echo -n "    " && grep -rle ' /etc/letsencrypt' /config/nginx
+fi

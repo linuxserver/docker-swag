@@ -200,6 +200,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "07.01.25:", desc: "Reverting symlink change made preventing Letsencrypt from finding certificates."}
   - {date: "17.12.24:", desc: "Rebase to Alpine 3.21."}
   - {date: "21.10.24:", desc: "Fix naming issue with Dynu plugin. If you are using Dynu, please make sure your credentials are set in /config/dns-conf/dynu.ini and your DNSPLUGIN variable is set to dynu (not dynudns)."}
   - {date: "30.08.24:", desc: "Fix zerossl cert revocation."}

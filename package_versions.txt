@@ -22,8 +22,8 @@ azure-mgmt-dns                  8.2.0             python
 backports-tarfile               1.2.0             python                   
 bash                            5.2.37-r0         apk                      
 beautifulsoup4                  4.12.3            python                   
-boto3                           1.35.92           python                   
-botocore                        1.35.92           python                   
+boto3                           1.35.93           python                   
+botocore                        1.35.93           python                   
 brotli-libs                     1.1.0-r2          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r9         apk                      

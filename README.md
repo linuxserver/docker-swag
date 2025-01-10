@@ -129,7 +129,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 * You can check which jails are active via `docker exec -it swag fail2ban-client status`
 * You can check the status of a specific jail via `docker exec -it swag fail2ban-client status <jail name>`
 * You can unban an IP via `docker exec -it swag fail2ban-client set <jail name> unbanip <IP>`
-* A list of commands can be found here: <https://www.fail2ban.org/wiki/index.php/Commands>
+* A list of commands for fail2ban-client can be found [here](https://manpages.ubuntu.com/manpages/noble/man1/fail2ban-client.1.html)
 
 ### Updating configs
 

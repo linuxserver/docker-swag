@@ -38,8 +38,8 @@ opt_param_env_vars:
   - {env_var: "EXTRA_DOMAINS", env_value: "", desc: "Additional fully qualified domain names (comma separated, no spaces) ie. `example.net,subdomain.example.net,*.example.org`"}
   - {env_var: "STAGING", env_value: "false", desc: "Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes."}
   - {env_var: "DISABLE_F2B", env_value: "", desc: "Set to `true` to disable the Fail2ban service in the container, if you're already running it elsewhere or using a different IPS."}
-  - {env_var: "SWAG_AUTORELOAD", env_value: "", desc: "Set to `true` to enable automatic reloading of nginx confs on change. Your filesystem must support inotify. This functionality was previously offered [via mod](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload)."}
-  - {env_var: "SWAG_AUTORELOAD_WATCHLIST", env_value: "", desc: "A pipe-separated list of additional folders for auto reload to watch in addition to `/config/nginx`"}
+  - {env_var: "SWAG_AUTORELOAD", env_value: "", desc: "Set to `true` to enable automatic reloading of confs on change without stopping/restarting nginx. Your filesystem must support inotify. This functionality was previously offered [via mod](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload)."}
+  - {env_var: "SWAG_AUTORELOAD_WATCHLIST", env_value: "", desc: "A [pipe](https://en.wikipedia.org/wiki/Vertical_bar)-separated list of additional folders for auto reload to watch in addition to `/config/nginx`"}
 opt_param_usage_include_ports: true
 opt_param_ports:
   - {external_port: "80", internal_port: "80", port_desc: "HTTP port (required for HTTP validation and HTTP -> HTTPS redirect)"}

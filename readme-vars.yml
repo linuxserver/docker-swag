@@ -195,6 +195,8 @@ init_diagram: |
     svc-nginx -> legacy-services
     init-services -> svc-php-fpm
     svc-php-fpm -> legacy-services
+    init-services -> svc-swag-auto-reload
+    svc-swag-auto-reload -> legacy-services
   }
   Base Images: {
     "baseimage-alpine-nginx:3.21" <- "baseimage-alpine:3.21"

@@ -190,6 +190,7 @@ services:
       - EXTRA_DOMAINS= #optional
       - STAGING=false #optional
       - DISABLE_F2B= #optional
+      - SWAG_AUTORELOAD= #optional
     volumes:
       - /path/to/swag/config:/config
     ports:
@@ -218,6 +219,7 @@ docker run -d \
   -e EXTRA_DOMAINS= `#optional` \
   -e STAGING=false `#optional` \
   -e DISABLE_F2B= `#optional` \
+  -e SWAG_AUTORELOAD= `#optional` \
   -p 443:443 \
   -p 80:80 `#optional` \
   -v /path/to/swag/config:/config \
@@ -247,6 +249,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e EXTRA_DOMAINS=` | Additional fully qualified domain names (comma separated, no spaces) ie. `example.net,subdomain.example.net,*.example.org` |
 | `-e STAGING=false` | Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes. |
 | `-e DISABLE_F2B=` | Set to `true` to disable the Fail2ban service in the container, if you're already running it elsewhere or using a different IPS. |
+| `-e SWAG_AUTORELOAD=` | Set to `true` to enable automatic reloading of nginx configs on change. Your filesystem must support inotify. This functionality was previous offered [via mod](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload). |
 | `-v /config` | Persistent config files |
 | `--read-only=true` | Run container with a read-only filesystem. Please [read the docs](https://docs.linuxserver.io/misc/read-only/). |
 | `--cap-add=NET_ADMIN` | Required for fail2Ban to be able to modify iptables rules. |
@@ -417,6 +420,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **19.01.25:** - Add [Auto Reload](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload) functionality to SWAG.
 * **17.12.24:** - Rebase to Alpine 3.21.
 * **21.10.24:** - Fix naming issue with Dynu plugin. If you are using Dynu, please make sure your credentials are set in /config/dns-conf/dynu.ini and your DNSPLUGIN variable is set to dynu (not dynudns).
 * **30.08.24:** - Fix zerossl cert revocation.

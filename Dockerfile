@@ -29,6 +29,7 @@ RUN \
   apk add --no-cache \
     fail2ban \
     gnupg \
+    inotify-tools \
     iptables-legacy \
     memcached \
     nginx-mod-http-brotli \

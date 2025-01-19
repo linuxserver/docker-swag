@@ -19,7 +19,7 @@ if [[ ${SWAG_AUTORELOAD,,} == "true" ]]; then
             function wait_for_changes {
             inotifywait -rq \
                 --event modify,move,create,delete \
-                --include '\.conf$' \
+                --includei '\.conf$' \
                 "${ACTIVE_WATCH[@]}"
             }
 

@@ -2,9 +2,7 @@
 # shellcheck shell=bash
 
 # permissions
+find /config/log ! -path '/config/log/logrotate.status' -exec chmod +r {} \+
+
 lsiown -R abc:abc \
     /config
-chmod -R +r /config/log
-
-# Workaround for systems with chmod errors
-true

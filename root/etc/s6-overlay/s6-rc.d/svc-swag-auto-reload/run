@@ -1,0 +1,41 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+if [[ ${SWAG_AUTORELOAD,,} == "true" ]]; then
+    if [[ -f "/etc/s6-overlay/s6-rc.d/svc-mod-swag-auto-reload/run" ]]; then
+        echo "ERROR: Legacy SWAG Auto Reload Mod detected, to use the built-in Auto Reload functionality please remove it from your container config."
+        sleep infinity
+    else
+        echo "Auto-reload: Watching the following folders for changes to .conf files:"
+        echo "/config/nginx"
+        ACTIVE_WATCH=("/config/nginx")
+        for i in $(echo "${SWAG_AUTORELOAD_WATCHLIST}" | tr "|" " "); do
+            if [ -f "${i}" ] || [ -d "${i}" ]; then
+                echo "${i}"
+                ACTIVE_WATCH+=("${i}")
+            fi
+            done
+
+            function wait_for_changes {
+            inotifywait -rq \
+                --event modify,move,create,delete \
+                --includei '\.conf$' \
+                "${ACTIVE_WATCH[@]}"
+            }
+
+            while wait_for_changes; do
+            NGINX_CONF=()
+            if ! grep -q "/config/nginx/nginx.conf" /etc/nginx/nginx.conf; then
+                NGINX_CONF=("-c" "/config/nginx/nginx.conf")
+            fi
+            if /usr/sbin/nginx "${NGINX_CONF[@]}" -t; then
+                echo "Changes to nginx config detected and the changes are valid, reloading nginx"
+                /usr/sbin/nginx "${NGINX_CONF[@]}" -s reload
+            else
+                echo "Changes to nginx config detected but the changes are not valid, skipping nginx reload. Please fix your config."
+            fi
+        done
+    fi
+else
+    sleep infinity
+fi

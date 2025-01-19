@@ -191,6 +191,7 @@ services:
       - STAGING=false #optional
       - DISABLE_F2B= #optional
       - SWAG_AUTORELOAD= #optional
+      - SWAG_AUTORELOAD_WATCHLIST= #optional
     volumes:
       - /path/to/swag/config:/config
     ports:
@@ -220,6 +221,7 @@ docker run -d \
   -e STAGING=false `#optional` \
   -e DISABLE_F2B= `#optional` \
   -e SWAG_AUTORELOAD= `#optional` \
+  -e SWAG_AUTORELOAD_WATCHLIST= `#optional` \
   -p 443:443 \
   -p 80:80 `#optional` \
   -v /path/to/swag/config:/config \
@@ -249,7 +251,8 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e EXTRA_DOMAINS=` | Additional fully qualified domain names (comma separated, no spaces) ie. `example.net,subdomain.example.net,*.example.org` |
 | `-e STAGING=false` | Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes. |
 | `-e DISABLE_F2B=` | Set to `true` to disable the Fail2ban service in the container, if you're already running it elsewhere or using a different IPS. |
-| `-e SWAG_AUTORELOAD=` | Set to `true` to enable automatic reloading of nginx configs on change. Your filesystem must support inotify. This functionality was previous offered [via mod](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload). |
+| `-e SWAG_AUTORELOAD=` | Set to `true` to enable automatic reloading of nginx confs on change. Your filesystem must support inotify. This functionality was previous offered [via mod](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload). |
+| `-e SWAG_AUTORELOAD_WATCHLIST=` | A `|`-separated list of additional folders for auto reload to watch in addition to `/config/nginx` |
 | `-v /config` | Persistent config files |
 | `--read-only=true` | Run container with a read-only filesystem. Please [read the docs](https://docs.linuxserver.io/misc/read-only/). |
 | `--cap-add=NET_ADMIN` | Required for fail2Ban to be able to modify iptables rules. |

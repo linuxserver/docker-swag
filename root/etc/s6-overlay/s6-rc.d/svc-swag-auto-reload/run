@@ -9,7 +9,7 @@ if [[ ${SWAG_AUTORELOAD,,} == "true" ]]; then
         echo "Auto-reload: Watching the following files/folders for changes (excluding .sample, .swp, and .md files):"
         echo "/config/nginx"
         ACTIVE_WATCH=("/config/nginx")
-        for i in $(echo "${WATCHLIST}" | tr "|" " "); do
+        for i in $(echo "${SWAG_AUTORELOAD_WATCHLIST}" | tr "|" " "); do
             if [ -f "${i}" ] || [ -d "${i}" ]; then
                 echo "${i}"
                 ACTIVE_WATCH+=("${i}")
@@ -19,7 +19,7 @@ if [[ ${SWAG_AUTORELOAD,,} == "true" ]]; then
             function wait_for_changes {
             inotifywait -rq \
                 --event modify,move,create,delete \
-                --excludei '\.(sample|md|swp)' \
+                --include '\.(conf)' \
                 "${ACTIVE_WATCH[@]}"
             }
 

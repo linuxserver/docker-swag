@@ -6,7 +6,7 @@ if [[ ${SWAG_AUTORELOAD,,} == "true" ]]; then
         echo "ERROR: Legacy SWAG Auto Reload Mod detected, to use the built-in Auto Reload functionality please remove it from your container config."
         sleep infinity
     else
-        echo "Auto-reload: Watching the following files/folders for changes (excluding .sample, .swp, and .md files):"
+        echo "Auto-reload: Watching the following folders for changes to .conf files:"
         echo "/config/nginx"
         ACTIVE_WATCH=("/config/nginx")
         for i in $(echo "${SWAG_AUTORELOAD_WATCHLIST}" | tr "|" " "); do

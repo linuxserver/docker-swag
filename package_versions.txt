@@ -22,8 +22,8 @@ azure-mgmt-dns                  8.2.0             python
 backports-tarfile               1.2.0             python                   
 bash                            5.2.37-r0         apk                      
 beautifulsoup4                  4.12.3            python                   
-boto3                           1.36.2            python                   
-botocore                        1.36.2            python                   
+boto3                           1.36.4            python                   
+botocore                        1.36.4            python                   
 brotli-libs                     1.1.0-r2          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r12        apk                      
@@ -32,7 +32,7 @@ c-ares                          1.34.3-r0         apk
 c-client                        2007f-r15         apk                      
 ca-certificates                 20241121-r1       apk                      
 ca-certificates-bundle          20241121-r1       apk                      
-cachetools                      5.5.0             python                   
+cachetools                      5.5.1             python                   
 catatonit                       0.2.0-r0          apk                      
 certbot                         3.1.0             python                   
 certbot-dns-acmedns             0.1.0             python                   
@@ -82,7 +82,7 @@ certifi                         2024.12.14        python
 cffi                            1.17.1            python                   
 charset-normalizer              3.4.1             python                   
 cloudflare                      2.19.4            python                   
-composer                        2.8.4             binary                   
+composer                        2.8.5             binary                   
 configargparse                  1.7               python                   
 configobj                       5.0.9             python                   
 coreutils                       9.5-r2            apk                      
@@ -99,7 +99,7 @@ domeneshop                      0.4.4             python
 fail2ban                        1.1.0             python                   
 fail2ban                        1.1.0-r2          apk                      
 fail2ban-pyc                    1.1.0-r2          apk                      
-filelock                        3.16.1            python                   
+filelock                        3.17.0            python                   
 findutils                       4.10.0-r0         apk                      
 fontconfig                      2.15.0-r1         apk                      
 freetype                        2.13.3-r0         apk                      
@@ -118,7 +118,7 @@ gnupg-wks-client                2.4.7-r0          apk
 gnutls                          3.8.8-r0          apk                      
 google-api-core                 2.24.0            python                   
 google-api-python-client        2.159.0           python                   
-google-auth                     2.37.0            python                   
+google-auth                     2.38.0            python                   
 google-auth-httplib2            0.2.0             python                   
 googleapis-common-protos        1.66.0            python                   
 gpg                             2.4.7-r0          apk                      
@@ -143,7 +143,7 @@ jaraco-context                  5.3.0             python
 jaraco-functools                4.0.1             python                   
 jaraco-text                     3.12.1            python                   
 jmespath                        1.0.1             python                   
-josepy                          1.14.0            python                   
+josepy                          1.15.0            python                   
 jq                              1.7.1-r0          apk                      
 jsonlines                       4.0.0             python                   
 jsonpickle                      4.0.1             python                   

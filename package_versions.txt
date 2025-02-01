@@ -12,7 +12,7 @@ apk-tools                       2.14.6-r2         apk
 apr                             1.7.5-r0          apk                      
 apr-util                        1.6.3-r1          apk                      
 argon2-libs                     20190702-r5       apk                      
-attrs                           24.3.0            python                   
+attrs                           25.1.0            python                   
 autocommand                     2.2.2             python                   
 azure-common                    1.1.28            python                   
 azure-core                      1.32.0            python                   
@@ -22,8 +22,8 @@ azure-mgmt-dns                  8.2.0             python
 backports-tarfile               1.2.0             python                   
 bash                            5.2.37-r0         apk                      
 beautifulsoup4                  4.12.3            python                   
-boto3                           1.36.6            python                   
-botocore                        1.36.6            python                   
+boto3                           1.36.11           python                   
+botocore                        1.36.11           python                   
 brotli-libs                     1.1.0-r2          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r12        apk                      
@@ -78,7 +78,7 @@ certbot-dns-standalone          1.1               python
 certbot-dns-transip             0.5.2             python                   
 certbot-dns-vultr               1.1.0             python                   
 certbot-plugin-gandi            1.5.0             python                   
-certifi                         2024.12.14        python                   
+certifi                         2025.1.31         python                   
 cffi                            1.17.1            python                   
 charset-normalizer              3.4.1             python                   
 cloudflare                      2.19.4            python                   
@@ -116,8 +116,8 @@ gnupg-keyboxd                   2.4.7-r0          apk
 gnupg-utils                     2.4.7-r0          apk                      
 gnupg-wks-client                2.4.7-r0          apk                      
 gnutls                          3.8.8-r0          apk                      
-google-api-core                 2.24.0            python                   
-google-api-python-client        2.159.0           python                   
+google-api-core                 2.24.1            python                   
+google-api-python-client        2.160.0           python                   
 google-auth                     2.38.0            python                   
 google-auth-httplib2            0.2.0             python                   
 googleapis-common-protos        1.66.0            python                   
@@ -135,8 +135,8 @@ inflect                         7.3.1             python
 inotify-tools                   4.23.9.0-r0       apk                      
 inotify-tools-libs              4.23.9.0-r0       apk                      
 inwx-domrobot                   3.2.0             python                   
-iptables                        1.8.10-r5         apk                      
-iptables-legacy                 1.8.10-r5         apk                      
+iptables                        1.8.11-r0         apk                      
+iptables-legacy                 1.8.11-r0         apk                      
 isodate                         0.7.2             python                   
 jaraco-collections              5.1.0             python                   
 jaraco-context                  5.3.0             python                   
@@ -166,8 +166,8 @@ libgpg-error                    1.51-r0           apk
 libice                          1.1.1-r6          apk                      
 libidn2                         2.3.7-r0          apk                      
 libintl                         0.22.5-r0         apk                      
-libip4tc                        1.8.10-r5         apk                      
-libip6tc                        1.8.10-r5         apk                      
+libip4tc                        1.8.11-r0         apk                      
+libip6tc                        1.8.11-r0         apk                      
 libjpeg-turbo                   3.0.4-r0          apk                      
 libksba                         1.6.7-r0          apk                      
 libldap                         2.6.8-r0          apk                      
@@ -203,7 +203,7 @@ libxml2                         2.13.4-r3         apk
 libxpm                          3.5.17-r0         apk                      
 libxslt                         1.1.42-r1         apk                      
 libxt                           1.3.1-r0          apk                      
-libxtables                      1.8.10-r5         apk                      
+libxtables                      1.8.11-r0         apk                      
 libzip                          1.11.2-r0         apk                      
 linux-pam                       1.6.1-r1          apk                      
 logrotate                       3.21.0-r1         apk                      
@@ -304,13 +304,13 @@ php83-xmlwriter                 8.3.16-r0         apk
 php83-xsl                       8.3.16-r0         apk                      
 php83-zip                       8.3.16-r0         apk                      
 pinentry                        1.3.1-r0          apk                      
-pip                             24.3.1            python                   
+pip                             25.0              python                   
 pkb-client                      2.0.0             python                   
 platformdirs                    4.2.2             python                   
 popt                            1.19-r4           apk                      
 portalocker                     2.10.1            python                   
 procps-ng                       4.0.4-r2          apk                      
-proto-plus                      1.25.0            python                   
+proto-plus                      1.26.0            python                   
 protobuf                        5.29.3            python                   
 pyacmedns                       0.4               python                   
 pyasn1                          0.6.1             python                   
@@ -329,7 +329,7 @@ python-transip                  0.6.0             python
 python3                         3.12.8-r1         apk                      
 python3-pyc                     3.12.8-r1         apk                      
 python3-pycache-pyc0            3.12.8-r1         apk                      
-pytz                            2024.2            python                   
+pytz                            2025.1            python                   
 pyyaml                          6.0.2             python                   
 readline                        8.2.13-r0         apk                      
 requests                        2.32.3            python                   

@@ -21,9 +21,9 @@ azure-mgmt-core                 1.5.0             python
 azure-mgmt-dns                  8.2.0             python                   
 backports-tarfile               1.2.0             python                   
 bash                            5.2.37-r0         apk                      
-beautifulsoup4                  4.12.3            python                   
-boto3                           1.36.11           python                   
-botocore                        1.36.11           python                   
+beautifulsoup4                  4.13.3            python                   
+boto3                           1.36.16           python                   
+botocore                        1.36.16           python                   
 brotli-libs                     1.1.0-r2          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r12        apk                      
@@ -74,7 +74,7 @@ certbot-dns-porkbun             0.9.1             python
 certbot-dns-rfc2136             3.1.0             python                   
 certbot-dns-route53             3.1.0             python                   
 certbot-dns-sakuracloud         3.1.0             python                   
-certbot-dns-standalone          1.1               python                   
+certbot-dns-standalone          1.2.1             python                   
 certbot-dns-transip             0.5.2             python                   
 certbot-dns-vultr               1.1.0             python                   
 certbot-plugin-gandi            1.5.0             python                   
@@ -120,7 +120,7 @@ google-api-core                 2.24.1            python
 google-api-python-client        2.160.0           python                   
 google-auth                     2.38.0            python                   
 google-auth-httplib2            0.2.0             python                   
-googleapis-common-protos        1.66.0            python                   
+googleapis-common-protos        1.67.0rc1         python                   
 gpg                             2.4.7-r0          apk                      
 gpg-agent                       2.4.7-r0          apk                      
 gpg-wks-server                  2.4.7-r0          apk                      
@@ -135,8 +135,8 @@ inflect                         7.3.1             python
 inotify-tools                   4.23.9.0-r0       apk                      
 inotify-tools-libs              4.23.9.0-r0       apk                      
 inwx-domrobot                   3.2.0             python                   
-iptables                        1.8.11-r0         apk                      
-iptables-legacy                 1.8.11-r0         apk                      
+iptables                        1.8.11-r1         apk                      
+iptables-legacy                 1.8.11-r1         apk                      
 isodate                         0.7.2             python                   
 jaraco-collections              5.1.0             python                   
 jaraco-context                  5.3.0             python                   
@@ -152,7 +152,7 @@ libattr                         2.5.2-r2          apk
 libavif                         1.0.4-r0          apk                      
 libbsd                          0.12.2-r0         apk                      
 libbz2                          1.0.8-r6          apk                      
-libcrypto3                      3.3.2-r4          apk                      
+libcrypto3                      3.3.2-r5          apk                      
 libcurl                         8.11.1-r0         apk                      
 libdav1d                        1.5.0-r0          apk                      
 libedit                         20240808.3.1-r0   apk                      
@@ -166,8 +166,8 @@ libgpg-error                    1.51-r0           apk
 libice                          1.1.1-r6          apk                      
 libidn2                         2.3.7-r0          apk                      
 libintl                         0.22.5-r0         apk                      
-libip4tc                        1.8.11-r0         apk                      
-libip6tc                        1.8.11-r0         apk                      
+libip4tc                        1.8.11-r1         apk                      
+libip6tc                        1.8.11-r1         apk                      
 libjpeg-turbo                   3.0.4-r0          apk                      
 libksba                         1.6.7-r0          apk                      
 libldap                         2.6.8-r0          apk                      
@@ -188,9 +188,9 @@ libseccomp                      2.5.5-r1          apk
 libsharpyuv                     1.4.0-r0          apk                      
 libsm                           1.2.4-r4          apk                      
 libsodium                       1.0.20-r0         apk                      
-libssl3                         3.3.2-r4          apk                      
+libssl3                         3.3.2-r5          apk                      
 libstdc++                       14.2.0-r4         apk                      
-libtasn1                        4.19.0-r2         apk                      
+libtasn1                        4.20.0-r0         apk                      
 libunistring                    1.2-r0            apk                      
 libuuid                         2.40.4-r0         apk                      
 libwebp                         1.4.0-r0          apk                      
@@ -203,7 +203,7 @@ libxml2                         2.13.4-r3         apk
 libxpm                          3.5.17-r0         apk                      
 libxslt                         1.1.42-r1         apk                      
 libxt                           1.3.1-r0          apk                      
-libxtables                      1.8.11-r0         apk                      
+libxtables                      1.8.11-r1         apk                      
 libzip                          1.11.2-r0         apk                      
 linux-pam                       1.6.1-r1          apk                      
 logrotate                       3.21.0-r1         apk                      
@@ -245,7 +245,7 @@ nginx-mod-stream-geoip2         1.26.2-r4         apk
 nginx-vim                       1.26.2-r4         apk                      
 npth                            1.6-r4            apk                      
 oniguruma                       6.9.9-r0          apk                      
-openssl                         3.3.2-r4          apk                      
+openssl                         3.3.2-r5          apk                      
 p11-kit                         0.25.5-r2         apk                      
 packaging                       24.2              python                   
 parsedatetime                   2.6               python                   
@@ -315,7 +315,7 @@ protobuf                        5.29.3            python
 pyacmedns                       0.4               python                   
 pyasn1                          0.6.1             python                   
 pyasn1-modules                  0.4.1             python                   
-pyc                             3.12.8-r1         apk                      
+pyc                             3.12.9-r0         apk                      
 pycparser                       2.22              python                   
 pyjwt                           2.10.1            python                   
 pynamecheap                     0.0.3             python                   
@@ -326,9 +326,9 @@ pyrfc3339                       2.0.1             python
 python-dateutil                 2.9.0.post0       python                   
 python-digitalocean             1.17.0            python                   
 python-transip                  0.6.0             python                   
-python3                         3.12.8-r1         apk                      
-python3-pyc                     3.12.8-r1         apk                      
-python3-pycache-pyc0            3.12.8-r1         apk                      
+python3                         3.12.9-r0         apk                      
+python3-pyc                     3.12.9-r0         apk                      
+python3-pycache-pyc0            3.12.9-r0         apk                      
 pytz                            2025.1            python                   
 pyyaml                          6.0.2             python                   
 readline                        8.2.13-r0         apk                      
@@ -343,7 +343,7 @@ shadow                          4.16.0-r1         apk
 six                             1.17.0            python                   
 skalibs-libs                    2.14.3.0-r0       apk                      
 soupsieve                       2.6               python                   
-sqlite-libs                     3.47.1-r0         apk                      
+sqlite-libs                     3.48.0-r0         apk                      
 ssl_client                      1.37.0-r12        apk                      
 tiff                            4.7.0-r0          apk                      
 tldextract                      5.1.3             python                   

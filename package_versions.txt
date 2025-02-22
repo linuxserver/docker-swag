@@ -5,10 +5,10 @@ acme                            3.2.0             python
 alpine-baselayout               3.6.8-r1          apk                      
 alpine-baselayout-data          3.6.8-r1          apk                      
 alpine-keys                     2.5-r0            apk                      
-alpine-release                  3.21.2-r0         apk                      
+alpine-release                  3.21.3-r0         apk                      
 aom-libs                        3.11.0-r0         apk                      
 apache2-utils                   2.4.62-r0         apk                      
-apk-tools                       2.14.6-r2         apk                      
+apk-tools                       2.14.6-r3         apk                      
 apr                             1.7.5-r0          apk                      
 apr-util                        1.6.3-r1          apk                      
 argon2-libs                     20190702-r5       apk                      
@@ -22,8 +22,8 @@ azure-mgmt-dns                  8.2.0             python
 backports-tarfile               1.2.0             python                   
 bash                            5.2.37-r0         apk                      
 beautifulsoup4                  4.13.3            python                   
-boto3                           1.36.21           python                   
-botocore                        1.36.21           python                   
+boto3                           1.36.26           python                   
+botocore                        1.36.26           python                   
 brotli-libs                     1.1.0-r2          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r12        apk                      
@@ -32,7 +32,7 @@ c-ares                          1.34.3-r0         apk
 c-client                        2007f-r15         apk                      
 ca-certificates                 20241121-r1       apk                      
 ca-certificates-bundle          20241121-r1       apk                      
-cachetools                      5.5.1             python                   
+cachetools                      5.5.2             python                   
 catatonit                       0.2.0-r0          apk                      
 certbot                         3.2.0             python                   
 certbot-dns-acmedns             0.1.0             python                   
@@ -90,7 +90,7 @@ coreutils-env                   9.5-r2            apk
 coreutils-fmt                   9.5-r2            apk                      
 coreutils-sha512sum             9.5-r2            apk                      
 cryptography                    44.0.1            python                   
-curl                            8.12.0-r0         apk                      
+curl                            8.12.1-r0         apk                      
 distro                          1.9.0             python                   
 dns-lexicon                     3.20.1            python                   
 dnslib                          0.9.25            python                   
@@ -120,7 +120,7 @@ google-api-core                 2.24.1            python
 google-api-python-client        2.161.0           python                   
 google-auth                     2.38.0            python                   
 google-auth-httplib2            0.2.0             python                   
-googleapis-common-protos        1.67.0            python                   
+googleapis-common-protos        1.68.0            python                   
 gpg                             2.4.7-r0          apk                      
 gpg-agent                       2.4.7-r0          apk                      
 gpg-wks-server                  2.4.7-r0          apk                      
@@ -146,14 +146,14 @@ jmespath                        1.0.1             python
 josepy                          1.15.0            python                   
 jq                              1.7.1-r0          apk                      
 jsonlines                       4.0.0             python                   
-jsonpickle                      4.0.1             python                   
+jsonpickle                      4.0.2             python                   
 libassuan                       2.5.7-r0          apk                      
 libattr                         2.5.2-r2          apk                      
 libavif                         1.0.4-r0          apk                      
 libbsd                          0.12.2-r0         apk                      
 libbz2                          1.0.8-r6          apk                      
 libcrypto3                      3.3.3-r0          apk                      
-libcurl                         8.12.0-r0         apk                      
+libcurl                         8.12.1-r0         apk                      
 libdav1d                        1.5.0-r0          apk                      
 libedit                         20240808.3.1-r0   apk                      
 libevent                        2.1.12-r7         apk                      
@@ -180,7 +180,7 @@ libncursesw                     6.5_p20241006-r3  apk
 libnftnl                        1.2.8-r0          apk                      
 libpanelw                       6.5_p20241006-r3  apk                      
 libpng                          1.6.44-r0         apk                      
-libpq                           17.2-r0           apk                      
+libpq                           17.4-r0           apk                      
 libproc2                        4.0.4-r2          apk                      
 libpsl                          0.21.5-r3         apk                      
 libsasl                         2.1.28-r8         apk                      
@@ -217,7 +217,7 @@ mpdecimal                       4.0.0-r0          apk
 msal                            1.31.1            python                   
 msal-extensions                 1.2.0             python                   
 musl                            1.2.5-r9          apk                      
-musl-utils                      1.2.5-r8          apk                      
+musl-utils                      1.2.5-r9          apk                      
 my-test-package                 1.0               python                   
 nano                            8.2-r0            apk                      
 ncurses-terminfo-base           6.5_p20241006-r3  apk                      
@@ -350,7 +350,7 @@ tldextract                      5.1.3             python
 tomli                           2.0.1             python                   
 typeguard                       4.3.0             python                   
 typing-extensions               4.12.2            python  (+1 duplicate)   
-tzdata                          2024b-r1          apk                      
+tzdata                          2025a-r0          apk                      
 unixodbc                        2.3.12-r0         apk                      
 uritemplate                     4.1.1             python                   
 urllib3                         2.3.0             python                   

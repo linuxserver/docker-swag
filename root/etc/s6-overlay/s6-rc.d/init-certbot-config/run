@@ -56,6 +56,9 @@ touch /config/etc/letsencrypt/cli.ini
 lsiown abc:abc /config/etc/letsencrypt/cli.ini
 grep -qF 'agree-tos' /config/etc/letsencrypt/cli.ini || echo 'agree-tos=true' >>/config/etc/letsencrypt/cli.ini
 
+# Check for broken dns credentials value in cli.ini and remove
+sed -i '/dns--credentials/d' /config/etc/letsencrypt/cli.ini
+
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/ 2> >(grep -v 'cp: not replacing')
 lsiown -R abc:abc /config/dns-conf

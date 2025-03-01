@@ -22,8 +22,8 @@ azure-mgmt-dns                  8.2.0             python
 backports-tarfile               1.2.0             python                   
 bash                            5.2.37-r0         apk                      
 beautifulsoup4                  4.13.3            python                   
-boto3                           1.37.1            python                   
-botocore                        1.37.1            python                   
+boto3                           1.37.4            python                   
+botocore                        1.37.4            python                   
 brotli-libs                     1.1.0-r2          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r12        apk                      
@@ -82,7 +82,7 @@ certifi                         2025.1.31         python
 cffi                            1.17.1            python                   
 charset-normalizer              3.4.1             python                   
 cloudflare                      2.19.4            python                   
-composer                        2.8.5             binary                   
+composer                        2.8.6             binary                   
 configargparse                  1.7               python                   
 configobj                       5.0.9             python                   
 coreutils                       9.5-r2            apk                      
@@ -158,7 +158,7 @@ libdav1d                        1.5.0-r0          apk
 libedit                         20240808.3.1-r0   apk                      
 libevent                        2.1.12-r7         apk                      
 libexpat                        2.6.4-r0          apk                      
-libffi                          3.4.6-r0          apk                      
+libffi                          3.4.7-r0          apk                      
 libgcc                          14.2.0-r4         apk                      
 libgcrypt                       1.10.3-r1         apk                      
 libgd                           2.3.3-r9          apk                      
@@ -336,9 +336,9 @@ requests                        2.32.3            python
 requests-file                   2.1.0             python                   
 requests-mock                   1.12.1            python                   
 rsa                             4.9               python                   
-s3transfer                      0.11.2            python                   
+s3transfer                      0.11.3            python                   
 scanelf                         1.3.8-r1          apk                      
-setuptools                      75.8.1            python                   
+setuptools                      75.8.2            python                   
 shadow                          4.16.0-r1         apk                      
 six                             1.17.0            python                   
 skalibs-libs                    2.14.3.0-r0       apk                      

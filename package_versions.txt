@@ -21,13 +21,13 @@ azure-mgmt-dns                  8.2.0             python
 backports-tarfile               1.2.0             python                  
 bash                            5.2.37-r0         apk                     
 beautifulsoup4                  4.13.3            python                  
-boto3                           1.37.29           python                  
-botocore                        1.37.29           python                  
+boto3                           1.37.32           python                  
+botocore                        1.37.32           python                  
 brotli-libs                     1.1.0-r2          apk                     
 bs4                             0.0.2             python                  
 busybox                         1.37.0-r12        apk                     
 busybox-binsh                   1.37.0-r12        apk                     
-c-ares                          1.34.3-r0         apk                     
+c-ares                          1.34.5-r0         apk                     
 c-client                        2007f-r15         apk                     
 ca-certificates                 20241121-r1       apk                     
 ca-certificates-bundle          20241121-r1       apk                     
@@ -69,7 +69,7 @@ certbot-dns-netcup              1.4.4             python
 certbot-dns-njalla              2.0.2             python                  
 certbot-dns-nsone               4.0.0             python                  
 certbot-dns-ovh                 4.0.0             python                  
-certbot-dns-porkbun             0.5.1             python                  
+certbot-dns-porkbun             0.10.0            python                  
 certbot-dns-rfc2136             4.0.0             python                  
 certbot-dns-route53             4.0.0             python                  
 certbot-dns-sakuracloud         4.0.0             python                  
@@ -81,7 +81,7 @@ certifi                         2025.1.31         python
 cffi                            1.17.1            python                  
 charset-normalizer              3.4.1             python                  
 cloudflare                      2.19.4            python                  
-composer                        2.8.7             binary                  
+composer                        2.8.8             binary                  
 configargparse                  1.7               python                  
 configobj                       5.0.9             python                  
 coreutils                       9.5-r2            apk                     
@@ -91,7 +91,7 @@ coreutils-sha512sum             9.5-r2            apk
 cryptography                    44.0.2            python                  
 curl                            8.12.1-r1         apk                     
 distro                          1.9.0             python                  
-dns-lexicon                     3.20.1            python                  
+dns-lexicon                     3.21.0            python                  
 dnslib                          0.9.26            python                  
 dnspython                       2.7.0             python                  
 domeneshop                      0.4.4             python                  
@@ -315,7 +315,7 @@ protobuf                        6.30.2            python
 pyacmedns                       0.4               python                  
 pyasn1                          0.6.1             python                  
 pyasn1-modules                  0.4.2             python                  
-pyc                             3.12.9-r0         apk                     
+pyc                             3.12.10-r0        apk                     
 pycparser                       2.22              python                  
 pyjwt                           2.10.1            python                  
 pynamecheap                     0.0.3             python                  
@@ -326,9 +326,9 @@ pyrfc3339                       2.0.1             python
 python-dateutil                 2.9.0.post0       python                  
 python-digitalocean             1.17.0            python                  
 python-transip                  0.6.0             python                  
-python3                         3.12.9-r0         apk                     
-python3-pyc                     3.12.9-r0         apk                     
-python3-pycache-pyc0            3.12.9-r0         apk                     
+python3                         3.12.10-r0        apk                     
+python3-pyc                     3.12.10-r0        apk                     
+python3-pycache-pyc0            3.12.10-r0        apk                     
 pytz                            2025.2            python                  
 pyyaml                          6.0.2             python                  
 readline                        8.2.13-r0         apk                     
@@ -350,11 +350,11 @@ tldextract                      5.2.0             python
 tomli                           2.0.1             python                  
 typeguard                       4.3.0             python                  
 typing-extensions               4.12.2            python                  
-typing-extensions               4.13.1            python                  
+typing-extensions               4.13.2            python                  
 tzdata                          2025b-r0          apk                     
 unixodbc                        2.3.12-r0         apk                     
 uritemplate                     4.1.1             python                  
-urllib3                         2.3.0             python                  
+urllib3                         2.4.0             python                  
 utmps-libs                      0.1.2.3-r2        apk                     
 wheel                           0.45.1            python  (+1 duplicate)  
 whois                           5.5.23-r0         apk                     

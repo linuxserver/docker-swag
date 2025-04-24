@@ -300,7 +300,7 @@ if [[ "${VALIDATION}" = "dns" ]]; then
         sed -i "/^dns-${DNSPLUGIN}-credentials\b/d" /config/etc/letsencrypt/cli.ini
     fi
     # plugins that don't support setting propagation
-    if [[ "${DNSPLUGIN}" =~ ^(azure|gandi|route53|standalone)$ ]]; then
+    if [[ "${DNSPLUGIN}" =~ ^(gandi|route53|standalone)$ ]]; then
         if [[ -n "${PROPAGATION}" ]]; then echo "${DNSPLUGIN} dns plugin does not support setting propagation time"; fi
         sed -i "/^dns-${DNSPLUGIN}-propagation-seconds\b/d" /config/etc/letsencrypt/cli.ini
     fi

@@ -32,7 +32,7 @@ opt_param_usage_include_env: true
 opt_param_env_vars:
   - {env_var: "SUBDOMAINS", env_value: "www,", desc: "Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this *exactly* to `wildcard` (wildcard cert is available via `dns` validation only)"}
   - {env_var: "CERTPROVIDER", env_value: "", desc: "Optionally define the cert provider. Set to `zerossl` for ZeroSSL certs (requires existing [ZeroSSL account](https://app.zerossl.com/signup) and the e-mail address entered in `EMAIL` env var). Otherwise defaults to Let's Encrypt."}
-  - {env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `acmedns`, `aliyun`, `azure`, `bunny`, `cloudflare`, `cpanel`, `desec`, `digitalocean`, `directadmin`, `dnsimple`, `dnsmadeeasy`, `dnspod`, `do`, `domeneshop`, `dreamhost`, `duckdns`, `dynu`, `freedns`, `gandi`, `gehirn`, `glesys`, `godaddy`, `google`, `he`, `hetzner`, `infomaniak`, `inwx`, `ionos`, `linode`, `loopia`, `luadns`, `namecheap`, `netcup`, `njalla`, `nsone`, `ovh`, `porkbun`, `rfc2136`, `route53`, `sakuracloud`, `standalone`, `transip`, and `vultr`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`."}
+  - {env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `acmedns`, `aliyun`, `azure`, `bunny`, `cloudflare`, `cpanel`, `desec`, `digitalocean`, `directadmin`, `dnsimple`, `dnsmadeeasy`, `dnspod`, `do`, `domeneshop`, `dreamhost`, `duckdns`, `dynu`, `freedns`, `gandi`, `gehirn`, `glesys`, `godaddy`, `google`, `he`, `hetzner`, `infomaniak`, `inwx`, `ionos`, `linode`, `loopia`, `luadns`, `namecheap`, `netcup`, `njalla`, `nsone`, `ovh`, `pdns`, `porkbun`, `rfc2136`, `route53`, `sakuracloud`, `standalone`, `transip`, and `vultr`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`."}
   - {env_var: "PROPAGATION", env_value: "", desc: "Optionally override (in seconds) the default propagation time for the dns plugins."}
   - {env_var: "EMAIL", env_value: "", desc: "Optional e-mail address used for cert expiration notifications (Required for ZeroSSL)."}
   - {env_var: "ONLY_SUBDOMAINS", env_value: "false", desc: "If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`"}
@@ -205,6 +205,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "11.03.25":, desc: "Added PowerDNS Certbot plugin."}
   - {date: "19.01.25:", desc: "Add [Auto Reload](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload) functionality to SWAG."}
   - {date: "17.12.24:", desc: "Rebase to Alpine 3.21."}
   - {date: "21.10.24:", desc: "Fix naming issue with Dynu plugin. If you are using Dynu, please make sure your credentials are set in /config/dns-conf/dynu.ini and your DNSPLUGIN variable is set to dynu (not dynudns)."}

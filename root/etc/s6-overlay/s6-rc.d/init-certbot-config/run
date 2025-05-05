@@ -59,6 +59,9 @@ grep -qF 'agree-tos' /config/etc/letsencrypt/cli.ini || echo 'agree-tos=true' >>
 # Check for broken dns credentials value in cli.ini and remove
 sed -i '/dns--credentials/d' /config/etc/letsencrypt/cli.ini
 
+# Disable Certbot's built in log rotation
+set_ini_value "max-log-backups" "0" /config/etc/letsencrypt/cli.ini
+
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/ 2> >(grep -v 'cp: not replacing')
 lsiown -R abc:abc /config/dns-conf

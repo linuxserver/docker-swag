@@ -164,6 +164,7 @@ init_diagram: |
     init-outdated-config -> init-config-end
     init-config -> init-crontab-config
     init-mods-end -> init-custom-files
+    init-adduser -> init-device-perms
     base -> init-envfile
     init-swag-samples -> init-fail2ban-config
     init-os-end -> init-folders
@@ -175,6 +176,7 @@ init_diagram: |
     init-samples -> init-nginx
     init-version-checks -> init-nginx-end
     init-adduser -> init-os-end
+    init-device-perms -> init-os-end
     init-envfile -> init-os-end
     init-renew -> init-outdated-config
     init-keygen -> init-permissions

@@ -22,6 +22,14 @@ if [[ ! -f /config/nginx/authentik-server.conf ]]; then
     cp /defaults/nginx/authentik-server.conf.sample /config/nginx/authentik-server.conf
 fi
 
+# copy tinyauth config files if they don't exist
+if [[ ! -f /config/nginx/tinyauth-location.conf ]]; then
+    cp /defaults/nginx/tinyauth-location.conf.sample /config/nginx/tinyauth-location.conf
+fi
+if [[ ! -f /config/nginx/tinyauth-server.conf ]]; then
+    cp /defaults/nginx/tinyauth-server.conf.sample /config/nginx/tinyauth-server.conf
+fi
+
 # copy old ldap config file to new location
 if [[ -f /config/nginx/ldap.conf ]] && [[ ! -f /config/nginx/ldap-server.conf ]]; then
     cp /config/nginx/ldap.conf /config/nginx/ldap-server.conf

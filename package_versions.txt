@@ -1,7 +1,7 @@
 NAME                            VERSION           TYPE                    
 Simple Launcher                 1.1.0.14          binary  (+5 duplicates)  
 acl-libs                        2.3.2-r1          apk                      
-acme                            4.1.0             python                   
+acme                            4.1.1             python                   
 alpine-baselayout               3.6.8-r1          apk                      
 alpine-baselayout-data          3.6.8-r1          apk                      
 alpine-keys                     2.5-r0            apk                      
@@ -22,8 +22,8 @@ azure-mgmt-dns                  8.2.0             python
 backports-tarfile               1.2.0             python                   
 bash                            5.2.37-r0         apk                      
 beautifulsoup4                  4.13.4            python                   
-boto3                           1.38.34           python                   
-botocore                        1.38.34           python                   
+boto3                           1.38.36           python                   
+botocore                        1.38.36           python                   
 brotli-libs                     1.1.0-r2          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r12        apk                      

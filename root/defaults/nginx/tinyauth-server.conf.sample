@@ -1,0 +1,35 @@
+## Version 2025/06/08 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/tinyauth-server.conf.sample
+# Make sure that your tinyauth container is in the same user defined bridge network and is named tinyauth
+# Rename /config/nginx/proxy-confs/tinyauth.subdomain.conf.sample to /config/nginx/proxy-confs/tinyauth.subdomain.conf
+
+# location for tinyauth auth requests
+location /tinyauth {
+    internal;
+
+    include /config/nginx/proxy.conf;
+    include /config/nginx/resolver.conf;
+    set $upstream_tinyauth tinyauth;
+    proxy_pass http://$upstream_tinyauth:3000/api/auth/nginx;
+
+    proxy_set_header x-forwarded-proto $scheme;
+    proxy_set_header x-forwarded-host $http_host;
+    proxy_set_header x-forwarded-uri $request_uri;
+}
+
+# virtual location for tinyauth 401 redirects
+location @tinyauth_login {
+    internal;
+
+    ## Set the $target_url variable based on the original request
+    set_escape_uri $target_url $scheme://$http_host$request_uri;
+    
+    ## Set the $signin_url variable
+    set $domain $host;
+    if ($host ~* "^[^.]+\.([^.]+\..+)$") {
+        set $domain $1;
+    }
+    set $signin_url https://tinyauth.$domain/login?redirect_uri=$target_url;
+
+    ## Redirect to login
+    return 302 $signin_url;
+}

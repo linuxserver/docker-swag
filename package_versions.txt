@@ -120,7 +120,7 @@ gnupg-keyboxd                   2.4.7-r0          apk
 gnupg-utils                     2.4.7-r0          apk                      
 gnupg-wks-client                2.4.7-r0          apk                      
 gnutls                          3.8.8-r0          apk                      
-google-api-core                 2.25.0            python                   
+google-api-core                 2.25.1            python                   
 google-api-python-client        2.172.0           python                   
 google-auth                     2.40.3            python                   
 google-auth-httplib2            0.2.0             python                   

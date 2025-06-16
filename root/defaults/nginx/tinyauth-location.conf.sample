@@ -1,0 +1,9 @@
+## Version 2025/06/08 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/tinyauth-location.conf.sample
+# Make sure that your tinyauth container is in the same user defined bridge network and is named tinyauth
+# Rename /config/nginx/proxy-confs/tinyauth.subdomain.conf.sample to /config/nginx/proxy-confs/tinyauth.subdomain.conf
+
+## Send a subrequest to tinyauth to verify if the user is authenticated and has permission to access the resource
+auth_request /tinyauth;
+
+## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal
+error_page 401 = @tinyauth_login;

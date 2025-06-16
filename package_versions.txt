@@ -78,7 +78,7 @@ certbot-dns-standalone          1.2.1             python
 certbot-dns-transip             0.5.2             python                   
 certbot-dns-vultr               1.1.0             python                   
 certbot-plugin-gandi            1.5.0             python                   
-certifi                         2025.4.26         python                   
+certifi                         2025.6.15         python                   
 cffi                            1.17.1            python                   
 charset-normalizer              3.4.2             python                   
 cli                             UNKNOWN           binary                   

@@ -15,15 +15,15 @@ argon2-libs                     20190702-r5       apk
 attrs                           25.3.0            python                   
 autocommand                     2.2.2             python                   
 azure-common                    1.1.28            python                   
-azure-core                      1.34.0            python                   
+azure-core                      1.35.0            python                   
 azure-identity                  1.23.0            python                   
-azure-mgmt-core                 1.5.0             python                   
+azure-mgmt-core                 1.6.0             python                   
 azure-mgmt-dns                  8.2.0             python                   
 backports-tarfile               1.2.0             python                   
 bash                            5.2.37-r0         apk                      
 beautifulsoup4                  4.13.4            python                   
-boto3                           1.38.46           python                   
-botocore                        1.38.46           python                   
+boto3                           1.39.3            python                   
+botocore                        1.39.3            python                   
 brotli-libs                     1.1.0-r2          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r12        apk                      
@@ -93,7 +93,7 @@ coreutils                       9.5-r2            apk
 coreutils-env                   9.5-r2            apk                      
 coreutils-fmt                   9.5-r2            apk                      
 coreutils-sha512sum             9.5-r2            apk                      
-cryptography                    45.0.4            python                   
+cryptography                    45.0.5            python                   
 curl                            8.12.1-r1         apk                      
 distro                          1.9.0             python                   
 dns-lexicon                     3.21.1            python                   
@@ -121,7 +121,7 @@ gnupg-utils                     2.4.7-r0          apk
 gnupg-wks-client                2.4.7-r0          apk                      
 gnutls                          3.8.8-r0          apk                      
 google-api-core                 2.25.1            python                   
-google-api-python-client        2.174.0           python                   
+google-api-python-client        2.175.0           python                   
 google-auth                     2.40.3            python                   
 google-auth-httplib2            0.2.0             python                   
 googleapis-common-protos        1.70.0            python                   
@@ -315,7 +315,7 @@ php83-xsl                       8.3.19-r0         apk
 php83-zip                       8.3.19-r0         apk                      
 pinentry                        1.3.1-r0          apk                      
 pip                             25.1.1            python                   
-pkb-client                      2.1.1             python                   
+pkb-client                      2.2.0             python                   
 platformdirs                    4.2.2             python                   
 popt                            1.19-r4           apk                      
 procps-ng                       4.0.4-r2          apk                      
@@ -359,7 +359,7 @@ tldextract                      5.3.0             python
 tomli                           2.0.1             python                   
 typeguard                       4.3.0             python                   
 typing-extensions               4.12.2            python                   
-typing-extensions               4.14.0            python                   
+typing-extensions               4.14.1            python                   
 tzdata                          2025b-r0          apk                      
 unixodbc                        2.3.12-r0         apk                      
 uritemplate                     4.2.0             python                   

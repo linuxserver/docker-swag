@@ -5,6 +5,9 @@ on:
     - cron:  '2 * * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   external-trigger-scheduler:
     runs-on: ubuntu-latest

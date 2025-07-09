@@ -420,6 +420,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **09.07.25:** - Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained.
 * **05.05.25:** - Disable Certbot's built in log rotation.
 * **19.01.25:** - Add [Auto Reload](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload) functionality to SWAG.
 * **17.12.24:** - Rebase to Alpine 3.21.

@@ -22,8 +22,8 @@ azure-mgmt-dns                  8.2.0             python
 backports-tarfile               1.2.0             python                   
 bash                            5.2.37-r0         apk                      
 beautifulsoup4                  4.13.4            python                   
-boto3                           1.39.3            python                   
-botocore                        1.39.3            python                   
+boto3                           1.39.4            python                   
+botocore                        1.39.4            python                   
 brotli-libs                     1.1.0-r2          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r12        apk                      
@@ -78,7 +78,7 @@ certbot-dns-standalone          1.2.1             python
 certbot-dns-transip             0.5.2             python                   
 certbot-dns-vultr               1.1.0             python                   
 certbot-plugin-gandi            1.5.0             python                   
-certifi                         2025.6.15         python                   
+certifi                         2025.7.9          python                   
 cffi                            1.17.1            python                   
 charset-normalizer              3.4.2             python                   
 cli                             UNKNOWN           binary                   
@@ -86,7 +86,7 @@ cli-32                          UNKNOWN           binary
 cli-64                          UNKNOWN           binary                   
 cli-arm64                       UNKNOWN           binary                   
 cloudflare                      2.19.4            python                   
-composer                        2.8.9             binary                   
+composer                        2.8.10            binary                   
 configargparse                  1.7.1             python                   
 configobj                       5.0.9             python                   
 coreutils                       9.5-r2            apk                      
@@ -109,9 +109,9 @@ fontconfig                      2.15.0-r1         apk
 freetype                        2.13.3-r0         apk                      
 future                          1.0.0             python                   
 gdbm                            1.24-r0           apk                      
-git                             2.47.2-r0         apk                      
-git-init-template               2.47.2-r0         apk                      
-git-perl                        2.47.2-r0         apk                      
+git                             2.47.3-r0         apk                      
+git-init-template               2.47.3-r0         apk                      
+git-perl                        2.47.3-r0         apk                      
 gmp                             6.3.0-r2          apk                      
 gnupg                           2.4.7-r0          apk                      
 gnupg-dirmngr                   2.4.7-r0          apk                      
@@ -121,7 +121,7 @@ gnupg-utils                     2.4.7-r0          apk
 gnupg-wks-client                2.4.7-r0          apk                      
 gnutls                          3.8.8-r0          apk                      
 google-api-core                 2.25.1            python                   
-google-api-python-client        2.175.0           python                   
+google-api-python-client        2.176.0           python                   
 google-auth                     2.40.3            python                   
 google-auth-httplib2            0.2.0             python                   
 googleapis-common-protos        1.70.0            python                   
@@ -135,8 +135,8 @@ gui-32                          UNKNOWN           binary
 gui-64                          UNKNOWN           binary                   
 gui-arm64                       UNKNOWN           binary                   
 httplib2                        0.22.0            python                   
-icu-data-en                     74.2-r0           apk                      
-icu-libs                        74.2-r0           apk                      
+icu-data-en                     74.2-r1           apk                      
+icu-libs                        74.2-r1           apk                      
 idna                            3.10              python                   
 importlib-metadata              8.0.0             python                   
 inflect                         7.3.1             python                   
@@ -152,7 +152,7 @@ jaraco-functools                4.0.1             python
 jaraco-text                     3.12.1            python                   
 jinja2                          3.1.6             python                   
 jmespath                        1.0.1             python                   
-josepy                          2.0.0             python                   
+josepy                          2.1.0             python                   
 jq                              1.7.1-r0          apk                      
 jsonlines                       4.0.0             python                   
 jsonpickle                      4.1.1             python                   
@@ -161,7 +161,7 @@ libattr                         2.5.2-r2          apk
 libavif                         1.0.4-r0          apk                      
 libbsd                          0.12.2-r0         apk                      
 libbz2                          1.0.8-r6          apk                      
-libcrypto3                      3.3.3-r0          apk                      
+libcrypto3                      3.3.4-r0          apk                      
 libcurl                         8.12.1-r1         apk                      
 libdav1d                        1.5.0-r0          apk                      
 libedit                         20240808.3.1-r0   apk                      
@@ -197,7 +197,7 @@ libseccomp                      2.5.5-r1          apk
 libsharpyuv                     1.4.0-r0          apk                      
 libsm                           1.2.4-r4          apk                      
 libsodium                       1.0.20-r0         apk                      
-libssl3                         3.3.3-r0          apk                      
+libssl3                         3.3.4-r0          apk                      
 libstdc++                       14.2.0-r4         apk                      
 libtasn1                        4.20.0-r0         apk                      
 libunistring                    1.2-r0            apk                      
@@ -255,7 +255,7 @@ nginx-mod-stream-geoip2         1.26.3-r0         apk
 nginx-vim                       1.26.3-r0         apk                      
 npth                            1.6-r4            apk                      
 oniguruma                       6.9.9-r0          apk                      
-openssl                         3.3.3-r0          apk                      
+openssl                         3.3.4-r0          apk                      
 p11-kit                         0.25.5-r2         apk                      
 packaging                       24.2              python                   
 parsedatetime                   2.6               python                   
@@ -263,7 +263,7 @@ pcre                            8.45-r3           apk
 pcre2                           10.43-r0          apk                      
 perl                            5.40.1-r1         apk                      
 perl-error                      0.17029-r2        apk                      
-perl-git                        2.47.2-r0         apk                      
+perl-git                        2.47.3-r0         apk                      
 php83                           8.3.19-r0         apk                      
 php83-bcmath                    8.3.19-r0         apk                      
 php83-bz2                       8.3.19-r0         apk                      

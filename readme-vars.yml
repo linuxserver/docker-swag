@@ -145,6 +145,8 @@ app_setup_block: |
 
   To enable QUIC, expose 443/UDP to your clients, then uncomment both QUIC listeners in all of your active proxy confs, as well as the default conf, and restart the container.
 
+  You should also uncomment the `Alt-Svc` header in your `ssl.conf` so that browsers are aware that you offer QUIC connectivity.
+
   ### Migration from the old `linuxserver/letsencrypt` image
 
   Please follow the instructions [on this blog post](https://www.linuxserver.io/blog/2020-08-21-introducing-swag#migrate).

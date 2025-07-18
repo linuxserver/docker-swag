@@ -148,6 +148,8 @@ This image supports QUIC (also known as HTTP/3) but it must be explicitly enable
 
 To enable QUIC, expose 443/UDP to your clients, then uncomment both QUIC listeners in all of your active proxy confs, as well as the default conf, and restart the container.
 
+You should also uncomment the `Alt-Svc` header in your `ssl.conf` so that browsers are aware that you offer QUIC connectivity.
+
 ### Migration from the old `linuxserver/letsencrypt` image
 
 Please follow the instructions [on this blog post](https://www.linuxserver.io/blog/2020-08-21-introducing-swag#migrate).
@@ -429,7 +431,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **09.07.25:** - Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained.
+* **18.07.25:** - Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained.
 * **05.05.25:** - Disable Certbot's built in log rotation.
 * **19.01.25:** - Add [Auto Reload](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload) functionality to SWAG.
 * **17.12.24:** - Rebase to Alpine 3.21.

@@ -142,6 +142,14 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 * Proxy sample files WILL be updated, however your renamed (enabled) proxy files will not.
 * You can check the new sample and adjust your active config as needed.
 
+### QUIC support
+
+This image supports QUIC (also known as HTTP/3) but it must be explicitly enabled in each proxy conf, and the default conf, because if the listener is enabled and you don't expose 443/UDP, it can break connections with some browsers.
+
+To enable QUIC, expose 443/UDP to your clients, then uncomment both QUIC listeners in all of your active proxy confs, as well as the default conf, and restart the container.
+
+You should also uncomment the `Alt-Svc` header in your `ssl.conf` so that browsers are aware that you offer QUIC connectivity.
+
 ### Migration from the old `linuxserver/letsencrypt` image
 
 Please follow the instructions [on this blog post](https://www.linuxserver.io/blog/2020-08-21-introducing-swag#migrate).
@@ -194,6 +202,7 @@ services:
     ports:
       - 443:443
       - 80:80 #optional
+      - 443/udp:443/udp #optional
     restart: unless-stopped
 ```
 
@@ -221,6 +230,7 @@ docker run -d \
   -e SWAG_AUTORELOAD_WATCHLIST= `#optional` \
   -p 443:443 \
   -p 80:80 `#optional` \
+  -p 443/udp:443/udp `#optional` \
   -v /path/to/swag/config:/config \
   --restart unless-stopped \
   lscr.io/linuxserver/swag:latest
@@ -234,6 +244,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | :----: | --- |
 | `-p 443:443` | HTTPS port |
 | `-p 80` | HTTP port (required for HTTP validation and HTTP -> HTTPS redirect) |
+| `-p 443/udp` | QUIC (HTTP/3) port. Must be enabled in the default and proxy confs. |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
@@ -420,6 +431,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **18.07.25:** - Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained.
 * **05.05.25:** - Disable Certbot's built in log rotation.
 * **19.01.25:** - Add [Auto Reload](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload) functionality to SWAG.
 * **17.12.24:** - Rebase to Alpine 3.21.

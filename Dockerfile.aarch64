@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:arm64v8-3.21
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:arm64v8-3.22
 
 # set version label
 ARG BUILD_DATE
@@ -49,37 +49,36 @@ RUN \
     nginx-mod-stream \
     nginx-mod-stream-geoip2 \
     nginx-vim \
-    php83-bcmath \
-    php83-bz2 \
-    php83-dom \
-    php83-exif \
-    php83-ftp \
-    php83-gd \
-    php83-gmp \
-    php83-imap \
-    php83-intl \
-    php83-ldap \
-    php83-mysqli \
-    php83-mysqlnd \
-    php83-opcache \
-    php83-pdo_mysql \
-    php83-pdo_odbc \
-    php83-pdo_pgsql \
-    php83-pdo_sqlite \
-    php83-pear \
-    php83-pecl-apcu \
-    php83-pecl-mcrypt \
-    php83-pecl-memcached \
-    php83-pecl-redis \
-    php83-pgsql \
-    php83-posix \
-    php83-soap \
-    php83-sockets \
-    php83-sodium \
-    php83-sqlite3 \
-    php83-tokenizer \
-    php83-xmlreader \
-    php83-xsl \
+    php84-bcmath \
+    php84-bz2 \
+    php84-dom \
+    php84-exif \
+    php84-ftp \
+    php84-gd \
+    php84-gmp \
+    php84-imap \
+    php84-intl \
+    php84-ldap \
+    php84-mysqli \
+    php84-mysqlnd \
+    php84-opcache \
+    php84-pdo_mysql \
+    php84-pdo_odbc \
+    php84-pdo_pgsql \
+    php84-pdo_sqlite \
+    php84-pear \
+    php84-pecl-apcu \
+    php84-pecl-memcached \
+    php84-pecl-redis \
+    php84-pgsql \
+    php84-posix \
+    php84-soap \
+    php84-sockets \
+    php84-sodium \
+    php84-sqlite3 \
+    php84-tokenizer \
+    php84-xmlreader \
+    php84-xsl \
     whois && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \
@@ -89,7 +88,7 @@ RUN \
   pip install -U --no-cache-dir \
     pip \
     wheel && \
-  pip install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.21/ \
+  pip install -U --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.22/ \
     certbot==${CERTBOT_VERSION} \
     certbot-dns-acmedns \
     certbot-dns-aliyun \

@@ -44,6 +44,7 @@ opt_param_env_vars:
 opt_param_usage_include_ports: true
 opt_param_ports:
   - {external_port: "80", internal_port: "80", port_desc: "HTTP port (required for HTTP validation and HTTP -> HTTPS redirect)"}
+  - {external_port: "443/udp", internal_port: "443/udp", port_desc: "QUIC (HTTP/3) port. Must be enabled in the default and proxy confs."}
 readonly_supported: true
 readonly_message: |
   * `/tmp` must be mounted to tmpfs
@@ -138,6 +139,16 @@ app_setup_block: |
   * Proxy sample files WILL be updated, however your renamed (enabled) proxy files will not.
   * You can check the new sample and adjust your active config as needed.
 
+  ### QUIC support
+
+  This image supports QUIC (also known as HTTP/3) but it must be explicitly enabled in each proxy conf, and the default conf, because if the listener is enabled and you don't expose 443/UDP, it can break connections with some browsers.
+
+  To enable QUIC, expose 443/UDP to your clients, then uncomment both QUIC listeners in all of your active proxy confs, as well as the default conf, and restart the container.
+
+  You should also uncomment the `Alt-Svc` header in your `ssl.conf` so that browsers are aware that you offer QUIC connectivity.
+
+  It is [recommended](https://quic-go.net/docs/quic/optimizations/#udp-buffer-sizes) to increase the UDP send/recieve buffer **on the host** by setting the `net.core.rmem_max` and `net.core.wmem_max` sysctls. Suggested values are 4-16Mb (4194304-16777216 bytes). For persistence between reboots use `/etc/sysctl.d/`.
+
   ### Migration from the old `linuxserver/letsencrypt` image
 
   Please follow the instructions [on this blog post](https://www.linuxserver.io/blog/2020-08-21-introducing-swag#migrate).
@@ -207,6 +218,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "18.07.25:", desc: "Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained."}
   - {date: "05.05.25:", desc: "Disable Certbot's built in log rotation."}
   - {date: "19.01.25:", desc: "Add [Auto Reload](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload) functionality to SWAG."}
   - {date: "17.12.24:", desc: "Rebase to Alpine 3.21."}

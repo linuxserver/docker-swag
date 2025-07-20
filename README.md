@@ -150,6 +150,8 @@ To enable QUIC, expose 443/UDP to your clients, then uncomment both QUIC listene
 
 You should also uncomment the `Alt-Svc` header in your `ssl.conf` so that browsers are aware that you offer QUIC connectivity.
 
+It is [recommended](https://quic-go.net/docs/quic/optimizations/#udp-buffer-sizes) to increase the UDP send/recieve buffer **on the host** by setting the `net.core.rmem_max` and `net.core.wmem_max` sysctls. Suggested values are 4-16Mb (4194304-16777216 bytes). For persistence between reboots use `/etc/sysctl.d/`.
+
 ### Migration from the old `linuxserver/letsencrypt` image
 
 Please follow the instructions [on this blog post](https://www.linuxserver.io/blog/2020-08-21-introducing-swag#migrate).

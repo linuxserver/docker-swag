@@ -204,7 +204,7 @@ services:
     ports:
       - 443:443
       - 80:80 #optional
-      - 443/udp:443/udp #optional
+      - 443:443/udp #optional
     restart: unless-stopped
 ```
 
@@ -232,7 +232,7 @@ docker run -d \
   -e SWAG_AUTORELOAD_WATCHLIST= `#optional` \
   -p 443:443 \
   -p 80:80 `#optional` \
-  -p 443/udp:443/udp `#optional` \
+  -p 443:443/udp `#optional` \
   -v /path/to/swag/config:/config \
   --restart unless-stopped \
   lscr.io/linuxserver/swag:latest

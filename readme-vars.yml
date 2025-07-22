@@ -44,7 +44,7 @@ opt_param_env_vars:
 opt_param_usage_include_ports: true
 opt_param_ports:
   - {external_port: "80", internal_port: "80", port_desc: "HTTP port (required for HTTP validation and HTTP -> HTTPS redirect)"}
-  - {external_port: "443/udp", internal_port: "443/udp", port_desc: "QUIC (HTTP/3) port. Must be enabled in the default and proxy confs."}
+  - {external_port: "443", internal_port: "443/udp", port_desc: "QUIC (HTTP/3) port. Must be enabled in the default and proxy confs."}
 readonly_supported: true
 readonly_message: |
   * `/tmp` must be mounted to tmpfs

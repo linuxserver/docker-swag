@@ -71,9 +71,9 @@ certbot-dns-njalla              2.0.2                 python
 certbot-dns-nsone               4.2.0                 python                   
 certbot-dns-ovh                 4.2.0                 python                   
 certbot-dns-porkbun             0.10.1                python                   
-certbot-dns-rfc2136             4.1.1                 python                   
-certbot-dns-route53             4.1.1                 python                   
-certbot-dns-sakuracloud         4.1.1                 python                   
+certbot-dns-rfc2136             4.2.0                 python                   
+certbot-dns-route53             4.2.0                 python                   
+certbot-dns-sakuracloud         4.2.0                 python                   
 certbot-dns-standalone          1.2.1                 python                   
 certbot-dns-transip             0.5.2                 python                   
 certbot-dns-vultr               1.1.0                 python                   

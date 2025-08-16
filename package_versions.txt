@@ -22,12 +22,12 @@ azure-mgmt-dns                  9.0.0                 python
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.13.4                python                   
-boto3                           1.40.6                python                   
-botocore                        1.40.6                python                   
+boto3                           1.40.11               python                   
+botocore                        1.40.11               python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
-busybox                         1.37.0-r18            apk                      
-busybox-binsh                   1.37.0-r18            apk                      
+busybox                         1.37.0-r19            apk                      
+busybox-binsh                   1.37.0-r19            apk                      
 c-ares                          1.34.5-r0             apk                      
 c-client                        2007f-r15             apk                      
 ca-certificates                 20250619-r0           apk                      
@@ -80,7 +80,7 @@ certbot-dns-vultr               1.1.0                 python
 certbot-plugin-gandi            1.5.0                 python                   
 certifi                         2025.8.3              python                   
 cffi                            1.17.1                python                   
-charset-normalizer              3.4.2                 python                   
+charset-normalizer              3.4.3                 python                   
 cli                             UNKNOWN               binary                   
 cli-32                          UNKNOWN               binary                   
 cli-64                          UNKNOWN               binary                   
@@ -103,7 +103,7 @@ domeneshop                      0.4.4                 python
 fail2ban                        1.1.0                 python                   
 fail2ban                        1.1.0-r3              apk                      
 fail2ban-pyc                    1.1.0-r3              apk                      
-filelock                        3.18.0                python                   
+filelock                        3.19.1                python                   
 findutils                       4.10.0-r0             apk                      
 fontconfig                      2.15.0-r3             apk                      
 freetype                        2.13.3-r0             apk                      
@@ -121,7 +121,7 @@ gnupg-utils                     2.4.7-r0              apk
 gnupg-wks-client                2.4.7-r0              apk                      
 gnutls                          3.8.8-r0              apk                      
 google-api-core                 2.25.1                python                   
-google-api-python-client        2.178.0               python                   
+google-api-python-client        2.179.0               python                   
 google-auth                     2.40.3                python                   
 google-auth-httplib2            0.2.0                 python                   
 googleapis-common-protos        1.70.0                python                   
@@ -319,7 +319,7 @@ platformdirs                    4.2.2                 python
 popt                            1.19-r4               apk                      
 procps-ng                       4.0.4-r3              apk                      
 proto-plus                      1.26.1                python                   
-protobuf                        6.31.1                python                   
+protobuf                        6.32.0                python                   
 pyacmedns                       0.4                   python                   
 pyasn1                          0.6.1                 python                   
 pyasn1-modules                  0.4.2                 python                   
@@ -351,7 +351,7 @@ six                             1.17.0                python
 skalibs-libs                    2.14.4.0-r0           apk                      
 soupsieve                       2.7                   python                   
 sqlite-libs                     3.49.2-r1             apk                      
-ssl_client                      1.37.0-r18            apk                      
+ssl_client                      1.37.0-r19            apk                      
 tiff                            4.7.0-r0              apk                      
 tldextract                      5.3.0                 python                   
 tomli                           2.0.1                 python                   

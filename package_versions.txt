@@ -21,9 +21,9 @@ azure-mgmt-core                 1.6.0                 python
 azure-mgmt-dns                  9.0.0                 python                   
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
-beautifulsoup4                  4.13.4                python                   
-boto3                           1.40.16               python                   
-botocore                        1.40.16               python                   
+beautifulsoup4                  4.13.5                python                   
+boto3                           1.40.21               python                   
+botocore                        1.40.21               python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r19            apk                      
@@ -134,7 +134,7 @@ gui                             UNKNOWN               binary
 gui-32                          UNKNOWN               binary                   
 gui-64                          UNKNOWN               binary                   
 gui-arm64                       UNKNOWN               binary                   
-httplib2                        0.22.0                python                   
+httplib2                        0.30.0                python                   
 icu-data-en                     76.1-r1               apk                      
 icu-libs                        76.1-r1               apk                      
 idna                            3.10                  python                   
@@ -291,7 +291,7 @@ php84-pdo_odbc                  8.4.11-r0             apk
 php84-pdo_pgsql                 8.4.11-r0             apk                      
 php84-pdo_sqlite                8.4.11-r0             apk                      
 php84-pear                      8.4.11-r0             apk                      
-php84-pecl-apcu                 5.1.26-r0             apk                      
+php84-pecl-apcu                 5.1.27-r0             apk                      
 php84-pecl-igbinary             3.2.16-r1             apk                      
 php84-pecl-imap                 1.0.3-r0              apk                      
 php84-pecl-memcached            3.3.0-r0              apk                      
@@ -330,7 +330,7 @@ pynamecheap                     0.0.3                 python
 pyopenssl                       25.1.0                python                   
 pyotp                           2.9.0                 python                   
 pyparsing                       3.2.3                 python                   
-pyrfc3339                       2.0.1                 python                   
+pyrfc3339                       2.1.0                 python                   
 python-dateutil                 2.9.0.post0           python                   
 python-digitalocean             1.17.0                python                   
 python-transip                  0.6.0                 python                   
@@ -349,7 +349,7 @@ setuptools                      80.9.0                python
 shadow                          4.17.3-r0             apk                      
 six                             1.17.0                python                   
 skalibs-libs                    2.14.4.0-r0           apk                      
-soupsieve                       2.7                   python                   
+soupsieve                       2.8                   python                   
 sqlite-libs                     3.49.2-r1             apk                      
 ssl_client                      1.37.0-r19            apk                      
 tiff                            4.7.0-r0              apk                      
@@ -357,7 +357,7 @@ tldextract                      5.3.0                 python
 tomli                           2.0.1                 python                   
 typeguard                       4.3.0                 python                   
 typing-extensions               4.12.2                python                   
-typing-extensions               4.14.1                python                   
+typing-extensions               4.15.0                python                   
 tzdata                          2025b-r0              apk                      
 unixodbc                        2.3.12-r0             apk                      
 uritemplate                     4.2.0                 python                   

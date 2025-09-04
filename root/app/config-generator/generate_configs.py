@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 
 # --- Configuration ---
 TEMPLATE_DIR = '/app/config-generator/templates'
-PROXY_OUTPUT_DIR = '/config/nginx/proxy-confs'
+PROXY_OUTPUT_DIR = '/config/nginx/env-proxy-confs'
 DEFAULT_CONF_OUTPUT = '/config/nginx/site-confs/default.conf'
 HTPASSWD_FILE = '/config/nginx/.htpasswd'
 # ---------------------

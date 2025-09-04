@@ -100,4 +100,6 @@ server {
 }
 
 # enable subdomain method reverse proxy confs
-include /config/nginx/proxy-confs/*.conf;
+include /config/nginx/proxy-confs/*.subdomain.conf;
+# enable env var subdomain method reverse proxy confs
+include /config/nginx/env-proxy-confs/*.subdomain.conf;

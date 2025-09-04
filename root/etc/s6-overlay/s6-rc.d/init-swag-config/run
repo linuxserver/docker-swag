@@ -43,12 +43,11 @@ if [[ ! -f /config/nginx/ldap-server.conf ]]; then
     cp /defaults/nginx/ldap-server.conf.sample /config/nginx/ldap-server.conf
 fi
 
+# clean the env target directory to ensure a fresh start
+rm -f /config/nginx/env-proxy-confs/*
 # check if any PROXY_CONFIG environment variables are set
 if env | grep -q "^PROXY_CONFIG_"; then
     echo "INFO: Found PROXY_CONFIG environment variables. Generating Nginx configs from environment..."
-    # clean the target directory to ensure a fresh start
-    echo "INFO: Cleaning /config/nginx/proxy-confs/ of existing files..."
-    rm -f /config/nginx/proxy-confs/*
     # run the Python generator script
     echo "INFO: Running python config generator..."
     if ! python3 /app/config-generator/generate_configs.py; then

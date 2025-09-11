@@ -79,6 +79,8 @@ RUN \
     php84-tokenizer \
     php84-xmlreader \
     php84-xsl \
+    python3 \
+    py3-jinja2 \
     whois && \
   echo "**** install certbot plugins ****" && \
   if [ -z ${CERTBOT_VERSION+x} ]; then \

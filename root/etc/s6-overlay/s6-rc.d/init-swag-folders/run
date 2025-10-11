@@ -6,6 +6,7 @@ mkdir -p \
     /config/{fail2ban,dns-conf} \
     /config/etc/letsencrypt/renewal-hooks \
     /config/log/{fail2ban,letsencrypt,nginx} \
+    /config/nginx/env-proxy-confs \
     /config/nginx/proxy-confs \
     /run/fail2ban \
     /tmp/letsencrypt

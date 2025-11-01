@@ -22,8 +22,8 @@ azure-mgmt-dns                  9.0.0                 python
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.2                python                   
-boto3                           1.40.59               python                   
-botocore                        1.40.59               python                   
+boto3                           1.40.64               python                   
+botocore                        1.40.64               python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r19            apk                      
@@ -120,10 +120,10 @@ gnupg-keyboxd                   2.4.7-r0              apk
 gnupg-utils                     2.4.7-r0              apk                      
 gnupg-wks-client                2.4.7-r0              apk                      
 gnutls                          3.8.8-r0              apk                      
-google-api-core                 2.27.0                python                   
-google-api-python-client        2.185.0               python                   
-google-auth                     2.41.1                python                   
-google-auth-httplib2            0.2.0                 python                   
+google-api-core                 2.28.1                python                   
+google-api-python-client        2.186.0               python                   
+google-auth                     2.42.1                python                   
+google-auth-httplib2            0.2.1                 python                   
 googleapis-common-protos        1.71.0                python                   
 gpg                             2.4.7-r0              apk                      
 gpg-agent                       2.4.7-r0              apk                      

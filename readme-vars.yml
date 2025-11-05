@@ -218,6 +218,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "04.11.25:", desc: "Switch default Gandi credentials from API Key to Token, allow DNS propagation time for Azure DNS plugin."}
   - {date: "18.07.25:", desc: "Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained."}
   - {date: "05.05.25:", desc: "Disable Certbot's built in log rotation."}
   - {date: "19.01.25:", desc: "Add [Auto Reload](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload) functionality to SWAG."}

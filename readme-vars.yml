@@ -82,6 +82,88 @@ app_setup_block: |
   Set the required credentials (usually found in the plugin documentation) in `/config/dns-conf/<plugin>.ini`.
   It is recommended to attempt obtaining a certificate with `STAGING=true` first to make sure the plugin is working as expected.
 
+
+  ### Dynamic Reverse Proxy Configuration via Environment Variables
+
+  SWAG can dynamically generate reverse proxy configuration files directly from environment variables, bypassing the need to manage individual `.conf` files. When any `PROXY_CONFIG_*` variable is detected, this mode is activated, and any existing `.conf` files in `/config/nginx/proxy-confs/` will be removed at startup.
+
+  **Service Definition**
+
+  Each reverse proxy service is defined by an environment variable following the format `PROXY_CONFIG_<SERVICE_NAME>`. The service name will be used as the subdomain (e.g., `SERVICE_NAME.yourdomain.com`), with the special exception of `DEFAULT` (see below). The value of the variable must be a valid JSON object.
+
+  ```yaml
+  environment:
+    # Configure the default site (root domain) to proxy to a dashboard service
+    - 'PROXY_CONFIG_DEFAULT={"name": "dashboard", "port": 80, "auth": "authelia", "quic": true}'
+
+    # Simple subdomain service
+    - 'PROXY_CONFIG_HOMARR={"port": 7575, "auth": "authelia"}'
+
+    # Service with a boolean flag for HTTPS backend and QUIC enabled
+    - 'PROXY_CONFIG_HEIMDALL={"port": 443, "https": true, "quic": true}'
+    
+    # Complex service with nested objects and lists (incomplete example for syntax)
+    - 'PROXY_CONFIG_PLEX={
+        "port": 32400,
+        "proxy_redirect_off": true,
+        "buffering_off": true,
+        "proxy_set_headers": [
+          {"key": "X-Plex-Client-Identifier", "value": "$$http_x_plex_client_identifier"},
+          {"key": "X-Plex-Device", "value": "$$http_x_plex_device"}
+        ],
+        "extra_locations": [
+          {"path": "/library/streams/", "custom_directives": ["proxy_pass_request_headers off"]}
+        ]
+      }'
+  ```
+
+  The available keys in the JSON object correspond to the options in the underlying Nginx template. Common keys include `port`, `https`, `quic`, `auth`, `buffering_off`, `proxy_set_headers`, and `extra_locations`.
+
+  **Configuring the Default Site (Root Domain)**
+
+  To configure the service that responds on your root domain (e.g., `https://yourdomain.com`), use the special service name `DEFAULT`.
+
+  *   The environment variable is `PROXY_CONFIG_DEFAULT`.
+  *   Unlike subdomain services, the `DEFAULT` configuration **must** include a `"name"` key in its JSON value. This key specifies the name of the container that SWAG should proxy traffic to.
+  *   If `PROXY_CONFIG_DEFAULT` is not set, the container will serve the standard SWAG welcome page on the root domain.
+
+  Example:
+  ```yaml
+  environment:
+    # This will proxy https://yourdomain.com to the 'dashboard' container on port 80
+    - 'PROXY_CONFIG_DEFAULT={"name": "dashboard", "port": 80, "auth": "none"}'
+  ```
+
+  **Authentication Management**
+
+  Authentication can be managed globally or per-service with a clear order of precedence.
+
+  1.  **Per-Service Override (Highest Priority):** Add an `auth` key directly inside the service's JSON configuration.
+      *   `"auth": "authelia"`: Enables Authelia for this service.
+      *   `"auth": "basic"`: Enables Basic Authentication for this service (see below).
+      *   `"auth": "none"`: Explicitly disables authentication for this service.
+
+  2.  **Global Exclusions:** A comma-separated list of service names to exclude from the global authenticator.
+      *   `PROXY_AUTH_EXCLUDE=ntfy,public-dashboard`
+
+  3.  **Global Default (Lowest Priority):** A single variable sets the default authentication provider for all services that don't have a per-service override and are not in the exclusion list.
+      *   `PROXY_AUTH_PROVIDER=authelia` (can be `ldap`, `authentik`, etc.)
+
+  **Basic Authentication**
+
+  If you set `"auth": "basic"` for any service, you must also provide the credentials using these two environment variables. The container will automatically create the necessary `.htpasswd` file.
+
+  *   `PROXY_AUTH_BASIC_USER`: The username for basic authentication.
+  *   `PROXY_AUTH_BASIC_PASS`: The password for basic authentication.
+
+  Example:
+  ```yaml
+  environment:
+    - 'PROXY_CONFIG_PORTAINER={"port": 9000, "auth": "basic"}'
+    - PROXY_AUTH_BASIC_USER=myadmin
+    - PROXY_AUTH_BASIC_PASS=supersecretpassword
+  ```
+
   ### Security and password protection
 
   * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start.
@@ -218,6 +300,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "02.09.25:", desc: "Add ability to define proxy configurations via environment variables."}
   - {date: "18.07.25:", desc: "Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained."}
   - {date: "05.05.25:", desc: "Disable Certbot's built in log rotation."}
   - {date: "19.01.25:", desc: "Add [Auto Reload](https://github.com/linuxserver/docker-mods/tree/swag-auto-reload) functionality to SWAG."}

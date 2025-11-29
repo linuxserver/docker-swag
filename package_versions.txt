@@ -22,12 +22,12 @@ azure-mgmt-dns                  9.0.0                 python
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.2                python                   
-boto3                           1.41.2                python                   
-botocore                        1.41.2                python                   
+boto3                           1.41.5                python                   
+botocore                        1.41.5                python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
-busybox                         1.37.0-r19            apk                      
-busybox-binsh                   1.37.0-r19            apk                      
+busybox                         1.37.0-r20            apk                      
+busybox-binsh                   1.37.0-r20            apk                      
 c-ares                          1.34.5-r0             apk                      
 c-client                        2007f-r15             apk                      
 ca-certificates                 20250911-r0           apk                      
@@ -153,7 +153,7 @@ jaraco-text                     3.12.1                python
 jinja2                          3.1.6                 python                   
 jmespath                        1.0.1                 python                   
 josepy                          2.2.0                 python                   
-jq                              1.8.0-r0              apk                      
+jq                              1.8.1-r0              apk                      
 jsonlines                       4.0.0                 python                   
 jsonpickle                      4.1.1                 python                   
 libapk2                         2.14.9-r3             apk                      
@@ -188,7 +188,7 @@ libmnl                          1.0.5-r2              apk
 libncursesw                     6.5_p20250503-r0      apk                      
 libnftnl                        1.2.9-r0              apk                      
 libpanelw                       6.5_p20250503-r0      apk                      
-libpng                          1.6.47-r0             apk                      
+libpng                          1.6.51-r0             apk                      
 libpq                           17.7-r0               apk                      
 libproc2                        4.0.4-r3              apk                      
 libpsl                          0.21.5-r3             apk                      
@@ -351,7 +351,7 @@ six                             1.17.0                python
 skalibs-libs                    2.14.4.0-r0           apk                      
 soupsieve                       2.8                   python                   
 sqlite-libs                     3.49.2-r1             apk                      
-ssl_client                      1.37.0-r19            apk                      
+ssl_client                      1.37.0-r20            apk                      
 tiff                            4.7.1-r0              apk                      
 tldextract                      5.3.0                 python                   
 tomli                           2.0.1                 python                   

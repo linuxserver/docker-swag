@@ -22,8 +22,8 @@ azure-mgmt-dns                  9.0.0                 python
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.3                python                   
-boto3                           1.42.2                python                   
-botocore                        1.42.2                python                   
+boto3                           1.42.4                python                   
+botocore                        1.42.4                python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r20            apk                      
@@ -319,7 +319,7 @@ platformdirs                    4.2.2                 python
 popt                            1.19-r4               apk                      
 procps-ng                       4.0.4-r3              apk                      
 proto-plus                      1.26.1                python                   
-protobuf                        6.33.1                python                   
+protobuf                        6.33.2                python                   
 pyacmedns                       0.4                   python                   
 pyasn1                          0.6.1                 python                   
 pyasn1-modules                  0.4.2                 python                   
@@ -361,7 +361,7 @@ typing-extensions               4.15.0                python
 tzdata                          2025b-r0              apk                      
 unixodbc                        2.3.12-r0             apk                      
 uritemplate                     4.2.0                 python                   
-urllib3                         2.5.0                 python                   
+urllib3                         2.6.0                 python                   
 utmps-libs                      0.1.3.1-r0            apk                      
 wheel                           0.45.1                python  (+1 duplicate)   
 whois                           5.6.3-r0              apk                      

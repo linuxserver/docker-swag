@@ -7,7 +7,7 @@ alpine-baselayout-data          3.7.0-r0              apk
 alpine-keys                     2.5-r0                apk                      
 alpine-release                  3.22.2-r0             apk                      
 aom-libs                        3.12.1-r0             apk                      
-apache2-utils                   2.4.65-r0             apk                      
+apache2-utils                   2.4.66-r0             apk                      
 apk-tools                       2.14.9-r3             apk                      
 apr                             1.7.5-r0              apk                      
 apr-util                        1.6.3-r1              apk                      
@@ -15,15 +15,15 @@ argon2-libs                     20190702-r5           apk
 attrs                           25.4.0                python                   
 autocommand                     2.2.2                 python                   
 azure-common                    1.1.28                python                   
-azure-core                      1.36.0                python                   
+azure-core                      1.37.0                python                   
 azure-identity                  1.25.1                python                   
 azure-mgmt-core                 1.6.0                 python                   
 azure-mgmt-dns                  9.0.0                 python                   
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.3                python                   
-boto3                           1.42.6                python                   
-botocore                        1.42.6                python                   
+boto3                           1.42.9                python                   
+botocore                        1.42.9                python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r20            apk                      
@@ -32,7 +32,7 @@ c-ares                          1.34.5-r0             apk
 c-client                        2007f-r15             apk                      
 ca-certificates                 20250911-r0           apk                      
 ca-certificates-bundle          20250911-r0           apk                      
-cachetools                      6.2.2                 python                   
+cachetools                      6.2.3                 python                   
 catatonit                       0.2.1-r0              apk                      
 certbot                         5.2.2                 python                   
 certbot-dns-acmedns             0.1.0                 python                   
@@ -361,7 +361,7 @@ typing-extensions               4.15.0                python
 tzdata                          2025b-r0              apk                      
 unixodbc                        2.3.12-r0             apk                      
 uritemplate                     4.2.0                 python                   
-urllib3                         2.6.1                 python                   
+urllib3                         2.6.2                 python                   
 utmps-libs                      0.1.3.1-r0            apk                      
 wheel                           0.45.1                python  (+1 duplicate)   
 whois                           5.6.3-r0              apk                      

@@ -22,8 +22,8 @@ azure-mgmt-dns                  9.0.0                 python
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.3                python                   
-boto3                           1.42.21               python                   
-botocore                        1.42.21               python                   
+boto3                           1.42.25               python                   
+botocore                        1.42.25               python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r20            apk                      
@@ -32,7 +32,6 @@ c-ares                          1.34.6-r0             apk
 c-client                        2007f-r15             apk                      
 ca-certificates                 20250911-r0           apk                      
 ca-certificates-bundle          20250911-r0           apk                      
-cachetools                      6.2.4                 python                   
 catatonit                       0.2.1-r0              apk                      
 certbot                         5.2.2                 python                   
 certbot-dns-acmedns             0.1.0                 python                   
@@ -78,7 +77,7 @@ certbot-dns-standalone          1.2.1                 python
 certbot-dns-transip             0.5.2                 python                   
 certbot-dns-vultr               1.1.0                 python                   
 certbot-plugin-gandi            1.5.0                 python                   
-certifi                         2025.11.12            python                   
+certifi                         2026.1.4              python                   
 cffi                            2.0.0                 python                   
 charset-normalizer              3.4.4                 python                   
 cli                             UNKNOWN               binary                   
@@ -103,7 +102,7 @@ domeneshop                      0.4.4                 python
 fail2ban                        1.1.0                 python                   
 fail2ban                        1.1.0-r3              apk                      
 fail2ban-pyc                    1.1.0-r3              apk                      
-filelock                        3.20.2                python                   
+filelock                        3.20.3                python                   
 findutils                       4.10.0-r0             apk                      
 fontconfig                      2.15.0-r3             apk                      
 freetype                        2.13.3-r0             apk                      
@@ -120,9 +119,9 @@ gnupg-keyboxd                   2.4.9-r0              apk
 gnupg-utils                     2.4.9-r0              apk                      
 gnupg-wks-client                2.4.9-r0              apk                      
 gnutls                          3.8.8-r0              apk                      
-google-api-core                 2.28.1                python                   
+google-api-core                 2.29.0                python                   
 google-api-python-client        2.187.0               python                   
-google-auth                     2.45.0                python                   
+google-auth                     2.47.0                python                   
 google-auth-httplib2            0.3.0                 python                   
 googleapis-common-protos        1.72.0                python                   
 gpg                             2.4.9-r0              apk                      
@@ -319,7 +318,7 @@ platformdirs                    4.2.2                 python
 popt                            1.19-r4               apk                      
 procps-ng                       4.0.4-r3              apk                      
 proto-plus                      1.27.0                python                   
-protobuf                        6.33.2                python                   
+protobuf                        6.33.3                python                   
 pyacmedns                       0.4                   python                   
 pyasn1                          0.6.1                 python                   
 pyasn1-modules                  0.4.2                 python                   
@@ -361,12 +360,12 @@ typing-extensions               4.15.0                python
 tzdata                          2025c-r0              apk                      
 unixodbc                        2.3.12-r0             apk                      
 uritemplate                     4.2.0                 python                   
-urllib3                         2.6.2                 python                   
+urllib3                         2.6.3                 python                   
 utmps-libs                      0.1.3.1-r0            apk                      
 wheel                           0.45.1                python  (+1 duplicate)   
 whois                           5.6.3-r0              apk                      
 xz-libs                         5.8.1-r0              apk                      
 zipp                            3.19.2                python                   
 zlib                            1.3.1-r2              apk                      
-zope-interface                  8.1.1                 python                   
+zope-interface                  8.2                   python                   
 zstd-libs                       1.5.7-r0              apk                      

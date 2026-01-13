@@ -254,7 +254,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e VALIDATION=http` | Certbot validation method to use, options are `http` or `dns` (`dns` method also requires `DNSPLUGIN` variable set). |
 | `-e SUBDOMAINS=www,` | Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this *exactly* to `wildcard` (wildcard cert is available via `dns` validation only) |
 | `-e CERTPROVIDER=` | Optionally define the cert provider. Set to `zerossl` for ZeroSSL certs (requires existing [ZeroSSL account](https://app.zerossl.com/signup) and the e-mail address entered in `EMAIL` env var). Otherwise defaults to Let's Encrypt. |
-| `-e DNSPLUGIN=cloudflare` | Required if `VALIDATION` is set to `dns`. Options are `acmedns`, `aliyun`, `azure`, `bunny`, `cloudflare`, `cpanel`, `desec`, `digitalocean`, `directadmin`, `dnsimple`, `dnsmadeeasy`, `dnspod`, `do`, `domeneshop`, `dreamhost`, `duckdns`, `dynu`, `freedns`, `gandi`, `gehirn`, `glesys`, `godaddy`, `google`, `he`, `hetzner`, `infomaniak`, `inwx`, `ionos`, `linode`, `loopia`, `luadns`, `namecheap`, `netcup`, `njalla`, `nsone`, `ovh`, `porkbun`, `rfc2136`, `route53`, `sakuracloud`, `standalone`, `transip`, and `vultr`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`. |
+| `-e DNSPLUGIN=cloudflare` | Required if `VALIDATION` is set to `dns`. Options are `acmedns`, `aliyun`, `azure`, `bunny`, `cloudflare`, `cpanel`, `desec`, `digitalocean`, `directadmin`, `dnsimple`, `dnsmadeeasy`, `dnspod`, `do`, `domeneshop`, `dreamhost`, `duckdns`, `dynu`, `freedns`, `gandi`, `gehirn`, `glesys`, `godaddy`, `google`, `he`, `hetzner`, `hetzner-cloud`, `infomaniak`, `inwx`, `ionos`, `linode`, `loopia`, `luadns`, `namecheap`, `netcup`, `njalla`, `nsone`, `ovh`, `porkbun`, `rfc2136`, `route53`, `sakuracloud`, `standalone`, `transip`, and `vultr`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`. |
 | `-e PROPAGATION=` | Optionally override (in seconds) the default propagation time for the dns plugins. |
 | `-e EMAIL=` | Optional e-mail address used for cert expiration notifications (Required for ZeroSSL). |
 | `-e ONLY_SUBDOMAINS=false` | If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true` |
@@ -433,6 +433,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **21.12.25:** - Add support for hetzner-cloud dns validation.
 * **04.11.25:** - Switch default Gandi credentials from API Key to Token, allow DNS propagation time for Azure DNS plugin.
 * **18.07.25:** - Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained.
 * **05.05.25:** - Disable Certbot's built in log rotation.

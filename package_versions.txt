@@ -22,8 +22,8 @@ azure-mgmt-dns                  9.0.0                 python
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.3                python                   
-boto3                           1.42.26               python                   
-botocore                        1.42.26               python                   
+boto3                           1.42.30               python                   
+botocore                        1.42.30               python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r20            apk                      
@@ -121,7 +121,7 @@ gnupg-utils                     2.4.9-r0              apk
 gnupg-wks-client                2.4.9-r0              apk                      
 gnutls                          3.8.8-r0              apk                      
 google-api-core                 2.29.0                python                   
-google-api-python-client        2.187.0               python                   
+google-api-python-client        2.188.0               python                   
 google-auth                     2.47.0                python                   
 google-auth-httplib2            0.3.0                 python                   
 googleapis-common-protos        1.72.0                python                   
@@ -134,8 +134,8 @@ gui                             UNKNOWN               binary
 gui-32                          UNKNOWN               binary                   
 gui-64                          UNKNOWN               binary                   
 gui-arm64                       UNKNOWN               binary                   
-hcloud                          2.14.0                python                   
-httplib2                        0.31.0                python                   
+hcloud                          2.15.0                python                   
+httplib2                        0.31.1                python                   
 icu-data-en                     76.1-r1               apk                      
 icu-libs                        76.1-r1               apk                      
 idna                            3.11                  python                   
@@ -322,7 +322,7 @@ procps-ng                       4.0.4-r3              apk
 proto-plus                      1.27.0                python                   
 protobuf                        6.33.4                python                   
 pyacmedns                       0.4                   python                   
-pyasn1                          0.6.1                 python                   
+pyasn1                          0.6.2                 python                   
 pyasn1-modules                  0.4.2                 python                   
 pyc                             3.12.12-r0            apk                      
 pycparser                       2.23                  python                   

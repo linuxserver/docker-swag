@@ -168,9 +168,9 @@ fi
 rm -rf /config/keys/letsencrypt
 if [[ "${ONLY_SUBDOMAINS}" = "true" ]] && [[ ! "${SUBDOMAINS}" = "wildcard" ]]; then
     DOMAIN="$(echo "${SUBDOMAINS}" | tr ',' ' ' | awk '{print $1}').${URL}"
-    ln -s /config/etc/letsencrypt/live/"${DOMAIN}" /config/keys/letsencrypt
+    ln -s ../etc/letsencrypt/live/"${DOMAIN}" /config/keys/letsencrypt
 else
-    ln -s /config/etc/letsencrypt/live/"${URL}" /config/keys/letsencrypt
+    ln -s ../etc/letsencrypt/live/"${URL}" /config/keys/letsencrypt
 fi
 
 # cleanup unused csr and keys folders

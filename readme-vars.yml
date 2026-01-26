@@ -177,7 +177,7 @@ init_diagram: |
     init-mods-end -> init-custom-files
     init-adduser -> init-device-perms
     base -> init-envfile
-    init-swag-samples -> init-fail2ban-config
+    init-require-url -> init-fail2ban-config
     init-os-end -> init-folders
     init-php -> init-keygen
     base -> init-migrations
@@ -198,9 +198,10 @@ init_diagram: |
     init-folders -> init-samples
     init-custom-files -> init-services
     init-fail2ban-config -> init-swag-config
-    init-require-url -> init-swag-folders
+    init-permissions -> init-swag-folders
     init-swag-folders -> init-swag-samples
     init-permissions -> init-version-checks
+    init-swag-samples -> init-version-checks
     init-services -> svc-cron
     svc-cron -> legacy-services
     init-services -> svc-fail2ban

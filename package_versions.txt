@@ -258,8 +258,7 @@ npth                            1.8-r0                apk
 oniguruma                       6.9.10-r0             apk                      
 openssl                         3.5.4-r0              apk                      
 p11-kit                         0.25.5-r2             apk                      
-packaging                       25.0                  python                   
-packaging                       26.0                  python                   
+packaging                       26.0                  python  (+1 duplicate)   
 parsedatetime                   2.6                   python                   
 pcre2                           10.46-r0              apk                      
 perl                            5.40.3-r0             apk                      
@@ -346,7 +345,7 @@ requests-mock                   1.12.1                python
 rsa                             4.9.1                 python                   
 s3transfer                      0.16.0                python                   
 scanelf                         1.3.8-r1              apk                      
-setuptools                      80.10.1               python                   
+setuptools                      80.10.2               python                   
 shadow                          4.17.3-r0             apk                      
 six                             1.17.0                python                   
 skalibs-libs                    2.14.4.0-r0           apk                      
@@ -362,8 +361,7 @@ unixodbc                        2.3.12-r0             apk
 uritemplate                     4.2.0                 python                   
 urllib3                         2.6.3                 python                   
 utmps-libs                      0.1.3.1-r0            apk                      
-wheel                           0.45.1                python                   
-wheel                           0.46.3                python                   
+wheel                           0.46.3                python  (+1 duplicate)   
 whois                           5.6.3-r0              apk                      
 xz-libs                         5.8.1-r0              apk                      
 zipp                            3.23.0                python                   

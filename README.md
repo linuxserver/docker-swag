@@ -433,6 +433,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **23.01.26:** - Reorder init to fix proxy conf version checks.
 * **21.12.25:** - Add support for hetzner-cloud dns validation.
 * **04.11.25:** - Switch default Gandi credentials from API Key to Token, allow DNS propagation time for Azure DNS plugin.
 * **18.07.25:** - Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained.

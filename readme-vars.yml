@@ -218,6 +218,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "23.01.26:", desc: "Reorder init to fix proxy conf version checks."}
   - {date: "21.12.25:", desc: "Add support for hetzner-cloud dns validation."}
   - {date: "04.11.25:", desc: "Switch default Gandi credentials from API Key to Token, allow DNS propagation time for Azure DNS plugin."}
   - {date: "18.07.25:", desc: "Rebase to Alpine 3.22 with PHP 8.4. Add QUIC support. Drop PHP bindings for mcrypt as it is no longer maintained."}

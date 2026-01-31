@@ -22,8 +22,8 @@ azure-mgmt-dns                  9.0.0                 python
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.3                python                   
-boto3                           1.42.34               python                   
-botocore                        1.42.34               python                   
+boto3                           1.42.39               python                   
+botocore                        1.42.39               python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r20            apk                      
@@ -86,14 +86,14 @@ cli-32                          UNKNOWN               binary
 cli-64                          UNKNOWN               binary                   
 cli-arm64                       UNKNOWN               binary                   
 cloudflare                      2.19.4                python                   
-composer                        2.9.4                 binary                   
+composer                        2.9.5                 binary                   
 configargparse                  1.7.1                 python                   
 configobj                       5.0.9                 python                   
 coreutils                       9.7-r1                apk                      
 coreutils-env                   9.7-r1                apk                      
 coreutils-fmt                   9.7-r1                apk                      
 coreutils-sha512sum             9.7-r1                apk                      
-cryptography                    46.0.3                python                   
+cryptography                    46.0.4                python                   
 curl                            8.14.1-r2             apk                      
 distro                          1.9.0                 python                   
 dns-lexicon                     3.23.2                python                   
@@ -123,7 +123,7 @@ gnupg-wks-client                2.4.9-r0              apk
 gnutls                          3.8.8-r0              apk                      
 google-api-core                 2.29.0                python                   
 google-api-python-client        2.188.0               python                   
-google-auth                     2.47.0                python                   
+google-auth                     2.48.0                python                   
 google-auth-httplib2            0.3.0                 python                   
 googleapis-common-protos        1.72.0                python                   
 gpg                             2.4.9-r0              apk                      
@@ -162,7 +162,7 @@ libattr                         2.5.2-r2              apk
 libavif                         1.3.0-r0              apk                      
 libbsd                          0.12.2-r0             apk                      
 libbz2                          1.0.8-r6              apk                      
-libcrypto3                      3.5.4-r0              apk                      
+libcrypto3                      3.5.5-r0              apk                      
 libcurl                         8.14.1-r2             apk                      
 libdav1d                        1.5.1-r0              apk                      
 libedit                         20250104.3.1-r1       apk                      
@@ -197,7 +197,7 @@ libseccomp                      2.6.0-r0              apk
 libsharpyuv                     1.5.0-r0              apk                      
 libsm                           1.2.5-r0              apk                      
 libsodium                       1.0.20-r1             apk                      
-libssl3                         3.5.4-r0              apk                      
+libssl3                         3.5.5-r0              apk                      
 libstdc++                       14.2.0-r6             apk                      
 libtasn1                        4.21.0-r0             apk                      
 libunistring                    1.3-r0                apk                      
@@ -256,7 +256,7 @@ nginx-mod-stream-geoip2         1.28.0-r3             apk
 nginx-vim                       1.28.0-r3             apk                      
 npth                            1.8-r0                apk                      
 oniguruma                       6.9.10-r0             apk                      
-openssl                         3.5.4-r0              apk                      
+openssl                         3.5.5-r0              apk                      
 p11-kit                         0.25.5-r2             apk                      
 packaging                       26.0                  python  (+1 duplicate)   
 parsedatetime                   2.6                   python                   
@@ -313,19 +313,19 @@ php84-xmlwriter                 8.4.16-r0             apk
 php84-xsl                       8.4.16-r0             apk                      
 php84-zip                       8.4.16-r0             apk                      
 pinentry                        1.3.1-r0              apk                      
-pip                             25.3                  python                   
+pip                             26.0                  python                   
 pkb-client                      2.2.0                 python                   
 platformdirs                    4.4.0                 python                   
 popt                            1.19-r4               apk                      
 procps-ng                       4.0.4-r3              apk                      
 proto-plus                      1.27.0                python                   
-protobuf                        6.33.4                python                   
+protobuf                        6.33.5                python                   
 pyacmedns                       0.4                   python                   
 pyasn1                          0.6.2                 python                   
 pyasn1-modules                  0.4.2                 python                   
 pyc                             3.12.12-r0            apk                      
 pycparser                       3.0                   python                   
-pyjwt                           2.10.1                python                   
+pyjwt                           2.11.0                python                   
 pynamecheap                     0.0.3                 python                   
 pyopenssl                       25.3.0                python                   
 pyotp                           2.9.0                 python                   

@@ -15,15 +15,15 @@ argon2-libs                     20190702-r5           apk
 attrs                           25.4.0                python                   
 autocommand                     2.2.2                 python                   
 azure-common                    1.1.28                python                   
-azure-core                      1.38.0                python                   
-azure-identity                  1.25.1                python                   
+azure-core                      1.38.1                python                   
+azure-identity                  1.25.2                python                   
 azure-mgmt-core                 1.6.0                 python                   
 azure-mgmt-dns                  9.0.0                 python                   
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.3                python                   
-boto3                           1.42.45               python                   
-botocore                        1.42.45               python                   
+boto3                           1.42.49               python                   
+botocore                        1.42.49               python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r20            apk                      
@@ -93,7 +93,7 @@ coreutils                       9.7-r1                apk
 coreutils-env                   9.7-r1                apk                      
 coreutils-fmt                   9.7-r1                apk                      
 coreutils-sha512sum             9.7-r1                apk                      
-cryptography                    46.0.4                python                   
+cryptography                    46.0.5                python                   
 curl                            8.14.1-r2             apk                      
 distro                          1.9.0                 python                   
 dns-lexicon                     3.23.2                python                   
@@ -104,7 +104,7 @@ domeneshop                      0.4.4                 python
 fail2ban                        1.1.0                 python                   
 fail2ban                        1.1.0-r3              apk                      
 fail2ban-pyc                    1.1.0-r3              apk                      
-filelock                        3.20.3                python                   
+filelock                        3.23.0                python                   
 findutils                       4.10.0-r0             apk                      
 fontconfig                      2.15.0-r3             apk                      
 freetype                        2.13.3-r0             apk                      
@@ -122,7 +122,7 @@ gnupg-utils                     2.4.9-r0              apk
 gnupg-wks-client                2.4.9-r0              apk                      
 gnutls                          3.8.8-r0              apk                      
 google-api-core                 2.29.0                python                   
-google-api-python-client        2.189.0               python                   
+google-api-python-client        2.190.0               python                   
 google-auth                     2.48.0                python                   
 google-auth-httplib2            0.3.0                 python                   
 googleapis-common-protos        1.72.0                python                   

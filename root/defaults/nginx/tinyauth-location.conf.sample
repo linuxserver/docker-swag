@@ -1,4 +1,5 @@
-## Version 2025/06/08 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/tinyauth-location.conf.sample
+## Version 2025/12/17 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/tinyauth-location.conf.sample
+# Add headers for Forward Auth
 # Make sure that your tinyauth container is in the same user defined bridge network and is named tinyauth
 # Rename /config/nginx/proxy-confs/tinyauth.subdomain.conf.sample to /config/nginx/proxy-confs/tinyauth.subdomain.conf
 
@@ -7,3 +8,17 @@ auth_request /tinyauth;
 
 ## If the subreqest returns 200 pass to the backend, if the subrequest returns 401 redirect to the portal
 error_page 401 = @tinyauth_login;
+
+## Translate the user information response headers from the auth subrequest into variables
+auth_request_set $email $upstream_http_remote_email;
+auth_request_set $groups $upstream_http_remote_groups;
+auth_request_set $name $upstream_http_remote_name;
+auth_request_set $user $upstream_http_remote_user;
+
+## Inject the user information into the request made to the actual upstream
+proxy_set_header Remote-Email $email;
+proxy_set_header Remote-Groups $groups;
+proxy_set_header Remote-Name $name;
+proxy_set_header Remote-User $user;
+
+## Can be extended with more custom headers https://tinyauth.app/docs/reference/headers#nginxnginx-proxy-manager

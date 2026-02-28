@@ -1,0 +1,29 @@
+## Version 2025/08/23 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/oauth2-proxy-server.conf.sample
+# Make sure that your oauth2-proxy container is in the same user defined bridge network and is named oauth2-proxy
+
+location /oauth2/ {
+    include /config/nginx/resolver.conf;
+    set $upstream_oauth2_proxy oauth2-proxy;
+    proxy_pass       http://$upstream_oauth2_proxy:4180;
+
+    proxy_set_header Host                    $host;
+    proxy_set_header X-Real-IP               $remote_addr;
+    proxy_set_header X-Auth-Request-Redirect $request_uri;
+    # or, if you are handling multiple domains:
+    # proxy_set_header X-Auth-Request-Redirect $scheme://$host$request_uri;
+}
+
+location = /oauth2/auth {
+    internal;
+
+    include /config/nginx/resolver.conf;
+    set $upstream_oauth2_proxy oauth2-proxy;
+    proxy_pass       http://$upstream_oauth2_proxy:4180;
+
+    proxy_set_header Host             $host;
+    proxy_set_header X-Real-IP        $remote_addr;
+    proxy_set_header X-Forwarded-Uri  $request_uri;
+    # nginx auth_request includes headers but not body
+    proxy_set_header Content-Length   "";
+    proxy_pass_request_body           off;
+}

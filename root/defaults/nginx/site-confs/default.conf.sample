@@ -1,4 +1,4 @@
-## Version 2025/07/18 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
+## Version 2025/08/23 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
 
 # redirect all traffic to https
 server {
@@ -36,6 +36,12 @@ server {
     # enable for Authentik (requires authentik-location.conf in the location block)
     #include /config/nginx/authentik-server.conf;
 
+    # enable for OAuth2 Proxy (requires oauth2-proxy-location.conf in the location block)
+    #include /config/nginx/oauth2-proxy-server.conf;
+
+    # enable for Tinyauth (requires tinyauth-location.conf in the location block)
+    #include /config/nginx/tinyauth-server.conf;
+
     location / {
         # enable for basic auth
         #auth_basic "Restricted";
@@ -49,6 +55,12 @@ server {
 
         # enable for Authentik (requires authentik-server.conf in the server block)
         #include /config/nginx/authentik-location.conf;
+
+        # enable for OAuth2 Proxy (requires oauth2-proxy-server.conf in the server block)
+        #include /config/nginx/oauth2-proxy-location.conf;
+
+        # enable for Tinyauth (requires tinyauth-server.conf in the server block)
+        #include /config/nginx/tinyauth-location.conf;
 
         try_files $uri $uri/ /index.html /index.htm /index.php$is_args$args;
     }
@@ -66,6 +78,12 @@ server {
 
         # enable for Authentik (requires authentik-server.conf in the server block)
         #include /config/nginx/authentik-location.conf;
+
+        # enable for OAuth2 Proxy (requires oauth2-proxy-server.conf in the server block)
+        #include /config/nginx/oauth2-proxy-location.conf;
+
+        # enable for Tinyauth (requires tinyauth-server.conf in the server block)
+        #include /config/nginx/tinyauth-location.conf;
 
         fastcgi_split_path_info ^(.+\.php)(.*)$;
         if (!-f $document_root$fastcgi_script_name) { return 404; }

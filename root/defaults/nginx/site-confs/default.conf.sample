@@ -1,4 +1,4 @@
-## Version 2025/07/18 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
+## Version 2026/02/08 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
 
 # redirect all traffic to https
 server {
@@ -13,9 +13,9 @@ server {
 # main server block
 server {
     listen 443 ssl default_server;
-#    listen 443 quic reuseport default_server;
     listen [::]:443 ssl default_server;
-#    listen [::]:443 quic reuseport default_server;
+    #listen 443 quic reuseport default_server;
+    #listen [::]:443 quic reuseport default_server;
 
     server_name _;
 
@@ -74,9 +74,17 @@ server {
         include /etc/nginx/fastcgi_params;
     }
 
-    # deny access to .htaccess/.htpasswd files
-    location ~ /\.ht {
+    # deny access to all dotfiles
+    location ~ /\. {
         deny all;
+        log_not_found off;
+        access_log off;
+        return 404;
+    }
+
+    # Allow access to the ".well-known" directory
+    location ^~ /.well-known {
+        allow all;
     }
 }
 

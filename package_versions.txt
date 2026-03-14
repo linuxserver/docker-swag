@@ -15,15 +15,15 @@ argon2-libs                     20190702-r5           apk
 attrs                           25.4.0                python                   
 autocommand                     2.2.2                 python                   
 azure-common                    1.1.28                python                   
-azure-core                      1.38.2                python                   
-azure-identity                  1.25.2                python                   
+azure-core                      1.38.3                python                   
+azure-identity                  1.25.3                python                   
 azure-mgmt-core                 1.6.0                 python                   
 azure-mgmt-dns                  9.0.0                 python                   
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.3                python                   
-boto3                           1.42.64               python                   
-botocore                        1.42.64               python                   
+boto3                           1.42.68               python                   
+botocore                        1.42.68               python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r20            apk                      
@@ -87,7 +87,7 @@ cli-64                          UNKNOWN               binary
 cli-arm64                       UNKNOWN               binary                   
 cloudflare                      2.19.4                python                   
 composer                        2.9.5                 binary                   
-configargparse                  1.7.3                 python                   
+configargparse                  1.7.5                 python                   
 configobj                       5.0.9                 python                   
 coreutils                       9.7-r1                apk                      
 coreutils-env                   9.7-r1                apk                      
@@ -104,7 +104,7 @@ domeneshop                      0.4.4                 python
 fail2ban                        1.1.0                 python                   
 fail2ban                        1.1.0-r3              apk                      
 fail2ban-pyc                    1.1.0-r3              apk                      
-filelock                        3.25.1                python                   
+filelock                        3.25.2                python                   
 findutils                       4.10.0-r0             apk                      
 fontconfig                      2.15.0-r3             apk                      
 freetype                        2.13.3-r0             apk                      
@@ -123,7 +123,7 @@ gnupg-wks-client                2.4.9-r0              apk
 gnutls                          3.8.12-r0             apk                      
 google-api-core                 2.30.0                python                   
 google-api-python-client        2.192.0               python                   
-google-auth                     2.49.0                python                   
+google-auth                     2.49.1                python                   
 google-auth-httplib2            0.3.0                 python                   
 googleapis-common-protos        1.73.0                python                   
 gpg                             2.4.9-r0              apk                      
@@ -189,7 +189,7 @@ libncursesw                     6.5_p20250503-r0      apk
 libnftnl                        1.2.9-r0              apk                      
 libpanelw                       6.5_p20250503-r0      apk                      
 libpng                          1.6.55-r0             apk                      
-libpq                           17.8-r0               apk                      
+libpq                           17.9-r0               apk                      
 libproc2                        4.0.4-r3              apk                      
 libpsl                          0.21.5-r3             apk                      
 libsasl                         2.1.28-r8             apk                      
@@ -324,7 +324,7 @@ pyasn1                          0.6.2                 python
 pyasn1-modules                  0.4.2                 python                   
 pyc                             3.12.12-r0            apk                      
 pycparser                       3.0                   python                   
-pyjwt                           2.11.0                python                   
+pyjwt                           2.12.1                python                   
 pynamecheap                     0.0.3                 python                   
 pyopenssl                       25.3.0                python                   
 pyotp                           2.9.0                 python                   
@@ -341,7 +341,6 @@ readline                        8.2.13-r1             apk
 requests                        2.32.5                python                   
 requests-file                   3.0.1                 python                   
 requests-mock                   1.12.1                python                   
-rsa                             4.9.1                 python                   
 s3transfer                      0.16.0                python                   
 scanelf                         1.3.8-r1              apk                      
 setuptools                      82.0.1                python                   
@@ -355,7 +354,7 @@ tiff                            4.7.1-r0              apk
 tldextract                      5.3.1                 python                   
 tomli                           2.4.0                 python                   
 typing-extensions               4.15.0                python                   
-tzdata                          2025c-r0              apk                      
+tzdata                          2026a-r0              apk                      
 unixodbc                        2.3.12-r0             apk                      
 uritemplate                     4.2.0                 python                   
 urllib3                         2.6.3                 python                   

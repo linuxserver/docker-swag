@@ -44,8 +44,13 @@ server {
 
     # enable for Authelia (requires authelia-location.conf in the location block)
     #include /config/nginx/authelia-server.conf;
+
     # enable for Authentik (requires authentik-location.conf in the location block)
     #include /config/nginx/authentik-server.conf;
+
+    # enable for Tinyauth (requires tinyauth-location.conf in the location block)
+    #include /config/nginx/tinyauth-server.conf;
+
     location / {
         # enable for basic auth
         #auth_basic "Restricted";
@@ -56,13 +61,18 @@ server {
 
         # enable for Authelia (requires authelia-server.conf in the server block)
         #include /config/nginx/authelia-location.conf;
+
         # enable for Authentik (requires authentik-server.conf in the server block)
         #include /config/nginx/authentik-location.conf;
+
+        # enable for Tinyauth (requires tinyauth-server.conf in the server block)
+        #include /config/nginx/tinyauth-location.conf;
+
         try_files $uri $uri/ /index.html /index.htm /index.php$is_args$args;
     }
 
     location ~ ^(.+\.php)(.*)$ {
-        # enable the next two lines for http auth
+        # enable for basic auth
         #auth_basic "Restricted";
         #auth_basic_user_file /config/nginx/.htpasswd;
 
@@ -71,8 +81,13 @@ server {
 
         # enable for Authelia (requires authelia-server.conf in the server block)
         #include /config/nginx/authelia-location.conf;
+
         # enable for Authentik (requires authentik-server.conf in the server block)
         #include /config/nginx/authentik-location.conf;
+
+        # enable for Tinyauth (requires tinyauth-server.conf in the server block)
+        #include /config/nginx/tinyauth-location.conf;
+
         fastcgi_split_path_info ^(.+\.php)(.*)$;
         if (!-f $document_root$fastcgi_script_name) {
             return 404;

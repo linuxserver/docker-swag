@@ -220,6 +220,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "05.05.26:", desc: "Added support for Let's Encrypt cert profiles." }
   - {date: "23.01.26:", desc: "Reorder init to fix proxy conf version checks."}
   - {date: "21.12.25:", desc: "Add support for hetzner-cloud dns validation."}
   - {date: "04.11.25:", desc: "Switch default Gandi credentials from API Key to Token, allow DNS propagation time for Azure DNS plugin."}

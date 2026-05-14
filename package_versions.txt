@@ -87,7 +87,7 @@ cli-32                          UNKNOWN               binary
 cli-64                          UNKNOWN               binary                   
 cli-arm64                       UNKNOWN               binary                   
 cloudflare                      5.1.0                 python                   
-composer                        2.9.7                 binary                   
+composer                        2.9.8                 binary                   
 configargparse                  1.7.5                 python                   
 configobj                       5.0.9                 python                   
 coreutils                       9.7-r1                apk                      
@@ -235,8 +235,8 @@ nano                            8.4-r0                apk
 ncurses-terminfo-base           6.5_p20250503-r0      apk                      
 netcat-openbsd                  1.229.1-r0            apk                      
 nettle                          3.10.2-r0             apk                      
-nghttp2-libs                    1.65.0-r0             apk                      
-nginx                           1.28.3-r0             apk                      
+nghttp2-libs                    1.69.0-r0             apk                      
+nginx                           1.28.3-r1             apk                      
 nginx-mod-devel-kit             1.28.3-r1             apk                      
 nginx-mod-http-brotli           1.28.3-r1             apk                      
 nginx-mod-http-dav-ext          1.28.3-r1             apk                      

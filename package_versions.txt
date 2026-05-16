@@ -23,8 +23,8 @@ azure-mgmt-dns                  9.0.0                 python
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
 beautifulsoup4                  4.14.3                python                   
-boto3                           1.43.8                python                   
-botocore                        1.43.8                python                   
+boto3                           1.43.9                python                   
+botocore                        1.43.9                python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r20            apk                      
@@ -123,7 +123,7 @@ gnupg-wks-client                2.4.9-r0              apk
 gnutls                          3.8.13-r0             apk                      
 google-api-core                 2.30.3                python                   
 google-api-python-client        2.196.0               python                   
-google-auth                     2.52.0                python                   
+google-auth                     2.53.0                python                   
 google-auth-httplib2            0.4.0                 python                   
 googleapis-common-protos        1.75.0                python                   
 gpg                             2.4.9-r0              apk                      

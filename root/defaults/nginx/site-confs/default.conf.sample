@@ -1,4 +1,4 @@
-## Version 2026/03/07 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
+## Version 2026/05/05 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
 
 # redirect all traffic to https
 server {
@@ -13,9 +13,9 @@ server {
 # main server block
 server {
     listen 443 ssl default_server;
-#    listen 443 quic reuseport default_server;
     listen [::]:443 ssl default_server;
-#    listen [::]:443 quic reuseport default_server;
+    #listen 443 quic reuseport default_server;
+    #listen [::]:443 quic reuseport default_server;
 
     server_name _;
 
@@ -23,6 +23,18 @@ server {
 
     root /config/www;
     index index.html index.htm index.php;
+
+    # Allow access to the ".well-known" directory
+    location ^~ /.well-known {
+        allow all;
+    }
+
+    # deny access to all dotfiles
+    location ~ /\. {
+        access_log off;
+        log_not_found off;
+        return 404;
+    }
 
     # enable subfolder method reverse proxy confs
     include /config/nginx/proxy-confs/*.subfolder.conf;
@@ -60,7 +72,7 @@ server {
     }
 
     location ~ ^(.+\.php)(.*)$ {
-        # enable the next two lines for http auth
+        # enable for basic auth
         #auth_basic "Restricted";
         #auth_basic_user_file /config/nginx/.htpasswd;
 
@@ -73,16 +85,16 @@ server {
         # enable for Authentik (requires authentik-server.conf in the server block)
         #include /config/nginx/authentik-location.conf;
 
+        # enable for Tinyauth (requires tinyauth-server.conf in the server block)
+        #include /config/nginx/tinyauth-location.conf;
+
         fastcgi_split_path_info ^(.+\.php)(.*)$;
-        if (!-f $document_root$fastcgi_script_name) { return 404; }
+        if (!-f $document_root$fastcgi_script_name) {
+            return 404;
+        }
         fastcgi_pass 127.0.0.1:9000;
         fastcgi_index index.php;
         include /etc/nginx/fastcgi_params;
-    }
-
-    # deny access to .htaccess/.htpasswd files
-    location ~ /\.ht {
-        deny all;
     }
 }
 

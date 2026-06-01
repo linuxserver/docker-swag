@@ -210,7 +210,7 @@ libxau                          1.0.12-r0             apk
 libxcb                          1.17.0-r0             apk                      
 libxdmcp                        1.1.5-r1              apk                      
 libxext                         1.3.6-r2              apk                      
-libxml2                         2.13.9-r0             apk                      
+libxml2                         2.13.9-r1             apk                      
 libxpm                          3.5.19-r0             apk                      
 libxslt                         1.1.43-r3             apk                      
 libxt                           1.3.1-r0              apk                      
@@ -315,7 +315,7 @@ php84-xmlwriter                 8.4.16-r0             apk
 php84-xsl                       8.4.16-r0             apk                      
 php84-zip                       8.4.16-r0             apk                      
 pinentry                        1.3.1-r0              apk                      
-pip                             26.1.1                python                   
+pip                             26.1.2                python                   
 pkb-client                      2.3.1                 python                   
 platformdirs                    4.4.0                 python                   
 popt                            1.19-r4               apk                      

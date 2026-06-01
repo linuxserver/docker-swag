@@ -433,6 +433,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **01.06.26:** - Remove obsolete old cert check logic.
 * **23.01.26:** - Reorder init to fix proxy conf version checks.
 * **21.12.25:** - Add support for hetzner-cloud dns validation.
 * **04.11.25:** - Switch default Gandi credentials from API Key to Token, allow DNS propagation time for Azure DNS plugin.

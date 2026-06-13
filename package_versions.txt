@@ -22,9 +22,9 @@ azure-mgmt-core                 1.6.0                 python
 azure-mgmt-dns                  9.0.0                 python                   
 backports-tarfile               1.2.0                 python                   
 bash                            5.2.37-r0             apk                      
-beautifulsoup4                  4.14.3                python                   
-boto3                           1.43.24               python                   
-botocore                        1.43.24               python                   
+beautifulsoup4                  4.15.0                python                   
+boto3                           1.43.29               python                   
+botocore                        1.43.29               python                   
 brotli-libs                     1.1.0-r2              apk                      
 bs4                             0.0.2                 python                   
 busybox                         1.37.0-r20            apk                      
@@ -86,7 +86,7 @@ cli                             UNKNOWN               binary
 cli-32                          UNKNOWN               binary                   
 cli-64                          UNKNOWN               binary                   
 cli-arm64                       UNKNOWN               binary                   
-cloudflare                      5.2.0                 python                   
+cloudflare                      5.3.0                 python                   
 composer                        2.10.1                binary                   
 configargparse                  1.7.5                 python                   
 configobj                       5.0.9                 python                   
@@ -94,7 +94,7 @@ coreutils                       9.7-r1                apk
 coreutils-env                   9.7-r1                apk                      
 coreutils-fmt                   9.7-r1                apk                      
 coreutils-sha512sum             9.7-r1                apk                      
-cryptography                    48.0.0                python                   
+cryptography                    49.0.0                python                   
 curl                            8.14.1-r2             apk                      
 distro                          1.9.0                 python                   
 dns-lexicon                     3.25.2                python                   
@@ -104,7 +104,7 @@ domeneshop                      0.4.4                 python
 fail2ban                        1.1.0                 python                   
 fail2ban                        1.1.0-r3              apk                      
 fail2ban-pyc                    1.1.0-r3              apk                      
-filelock                        3.29.1                python                   
+filelock                        3.29.3                python                   
 findutils                       4.10.0-r0             apk                      
 fontconfig                      2.15.0-r3             apk                      
 freetype                        2.13.3-r0             apk                      
@@ -123,7 +123,7 @@ gnupg-wks-client                2.4.9-r0              apk
 gnutls                          3.8.13-r0             apk                      
 google-api-core                 2.31.0                python                   
 google-api-python-client        2.197.0               python                   
-google-auth                     2.53.0                python                   
+google-auth                     2.54.0                python                   
 google-auth-httplib2            0.4.0                 python                   
 googleapis-common-protos        1.75.0                python                   
 gpg                             2.4.9-r0              apk                      
@@ -136,7 +136,7 @@ gui-32                          UNKNOWN               binary
 gui-64                          UNKNOWN               binary                   
 gui-arm64                       UNKNOWN               binary                   
 h11                             0.16.0                python                   
-hcloud                          2.20.0                python                   
+hcloud                          2.21.0                python                   
 httpcore                        1.0.9                 python                   
 httplib2                        0.31.2                python                   
 httpx                           0.28.1                python                   
@@ -164,7 +164,7 @@ libattr                         2.5.2-r2              apk
 libavif                         1.3.0-r0              apk                      
 libbsd                          0.12.2-r0             apk                      
 libbz2                          1.0.8-r6              apk                      
-libcrypto3                      3.5.6-r0              apk                      
+libcrypto3                      3.5.7-r0              apk                      
 libcurl                         8.14.1-r2             apk                      
 libdav1d                        1.5.1-r0              apk                      
 libedit                         20250104.3.1-r1       apk                      
@@ -199,7 +199,7 @@ libseccomp                      2.6.0-r0              apk
 libsharpyuv                     1.5.0-r0              apk                      
 libsm                           1.2.5-r0              apk                      
 libsodium                       1.0.20-r1             apk                      
-libssl3                         3.5.6-r0              apk                      
+libssl3                         3.5.7-r0              apk                      
 libstdc++                       14.2.0-r6             apk                      
 libtasn1                        4.21.0-r0             apk                      
 libunistring                    1.3-r0                apk                      
@@ -257,7 +257,7 @@ nginx-mod-stream-geoip2         1.28.3-r3             apk
 nginx-vim                       1.28.3-r3             apk                      
 npth                            1.8-r0                apk                      
 oniguruma                       6.9.10-r0             apk                      
-openssl                         3.5.6-r0              apk                      
+openssl                         3.5.7-r0              apk                      
 p11-kit                         0.25.5-r2             apk                      
 packaging                       26.0                  python                   
 packaging                       26.2                  python                   
@@ -321,7 +321,7 @@ platformdirs                    4.4.0                 python
 popt                            1.19-r4               apk                      
 procps-ng                       4.0.4-r3              apk                      
 proto-plus                      1.28.0                python                   
-protobuf                        7.35.0                python                   
+protobuf                        7.35.1                python                   
 pyacmedns                       0.4                   python                   
 pyasn1                          0.6.3                 python                   
 pyasn1-modules                  0.4.2                 python                   
@@ -331,7 +331,7 @@ pydantic                        2.13.4                python
 pydantic-core                   2.46.4                python                   
 pyjwt                           2.13.0                python                   
 pynamecheap                     0.0.3                 python                   
-pyopenssl                       26.2.0                python                   
+pyopenssl                       26.3.0                python                   
 pyotp                           2.9.0                 python                   
 pyparsing                       3.3.2                 python                   
 pyrfc3339                       2.1.0                 python                   

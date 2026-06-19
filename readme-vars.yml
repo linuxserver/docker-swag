@@ -31,7 +31,11 @@ cap_add_param_vars:
 opt_param_usage_include_env: true
 opt_param_env_vars:
   - {env_var: "SUBDOMAINS", env_value: "www,", desc: "Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this *exactly* to `wildcard` (wildcard cert is available via `dns` validation only)"}
-  - {env_var: "CERTPROVIDER", env_value: "", desc: "Optionally define the cert provider. Set to `zerossl` for ZeroSSL certs (requires existing [ZeroSSL account](https://app.zerossl.com/signup) and the e-mail address entered in `EMAIL` env var). Otherwise defaults to Let's Encrypt."}
+  - {env_var: "CERTPROVIDER", env_value: "", desc: "Optionally define the cert provider. Set to `zerossl` for ZeroSSL certs (requires existing [ZeroSSL account](https://app.zerossl.com/signup) and the e-mail address entered in `EMAIL` env var). Set to `custom` to use a custom/internal ACME server (e.g. [step-ca](https://smallstep.com/docs/step-ca/)), which requires `CERTPROVIDERURL` (see below). Otherwise defaults to Let's Encrypt."}
+  - {env_var: "CERTPROVIDERURL", env_value: "", desc: "Only used when `CERTPROVIDER=custom`. The ACME directory URL of your custom ACME server, ie. `https://ca.example.com/acme/acme/directory`."}
+  - {env_var: "ACMECABUNDLE", env_value: "", desc: "Only used when `CERTPROVIDER=custom`. Trust an internal CA so SWAG can connect to your ACME server over TLS. Either a path to a CA bundle PEM file mounted into the container, or the base64-encoded contents of that PEM."}
+  - {env_var: "EAB_KID", env_value: "", desc: "Only used when `CERTPROVIDER=custom`. External Account Binding key identifier, if your custom ACME server requires EAB. Must be set together with `EAB_HMAC_KEY`."}
+  - {env_var: "EAB_HMAC_KEY", env_value: "", desc: "Only used when `CERTPROVIDER=custom`. External Account Binding HMAC key, if your custom ACME server requires EAB. Must be set together with `EAB_KID`."}
   - {env_var: "CERT_PROFILE", env_value: "", desc: "Optionally define a cert profile to use for cert generation. This is useful if you want to use a custom cert profile instead of the default one. Currently only supported for Let's Encrypt. See https://letsencrypt.org/docs/profiles/ "}
   - {env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `acmedns`, `aliyun`, `azure`, `bunny`, `cloudflare`, `cpanel`, `desec`, `digitalocean`, `directadmin`, `dnsimple`, `dnsmadeeasy`, `dnspod`, `do`, `domeneshop`, `dreamhost`, `duckdns`, `dynu`, `freedns`, `gandi`, `gehirn`, `glesys`, `godaddy`, `google`, `he`, `hetzner`, `hetzner-cloud`, `infomaniak`, `inwx`, `ionos`, `linode`, `loopia`, `luadns`, `mijn-host`, `namecheap`, `netcup`, `njalla`, `nsone`, `ovh`, `porkbun`, `rfc2136`, `route53`, `sakuracloud`, `standalone`, `transip`, and `vultr`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`."}
   - {env_var: "PROPAGATION", env_value: "", desc: "Optionally override (in seconds) the default propagation time for the dns plugins."}
@@ -220,6 +224,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "11.07.26:", desc: "Add support for custom/internal ACME servers via `CERTPROVIDER=custom` with `CERTPROVIDERURL`, optional `ACMECABUNDLE` for internal CA trust, and optional `EAB_KID`/`EAB_HMAC_KEY` for External Account Binding."}
   - {date: "10.07.26:", desc: "Add support for Let's Encrypt cert profiles. Run certbot twice daily with a random delay."}
   - {date: "19.06.26:", desc: "Add support for mijn.host dns validation."}
   - {date: "01.06.26:", desc: "Remove obsolete old cert check logic."}

@@ -121,6 +121,7 @@ RUN \
     certbot-dns-linode \
     certbot-dns-loopia \
     certbot-dns-luadns \
+    certbot-dns-mijn-host \
     certbot-dns-namecheap \
     certbot-dns-netcup \
     certbot-dns-njalla \

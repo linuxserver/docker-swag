@@ -220,7 +220,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
-  - {date: "10.07.26:", desc: "Add support for Let's Encrypt cert profiles. Run certbot twice daily with a random delay." }
+  - {date: "10.07.26:", desc: "Add support for Let's Encrypt cert profiles. Run certbot twice daily with a random delay."}
   - {date: "19.06.26:", desc: "Add support for mijn.host dns validation."}
   - {date: "01.06.26:", desc: "Remove obsolete old cert check logic."}
   - {date: "23.01.26:", desc: "Reorder init to fix proxy conf version checks."}

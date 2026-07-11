@@ -1,5 +1,4 @@
 ## Version 2025/12/17 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/tinyauth-location.conf.sample
-# Add headers for Forward Auth
 # Make sure that your tinyauth container is in the same user defined bridge network and is named tinyauth
 # Rename /config/nginx/proxy-confs/tinyauth.subdomain.conf.sample to /config/nginx/proxy-confs/tinyauth.subdomain.conf
 

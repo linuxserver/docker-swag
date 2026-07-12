@@ -12,12 +12,13 @@ EXTRA_DOMAINS=${EXTRA_DOMAINS}\\n\
 ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}\\n\
 VALIDATION=${VALIDATION}\\n\
 CERTPROVIDER=${CERTPROVIDER}\\n\
+CERT_PROFILE=${CERT_PROFILE}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
 STAGING=${STAGING}\\n"
 
 # Sanitize variables
-SANED_VARS=(DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION CERTPROVIDER)
+SANED_VARS=(DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION CERTPROVIDER CERT_PROFILE)
 for i in "${SANED_VARS[@]}"; do
     export echo "${i}"="${!i//\"/}"
     export echo "${i}"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
@@ -80,7 +81,7 @@ if [[ -f "/config/donoteditthisfile.conf" ]]; then
     mv /config/donoteditthisfile.conf /config/.donoteditthisfile.conf
 fi
 if [[ ! -f "/config/.donoteditthisfile.conf" ]]; then
-    echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
+    echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\" ORIGCERT_PROFILE=\"${CERT_PROFILE}\"" >/config/.donoteditthisfile.conf
     echo "Created .donoteditthisfile.conf"
 fi
 
@@ -186,7 +187,8 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
     [[ ! "${DNSPLUGIN}" = "${ORIGDNSPLUGIN}" ]] ||
     [[ ! "${PROPAGATION}" = "${ORIGPROPAGATION}" ]] ||
     [[ ! "${STAGING}" = "${ORIGSTAGING}" ]] ||
-    [[ ! "${CERTPROVIDER}" = "${ORIGCERTPROVIDER}" ]]; then
+    [[ ! "${CERTPROVIDER}" = "${ORIGCERTPROVIDER}" ]] ||
+    [[ ! "${CERT_PROFILE}" = "${ORIGCERT_PROFILE}" ]]; then
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
     if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]]; then
         REV_ACMESERVER=("https://acme.zerossl.com/v2/DV90")
@@ -204,19 +206,7 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\"" >/config/.donoteditthisfile.conf
-
-# Check if the cert is using the old LE root cert, revoke and regen if necessary
-if [[ -f "/config/keys/letsencrypt/chain.pem" ]] && { [[ "${CERTPROVIDER}" == "letsencrypt" ]] || [[ "${CERTPROVIDER}" == "" ]]; } && [[ "${STAGING}" != "true" ]] && ! openssl x509 -in /config/keys/letsencrypt/chain.pem -noout -issuer | grep -q "ISRG Root X"; then
-    echo "The cert seems to be using the old LE root cert, which is no longer valid. Deleting and revoking."
-    REV_ACMESERVER=("https://acme-v02.api.letsencrypt.org/directory")
-    if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
-        certbot revoke --config-dir /config/etc/letsencrypt --logs-dir /config/log/letsencrypt --work-dir /tmp/letsencrypt --config /config/etc/letsencrypt/cli.ini --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --server "${REV_ACMESERVER[@]}" || true
-    else
-        certbot revoke --config-dir /config/etc/letsencrypt --logs-dir /config/log/letsencrypt --work-dir /tmp/letsencrypt --config /config/etc/letsencrypt/cli.ini --non-interactive --cert-name "${ORIGDOMAIN}" --server "${REV_ACMESERVER[@]}" || true
-    fi
-    rm -rf /config/etc/letsencrypt/{accounts,archive,live,renewal}
-fi
+echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\" ORIGCERT_PROFILE=\"${CERT_PROFILE}\"" >/config/.donoteditthisfile.conf
 
 # if zerossl is selected or staging is set to true, use the relevant server
 if [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ "${STAGING}" = "true" ]]; then
@@ -238,6 +228,21 @@ else
 fi
 
 set_ini_value "server" "${ACMESERVER}" /config/etc/letsencrypt/cli.ini
+
+# set certificate profile (e.g. "shortlived" for 6-day certs, "classic" for 90-day)
+# Profiles are a Let's Encrypt ACME feature; ZeroSSL ignores it.
+if [[ -n "${CERT_PROFILE}" ]]; then
+    if [[ "${CERTPROVIDER}" = "zerossl" ]]; then
+        echo "ZeroSSL does not support ACME profiles, ignoring CERT_PROFILE variable"
+        sed -i "/^preferred-profile\b/d" /config/etc/letsencrypt/cli.ini
+    else
+        echo "Requesting certificate with profile: ${CERT_PROFILE}"
+        set_ini_value "preferred-profile" "${CERT_PROFILE}" /config/etc/letsencrypt/cli.ini
+    fi
+else
+    # remove if previously set so going back to default works
+    sed -i "/^preferred-profile\b/d" /config/etc/letsencrypt/cli.ini
+fi
 
 # figuring out domain only vs domain & subdomains vs subdomains only
 DOMAINS_ARRAY=()

@@ -436,7 +436,6 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **19.07.26:** - Use new X-Tinyauth-Location header in Tinyauth locations.
 * **10.07.26:** - Add support for Let's Encrypt cert profiles. Run certbot twice daily with a random delay.
 * **19.06.26:** - Add support for mijn.host dns validation.
 * **01.06.26:** - Remove obsolete old cert check logic.

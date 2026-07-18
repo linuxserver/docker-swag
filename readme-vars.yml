@@ -220,6 +220,7 @@ init_diagram: |
   "swag:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "19.07.26:", desc: "Use new X-Tinyauth-Location header in Tinyauth locations."}
   - {date: "10.07.26:", desc: "Add support for Let's Encrypt cert profiles. Run certbot twice daily with a random delay."}
   - {date: "19.06.26:", desc: "Add support for mijn.host dns validation."}
   - {date: "01.06.26:", desc: "Remove obsolete old cert check logic."}

@@ -38,10 +38,10 @@ location @goauthentik_proxy_signin {
     add_header Set-Cookie $set_cookie;
 
     ## Set the $target_url variable based on the original request
-    set_escape_uri $target_url $scheme://$http_host$request_uri;
+    set_escape_uri $target_url $scheme://$host:$server_port$request_uri;
 
     ## Set the $signin_url variable
-    set $signin_url https://$http_host/outpost.goauthentik.io/start?rd=$target_url;
+    set $signin_url https://$host:$server_port/outpost.goauthentik.io/start?rd=$target_url;
 
     ## Redirect to login
     return 302 $signin_url;

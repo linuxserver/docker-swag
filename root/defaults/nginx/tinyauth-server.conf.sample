@@ -12,7 +12,7 @@ location /tinyauth {
     proxy_pass http://$upstream_tinyauth:3000/api/auth/nginx;
 
     proxy_set_header x-forwarded-proto $scheme;
-    proxy_set_header x-forwarded-host $http_host;
+    proxy_set_header x-forwarded-host $host:$server_port;
     proxy_set_header x-forwarded-uri $request_uri;
 }
 
@@ -21,8 +21,8 @@ location @tinyauth_login {
     internal;
 
     ## Set the $target_url variable based on the original request
-    set_escape_uri $target_url $scheme://$http_host$request_uri;
-    
+    set_escape_uri $target_url $scheme://$host:$server_port$request_uri;
+
     ## Set the $signin_url variable
     set $domain $host;
     if ($host ~* "^[^.]+\.([^.]+\..+)$") {

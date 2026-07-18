@@ -1,4 +1,4 @@
-## Version 2025/06/08 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/tinyauth-server.conf.sample
+## Version 2026/07/18 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/tinyauth-server.conf.sample
 # Make sure that your tinyauth container is in the same user defined bridge network and is named tinyauth
 # Rename /config/nginx/proxy-confs/tinyauth.subdomain.conf.sample to /config/nginx/proxy-confs/tinyauth.subdomain.conf
 

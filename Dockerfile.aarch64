@@ -56,12 +56,10 @@ RUN \
     php85-ftp \
     php85-gd \
     php85-gmp \
-    php85-imap \
     php85-intl \
     php85-ldap \
     php85-mysqli \
     php85-mysqlnd \
-    php85-opcache \
     php85-pdo_mysql \
     php85-pdo_odbc \
     php85-pdo_pgsql \

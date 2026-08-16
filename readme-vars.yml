@@ -215,7 +215,7 @@ init_diagram: |
     svc-swag-auto-reload -> legacy-services
   }
   Base Images: {
-    "baseimage-alpine-nginx:3.22" <- "baseimage-alpine:3.22"
+    "baseimage-alpine-nginx:3.24" <- "baseimage-alpine:3.24"
   }
   "swag:latest" <- Base Images
 # changelog

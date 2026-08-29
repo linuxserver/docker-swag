@@ -219,12 +219,13 @@ init_diagram: |
     svc-swag-auto-reload -> legacy-services
   }
   Base Images: {
-    "baseimage-alpine-nginx:3.22" <- "baseimage-alpine:3.22"
+    "baseimage-alpine-nginx:3.24" <- "baseimage-alpine:3.24"
   }
   "swag:latest" <- Base Images
 # changelog
 changelogs:
-  - {date: "11.07.26:", desc: "Add support for custom/internal ACME servers via `CERTPROVIDER=custom` with `CERTPROVIDERURL`, optional `ACMECABUNDLE` for internal CA trust, and optional `EAB_KID`/`EAB_HMAC_KEY` for External Account Binding."}
+  - {date: "29.08.26:", desc: "Add support for custom/internal ACME servers via `CERTPROVIDER=custom` with `CERTPROVIDERURL`, optional `ACMECABUNDLE` for internal CA trust, and optional `EAB_KID`/`EAB_HMAC_KEY` for External Account Binding."}
+  - {date: "19.07.26:", desc: "Rebase to Alpine 3.24 with PHP 8.5."}
   - {date: "10.07.26:", desc: "Add support for Let's Encrypt cert profiles. Run certbot twice daily with a random delay."}
   - {date: "19.06.26:", desc: "Add support for mijn.host dns validation."}
   - {date: "01.06.26:", desc: "Remove obsolete old cert check logic."}

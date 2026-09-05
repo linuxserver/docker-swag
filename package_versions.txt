@@ -7,7 +7,7 @@ alpine-baselayout-data          3.7.2-r1          apk
 alpine-keys                     2.6-r0            apk                      
 alpine-release                  3.24.1-r0         apk                      
 annotated-types                 0.8.0             python                   
-anyio                           4.14.2            python                   
+anyio                           4.15.0            python                   
 aom-libs                        3.14.1-r0         apk                      
 apache2-utils                   2.4.68-r0         apk                      
 apk-tools                       3.0.7-r0          apk                      
@@ -23,8 +23,8 @@ azure-mgmt-dns                  9.0.0             python
 backports-tarfile               1.2.0             python                   
 bash                            5.3.9-r1          apk                      
 beautifulsoup4                  4.15.0            python                   
-boto3                           1.43.86           python                   
-botocore                        1.43.86           python                   
+boto3                           1.43.89           python                   
+botocore                        1.43.89           python                   
 brotli-libs                     1.2.0-r1          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r31        apk                      
@@ -86,7 +86,7 @@ cli                             UNKNOWN           binary
 cli-32                          UNKNOWN           binary                   
 cli-64                          UNKNOWN           binary                   
 cli-arm64                       UNKNOWN           binary                   
-cloudflare                      5.6.0             python                   
+cloudflare                      5.7.0             python                   
 composer                        2.10.3            binary                   
 configargparse                  1.7.5             python                   
 configobj                       5.0.9             python                   
@@ -121,11 +121,11 @@ gnupg-keyboxd                   2.4.9-r1          apk
 gnupg-utils                     2.4.9-r1          apk                      
 gnupg-wks-client                2.4.9-r1          apk                      
 gnutls                          3.8.13-r0         apk                      
-google-api-core                 2.34.0            python                   
+google-api-core                 2.36.0            python                   
 google-api-python-client        2.200.0           python                   
-google-auth                     2.57.0            python                   
+google-auth                     2.57.1            python                   
 google-auth-httplib2            0.4.2             python                   
-googleapis-common-protos        1.75.2            python                   
+googleapis-common-protos        1.75.3            python                   
 gpg                             2.4.9-r1          apk                      
 gpg-agent                       2.4.9-r1          apk                      
 gpg-wks-server                  2.4.9-r1          apk                      
@@ -169,7 +169,7 @@ libcurl                         8.21.0-r0         apk
 libdav1d                        1.5.3-r0          apk                      
 libedit                         20260508.3.1-r1   apk                      
 libevent                        2.1.13-r0         apk                      
-libexpat                        2.8.3-r0          apk                      
+libexpat                        2.8.4-r0          apk                      
 libffi                          3.5.2-r1          apk                      
 libgcc                          15.2.0-r5         apk                      
 libgcrypt                       1.12.2-r0         apk                      
@@ -220,7 +220,7 @@ libzip                          1.11.4-r2         apk
 linux-pam                       1.7.1-r2          apk                      
 logrotate                       3.22.0-r0         apk                      
 loopialib                       0.2.0             python                   
-lxml                            6.1.2             python                   
+lxml                            6.1.3             python                   
 lz4-libs                        1.10.0-r1         apk                      
 markupsafe                      3.0.3             python                   
 memcached                       1.6.42-r0         apk                      
@@ -258,11 +258,12 @@ nginx-vim                       1.30.4-r1         apk
 npth                            1.8-r0            apk                      
 oniguruma                       6.9.10-r0         apk                      
 openssl                         3.5.8-r0          apk                      
+opentelemetry-api               1.44.0            python                   
 p11-kit                         0.26.2-r0         apk                      
 packaging                       26.0              python                   
 packaging                       26.3              python                   
 parsedatetime                   2.6               python                   
-pcre2                           10.47-r1          apk                      
+pcre2                           10.48-r0          apk                      
 perl                            5.42.2-r0         apk                      
 perl-error                      0.17030-r0        apk                      
 perl-git                        2.54.0-r0         apk                      

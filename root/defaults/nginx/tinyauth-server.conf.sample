@@ -6,12 +6,8 @@
 location /tinyauth {
     internal;
 
-    include /config/nginx/proxy.conf;
+    include /config/nginx/tinyauth-proxy.conf;
     include /config/nginx/resolver.conf;
     set $upstream_tinyauth tinyauth;
     proxy_pass http://$upstream_tinyauth:3000/api/auth/nginx;
-
-    proxy_set_header x-forwarded-proto $scheme;
-    proxy_set_header x-forwarded-host $http_host;
-    proxy_set_header x-forwarded-uri $request_uri;
 }

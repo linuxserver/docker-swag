@@ -10,4 +10,6 @@ location /tinyauth {
     include /config/nginx/resolver.conf;
     set $upstream_tinyauth tinyauth;
     proxy_pass http://$upstream_tinyauth:3000/api/auth/nginx;
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
 }

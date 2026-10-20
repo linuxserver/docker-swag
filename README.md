@@ -436,6 +436,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **20.10.26:** - [Existing users should update:](https://github.com/linuxserver/docker-swag/blob/master/README.md#updating-configs) proxy.conf, authelia-server.conf, authentik-server.conf, tinyauth-server.conf - Update Nginx configuration to replace $http_host with $host$is_request_port$request_port for better compatibility.
 * **09.09.26:** - Use new X-Tinyauth-Location header in Tinyauth locations and remove duplicate auth module headers.
 * **19.07.26:** - Rebase to Alpine 3.24 with PHP 8.5.
 * **10.07.26:** - Add support for Let's Encrypt cert profiles. Run certbot twice daily with a random delay.

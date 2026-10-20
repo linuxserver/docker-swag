@@ -1,4 +1,4 @@
-## Version 2026/09/08 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/tinyauth-server.conf.sample
+## Version 2026/10/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/tinyauth-server.conf.sample
 # Make sure that your tinyauth container is in the same user defined bridge network and is named tinyauth
 # Rename /config/nginx/proxy-confs/tinyauth.subdomain.conf.sample to /config/nginx/proxy-confs/tinyauth.subdomain.conf
 
@@ -15,7 +15,7 @@ location /tinyauth {
     proxy_set_header Content-Length "";
 
     # Headers needed for authentication
-    proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
+    proxy_set_header X-Original-URL $scheme://$host$is_request_port$request_port$request_uri;
     proxy_set_header X-Original-Method $request_method;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Real-IP $remote_addr;

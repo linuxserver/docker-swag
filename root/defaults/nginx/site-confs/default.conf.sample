@@ -1,4 +1,4 @@
-## Version 2026/03/07 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
+## Version 2026/10/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/site-confs/default.conf.sample
 
 # redirect all traffic to https
 server {
@@ -7,6 +7,11 @@ server {
 
     location / {
         return 301 https://$host$request_uri;
+
+        # NOTE FOR USERS: If your external HTTP and HTTPS ports are asymmetrical
+        # (e.g., External 8443 maps to Nginx 443),
+        # replace the return above this one and hardcode your external HTTPS port:
+        # return 301 https://$host:8443$request_uri;
     }
 }
 

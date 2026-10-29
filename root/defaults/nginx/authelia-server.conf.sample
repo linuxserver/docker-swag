@@ -1,4 +1,4 @@
-## Version 2026/10/20 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
+## Version 2026/10/29 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/nginx/authelia-server.conf.sample
 # Make sure that your authelia container is in the same user defined bridge network and is named authelia
 # Rename /config/nginx/proxy-confs/authelia.subdomain.conf.sample to /config/nginx/proxy-confs/authelia.subdomain.conf
 
@@ -23,9 +23,7 @@ location = /authelia/api/authz/auth-request {
 location @authelia_proxy_signin {
     internal;
 
-    ## Include the Set-Cookie header if present
-    auth_request_set $set_cookie $upstream_http_set_cookie;
-    add_header Set-Cookie $set_cookie;
+    ## Avoid overwriting a newer portal session with an earlier anonymous response
 
     ## Set the $target_url variable based on the original request
     set_escape_uri $target_url $scheme://$host$is_request_port$request_port$request_uri;

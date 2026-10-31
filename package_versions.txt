@@ -23,8 +23,8 @@ azure-mgmt-dns                  9.0.0             python
 backports-tarfile               1.2.0             python                   
 bash                            5.3.9-r1          apk                      
 beautifulsoup4                  4.15.0            python                   
-boto3                           1.43.122          python                   
-botocore                        1.43.122          python                   
+boto3                           1.43.123          python                   
+botocore                        1.43.123          python                   
 brotli-libs                     1.2.1-r0          apk                      
 bs4                             0.0.2             python                   
 busybox                         1.37.0-r31        apk                      
@@ -87,7 +87,7 @@ cli-32                          UNKNOWN           binary
 cli-64                          UNKNOWN           binary                   
 cli-arm64                       UNKNOWN           binary                   
 cloudflare                      5.9.0             python                   
-composer                        2.10.3            binary                   
+composer                        2.11.0            binary                   
 configargparse                  1.9.0             python                   
 configobj                       5.0.9             python                   
 coreutils                       9.11-r0           apk                      
@@ -104,7 +104,7 @@ domeneshop                      0.4.4             python
 fail2ban                        1.1.0             python                   
 fail2ban                        1.1.0-r3          apk                      
 fail2ban-pyc                    1.1.0-r3          apk                      
-filelock                        4.2.4             python                   
+filelock                        4.2.5             python                   
 findutils                       4.10.0-r1         apk                      
 fontconfig                      2.17.1-r1         apk                      
 freetype                        2.14.3-r0         apk                      

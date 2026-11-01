@@ -13,6 +13,7 @@ ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}\\n\
 VALIDATION=${VALIDATION}\\n\
 CERTPROVIDER=${CERTPROVIDER}\\n\
 CERT_PROFILE=${CERT_PROFILE}\\n\
+CERTPROVIDERURL=${CERTPROVIDERURL}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
 STAGING=${STAGING}\\n"
@@ -22,6 +23,12 @@ SANED_VARS=(DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL
 for i in "${SANED_VARS[@]}"; do
     export echo "${i}"="${!i//\"/}"
     export echo "${i}"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
+done
+
+# Custom ACME vars are case-sensitive (URL paths, base64 EAB keys / CA bundle),
+# so only strip surrounding quotes; do not lowercase them.
+for i in CERTPROVIDERURL ACMECABUNDLE EAB_KID EAB_HMAC_KEY; do
+    export "${i}=${!i//\"/}"
 done
 
 # Check for and install requested DNS plugins
@@ -81,7 +88,7 @@ if [[ -f "/config/donoteditthisfile.conf" ]]; then
     mv /config/donoteditthisfile.conf /config/.donoteditthisfile.conf
 fi
 if [[ ! -f "/config/.donoteditthisfile.conf" ]]; then
-    echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\" ORIGCERT_PROFILE=\"${CERT_PROFILE}\"" >/config/.donoteditthisfile.conf
+    echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGCERTPROVIDERURL=\"${CERTPROVIDERURL}\" ORIGEMAIL=\"${EMAIL}\" ORIGCERT_PROFILE=\"${CERT_PROFILE}\"" >/config/.donoteditthisfile.conf
     echo "Created .donoteditthisfile.conf"
 fi
 
@@ -188,14 +195,22 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
     [[ ! "${PROPAGATION}" = "${ORIGPROPAGATION}" ]] ||
     [[ ! "${STAGING}" = "${ORIGSTAGING}" ]] ||
     [[ ! "${CERTPROVIDER}" = "${ORIGCERTPROVIDER}" ]] ||
+    [[ ! "${CERTPROVIDERURL}" = "${ORIGCERTPROVIDERURL}" ]] ||
     [[ ! "${CERT_PROFILE}" = "${ORIGCERT_PROFILE}" ]]; then
     echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
-    if [[ "${ORIGCERTPROVIDER}" = "zerossl" ]]; then
+    if [[ "${ORIGCERTPROVIDER}" = "custom" ]]; then
+        REV_ACMESERVER=("${ORIGCERTPROVIDERURL}")
+    elif [[ "${ORIGCERTPROVIDER}" = "zerossl" ]]; then
         REV_ACMESERVER=("https://acme.zerossl.com/v2/DV90")
     elif [[ "${ORIGSTAGING}" = "true" ]]; then
         REV_ACMESERVER=("https://acme-staging-v02.api.letsencrypt.org/directory")
     else
         REV_ACMESERVER=("https://acme-v02.api.letsencrypt.org/directory")
+    fi
+    # if the previous provider was a custom internal CA, trust its bundle so the
+    # revocation request can verify TLS
+    if [[ "${ORIGCERTPROVIDER}" = "custom" ]] && [[ -f /config/cabundle.pem ]]; then
+        export REQUESTS_CA_BUNDLE="/config/cabundle.pem"
     fi
     if [[ -f /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem ]]; then
         certbot revoke --config-dir /config/etc/letsencrypt --logs-dir /config/log/letsencrypt --work-dir /tmp/letsencrypt --config /config/etc/letsencrypt/cli.ini --non-interactive --cert-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/fullchain.pem --key-path /config/etc/letsencrypt/live/"${ORIGDOMAIN}"/privkey.pem --server "${REV_ACMESERVER[@]}" || true
@@ -206,13 +221,34 @@ if [[ ! "${URL}" = "${ORIGURL}" ]] ||
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGEMAIL=\"${EMAIL}\" ORIGCERT_PROFILE=\"${CERT_PROFILE}\"" >/config/.donoteditthisfile.conf
+echo -e "ORIGURL=\"${URL}\" ORIGSUBDOMAINS=\"${SUBDOMAINS}\" ORIGONLY_SUBDOMAINS=\"${ONLY_SUBDOMAINS}\" ORIGEXTRA_DOMAINS=\"${EXTRA_DOMAINS}\" ORIGVALIDATION=\"${VALIDATION}\" ORIGDNSPLUGIN=\"${DNSPLUGIN}\" ORIGPROPAGATION=\"${PROPAGATION}\" ORIGSTAGING=\"${STAGING}\" ORIGCERTPROVIDER=\"${CERTPROVIDER}\" ORIGCERTPROVIDERURL=\"${CERTPROVIDERURL}\" ORIGEMAIL=\"${EMAIL}\" ORIGCERT_PROFILE=\"${CERT_PROFILE}\"" >/config/.donoteditthisfile.conf
 
 # if zerossl is selected or staging is set to true, use the relevant server
 if [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ "${STAGING}" = "true" ]]; then
     echo "ZeroSSL does not support staging mode, ignoring STAGING variable"
 fi
-if [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ -n "${EMAIL}" ]]; then
+if [[ "${CERTPROVIDER}" = "custom" ]]; then
+    if [[ -z "${CERTPROVIDERURL}" ]]; then
+        echo "CERTPROVIDER is set to custom, but CERTPROVIDERURL is not set. Please set CERTPROVIDERURL to the ACME directory URL of your custom ACME server (e.g. https://ca.example.com/acme/acme/directory). Sleeping."
+        sleep infinity
+    fi
+    echo "Using custom ACME server as the cert provider: ${CERTPROVIDERURL}"
+    if [[ "${STAGING}" = "true" ]]; then
+        echo "STAGING has no effect with a custom ACME server, ignoring STAGING variable"
+    fi
+    ACMESERVER="${CERTPROVIDERURL}"
+    # Trust a custom/internal CA so certbot can reach the ACME server over TLS.
+    # ACMECABUNDLE may be a path to a mounted PEM file or a base64-encoded PEM.
+    if [[ -n "${ACMECABUNDLE}" ]]; then
+        if [[ -f "${ACMECABUNDLE}" ]]; then
+            cp "${ACMECABUNDLE}" /config/cabundle.pem
+        else
+            echo "${ACMECABUNDLE}" | base64 -d - >/config/cabundle.pem
+        fi
+        lsiown abc:abc /config/cabundle.pem
+        echo "Custom CA bundle written to /config/cabundle.pem"
+    fi
+elif [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ -n "${EMAIL}" ]]; then
     echo "ZeroSSL is selected as the cert provider, registering cert with ${EMAIL}"
     ACMESERVER="https://acme.zerossl.com/v2/DV90"
 elif [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ -z "${EMAIL}" ]]; then
@@ -242,6 +278,20 @@ if [[ -n "${CERT_PROFILE}" ]]; then
 else
     # remove if previously set so going back to default works
     sed -i "/^preferred-profile\b/d" /config/etc/letsencrypt/cli.ini
+fi
+
+# Trust the custom CA for this issuance run; clean up custom remnants when not
+# using a custom provider so a previous internal CA / EAB is not reused.
+if [[ "${CERTPROVIDER}" = "custom" ]] && [[ -f /config/cabundle.pem ]]; then
+    export REQUESTS_CA_BUNDLE="/config/cabundle.pem"
+elif [[ "${CERTPROVIDER}" != "custom" ]]; then
+    unset REQUESTS_CA_BUNDLE
+    rm -f /config/cabundle.pem
+    if [[ "${ORIGCERTPROVIDER}" = "custom" ]]; then
+        # drop EAB creds left over from a custom provider so Let's Encrypt /
+        # ZeroSSL re-register cleanly
+        sed -i -e "/^eab-kid\b/d" -e "/^eab-hmac-key\b/d" /config/etc/letsencrypt/cli.ini
+    fi
 fi
 
 # figuring out domain only vs domain & subdomains vs subdomains only
@@ -338,7 +388,22 @@ fi
 
 # generating certs if necessary
 if [[ ! -f "/config/keys/letsencrypt/fullchain.pem" ]]; then
-    if [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ -n "${EMAIL}" ]]; then
+    if [[ "${CERTPROVIDER}" = "custom" ]]; then
+        # Optional External Account Binding for custom ACME servers (e.g. step-ca
+        # ACME provisioners configured to require EAB). Only consumed at account
+        # registration, so it has no effect on later renewals.
+        if [[ -n "${EAB_KID}" ]] && [[ -n "${EAB_HMAC_KEY}" ]]; then
+            echo "Registering with custom ACME server using provided EAB credentials"
+            set_ini_value "eab-kid" "${EAB_KID}" /config/etc/letsencrypt/cli.ini
+            set_ini_value "eab-hmac-key" "${EAB_HMAC_KEY}" /config/etc/letsencrypt/cli.ini
+        elif [[ -n "${EAB_KID}" ]] || [[ -n "${EAB_HMAC_KEY}" ]]; then
+            echo "Only one of EAB_KID / EAB_HMAC_KEY is set. Both are required to use External Account Binding. Sleeping."
+            sleep infinity
+        else
+            # remove any EAB values left over from a previous provider
+            sed -i -e "/^eab-kid\b/d" -e "/^eab-hmac-key\b/d" /config/etc/letsencrypt/cli.ini
+        fi
+    elif [[ "${CERTPROVIDER}" = "zerossl" ]] && [[ -n "${EMAIL}" ]]; then
         echo "Retrieving EAB from ZeroSSL"
         EAB_CREDS=$(curl -s https://api.zerossl.com/acme/eab-credentials-email --data "email=${EMAIL}")
         ZEROSSL_EAB_KID=$(echo "${EAB_CREDS}" | jq .eab_kid)

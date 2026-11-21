@@ -9,7 +9,7 @@ location ^~ /outpost.goauthentik.io {
     include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
     set $upstream_authentik authentik-server;
-    proxy_pass http://$upstream_authentik:9000;
+    proxy_pass https://$upstream_authentik:9443;
 }
 
 # location for authentik auth requests
@@ -19,7 +19,7 @@ location = /outpost.goauthentik.io/auth/nginx {
     include /config/nginx/proxy.conf;
     include /config/nginx/resolver.conf;
     set $upstream_authentik authentik-server;
-    proxy_pass http://$upstream_authentik:9000/outpost.goauthentik.io/auth/nginx;
+    proxy_pass https://$upstream_authentik:9443/outpost.goauthentik.io/auth/nginx;
 
     ## Include the Set-Cookie header if present
     auth_request_set $set_cookie $upstream_http_set_cookie;

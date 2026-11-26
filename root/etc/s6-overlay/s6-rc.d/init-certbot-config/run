@@ -372,4 +372,8 @@ if [[ -d /config/keys/letsencrypt ]]; then
     ln -s ./letsencrypt/fullchain.pem /config/keys/cert.crt
     rm -rf /config/keys/cert.key
     ln -s ./letsencrypt/privkey.pem /config/keys/cert.key
+    if pgrep -f "nginx:" >/dev/null; then
+        echo "nginx is already running, reloading"
+        s6-svc -h /run/service/svc-nginx
+    fi
 fi
